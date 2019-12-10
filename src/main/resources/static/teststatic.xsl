@@ -2,7 +2,7 @@
 
     <xsl:template match="/">
 
-        <xsl:apply-imports>tztg</xsl:apply-imports>
+        <xsl:apply-imports>tzg</xsl:apply-imports>
     </xsl:template>
 
 </xsl:stylesheet>
