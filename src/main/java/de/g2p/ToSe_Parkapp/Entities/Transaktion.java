@@ -7,7 +7,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Date;
 
-
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Transaktion {
@@ -45,70 +46,6 @@ public class Transaktion {
         this.gebuehr = gebuehr;
         this.datum = datum;
         this.parkid = parkid;
-        this.pid = pid;
-    }
-
-    public Integer getTid() {
-        return tid;
-    }
-
-    public void setTid(Integer tid) {
-        this.tid = tid;
-    }
-
-    public Konsument getKid() {
-        return kid;
-    }
-
-    public void setKid(Konsument kid) {
-        this.kid = kid;
-    }
-
-    public Anbieter getAid() {
-        return aid;
-    }
-
-    public void setAid(Anbieter aid) {
-        this.aid = aid;
-    }
-
-    public double getBetrag() {
-        return betrag;
-    }
-
-    public void setBetrag(double betrag) {
-        this.betrag = betrag;
-    }
-
-    public boolean isGebuehr() {
-        return gebuehr;
-    }
-
-    public void setGebuehr(boolean gebuehr) {
-        this.gebuehr = gebuehr;
-    }
-
-    public Date getDatum() {
-        return datum;
-    }
-
-    public void setDatum(Date datum) {
-        this.datum = datum;
-    }
-
-    public Parken getParkid() {
-        return parkid;
-    }
-
-    public void setParkid(Parken parkid) {
-        this.parkid = parkid;
-    }
-
-    public Parkplatz getPid() {
-        return pid;
-    }
-
-    public void setPid(Parkplatz pid) {
         this.pid = pid;
     }
 }

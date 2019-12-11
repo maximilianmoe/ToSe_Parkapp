@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Parkplatz {
@@ -57,94 +59,6 @@ public class Parkplatz {
         this.bewertungsanzahl = bewertungsanzahl;
         this.anbieterId = anbieterId;
         this.strafgebuehr = strafgebuehr;
-        this.beschreibung = beschreibung;
-    }
-
-    public Integer getPid() {
-        return pid;
-    }
-
-    public void setPid(Integer pid) {
-        this.pid = pid;
-    }
-
-    public String getFahrzeugtyp() {
-        return fahrzeugtyp;
-    }
-
-    public void setFahrzeugtyp(String fahrzeugtyp) {
-        this.fahrzeugtyp = fahrzeugtyp;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public boolean isPrivat() {
-        return privat;
-    }
-
-    public void setPrivat(boolean privat) {
-        this.privat = privat;
-    }
-
-    public Integer getZeitbegrenzung() {
-        return zeitbegrenzung;
-    }
-
-    public void setZeitbegrenzung(Integer zeitbegrenzung) {
-        this.zeitbegrenzung = zeitbegrenzung;
-    }
-
-    public Standort getOrtid() {
-        return ortid;
-    }
-
-    public void setOrtid(Standort ortid) {
-        this.ortid = ortid;
-    }
-
-    public Integer getBewertung() {
-        return bewertung;
-    }
-
-    public void setBewertung(Integer bewertung) {
-        this.bewertung = bewertung;
-    }
-
-    public Integer getBewertungsanzahl() {
-        return bewertungsanzahl;
-    }
-
-    public void setBewertungsanzahl(Integer bewertungsanzahl) {
-        this.bewertungsanzahl = bewertungsanzahl;
-    }
-
-    public Anbieter getAnbieterId() {
-        return anbieterId;
-    }
-
-    public void setAnbieterId(Anbieter anbieterId) {
-        this.anbieterId = anbieterId;
-    }
-
-    public double getStrafgebuehr() {
-        return strafgebuehr;
-    }
-
-    public void setStrafgebuehr(double strafgebuehr) {
-        this.strafgebuehr = strafgebuehr;
-    }
-
-    public String getBeschreibung() {
-        return beschreibung;
-    }
-
-    public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
     }
 }

@@ -7,6 +7,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Date;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Reservierung {
@@ -39,62 +41,6 @@ public class Reservierung {
         this.start = start;
         this.ende = ende;
         this.resZuParken = resZuParken;
-        this.beendet = beendet;
-    }
-
-    public Integer getRid() {
-        return rid;
-    }
-
-    public void setRid(Integer rid) {
-        this.rid = rid;
-    }
-
-    public Konsument getKid() {
-        return kid;
-    }
-
-    public void setKid(Konsument kid) {
-        this.kid = kid;
-    }
-
-    public Parkplatz getPid() {
-        return pid;
-    }
-
-    public void setPid(Parkplatz pid) {
-        this.pid = pid;
-    }
-
-    public Date getStart() {
-        return start;
-    }
-
-    public void setStart(Date start) {
-        this.start = start;
-    }
-
-    public Date getEnde() {
-        return ende;
-    }
-
-    public void setEnde(Date ende) {
-        this.ende = ende;
-    }
-
-    public boolean isResZuParken() {
-        return resZuParken;
-    }
-
-    public void setResZuParken(boolean resZuParken) {
-        this.resZuParken = resZuParken;
-    }
-
-    public boolean isBeendet() {
-        return beendet;
-    }
-
-    public void setBeendet(boolean beendet) {
         this.beendet = beendet;
     }
 }
