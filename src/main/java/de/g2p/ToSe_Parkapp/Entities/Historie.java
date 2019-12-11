@@ -6,8 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+
 @NoArgsConstructor
 @Entity
 public class Historie {
@@ -30,6 +29,38 @@ public class Historie {
     public Historie(Nutzer nid, Parkplatz pid, String aktion) {
         this.nid = nid;
         this.pid = pid;
+        this.aktion = aktion;
+    }
+
+    public Integer getHistorienId() {
+        return historienId;
+    }
+
+    public void setHistorienId(Integer historienId) {
+        this.historienId = historienId;
+    }
+
+    public Nutzer getNid() {
+        return nid;
+    }
+
+    public void setNid(Nutzer nid) {
+        this.nid = nid;
+    }
+
+    public Parkplatz getPid() {
+        return pid;
+    }
+
+    public void setPid(Parkplatz pid) {
+        this.pid = pid;
+    }
+
+    public String getAktion() {
+        return aktion;
+    }
+
+    public void setAktion(String aktion) {
         this.aktion = aktion;
     }
 }
