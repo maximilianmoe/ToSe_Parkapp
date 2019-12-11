@@ -1,6 +1,8 @@
 package de.g2p.ToSe_Parkapp.Service;
 
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -15,7 +17,6 @@ public class MailService{
 
     public JavaMailSender mailSender;
 
-
     /**
      * @param to The email address of the user the email is send to.
      * @param subject The subject of the email.
@@ -28,5 +29,31 @@ public class MailService{
         message.setText(text);
         mailSender.send(message);
     }
+    @Bean
+    public SimpleMailMessage templateRegistration(){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setText("Um die Registrierung abzuschließen und dich zu verifizieren klicke auf diesen Link: ");
+        return message;
+    }
+    @Bean
+    public SimpleMailMessage templatePassword(){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setText("Um dein Passwort zurückzusetzten klicke auf diesen Link: ");
+        return message;
+    }
+    @Bean
+    public SimpleMailMessage templateReminder(){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setText("In einer halben Stunde läuft dein Parkplatz ab");
+        return message;
+    }
 }
 
+   /* Die Templates können nach folgendem Beispiel verwendet werden: https://www.baeldung.com/spring-email
+
+   @Autowired
+    public SimpleMailMessage template;
+...
+        String text = String.format(template.getText(), templateArgs);
+        sendSimpleMessage(to, subject, text);
+*/
