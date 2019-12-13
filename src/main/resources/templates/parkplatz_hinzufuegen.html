@@ -99,8 +99,16 @@
             </div>
         </div>
         <div class="row" id="row">
+            <!--
             <div class="col">
                 <input type="text" class="form-control" placeholder="Straße, Hausnummer (optional)">
+            </div>
+            -->
+            <div class="col-4">
+                <input type="text" class="form-control" placeholder="Straße">
+            </div>
+            <div class="col-2">
+                <input type="text" class="form-control" placeholder="Hausnummer">
             </div>
             <!--
             <div class="col">
@@ -229,7 +237,7 @@
 </div>
 <script type="text/javascript">
     /*
-        Folgende Funktion sorgt dafür, dass wenn ein Öffentlicher Parkplatz hinzugefügt wird,
+        Folgende Funktion sorgt dafür das, wenn ein Öffentlicher Parkplatz hinzugefügt wird,
         die Eingabefelder für {Parkgebühr; Strafgebühr; Parkhöchstdauer} deaktiviert/ausgegraut werden.
         Der zweite Teil der Funktion sorgt dafür, dass die Felder wieder aktiviert werden, wenn doch
         wieder aud privater Parkplatz gewechselt wird.
