@@ -89,7 +89,7 @@
     <form class="input">
         <div class="row">
             <div class="col">
-                <input type="text" class="form-control" placeholder="E-Mail">
+                <input type="text" class="form-control" id="mail1" placeholder="E-Mail">
             </div>
             <div class="col">
                 <input type="text" class="form-control" placeholder="Adresse">
@@ -99,7 +99,7 @@
     <form class="input">
         <div class="row">
             <div class="col">
-                <input type="text" class="form-control" placeholder="E-Mail bestätigen">
+                <input type="text" class="form-control" id="mail2" placeholder="E-Mail bestätigen">
             </div>
             <div class="col">
                 <input type="text" class="form-control" placeholder="PLZ">
@@ -109,10 +109,10 @@
     <form class="input">
         <div class="row">
             <div class="col">
-                <input type="text" class="form-control" placeholder="Passwort">
+                <input type="text" class="form-control" id="pw1" placeholder="Passwort">
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="Passwort bestätigen">
+                <input type="text" class="form-control" id="pw2" placeholder="Passwort bestätigen">
             </div>
         </div>
         <div class="form-group" id="checkbox">
@@ -124,7 +124,7 @@
             </div>
         </div>
         <div id="reg">
-            <button type="submit" class="btn btn-outline-secondary btn-lg">Registrieren</button>
+            <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">Registrieren</button>
         </div>
     </form>
 
@@ -158,6 +158,77 @@
             }
         });
         */
+    });
+
+    $('#mail2').focusout(function () {
+        /*
+        var mail1 = $('#mail1').text();
+        var mail2 = $('#mail2').text();
+        if(mail1 == mail2){
+            alert('Cant do that!');
+            return false;
+        }
+        else{
+            return true;
+        }
+        */
+        //var mail1 = $('#mail1').text();
+        /*
+        if( $('#mail1').val() == $('#mail2').()){
+            alert('same');
+            $('#mail1').css('background-color', 'red');
+        }
+        else{
+            alert('Different value');
+            $('#mail1').css('background-color', 'blue');
+            }
+
+        if($('#mail1').val() == $('#mail1').val()){
+            $('#mail1').css('background-color', 'red');
+        }
+        else{
+            $('#mail1').css('background-color', 'blue');
+        }
+        */
+        var mail1 = $('#mail1').val();
+        var mail2 = $('#mail2').val();
+        if (mail1 != mail2) {
+            alert('Die zwei eingegebenen Email Adressen stimmer nicht überein!');
+            $('#btn').prop('disabled', true);
+        } else {
+            $('#btn').prop('disabled', false);
+        }
+    });
+    $('#pw2').focusout(function () {
+        var pw1 = $('#pw1').val();
+        var pw2 = $('#pw2').val();
+        if (pw1 != pw2) {
+            alert('Passwörter stimmen nicht überein!');
+            $('#btn').prop('disabled', true);
+        } else {
+            $('#btn').prop('disabled', false);
+        }
+    });
+    $('#btn').focus(function () {
+        if ($('#gridCheck').prop('checked') == false) {
+            alert('Datenschutzrichtlinien müssen akzeptiert werden');
+            $('#btn').prop('disabled', true);
+        } else {
+            $('#btn').prop('disabled', false);
+        }
+    });
+    $('#gridCheck').click(function () {
+        if ($('#gridCheck').prop('checked') == true) {
+            $('#btn').prop('disabled', false);
+        }
+    });
+    $('#btn').hover(function () {
+        if ($('#gridCheck').prop('checked') == false) {
+            alert('Datenschutzrichtlinien müsse akzeptiert werden');
+            $('#btn').prop('disabled', true);
+        } else {
+            $('#btn').prop('disabled', false);
+        }
     });
 </script>
 </body>
