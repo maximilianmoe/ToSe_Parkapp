@@ -39,4 +39,11 @@ public class Nutzer {
         this.admin = admin;
         this.sperrung = sperrung;
     }
+
+    public Nutzer(String vorname, String nachname, String emailAdresse, String passwort) {
+        this.vorname = vorname;
+        this.nachname = nachname;
+        this.emailAdresse = emailAdresse;
+        this.passwort = passwort;
+    }
 }

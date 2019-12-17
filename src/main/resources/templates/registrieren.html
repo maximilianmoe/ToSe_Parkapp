@@ -45,13 +45,13 @@
     <div>
         <h2 id="head">Registrierung </h2>
     </div>
-    <form class="input">
+    <form class="input" action="#" th:action="@{/registrieren}" th:object="${nutzer}" method="post">
         <div class="row">
             <div class="col">
-                <input type="text" class="form-control" placeholder="Vorname">
+                <input type="text" th:field="*{vorname}" class="form-control" placeholder="Vorname">
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="Nachname">
+                <input type="text" th:field="*{nachname}" class="form-control" placeholder="Nachname">
             </div>
         </div>
     </form>
