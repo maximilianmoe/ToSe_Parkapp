@@ -11,6 +11,7 @@ import java.sql.Date;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(name = "Transaktion")
 public class Transaktion {
 
     @Id
