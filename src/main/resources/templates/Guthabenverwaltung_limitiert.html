@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleafe.org" lang="de-De">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- NÖTIG um Interaktivität zu aktivieren-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <style>
+        #navbar {
+            width: 100%;
+        }
+
+        #ueberschrift {
+            margin-top: 60px;
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        #test {
+            text-align: center;
+        }
+
+        #row1 {
+            margin-top: 40px;
+        }
+
+        #guthaben {
+            text-align: center;
+            color: grey;
+        }
+
+        #betrag {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        #aufladen {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        #auszahlen {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        #zahlungsmethode {
+            display: inline-block;
+            width: 300px;
+        }
+
+        #unten {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #too_much_div{
+            text-align: center;
+        }
+        #too_much{
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
+    <a class="navbar-brand" href="#">{Logo}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#" disabled>Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"cdisabled>Profil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="guthabenverwaltung.html">Guthaben</a>
+            </li>
+            <li class="nav-item dropdown" disabled>
+                <a class="nav-link dropdown-toggle" href="login.html" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Parkplätze
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Meine Parkplätze</a>
+                    <a class="dropdown-item" href="parkplatz_hinzufügen.html">Parkplatz hinzufügen</a>
+                    <a class="dropdown-item" href="parkplaetze.html">Alle Parkplätze</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" disabled>Einstellungen</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit" disabled>Search</button>
+        </form>
+    </div>
+</nav>
+<div class="container">
+    <h2 id="ueberschrift">Guthabenverwaltung</h2>
+    <div class="row" id="row1">
+        <div class="list-group col-sm-5" id="test2">
+            <a class="list-group-item list-group-item-action">
+                <div>
+                    <div id="guthaben">
+                        <h5>Aktuelles Guthaben</h5>
+                    </div>
+                    <small></small>
+                </div>
+                <!--
+                <p class="mb-1" id="betrag">25,00</p>
+                -->
+                <!--
+                <p class="mb-1"><data id="betrag">25</data></p>
+                -->
+                <p id="test">11</p>
+                <small></small>
+            </a>
+        </div>
+        <div class="panel panel-default col-sm-2">
+            <div class="panel-body">
+                <p></p>
+            </div>
+        </div>
+        <div class="input-group input-group-lg col-sm-5">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-lg">EUR</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                   placeholder="Betrag" type="number" id="geld_input">
+        </div>
+    </div>
+    <div id="aufladen">
+        <button type="submit" class="btn btn-outline-secondary btn-lg" id="aufl_btn">Aufladen</button>
+    </div>
+    <div id="auszahlen">
+        <button type="submit" class="btn btn-outline-secondary btn-lg" id="auszahlen-btn" disabled>Auszahlen</button>
+    </div>
+
+    <p id="too_much"></p>
+    <div id="unten">
+        <div class="form-group" id="zahlungsmethode">
+            <label for="sel1">Zahlungsmethoden</label>
+            <select class="form-control" id="sel1">
+                <option selected>FakePal</option>
+                <option disabled>Bank Transfer (coming soon)</option>
+                <option disabled>Kreditkarte (coming soon)</option>
+            </select>
+        </div>
+    </div>
+</div>
+<script>
+    /*
+    $(document).ready(function(){
+        $('#auszahlen').on('click', function (e){
+            if(parseInt($("#geld_input").val()) > parseInt($("#betrag").val())){
+                //document.getElementById('log').innerHTML = "Zu wenig Geld auf ihrem Konto";
+                $("#log").css("color", "green");
+            }
+        })
+    });
+
+    $(document).ready(function () {
+        if(parseFloat($("#betrag").val()) < 90) {
+            $("#ueberschrift").css("color", "green");
+        }
+    });
+
+    $(document).on('input', '#geld_betrag', function(){
+        var coins = $("#geld_betrag").val();
+        $("#reward").text(coins);
+    })
+
+    $(document).ready(function () {
+        var betrag = $("#geld_input").val();
+        if (betrag > 1) {
+            alert("Endlich?");
+        } else {
+            alert("Irgendwas");
+        }
+    });
+    */
+    /*
+    $(document).on("click", "#auszahlen", function(){
+        var wert1 = $("#geld_input").val();
+        var wert2 = $("betrag").val();
+        alert(wert1 + wert2);
+    })
+
+    $("#test2").hover(function(){
+        var h5text = document.querySelector("#test").textContent;
+        alert(h5text);
+    });
+
+    $("#test2").hover(function(){
+        var h5text = document.querySelector("#test").textContent;
+        if(h5text > 10){
+            alert(h5text);
+        }
+    });
+    */
+    $(document).ready(function(){
+        var akk_betrag = parseInt(document.querySelector("#test").textContent);
+        var aufladen = $("#geld_input").val();
+        var len = 0;
+        $("#geld_input").keyup(function(){
+            len = this.value
+            if(len > akk_betrag){
+                $('#too_much').html("Sie haben nicht genug Guthaben, um den von ihnen gewählten Betrag auszuzahlen");
+                $('#auszahlen-btn').prop("disabled", true);
+            }
+            if(len <= akk_betrag){
+                $('#too_much').html("");
+                $('#auszahlen-btn').prop("disabled", true);
+            }
+        })
+    })
+</script>
+</body>
+
+
+</html>
