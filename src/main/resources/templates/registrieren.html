@@ -230,6 +230,23 @@
             $('#btn').prop('disabled', false);
         }
     });
+    /*
+        Folgende Funktion liest den Input des Users bezüglich des Kennzeichens aus und überprüft ob es
+        in der richtigen Form eingegeben wurde. Wenn dies nicht der Fall ist wird der User mittels alert informiert
+        und der submit button wird ausgegraut, solange das Kennzeichen nicht in der richtigen Form eingegeben wurde.
+     */
+    $('#kennzeichen').focusout(function(){
+        var expression = /\b[A-Z]{1,3}[-][A-Z]{1,2}[-][0-9]{1,4}\b/g;
+        var regex = new RegExp(expression);
+        var kennz = $('#kennzeichen').val();
+        if(kennz.match(regex)){
+            $('#btn').prop('disabled', false);
+        }
+        else{
+            alert('Kennzeichen muss in dem Format PA-XY-123 (Nur Großbuchstaben) angegeben werden!');
+            $('#btn').prop('disabled', true);
+        }
+    });
 </script>
 </body>
 
