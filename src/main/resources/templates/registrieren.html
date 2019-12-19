@@ -89,7 +89,7 @@
     <form class="input">
         <div class="row">
             <div class="col">
-                <input type="text" class="form-control" id="mail1" placeholder="E-Mail">
+                <input type="text" th:value="*{emailadresse}" class="form-control" id="mail1" placeholder="E-Mail">
             </div>
             <div class="col">
                 <input type="text" class="form-control" placeholder="Adresse">
@@ -109,7 +109,7 @@
     <form class="input">
         <div class="row">
             <div class="col">
-                <input type="text" class="form-control" id="pw1" placeholder="Passwort">
+                <input type="text" th:value="*{passwort}" class="form-control" id="pw1" placeholder="Passwort">
             </div>
             <div class="col">
                 <input type="text" class="form-control" id="pw2" placeholder="Passwort bestätigen">

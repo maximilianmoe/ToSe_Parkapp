@@ -7,17 +7,15 @@ import de.g2p.ToSe_Parkapp.Repositories.StandortRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class ParkplatzController {
 
     @Autowired
     ParkplatzRepository parkplatzRepository;
-
     @Autowired
     StandortRepository standortRepository;
 
@@ -29,14 +27,34 @@ public class ParkplatzController {
     }
 
     @PostMapping("/add")
-    public String addParkplatz(@ModelAttribute Parkplatz parkplatz, @ModelAttribute Standort standort) {
-        //parkplatzRepository.save(parkplatz);
-        //standortRepository.save(standort);
-        //String returnstring = parkplatzRepository.toString()+" // "+standortRepository.toString();
+    public String addParkplatz(@ModelAttribute Parkplatz parkplatz, @ModelAttribute Standort standort,
+                               @RequestParam("parkplatzChecked") String checked) {
 
-        String returnstring = standort.toString()+"   //    "+ parkplatz.toString();
+        parkplatz.setStatus("frei");
+        parkplatz.setOrtid(standort);
+        parkplatz.setBewertung(0);
+        parkplatz.setBewertungsanzahl(0);
+
+        //Sets Parkplatz to private if the box for "privater Parkplatz" is checked
+        if(checked.contains("1"))
+            parkplatz.setPrivat(true);
+        else if (checked.contains("2"))
+            parkplatz.setPrivat(false);
+
+        parkplatzRepository.save(parkplatz);
+        standortRepository.save(standort);
+
+
+
         //Übersichtsseite erstellen und den Namen hier ändern
-        return returnstring;
+        return "testweiterleitung";
     }
+
+    @GetMapping("/testlauf")
+    @ResponseBody
+    public List<Parkplatz> testlauf() {
+        return parkplatzRepository.findAll();
+    }
+
 
 }

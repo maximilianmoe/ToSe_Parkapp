@@ -92,7 +92,7 @@
     <form action="#" th:action="@{/add}" method="post">
         <div class="row" id="row1">
             <div class="col">
-                <input type="text" th:value="{standort.plz}" name="plz" class="form-control" placeholder="PLZ">
+                <input type="text" th:value="*{standort.plz}" th:name="plz" class="form-control" placeholder="PLZ">
             </div>
             <div class="col">
                 <input type="text" class="form-control" placeholder="Ort">
@@ -105,10 +105,10 @@
             </div>
             -->
             <div class="col-4">
-                <input type="text" th:value="{standort.strasse}" name="strasse" class="form-control" placeholder="Straße">
+                <input type="text" th:value="*{standort.strasse}" th:name="strasse" class="form-control" placeholder="Straße">
             </div>
             <div class="col-2">
-                <input type="text" th:value="{standort.hausnummer}" name="hausnummer" class="form-control" placeholder="Hausnummer">
+                <input type="text" th:value="*{standort.hausnummer}" th:name="hausnummer" class="form-control" placeholder="Hausnummer">
             </div>
             <!--
             <div class="col">
@@ -121,7 +121,7 @@
                         <label class="input-group-text" for="inputGroupSelect01">Parkplatz Art</label>
                     </div>
                     <select class="custom-select select_parkplatz" id="inputGroupSelect01"
-                            onchange="changeTextbox();">
+                            onchange="changeTextbox();" th:name="parkplatzChecked">
                         <option value="1">Privater Parkplatz</option>
                         <option value="2">Öffentlicher Parkplatz</option>
                     </select>
@@ -134,7 +134,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">EUR</span>
                     </div>
-                    <input type="text" th:value="{parkplatz.parkgebuehr}" class="form-control" aria-label="Amount (to the nearest dollar)"
+                    <input type="number" th:value="*{parkplatz.parkgebuehr}" name="parkgebuehr" class="form-control" aria-label="Amount (to the nearest dollar)"
                            placeholder="Parkgebühr" id="parkgebuehr">
                     <div class="input-group-append">
                         <span class="input-group-text">.00</span>
@@ -146,7 +146,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">EUR</span>
                     </div>
-                    <input type="text" th:value="{parkplatz.strafgebuehr}" class="form-control" aria-label="Amount (to the nearest dollar)"
+                    <input type="number" th:value="*{parkplatz.strafgebuehr}" name="strafgebuehr" class="form-control" aria-label="Amount (to the nearest dollar)"
                            placeholder="Strafgebühr" id="strafgebuehr">
                     <div class="input-group-append">
                         <span class="input-group-text">.00</span>
@@ -178,7 +178,7 @@
                 </div>
             </div>
             <div class="col">
-                <input type="text" th:value="{parkplatz.zeitbegrenzung}" class="form-control" placeholder="Parkhöchstdauer in min (MAX 999)"
+                <input type="text" th:value="*{parkplatz.zeitbegrenzung}" name="zeitbegrenzung" class="form-control" placeholder="Parkhöchstdauer in min (MAX 999)"
                        id="parkhoechstdauer">
             </div>
             <!--
@@ -213,7 +213,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Beschreibung</span>
                     </div>
-                    <textarea class="form-control" th:value="{parkplatz.beschreibung}" id="beschreibung" aria-label="With textarea"
+                    <textarea class="form-control" th:value="*{parkplatz.beschreibung}" name="beschreibung" id="beschreibung" aria-label="With textarea"
                               placeholder="Limitiert auf 255 Zeichen"></textarea>
 
                 </div>
