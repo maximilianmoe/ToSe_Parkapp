@@ -48,14 +48,21 @@
 </div>
 <p></p>
 <div class="login-form">
-    <form action="/examples/actions/confirmation.php" method="post">
+    <form action="#" th:action="@{/logintest}" method="post">
         <h2 class="text-center" id="login">Log in</h2>
         <div class="form-group">
-            <input type="text" th:field="*{username}" class="form-control" placeholder="Username" required="required">
+            <input type="text" th:value="*{nutzer.vorname}" name="vorname" class="form-control" placeholder="Vorname" required="required">
         </div>
         <div class="form-group">
-            <input type="password" th:field="*{password}" class="form-control" placeholder="Passwort" required="required">
+            <input type="text" th:value="*{nutzer.nachname}" name="nachname" class="form-control" placeholder="Nachname" required="required">
         </div>
+            <h2 class="text-center" id="standort">Standort</h2>
+            <div class="form-group" >
+                <input type="text" th:field="*{standort.plz}" name="plz" class="form-control" placeholder="PLZ" required="required">
+            </div>
+            <div class="form-group">
+                <input type="text" th:field="*{standort.strasse}" name="strasse" class="form-control" placeholder="Straße" required="required">
+            </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Log in</button>
         </div>

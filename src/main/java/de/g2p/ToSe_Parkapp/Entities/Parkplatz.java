@@ -43,6 +43,8 @@ public class Parkplatz {
     @JoinColumn(name = "aid")
     private Anbieter anbieterId;
 
+    private double parkgebuehr;
+
     @NotNull
     private double strafgebuehr;
 

@@ -1,6 +1,7 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
+import de.g2p.ToSe_Parkapp.Entities.Standort;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,20 +17,17 @@ public class WebController {
     @Autowired
     NutzerRepository nutzerRepository;
 
-    @RequestMapping(value ="/test1",method = RequestMethod.GET)
-    public String index() {
+    @GetMapping("/logintest")
+    public String index(Model model) {
+        model.addAttribute("nutzer", new Nutzer());
+        model.addAttribute("standort", new Standort());
         return "logintest";
     }
 
-    @PostMapping("/test1")
-    public String login(
-            @RequestParam(value = "username", required = true) String username, BindingResult result,
-            @RequestParam(value = "passwort", required = true) String passwort, BindingResult result2,
-            Model model) {
-
-        model.addAttribute("username", username);
-        model.addAttribute("passwort", passwort);
-        return username+" "+passwort+" erfolgreich!";
+    @PostMapping("/logintest")
+    @ResponseBody
+    public String login(@ModelAttribute Nutzer nutzer, @ModelAttribute Standort standort) {
+        return standort.getStrasse()+" "+nutzer.getNachname();
     }
 
     @RequestMapping("/test")
