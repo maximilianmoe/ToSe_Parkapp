@@ -37,9 +37,9 @@ public class WebController {
     }
 
     //GetMapping for the error page
-    @GetMapping("/errorpage")
+    @GetMapping("/error")
     public String error() {
-        return "error_page";
+        return "error";
     }
 
 
