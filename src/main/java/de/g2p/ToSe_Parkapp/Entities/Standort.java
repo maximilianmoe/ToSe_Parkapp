@@ -27,7 +27,8 @@ public class Standort {
 
     private String longitude;
 
-    public Standort(String strasse, Integer plz, Integer hausnummer, String latitude, String longitude) {
+    public Standort(Integer ortid, String strasse, Integer plz, Integer hausnummer, String latitude, String longitude) {
+        this.ortid = ortid;
         this.strasse = strasse;
         this.plz = plz;
         this.hausnummer = hausnummer;

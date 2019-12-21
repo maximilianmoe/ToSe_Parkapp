@@ -40,9 +40,7 @@ public class NutzerController {
     }
 
     @PostMapping("/login")
-    public String loginUser(HttpServletRequest request, Model model){
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+    public String loginUser(){
 
         return null;
     }
