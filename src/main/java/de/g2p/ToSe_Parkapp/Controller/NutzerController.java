@@ -23,6 +23,8 @@ public class NutzerController {
     @Autowired
     KonsumentRepository konsumentRepository;
 
+
+
     @GetMapping("/registrieren")
     public String registration() {
         return "registrieren";
