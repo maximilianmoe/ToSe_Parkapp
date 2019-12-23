@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleafe.org" lang="de-De">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- NÖTIG um Interaktivität zu aktivieren-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <style>
+        body {
+            background-color: lightslategray;
+        }
+
+        #input_1 {
+            height: 300px;
+            width: 300px;
+            background-color: #5D5C61;
+            margin: 30px;
+            border-radius: 5%;
+        }
+
+        #input_2 {
+            height: 300px;
+            width: 300px;
+            background-color: #7395AE;
+            margin: 30px;
+            border-radius: 5%;
+        }
+
+        #input_3 {
+            height: 300px;
+            width: 300px;
+            background-color: green;
+            margin: 30px;
+            border-radius: 5%;
+        }
+
+        #row1 {
+            margin-top: 50px;
+        }
+
+        .tile_input {
+            text-align: center;
+            vertical-align: middle;
+            line-height: 300px;
+        }
+
+        #field1 {
+            font-size: 200%;
+            color: #8590AA;
+        }
+
+        #field2 {
+            font-size: 200%;
+            color: #66FCF1;
+        }
+    </style>
+</head>
+
+<body>
+<!--
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
+    Alte Navbar; Bei neuer kann ich Farbe selbst auswählen!!
+-->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #5D5C61;" id="navbar">
+    <a class="navbar-brand" href="#">{Logo}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="guthabenverwaltung.html">Guthaben</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="login.html" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Parkplätze
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Meine Parkplätze</a>
+                    <a class="dropdown-item" href="parkplatz_hinzufügen.html">Parkplatz hinzufügen</a>
+                    <a class="dropdown-item" href="parkplaetze.html">Alle Parkplätze</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Einstellungen</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<div class="container">
+    <div class="row" id="row1">
+        <div class="tile_input" id="input_1">
+            <p id="field1">Suche</p>
+        </div>
+        <div class="tile_input" id="input_2">
+            <p id="field2">Parkplatz</p>
+        </div>
+        <div class="tile_input" id="input_1">
+            <p id="field1">Guthaben</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="tile_input" id="input_2">
+            <p id="field2">Profil</p>
+        </div>
+        <div class="tile_input" id="input_1">
+            <p id="field1">aktueller Parkplatz</p>
+        </div>
+        <div class="tile_input" id="input_2">
+            <p id="field2">Kontakt</p>
+        </div>
+    </div>
+</div>
+
+</body>
+
+
+</html>
