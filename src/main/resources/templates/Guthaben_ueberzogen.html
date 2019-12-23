@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleafe.org" lang="de-De">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- NÖTIG um Interaktivität zu aktivieren-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <style>
+        #blocked_img{
+            text-align: center;
+            margin-top: 30px;
+        }
+        #text{
+            text-align: center;
+        }
+        #h3{
+            margin-top: 40px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        #h4{
+            margin-top: 20px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        #btn{
+            margin-top: 30px;
+        }
+        #blocked{
+            border-radius: 2%;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div id="blocked_img">
+        <img th:src="@{images/no-money.jpg}" src="../static/images/no-money.jpg" id="blocked">
+    </div>
+    <div id="text">
+        <h4 id="h4">Sie haben leider ihr Guthaben überzogen und wurden deshalb vorübergehend gesperrt!</h2>
+            <h5 id="h4">Bitte laden Sie ihr Guthaben auf, um ihre Schulden zu bezahlen
+                und ihren Account wieder zu entsperren.
+                </h3>
+                <div id="btn">
+                    <button type="button" class="btn btn-outline-secondary btn-lg">Zur Guthabenverwaltung</button>
+                </div>
+    </div>
+</div>
+
+
+<script>
+
+</script>
+</body>
+
+
+</html>
