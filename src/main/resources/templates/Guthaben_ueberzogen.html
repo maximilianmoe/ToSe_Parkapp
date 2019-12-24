@@ -16,10 +16,6 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
-        #blocked{
-            max-height: 50%;
-            max-width: 50%;
-        }
         #blocked_img{
             text-align: center;
             margin-top: 30px;
@@ -35,8 +31,11 @@
             margin-top: 20px;
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
-        #mail{
-            color:red;
+        #btn{
+            margin-top: 30px;
+        }
+        #blocked{
+            border-radius: 2%;
         }
     </style>
 </head>
@@ -44,14 +43,19 @@
 <body>
 <div class="container">
     <div id="blocked_img">
-        <img th:src="@{images/blocked.jpg}" src="../static/images/blocked.jpg" id="blocked">
+        <img th:src="@{images/no-money.jpg}" src="../static/images/no-money.jpg" id="blocked">
     </div>
     <div id="text">
-        <h4 id="h3">Sie wurden wegen unpassendem Verhalten leider gesperrt!</h4>
-            <h4 id="h4">Bitte setzen Sie sich unter folgender E-Mail: <a id="mail">good2park.service@gmail.com</a>
-                mit einem Admin in Verbindung, um weiteres Vorgehen zu besprechen</h4>
+        <h4 id="h4">Sie haben leider ihr Guthaben überzogen und wurden deshalb vorübergehend gesperrt!</h2>
+            <h5 id="h4">Bitte laden Sie ihr Guthaben auf, um ihre Schulden zu bezahlen
+                und ihren Account wieder zu entsperren.
+                </h3>
+                <div id="btn">
+                    <button type="button" class="btn btn-outline-secondary btn-lg">Zur Guthabenverwaltung</button>
+                </div>
     </div>
 </div>
+
 
 <script>
 
