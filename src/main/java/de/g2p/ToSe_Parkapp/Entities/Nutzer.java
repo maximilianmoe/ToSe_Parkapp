@@ -3,8 +3,8 @@ package de.g2p.ToSe_Parkapp.Entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -21,6 +21,7 @@ public class Nutzer {
 
     private String nachname;
 
+    @NotNull
     @Column(name = "emailadresse")
     private String emailAdresse;
 
@@ -39,4 +40,16 @@ public class Nutzer {
         this.admin = admin;
         this.sperrung = sperrung;
     }
+
+    public Nutzer(String vorname, String nachname, String emailAdresse, String passwort) {
+        this.vorname = vorname;
+        this.nachname = nachname;
+        this.emailAdresse = emailAdresse;
+        this.passwort = passwort;
+    }
+
+    public Nutzer getNid() {
+        return this;
+    }
+
 }

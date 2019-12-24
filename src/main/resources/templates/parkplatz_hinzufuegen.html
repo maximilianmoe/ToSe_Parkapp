@@ -89,26 +89,26 @@
 </nav>
 <div class="container">
     <h2 id="ueberschrift">Parkplatz Hinzufügen</h2>
-    <form>
+    <form action="#" th:action="@{/add}" method="post">
         <div class="row" id="row1">
             <div class="col">
-                <input type="text" class="form-control" placeholder="PLZ">
+                <input type="text" th:value="*{standort.plz}" th:name="plz" class="form-control" placeholder="PLZ">
             </div>
             <div class="col">
                 <input type="text" class="form-control" placeholder="Ort">
             </div>
         </div>
-        <div class="row" id="row">
+        <div class="row" id="row2">
             <!--
             <div class="col">
                 <input type="text" class="form-control" placeholder="Straße, Hausnummer (optional)">
             </div>
             -->
             <div class="col-4">
-                <input type="text" class="form-control" placeholder="Straße">
+                <input type="text" th:value="*{standort.strasse}" th:name="strasse" class="form-control" placeholder="Straße">
             </div>
             <div class="col-2">
-                <input type="text" class="form-control" placeholder="Hausnummer">
+                <input type="text" th:value="*{standort.hausnummer}" th:name="hausnummer" class="form-control" placeholder="Hausnummer">
             </div>
             <!--
             <div class="col">
@@ -121,20 +121,20 @@
                         <label class="input-group-text" for="inputGroupSelect01">Parkplatz Art</label>
                     </div>
                     <select class="custom-select select_parkplatz" id="inputGroupSelect01"
-                            onchange="changeTextbox();">
+                            onchange="changeTextbox();" th:name="parkplatzChecked">
                         <option value="1">Privater Parkplatz</option>
                         <option value="2">Öffentlicher Parkplatz</option>
                     </select>
                 </div>
             </div>
         </div>
-        <div class="row" id="row">
+        <div class="row" id="row3">
             <div class="col">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">EUR</span>
                     </div>
-                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
+                    <input type="number" th:value="*{parkplatz.parkgebuehr}" name="parkgebuehr" class="form-control" aria-label="Amount (to the nearest dollar)"
                            placeholder="Parkgebühr" id="parkgebuehr">
                     <div class="input-group-append">
                         <span class="input-group-text">.00</span>
@@ -146,7 +146,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">EUR</span>
                     </div>
-                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
+                    <input type="number" th:value="*{parkplatz.strafgebuehr}" name="strafgebuehr" class="form-control" aria-label="Amount (to the nearest dollar)"
                            placeholder="Strafgebühr" id="strafgebuehr">
                     <div class="input-group-append">
                         <span class="input-group-text">.00</span>
@@ -154,31 +154,31 @@
                 </div>
             </div>
         </div>
-        <div class="row" id="row2">
-            <div class="col">
+        <div class="row" id="row4">
+            <div class="col" >
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">SUV
+                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="suv">SUV
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">Kleinwagen
+                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="kleinwagen">Kleinwagen
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">Van
+                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="van">Van
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">Kombi
+                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="kombi">Kombi
                     </label>
                 </div>
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="Parkhöchstdauer in min (MAX 999)"
+                <input type="text" th:value="*{parkplatz.zeitbegrenzung}" name="zeitbegrenzung" class="form-control" placeholder="Parkhöchstdauer in min (MAX 999)"
                        id="parkhoechstdauer">
             </div>
             <!--
@@ -213,7 +213,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Beschreibung</span>
                     </div>
-                    <textarea class="form-control" id="beschreibung" aria-label="With textarea"
+                    <textarea class="form-control" th:value="*{parkplatz.beschreibung}" name="beschreibung" id="beschreibung" aria-label="With textarea"
                               placeholder="Limitiert auf 255 Zeichen"></textarea>
 
                 </div>
@@ -232,8 +232,7 @@
         <div id="reg">
             <button type="submit" class="btn btn-outline-secondary btn-lg" id="submit">Parkplatz hinzufügen</button>
         </div>
-</div>
-</form>
+    </form>
 </div>
 <script type="text/javascript">
     /*

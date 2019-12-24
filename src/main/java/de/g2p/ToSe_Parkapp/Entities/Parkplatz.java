@@ -43,14 +43,15 @@ public class Parkplatz {
     @JoinColumn(name = "aid")
     private Anbieter anbieterId;
 
-    @NotNull
-    private double strafgebuehr;
+    private Integer parkgebuehr;
+
+    private Integer strafgebuehr;
 
     private String beschreibung;
 
     public Parkplatz(String fahrzeugtyp, String status, boolean privat, Integer zeitbegrenzung, Standort ortid,
-                     Integer bewertung, Integer bewertungsanzahl, Anbieter anbieterId, @NotNull double strafgebuehr,
-                     String beschreibung) {
+                     Integer bewertung, Integer bewertungsanzahl, Anbieter anbieterId, @NotNull Integer strafgebuehr,
+                     String beschreibung, Integer parkgebuehr) {
         this.fahrzeugtyp = fahrzeugtyp;
         this.status = status;
         this.privat = privat;
@@ -61,5 +62,6 @@ public class Parkplatz {
         this.anbieterId = anbieterId;
         this.strafgebuehr = strafgebuehr;
         this.beschreibung = beschreibung;
+        this.parkgebuehr = parkgebuehr;
     }
 }
