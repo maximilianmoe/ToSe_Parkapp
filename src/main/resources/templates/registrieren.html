@@ -41,17 +41,19 @@
 </head>
 
 <body>
-<div class="container">
+<div class="container" action="#" th:action="@{/registrieren}" method="post">
     <div>
         <h2 id="head">Registrierung </h2>
     </div>
-    <form class="input" action="#" th:action="@{/registrieren}" th:object="${nutzer}" method="post">
+    <form class="input" >
         <div class="row">
             <div class="col">
-                <input type="text" th:field="*{vorname}" class="form-control" placeholder="Vorname">
+                <input type="text" th:value="*{nutzer.vorname}" th:name="vorname" class="form-control"
+                       placeholder="Vorname">
             </div>
             <div class="col">
-                <input type="text" th:field="*{nachname}" class="form-control" placeholder="Nachname">
+                <input type="text" th:value="*{nutzer.nachname}" th:name="nachname" class="form-control"
+                       placeholder="Nachname">
             </div>
         </div>
     </form>
@@ -59,16 +61,17 @@
         <div class="container">
             <select class="form-control" id="nutzungs_art">
                 <option selected disabled>Wie wollen Sie G2P nutzen?</option>
-                <option>Konsument</option>
-                <option>Anbieter</option>
-                <option>Beides</option>
+                <option th:name="nutzertyp" th:value="konsument">Konsument</option>
+                <option th:name="nutzertyp" th:value="anbieter">Anbieter</option>
+                <option th:name="nutzertyp" th:value="beides">Beides</option>
             </select>
         </div>
     </div>
     <form class="input">
         <div class="row">
             <div class="col">
-                <input type="text" class="form-control" placeholder="Kennzeichen" id="kennzeichen">
+                <input type="text" th:value="*{konsument.kennzeichen}" th:name="kennzeichen"
+                       class="form-control" placeholder="Kennzeichen" id="kennzeichen">
             </div>
             <!--
             <div class="col">
@@ -78,10 +81,10 @@
             <div class="col">
                 <select class="form-control" id="fahrzeug_art">
                     <option selected disabled>Fahrzeugtyp auswählen</option>
-                    <option>SUV</option>
-                    <option>Kleinwagen</option>
-                    <option>Van</option>
-                    <option>Kombi</option>
+                    <option th:name="fahrzeugtyp" th:value="suv">SUV</option>
+                    <option th:name="fahrzeugtyp" th:value="kleinwagen">Kleinwagen</option>
+                    <option th:name="fahrzeugtyp" th:value="van">Van</option>
+                    <option th:name="fahrzeugtyp" th:value="kombi">Kombi</option>
                 </select>
             </div>
         </div>
@@ -89,7 +92,8 @@
     <form class="input">
         <div class="row">
             <div class="col">
-                <input type="text" th:value="*{emailadresse}" class="form-control" id="mail1" placeholder="E-Mail">
+                <input type="text" th:value="*{nutzer.emailAdresse}" th:name="emailadresse"
+                       class="form-control" id="mail1" placeholder="E-Mail">
             </div>
             <div class="col">
                 <input type="text" class="form-control" placeholder="Adresse">
@@ -109,7 +113,8 @@
     <form class="input">
         <div class="row">
             <div class="col">
-                <input type="text" th:value="*{passwort}" class="form-control" id="pw1" placeholder="Passwort">
+                <input type="text" th:value="*{nutzer.passwort}" th:name="passwort" class="form-control" id="pw1"
+                       placeholder="Passwort">
             </div>
             <div class="col">
                 <input type="text" class="form-control" id="pw2" placeholder="Passwort bestätigen">
