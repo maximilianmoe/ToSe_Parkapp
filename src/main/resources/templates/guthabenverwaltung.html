@@ -114,56 +114,58 @@
 </nav>
 <div class="container">
     <h2 id="ueberschrift">Guthabenverwaltung</h2>
-    <div class="row" id="row1">
-        <div class="list-group col-sm-5" id="test2">
-            <a class="list-group-item list-group-item-action">
-                <div>
-                    <div id="guthaben">
-                        <h5>Aktuelles Guthaben</h5>
+    <form action="#" th:action="@{/guthaben}" method="post">
+        <div class="row" id="row1">
+            <div class="list-group col-sm-5" id="test2">
+                <a class="list-group-item list-group-item-action">
+                    <div>
+                        <div id="guthaben">
+                            <h5>Aktuelles Guthaben</h5>
+                        </div>
+                        <small></small>
                     </div>
-                    <small></small>
-                </div>
                 <!--
                 <p class="mb-1" id="betrag">25,00</p>
                 -->
                 <!--
                 <p class="mb-1"><data id="betrag">25</data></p>
                 -->
-                <p id="test">11</p>
-                <small></small>
-            </a>
-        </div>
-        <div class="panel panel-default col-sm-2">
-            <div class="panel-body">
-                <p></p>
+                    <p id="test">11</p>
+                    <small></small>
+                </a>
+            </div>
+            <div class="panel panel-default col-sm-2">
+                <div class="panel-body">
+                    <p></p>
+                </div>
+            </div>
+            <div class="input-group input-group-lg col-sm-5">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-lg">EUR</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                       placeholder="Betrag" type="number" id="geld_input">
             </div>
         </div>
-        <div class="input-group input-group-lg col-sm-5">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-lg">EUR</span>
-            </div>
-            <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                   placeholder="Betrag" type="number" id="geld_input">
+        <div id="aufladen">
+            <button type="submit" class="btn btn-outline-secondary btn-lg" id="aufl_btn">Aufladen</button>
         </div>
-    </div>
-    <div id="aufladen">
-        <button type="submit" class="btn btn-outline-secondary btn-lg" id="aufl_btn">Aufladen</button>
-    </div>
-    <div id="auszahlen">
-        <button type="submit" class="btn btn-outline-secondary btn-lg" id="auszahlen-btn">Auszahlen</button>
-    </div>
+        <div id="auszahlen">
+            <button type="submit" class="btn btn-outline-secondary btn-lg" id="auszahlen-btn">Auszahlen</button>
+        </div>
 
-    <p id="too_much"></p>
-    <div id="unten">
-        <div class="form-group" id="zahlungsmethode">
-            <label for="sel1">Zahlungsmethoden</label>
-            <select class="form-control" id="sel1">
-                <option selected>FakePal</option>
-                <option disabled>Bank Transfer (coming soon)</option>
-                <option disabled>Kreditkarte (coming soon)</option>
-            </select>
+        <p id="too_much"></p>
+        <div id="unten">
+            <div class="form-group" id="zahlungsmethode">
+                <label for="sel1">Zahlungsmethoden</label>
+                <select class="form-control" id="sel1">
+                    <option selected>FakePal</option>
+                    <option disabled>Bank Transfer (coming soon)</option>
+                    <option disabled>Kreditkarte (coming soon)</option>
+                </select>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 <script>
     /*

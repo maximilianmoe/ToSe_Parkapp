@@ -32,6 +32,12 @@ public class NutzerController {
         return "registrieren";
     }
 
+//    @PostMapping("/registrieren")
+//    public String test() {
+//        System.out.println("testausgabe");
+//        return "testweiterleitung";
+//    }
+
     @PostMapping("/registrieren")
     public String addUser(@ModelAttribute Nutzer nutzer, @ModelAttribute Konsument konsument,
                           @ModelAttribute Anbieter anbieter, @RequestParam("nutzertyp") String nutzertyp,

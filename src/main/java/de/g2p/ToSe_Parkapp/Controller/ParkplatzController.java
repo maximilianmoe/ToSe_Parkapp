@@ -6,7 +6,6 @@ import de.g2p.ToSe_Parkapp.Fahrzeugtyp;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
 import de.g2p.ToSe_Parkapp.Repositories.StandortRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.origin.SystemEnvironmentOrigin;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
