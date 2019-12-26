@@ -115,6 +115,7 @@
     </div>
 </nav>
 <div class="container">
+    <form action="#" th:action="@{/reserve}" method="post">
     <div class="card mb-3">
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
         <div class="card-body">
@@ -131,7 +132,7 @@
                 <p>Parkhöchstdauer:</p>
             </div>
         </div>
-        <form action="#" th:action="@{/reserve}" method="post">
+<!--        <form action="#" th:action="@{/reserve}" method="post">-->
             <select class="form-control" id="belegt">
                 <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
                 <option value="1">Der Parkplatz ist frei</option>
