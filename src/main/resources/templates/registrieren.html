@@ -58,11 +58,11 @@
             </div>
         <div class="row">
             <div class="container">
-                <select class="form-control" id="nutzungs_art">
+                <select th:name="nutzertyp" class="form-control" id="nutzungs_art">
                     <option selected disabled>Wie wollen Sie G2P nutzen?</option>
-                    <option th:name="nutzertyp" th:value="konsument">Konsument</option>
-                    <option th:name="nutzertyp" th:value="anbieter">Anbieter</option>
-                    <option th:name="nutzertyp" th:value="beides">Beides</option>
+                    <option th:value="konsument">Konsument</option>
+                    <option th:value="anbieter">Anbieter</option>
+                    <option th:value="beides">Beides</option>
                 </select>
             </div>
         </div>
@@ -77,12 +77,12 @@
                 </div>
             -->
                 <div class="col">
-                    <select class="form-control" id="fahrzeug_art">
-                        <option selected disabled>Fahrzeugtyp auswählen</option>
-                        <option th:name="fahrzeugtyp" th:value="suv">SUV</option>
-                        <option th:name="fahrzeugtyp" th:value="kleinwagen">Kleinwagen</option>
-                        <option th:name="fahrzeugtyp" th:value="van">Van</option>
-                        <option th:name="fahrzeugtyp" th:value="kombi">Kombi</option>
+                    <select th:name="fahrzeugtyp" th:value="kleinwagen" class="form-control" id="fahrzeug_art">
+<!--                        <option selected disabled>Fahrzeugtyp auswählen</option>-->
+                        <option selected th:value="kleinwagen">Kleinwagen</option>
+                        <option th:value="suv">SUV</option>
+                        <option th:value="van">Van</option>
+                        <option th:value="kombi">Kombi</option>
                     </select>
                 </div>
             </div>
@@ -130,7 +130,9 @@
     $(document).ready(function () {
         $('#nutzungs_art').change(function () {
             if ($(this).find('option:selected').text() == 'Anbieter') {
+                /*
                 $('#fahrzeug_art').prop('disabled', true);
+                */
                 $('#kennzeichen').prop('disabled', true);
             }
         });
@@ -244,6 +246,8 @@
             $('#btn').prop('disabled', true);
         }
     });
+
+<!--    $('#fahrzeug_art').val($("#fahrzeug_art option:first").val());-->
 </script>
 </body>
 

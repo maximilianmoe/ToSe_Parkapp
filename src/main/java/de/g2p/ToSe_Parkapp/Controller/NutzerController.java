@@ -28,15 +28,12 @@ public class NutzerController {
         model.addAttribute("nutzer", new Nutzer());
         model.addAttribute("konsument", new Konsument());
         model.addAttribute("anbieter", new Anbieter());
+        String fahrzeugtyp = "kleinwagen";
+        model.addAttribute("fahrzeugtyp", fahrzeugtyp);
         System.out.println("getmapping");
         return "registrieren";
     }
 
-//    @PostMapping("/registrieren")
-//    public String test() {
-//        System.out.println("testausgabe");
-//        return "testweiterleitung";
-//    }
 
     @PostMapping("/registrieren")
     public String addUser(@ModelAttribute Nutzer nutzer, @ModelAttribute Konsument konsument,
@@ -44,14 +41,15 @@ public class NutzerController {
                           @RequestParam("fahrzeugtyp") String fahrzeugtyp) {
 
         System.out.println("vor duplicate");
-        boolean duplicate = nutzerRepository.findByEmailAdresse(nutzer.getEmailAdresse()).isPresent();
+        //boolean duplicate = nutzerRepository.findByEmailAdresse("mmm@gmx.de").isPresent();
         System.out.println("duplicate");
 
-        if(!duplicate) {
+        System.out.println(nutzer.getEmailAdresse());
+
+
+        //if(!duplicate) {
             nutzer.setAdmin(false);
             nutzer.setSperrung(false);
-            nutzerRepository.save(nutzer);
-            System.out.println("save nutzer");
             //Set all values for Anbieter
             if(nutzertyp.contains("anbieter")) {
                 anbieter.setNid(nutzer.getNid());
@@ -66,23 +64,40 @@ public class NutzerController {
                     konsument.setFahrzeugtyp("kleinwagen");
 
                 anbieterRepository.save(anbieter);
+                System.out.println("save anbieter");
             }
             //Set all values for Konsument
             else if(nutzertyp.contains("konsument")) {
                 konsument.setNid(nutzer.getNid());
                 konsumentRepository.save(konsument);
+                System.out.println("save Konsument");
             }
             //Set all values for both
             else if(nutzertyp.contains("beides")){
                 anbieter.setNid(nutzer.getNid());
                 konsument.setNid(nutzer.getNid());
+                //Set fahrzeugtyp for both
+                if(fahrzeugtyp.contains("van"))
+                    konsument.setFahrzeugtyp("van");
+                else if(fahrzeugtyp.contains("kombi"))
+                    konsument.setFahrzeugtyp("kombi");
+                else if(fahrzeugtyp.contains("suv"))
+                    konsument.setFahrzeugtyp("suv");
+                else if(fahrzeugtyp.contains("kleinwagen"))
+                    konsument.setFahrzeugtyp("kleinwagen");
+
                 anbieterRepository.save(anbieter);
                 konsumentRepository.save(konsument);
+                System.out.println("save anbieter and konsument");
             }
-        }
+        //}
+
+        System.out.println(nutzer.getEmailAdresse());
+        nutzerRepository.save(nutzer);
+        System.out.println("save nutzer");
 
         //Set the name from "testweiterleitung" to the home.html file
-        return "testweiterleitung";
+        return "home";
     }
 
     @PostMapping("/login")

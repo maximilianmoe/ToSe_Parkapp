@@ -111,28 +111,31 @@
     </div>
 </nav>
 <div class="container">
-    <div class="row" id="row1">
-        <div class="tile_input" id="input_1">
-            <p id="field1">Suche</p>
+    <form action="#" th:action="@{/home}" method="post">
+        <div class="row" id="row1" >
+            <div class="tile_input" th:name="input" th:value="suche" id="input_1">
+    <!--            <p id="field1">Suche</p>-->
+                <button type="submit">Suche</button>
+            </div>
+            <div class="tile_input" th:name="input" th:value="parkplatz" id="input_2">
+                <p id="field2">Parkplatz</p>
+            </div>
+            <div class="tile_input" th:name="input" th:value="guthaben" id="input_1">
+                <button type="submit">Guthaben</button>
+            </div>
         </div>
-        <div class="tile_input" id="input_2">
-            <p id="field2">Parkplatz</p>
+        <div class="row">
+            <div class="tile_input" th:name="input" th:value="profil" id="input_2">
+                <p id="field2">Profil</p>
+            </div>
+            <div class="tile_input" th:name="input" th:value="parkplatz_aktuell" id="input_1">
+                <p id="field1">aktueller Parkplatz</p>
+            </div>
+            <div class="tile_input" th:name="input" th:value="kontakt" id="input_2">
+                <p id="field2">Kontakt</p>
+            </div>
         </div>
-        <div class="tile_input" id="input_1">
-            <p id="field1">Guthaben</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="tile_input" id="input_2">
-            <p id="field2">Profil</p>
-        </div>
-        <div class="tile_input" id="input_1">
-            <p id="field1">aktueller Parkplatz</p>
-        </div>
-        <div class="tile_input" id="input_2">
-            <p id="field2">Kontakt</p>
-        </div>
-    </div>
+    </form>
 </div>
 
 </body>

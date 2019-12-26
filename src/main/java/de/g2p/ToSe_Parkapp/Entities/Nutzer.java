@@ -21,7 +21,6 @@ public class Nutzer {
 
     private String nachname;
 
-    @NotNull
     @Column(name = "emailadresse")
     private String emailAdresse;
 
@@ -32,7 +31,7 @@ public class Nutzer {
     private boolean sperrung;
 
     public Nutzer(String vorname, String nachname, String emailAdresse, String passwort,
-                  boolean admin, boolean sperrung, Historie ... historie) {
+                  boolean admin, boolean sperrung) {
         this.vorname = vorname;
         this.nachname = nachname;
         this.emailAdresse = emailAdresse;
