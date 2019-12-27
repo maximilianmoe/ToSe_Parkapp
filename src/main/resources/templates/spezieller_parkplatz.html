@@ -115,7 +115,6 @@
     </div>
 </nav>
 <div class="container">
-    <form action="#" th:action="@{/reserve}" method="post">
     <div class="card mb-3">
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
         <div class="card-body">
@@ -132,7 +131,7 @@
                 <p>Parkhöchstdauer:</p>
             </div>
         </div>
-<!--        <form action="#" th:action="@{/reserve}" method="post">-->
+        <form action="#" th:action="@{/reserve}" method="post">
             <select class="form-control" id="belegt">
                 <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
                 <option value="1">Der Parkplatz ist frei</option>
@@ -143,12 +142,12 @@
             <div class="row">
                 <div class="col">
                     <h6>Anfanngszeit & Datum:</h6>
-                    <input type="datetime" id="datetime1" th:value="*{reservierung.start}" th:name="start" class="form-control" placeholder="Bsp.: 01.01.2020 10:00">
+                    <input type="datetime-local" id="datetime1" th:value="*{reservierung.start}" th:name="start" class="form-control" placeholder="Bsp.: 01.01.2020 10:00">
                     <span id="popup"></span>
                 </div>
                 <div class="col">
                     <h6>Endzeit & Datum:</h6>
-                    <input type="text" id="datetime2" th:value="*{reservierung.ende}" th:name="ende" class="form-control" placeholder="Bsp.: 01.01.2020 13:00">
+                    <input type="datetime-local" id="datetime2" th:value="*{reservierung.ende}" th:name="ende" class="form-control" placeholder="Bsp.: 01.01.2020 13:00">
                     <span id="popup2"></span>
                 </div>
             </div>

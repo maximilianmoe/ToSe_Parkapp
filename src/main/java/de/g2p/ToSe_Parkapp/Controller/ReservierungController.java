@@ -5,30 +5,26 @@ import de.g2p.ToSe_Parkapp.Repositories.ParkenRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ReservierungenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 public class ReservierungController {
     @Autowired
     ParkenRepository parkenRepository;
-    @Autowired
-    ParkplatzRepository parkplatzRepository;
     @Autowired
     ReservierungenRepository reservierungenRepository;
 
     @GetMapping("/reserve")
     public String reserve(Model model) {
-        model.addAttribute("parkplatz", new Parkplatz());
         model.addAttribute("parken", new Parken());
         model.addAttribute("reservierung", new Reservierung());
         return "spezieller_parkplatz";
     }
 
     @PostMapping("/reserve")
-    public String reserveParkplatz(@ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken,
-                                   @ModelAttribute Reservierung reservierung, @ModelAttribute Konsument konsument,
-                                   @RequestParam("reservierungChecked") String checked) {
+    public String reserveParkplatz(@ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @ModelAttribute Konsument konsument, @RequestParam("reservierungChecked") String checked) {
 
 
         reservierung.setBeendet(false);
@@ -46,7 +42,6 @@ public class ReservierungController {
 
 
         //Saves all data in the database
-        parkplatzRepository.save(parkplatz);
         parkenRepository.save(parken);
         reservierungenRepository.save(reservierung);
 
