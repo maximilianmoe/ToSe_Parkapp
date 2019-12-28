@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleafe.org" lang="de-De">
+<html xmlns:th="http://www.thymeleafe.org" xmlns="http://www.w3.org/1999/html" lang="de-De">
 
 <head>
     <meta charset="utf-8"/>
@@ -41,34 +41,35 @@
 </head>
 
 <body>
-<div class="container">
+<div class="container" >
     <div>
         <h2 id="head">Registrierung </h2>
     </div>
-    <form class="input">
-        <div class="row">
+    <form class="input" action="#" th:action="@{/registrieren}" method="post">
+        <div class="row input">
             <div class="col">
-                <input type="text" class="form-control" placeholder="Vorname">
+                <input type="text" th:value="*{nutzer.vorname}" th:name="vorname" class="form-control"
+                       placeholder="Vorname">
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="Nachname">
+                <input type="text" th:value="*{nutzer.nachname}" th:name="nachname" class="form-control"
+                       placeholder="Nachname">
             </div>
         </div>
-    </form>
-    <div class="row">
-        <div class="container">
-            <select class="form-control" id="nutzungs_art">
-                <option selected disabled>Wie wollen Sie G2P nutzen?</option>
-                <option>Konsument</option>
-                <option>Anbieter</option>
-                <option>Beides</option>
-            </select>
+        <div class="row input">
+            <div class="container">
+                <select th:name="nutzertyp" class="form-control" id="nutzungs_art">
+                    <option selected disabled>Wie wollen Sie G2P nutzen?</option>
+                    <option th:value="konsument">Konsument</option>
+                    <option th:value="anbieter">Anbieter</option>
+                    <option th:value="beides">Beides</option>
+                </select>
+            </div>
         </div>
-    </div>
-    <form class="input">
-        <div class="row">
+        <div class="row input">
             <div class="col">
-                <input type="text" class="form-control" placeholder="Kennzeichen" id="kennzeichen">
+                <input type="text" th:value="*{konsument.kennzeichen}" th:name="kennzeichen"
+                       class="form-control" placeholder="Kennzeichen" id="kennzeichen">
             </div>
             <!--
             <div class="col">
@@ -76,28 +77,25 @@
             </div>
         -->
             <div class="col">
-                <select class="form-control" id="fahrzeug_art">
-                    <option selected disabled>Fahrzeugtyp auswählen</option>
-                    <option>SUV</option>
-                    <option>Kleinwagen</option>
-                    <option>Van</option>
-                    <option>Kombi</option>
+                <select th:name="fahrzeugtyp" th:value="kleinwagen" class="form-control" id="fahrzeug_art">
+                    <!--                        <option selected disabled>Fahrzeugtyp auswählen</option>-->
+                    <option selected th:value="kleinwagen">Kleinwagen</option>
+                    <option th:value="suv">SUV</option>
+                    <option th:value="van">Van</option>
+                    <option th:value="kombi">Kombi</option>
                 </select>
             </div>
         </div>
-    </form>
-    <form class="input">
-        <div class="row">
+        <div class="row input">
             <div class="col">
-                <input type="text" class="form-control" id="mail1" placeholder="E-Mail">
+                <input type="text" th:value="*{nutzer.emailAdresse}" th:name="emailadresse"
+                       class="form-control" id="mail1" placeholder="E-Mail">
             </div>
             <div class="col">
                 <input type="text" class="form-control" placeholder="Adresse">
             </div>
         </div>
-    </form>
-    <form class="input">
-        <div class="row">
+        <div class="row input">
             <div class="col">
                 <input type="text" class="form-control" id="mail2" placeholder="E-Mail bestätigen">
             </div>
@@ -105,11 +103,10 @@
                 <input type="text" class="form-control" placeholder="PLZ">
             </div>
         </div>
-    </form>
-    <form class="input">
-        <div class="row">
+        <div class="row input">
             <div class="col">
-                <input type="text" class="form-control" id="pw1" placeholder="Passwort">
+                <input type="text" th:value="*{nutzer.passwort}" th:name="passwort" class="form-control" id="pw1"
+                       placeholder="Passwort">
             </div>
             <div class="col">
                 <input type="text" class="form-control" id="pw2" placeholder="Passwort bestätigen">
@@ -133,7 +130,9 @@
     $(document).ready(function () {
         $('#nutzungs_art').change(function () {
             if ($(this).find('option:selected').text() == 'Anbieter') {
+                /*
                 $('#fahrzeug_art').prop('disabled', true);
+                */
                 $('#kennzeichen').prop('disabled', true);
             }
         });
@@ -247,6 +246,8 @@
             $('#btn').prop('disabled', true);
         }
     });
+
+    <!--    $('#fahrzeug_art').val($("#fahrzeug_art option:first").val());-->
 </script>
 </body>
 
