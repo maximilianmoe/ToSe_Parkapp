@@ -10,11 +10,6 @@ import org.springframework.mail.SimpleMailMessage;
 public class ToSeParkappApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ToSeParkappApplication.class, args);
-
-
-
-
-
 	}
 
 }

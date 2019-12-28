@@ -24,20 +24,16 @@ public class MailService implements EmailService{
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
-        mailSender.send(message);
-    }
-/*
 
-    MimeMessage message = emailSender.createMimeMessage();
-    MimeMessageHelper helper = new MimeMessageHelper(message, true);
-    helper.setTo(to);
-    helper.setSubject(subject);
-    helper.setText(text);
-    FileSystemResource file
-            = new FileSystemResource(new File(pathToAttachment));
-    helper.addAttachment("Invoice", file);
-    emailSender.send(message);
-*/
+        try {
+            mailSender.send(message); //This line produces the exception
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Can't send message");
+        }
+    }
+
+
 
 
 

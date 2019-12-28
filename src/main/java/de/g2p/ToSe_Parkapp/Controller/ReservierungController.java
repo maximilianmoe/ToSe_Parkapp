@@ -2,8 +2,8 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.*;
 import de.g2p.ToSe_Parkapp.Repositories.ParkenRepository;
-import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ReservierungenRepository;
+import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,16 +16,21 @@ public class ReservierungController {
     @Autowired
     ReservierungenRepository reservierungenRepository;
 
+    MailService mailService = new MailService();
+
+
+
     @GetMapping("/reserve")
     public String reserve(Model model) {
+        mailService.sendSimpleMessage("lehnermaxi@yahoo.de", "Test", "Test");
         model.addAttribute("parken", new Parken());
         model.addAttribute("reservierung", new Reservierung());
         return "spezieller_parkplatz";
+
     }
 
     @PostMapping("/reserve")
     public String reserveParkplatz(@ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @ModelAttribute Konsument konsument, @RequestParam("reservierungChecked") String checked) {
-
 
         reservierung.setBeendet(false);
         reservierung.setResZuParken(true);
