@@ -134,9 +134,9 @@
         <form>
             <select class="form-control" id="belegt">
                 <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
-                <option>Der Parkplatz ist frei</option>
-                <option>Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden</option>
-                <option>Ich belege den Parkplatz</option>
+                <option value="1">Der Parkplatz ist frei</option>
+                <option value="2">Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden</option>
+                <option value="3">Ich belege den Parkplatz</option>
             </select>
             <h5 id="ueberschrift">Parkplatz Reservieren:</h5>
             <div class="row">
@@ -156,8 +156,8 @@
                     <div class="form-group">
                         <h6>Wollen Sie eine Erinnerungsmail erhalten?</h6>
                         <select id="question" class="form-control">
-                            <option>Ja!</option>
-                            <option>Nein!</option>
+                            <option value="1">Ja!</option>
+                            <option value="2">Nein!</option>
                         </select>
                     </div>
                 </div>
