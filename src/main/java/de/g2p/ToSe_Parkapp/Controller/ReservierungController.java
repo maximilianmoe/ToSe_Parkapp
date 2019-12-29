@@ -18,11 +18,9 @@ public class ReservierungController {
 
     MailService mailService = new MailService();
 
-
-
     @GetMapping("/reserve")
     public String reserve(Model model) {
-        mailService.sendSimpleMessage("lehnermaxi@yahoo.de", "Test", "Test");
+        mailService.sendSimpleMessage("lehnermaxi@yahoo.de", "Test", "test");
         model.addAttribute("parken", new Parken());
         model.addAttribute("reservierung", new Reservierung());
         return "spezieller_parkplatz";
