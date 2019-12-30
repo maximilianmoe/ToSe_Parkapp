@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,9 +27,11 @@ public class Reservierung {
     @JoinColumn(name = "pid")
     private Parkplatz pid;
 
-    private Date start;
+    private LocalDateTime start;
+//    private Date start;
 
-    private Date ende;
+    private LocalDateTime ende;
+//    private Date ende;
 
     //wurde das Parken durch eine Reservierung ausgelöst?
     @Column(name = "REMARK")
@@ -36,7 +39,7 @@ public class Reservierung {
 
     private boolean beendet;
 
-    public Reservierung(Konsument kid, Parkplatz pid, Date start, Date ende, boolean resZuParken, boolean beendet) {
+    public Reservierung(Konsument kid, Parkplatz pid, LocalDateTime start, LocalDateTime ende, boolean resZuParken, boolean beendet) {
         this.kid = kid;
         this.pid = pid;
         this.start = start;
@@ -44,4 +47,6 @@ public class Reservierung {
         this.resZuParken = resZuParken;
         this.beendet = beendet;
     }
+
+
 }

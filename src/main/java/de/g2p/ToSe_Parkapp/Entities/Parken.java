@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,19 +29,25 @@ public class Parken {
     @JoinColumn(name = "pid")
     private Parkplatz pid;
 
-    private Date start;
+//    private Date start;
 
-    private Date ende;
+    private LocalDateTime start;
+
+    private LocalDateTime ende;
+
+//    private Date ende;
+
 
     @Column(name = "EIGENBEL")
     private boolean eigenbelegt;
 
-    private Date erinnerung;
+    private LocalDateTime erinnerung;
+//    private Date erinnerung;
 
     private boolean freigabe;
 
-    public Parken(Konsument kid, Parkplatz pid, Date start, Date ende, boolean eigenbelegt, Date erinnerung,
-                  boolean freigabe) {
+    public Parken(Konsument kid, Parkplatz pid, LocalDateTime start, LocalDateTime ende, boolean eigenbelegt,
+                  LocalDateTime erinnerung, boolean freigabe) {
         this.kid = kid;
         this.pid = pid;
         this.start = start;
