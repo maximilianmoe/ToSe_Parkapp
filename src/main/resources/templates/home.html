@@ -114,7 +114,7 @@
     <form action="#" th:action="@{/home}" method="post">
         <div class="row" id="row1" >
             <div class="tile_input" th:name="input" th:value="suche" id="input_1">
-                <p id="field1" class="text-center"><a href="parkplaetze.html">Suche</a></p>
+                <p id="field1" class="text-center"><a href="parkplaetze.html" th:href="@{/parkplaetze}">Suche</a></p>
             </div>
             <div class="tile_input" th:name="input" th:value="parkplatz" id="input_2">
                 <p id="field2" class="text-center"><a href="spezieller_parkplatz.html">Parkplatz</a></p>
