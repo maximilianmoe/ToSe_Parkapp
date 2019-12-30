@@ -32,37 +32,6 @@ public class WebController {
         return "home";
     }
 
-    @PostMapping("/home")
-    public String homemapping(@RequestParam("input") String input) {
-
-        String returnstring = "";
-
-        System.out.println(input);
-
-        //update the final html. site names
-        switch (input) {
-            case "suche":
-                returnstring = "testweiterleitung";
-                break;
-            case "parkplatz":
-                returnstring = "testweiterleitung";
-                break;
-            case "guthaben":
-                returnstring = "guthabenverwaltung";
-                break;
-            case "profil":
-                returnstring = "testweiterleitung";
-                break;
-            case "parkplatz_aktuell":
-                returnstring = "testweiterleitung";
-                break;
-            case "kontakt":
-                returnstring = "testweiterleitung";
-                break;
-        }
-        return returnstring;
-    }
-
     //GetMapping for the error page
     @GetMapping("/errorpage")
     public String error() {

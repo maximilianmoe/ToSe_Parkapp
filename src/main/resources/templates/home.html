@@ -114,25 +114,24 @@
     <form action="#" th:action="@{/home}" method="post">
         <div class="row" id="row1" >
             <div class="tile_input" th:name="input" th:value="suche" id="input_1">
-    <!--            <p id="field1">Suche</p>-->
-                <button type="submit">Suche</button>
+                <p id="field1" class="text-center"><a href="parkplaetze.html">Suche</a></p>
             </div>
             <div class="tile_input" th:name="input" th:value="parkplatz" id="input_2">
-                <p id="field2">Parkplatz</p>
+                <p id="field2" class="text-center"><a href="spezieller_parkplatz.html">Parkplatz</a></p>
             </div>
             <div class="tile_input" th:name="input" th:value="guthaben" id="input_1">
-                <button type="submit">Guthaben</button>
+                <p id="field1" class="text-center"><a href="guthabenverwaltung.html">Guthaben</a></p>
             </div>
         </div>
         <div class="row">
             <div class="tile_input" th:name="input" th:value="profil" id="input_2">
-                <p id="field2">Profil</p>
+                <p id="field2" class="text-center"><a href="testweiterleitung.html">Profil</a></p>
             </div>
             <div class="tile_input" th:name="input" th:value="parkplatz_aktuell" id="input_1">
-                <p id="field1">aktueller Parkplatz</p>
+                <p id="field1" class="text-center"><a href="spezieller_parkplatz.html">aktueller Parkplatz</a></p>
             </div>
             <div class="tile_input" th:name="input" th:value="kontakt" id="input_2">
-                <p id="field2">Kontakt</p>
+                <p id="field2" class="text-center"><a href="testweiterleitung.html">Kontakt</a></p>
             </div>
         </div>
     </form>

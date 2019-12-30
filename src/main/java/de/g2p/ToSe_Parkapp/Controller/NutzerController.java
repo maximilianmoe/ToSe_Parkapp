@@ -96,7 +96,6 @@ public class NutzerController {
         nutzerRepository.save(nutzer);
         System.out.println("save nutzer");
 
-        //Set the name from "testweiterleitung" to the home.html file
         return "home";
     }
 
