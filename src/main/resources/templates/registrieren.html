@@ -46,17 +46,17 @@
         <h2 id="head">Registrierung </h2>
     </div>
     <form class="input" action="#" th:action="@{/registrieren}" method="post">
-            <div class="row">
-                <div class="col">
-                    <input type="text" th:value="*{nutzer.vorname}" th:name="vorname" class="form-control"
-                           placeholder="Vorname">
-                </div>
-                <div class="col">
-                    <input type="text" th:value="*{nutzer.nachname}" th:name="nachname" class="form-control"
-                           placeholder="Nachname">
-                </div>
+        <div class="row input">
+            <div class="col">
+                <input type="text" th:value="*{nutzer.vorname}" th:name="vorname" class="form-control"
+                       placeholder="Vorname">
             </div>
-        <div class="row">
+            <div class="col">
+                <input type="text" th:value="*{nutzer.nachname}" th:name="nachname" class="form-control"
+                       placeholder="Nachname">
+            </div>
+        </div>
+        <div class="row input">
             <div class="container">
                 <select th:name="nutzertyp" class="form-control" id="nutzungs_art">
                     <option selected disabled>Wie wollen Sie G2P nutzen?</option>
@@ -66,63 +66,55 @@
                 </select>
             </div>
         </div>
-            <div class="row">
-                <div class="col">
-                    <input type="text" th:value="*{konsument.kennzeichen}" th:name="kennzeichen"
-                           class="form-control" placeholder="Kennzeichen" id="kennzeichen">
-                </div>
-                <!--
-                <div class="col">
-                    <input type="text" class="form-control" id="color" placeholder="Fahrzeugtyp">
-                </div>
-            -->
-                <div class="col">
-                    <select th:name="fahrzeugtyp" th:value="kleinwagen" class="form-control" id="fahrzeug_art">
-<!--                        <option selected disabled>Fahrzeugtyp auswählen</option>-->
-                        <option selected th:value="kleinwagen">Kleinwagen</option>
-                        <option th:value="suv">SUV</option>
-                        <option th:value="van">Van</option>
-                        <option th:value="kombi">Kombi</option>
-                    </select>
-                </div>
+        <div class="row input">
+            <div class="col">
+                <input type="text" th:value="*{konsument.kennzeichen}" th:name="kennzeichen"
+                       class="form-control" placeholder="Kennzeichen" id="kennzeichen">
             </div>
-            <div class="row">
-                <div class="col">
-                    <input type="text" th:value="*{nutzer.emailAdresse}" th:name="emailadresse"
-                           class="form-control" id="mail1" placeholder="E-Mail">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="Adresse">
-                </div>
+            <!--
+            <div class="col">
+                <input type="text" class="form-control" id="color" placeholder="Fahrzeugtyp">
             </div>
-            <div class="row">
-                <div class="col">
-                    <input type="text" class="form-control" id="mail2" placeholder="E-Mail bestätigen">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="PLZ">
-                </div>
+        -->
+            <div class="col">
+                <select th:name="fahrzeugtyp" th:value="kleinwagen" class="form-control" id="fahrzeug_art">
+                    <!--                        <option selected disabled>Fahrzeugtyp auswählen</option>-->
+                    <option selected th:value="kleinwagen">Kleinwagen</option>
+                    <option th:value="suv">SUV</option>
+                    <option th:value="van">Van</option>
+                    <option th:value="kombi">Kombi</option>
+                </select>
             </div>
-            <div class="row">
-                <div class="col">
-                    <input type="text" th:value="*{nutzer.passwort}" th:name="passwort" class="form-control" id="pw1"
-                           placeholder="Passwort">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control" id="pw2" placeholder="Passwort bestätigen">
-                </div>
+        </div>
+        <div class="row input">
+            <div class="col">
+                <input type="text" th:value="*{nutzer.emailAdresse}" th:name="emailadresse"
+                       class="form-control" id="mail1" placeholder="E-Mail">
             </div>
-            <div class="form-group" id="checkbox">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                    <label class="form-check-label" for="gridCheck">
-                        Datenschutzrichtlinien bestätigen
-                    </label>
-                </div>
+            <div class="col">
+                <input type="text" class="form-control" id="mail2" placeholder="E-Mail bestätigen">
             </div>
-            <div id="reg">
-                <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">Registrieren</button>
+        </div>
+        <div class="row input">
+            <div class="col">
+                <input type="text" th:value="*{nutzer.passwort}" th:name="passwort" class="form-control" id="pw1"
+                       placeholder="Passwort">
             </div>
+            <div class="col">
+                <input type="text" class="form-control" id="pw2" placeholder="Passwort bestätigen">
+            </div>
+        </div>
+        <div class="form-group" id="checkbox">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                    Datenschutzrichtlinien bestätigen
+                </label>
+            </div>
+        </div>
+        <div id="reg">
+            <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">Registrieren</button>
+        </div>
     </form>
 
 </div>
@@ -247,7 +239,7 @@
         }
     });
 
-<!--    $('#fahrzeug_art').val($("#fahrzeug_art option:first").val());-->
+    <!--    $('#fahrzeug_art').val($("#fahrzeug_art option:first").val());-->
 </script>
 </body>
 
