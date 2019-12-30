@@ -2,7 +2,6 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.Parkplatz;
 import de.g2p.ToSe_Parkapp.Entities.Standort;
-import de.g2p.ToSe_Parkapp.Fahrzeugtyp;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
 import de.g2p.ToSe_Parkapp.Repositories.StandortRepository;
 import org.springframework.beans.factory.annotation.Autowired;

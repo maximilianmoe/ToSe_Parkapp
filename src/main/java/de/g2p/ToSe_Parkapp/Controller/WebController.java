@@ -1,23 +1,10 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
-import de.g2p.ToSe_Parkapp.Entities.Nutzer;
-import de.g2p.ToSe_Parkapp.Entities.Standort;
-import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class WebController {
-
-    @Autowired
-    NutzerRepository nutzerRepository;
-
-    @GetMapping("/home")
-    public String home() {
-        return "home";
-    }
 
     //GetMapping for the error page
     @GetMapping("/errorpage")
@@ -25,7 +12,33 @@ public class WebController {
         return "error_page";
     }
 
+    //GetMapping for the home page
+    @GetMapping("/home")
+    public String home() {
+        return "home";
+    }
 
 
+    //GetMapping for the buttons on the home page
+    //Profil and Kontakt has to be added later when the html pages are done
 
+    @GetMapping("/suche")
+    public String suche() {
+        return "parkplaetze";
+    }
+
+    @GetMapping("/spezieller_parkplatz")
+    public String speziellerParkplatz() {
+        return "spezieller_parkplatz";
+    }
+
+    @GetMapping("/guthabenverwaltung")
+    public String guthaben() {
+        return "guthabenverwaltung";
+    }
+
+    @GetMapping("/aktueller_parkplatz")
+    public String aktuellerParkplatz() {
+        return "spezieller_parkplatz";
+    }
 }
