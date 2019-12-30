@@ -28,10 +28,12 @@ public class ReservierungController {
     }
 
     @PostMapping("/reserve")
-    public String reserveParkplatz(@ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @ModelAttribute Konsument konsument, @RequestParam("reservierungChecked") String checked) {
+    public String reserveParkplatz(@ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken,
+                                   @ModelAttribute Reservierung reservierung, @ModelAttribute Konsument konsument,
+                                   @RequestParam("reservierungChecked") String checked) {
 
         reservierung.setBeendet(false);
-        reservierung.setResZuParken(true);
+        reservierung.setResZuParken(false);
         reservierung.setKid(konsument);
         reservierung.setPid(parkplatz);
 
