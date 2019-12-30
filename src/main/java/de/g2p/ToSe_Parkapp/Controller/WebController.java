@@ -19,7 +19,7 @@ public class WebController {
     }
 
 
-    //GetMapping for the buttons on the home page
+    //GetMapping for the buttons on the home page if there is no mapping in other classes
     //Profil and Kontakt has to be added later when the html pages are done
 
     @GetMapping("/suche")
@@ -30,11 +30,6 @@ public class WebController {
     @GetMapping("/spezieller_parkplatz")
     public String speziellerParkplatz() {
         return "spezieller_parkplatz";
-    }
-
-    @GetMapping("/guthabenverwaltung")
-    public String guthaben() {
-        return "guthabenverwaltung";
     }
 
     @GetMapping("/aktueller_parkplatz")
