@@ -36,11 +36,14 @@ public class ReservierungController {
         reservierung.setPid(parkplatz);
 
         //      checks if reminder is requested. Weather checked == "1", consumer chose to get a reminder in the dropdown menue.
-        if (checked.contains("1"))
+        if (checked.contains("1")) {
             //      Erinnerung is hardcoded here to 30 minutes before the parking time ends.
-            parken.setErinnerung(parken.getEnde().minusMinutes(30));
-        else if (checked.contains("2"))
+//            parken.setErinnerung(parken.getEnde().minusMinutes(30));
+            System.out.println("worked");
+        }else if (checked.contains("2")) {
             parken.setErinnerung(null);
+            System.out.println("worked");
+        }
 
 
 
