@@ -31,9 +31,9 @@ public class Parken {
 
 //    private Date start;
 
-    private LocalDateTime start;
+    private String start;
 
-    private LocalDateTime ende;
+    private String ende;
 
 //    private Date ende;
 
@@ -46,7 +46,7 @@ public class Parken {
 
     private boolean freigabe;
 
-    public Parken(Konsument kid, Parkplatz pid, LocalDateTime start, LocalDateTime ende, boolean eigenbelegt,
+    public Parken(Konsument kid, Parkplatz pid, String start, String ende, boolean eigenbelegt,
                   LocalDateTime erinnerung, boolean freigabe) {
         this.kid = kid;
         this.pid = pid;

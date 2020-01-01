@@ -28,21 +28,11 @@ public class ParkplatzController {
     }
 
     @PostMapping("/add")
-    public String addParkplatz(@ModelAttribute Parkplatz parkplatz, @ModelAttribute Standort standort,
+    public String addParkplatz(@ModelAttribute Parkplatz parkplatz,
+                               @ModelAttribute Standort standort,
                                @RequestParam("parkplatzChecked") String checked,
                                @RequestParam("fahrzeugtyp") String fahrzeugtyp) {
-        // Example for checking an already existing Standort where no new database entry is created
-//        for (Standort standortvariable : standortRepository.findAll()) {
-//            if (standortvariable.getStrasse() == standort.getStrasse())
-//                if(standortvariable.getHausnummer() == standort.getHausnummer())
-//                    if(standortvariable.getPlz() == standort.getPlz()) {
-//                        standort.setOrtid(standortvariable.getOrtid());
-//                        Integer ortId = standortvariable.getOrtid()
-//                        parkplatz.setOrtid(ortId);
-//                    }
-//        }
 
-        //parkplatz.setAid has to be Implemented!!
         parkplatz.setStatus("frei");
         parkplatz.setOrtid(standort);
         parkplatz.setBewertung(0);

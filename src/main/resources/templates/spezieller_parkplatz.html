@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleafe.org" lang="de-De">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -116,6 +116,7 @@
 </nav>
 <div class="container">
     <div class="card mb-3">
+        <form action="#" th:action="@{/reserve}" method="post">
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
         <div class="card-body">
             <h5 class="card-title">PLZ + Ort + Str. + Hausnummer</h5>
@@ -131,23 +132,26 @@
                 <p>Parkhöchstdauer:</p>
             </div>
         </div>
-        <form>
+
             <select class="form-control" id="belegt">
                 <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
                 <option value="1">Der Parkplatz ist frei</option>
-                <option value="2">Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden</option>
+                <option value="2">Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden
+                </option>
                 <option value="3">Ich belege den Parkplatz</option>
             </select>
             <h5 id="ueberschrift">Parkplatz Reservieren:</h5>
             <div class="row">
                 <div class="col">
                     <h6>Anfanngszeit & Datum:</h6>
-                    <input type="datetime-local" id="datetime1" class="form-control" placeholder="Bsp.: 01.01.2020 10:00">
+                    <input type="datetime-local" id="datetime1" th:value="*{reservierung.start}" th:name="start" class="form-control"
+                           placeholder="Bsp.: 01.01.2020 10:00">
                     <span id="popup"></span>
                 </div>
                 <div class="col">
                     <h6>Endzeit & Datum:</h6>
-                    <input type="datetime-local" id="datetime2" class="form-control" placeholder="Bsp.: 01.01.2020 13:00">
+                    <input type="datetime-local" id="datetime2" th:value="*{reservierung.ende}" th:name="ende" class="form-control"
+                           placeholder="Bsp.: 01.01.2020 13:00">
                     <span id="popup2"></span>
                 </div>
             </div>
@@ -155,7 +159,7 @@
                 <div class="col">
                     <div class="form-group">
                         <h6>Wollen Sie eine Erinnerungsmail erhalten?</h6>
-                        <select id="question" class="form-control">
+                        <select id="question" class="form-control"th:name="parkplatzChecked">
                             <option value="1">Ja!</option>
                             <option value="2">Nein!</option>
                         </select>
@@ -170,7 +174,8 @@
             <div id="btn_row">
                 <div id="btn">
                     <button type="submit" class="btn btn-outline-secondary btn-lg" id="submit_btn">
-                        Parkplatz Reservieren</button>
+                        Parkplatz Reservieren
+                    </button>
                 </div>
             </div>
         </form>
@@ -209,7 +214,7 @@
                 //$('#submit_btn').prop('disabled', false);
                 $('#popup3').html("");
                 var input_check = $('#mail').val();
-                if(input_check.length > 0){
+                if (input_check.length > 0) {
                     input_check = "";
                     $('#mail').val(input_check);
                 }
@@ -239,128 +244,128 @@
         var check2 = 0;
         var check3 = 0;
         var count = 0;
-        /*
-        ANFANG TEST
-        $('#datetime1').focusout(function () {
-            var expression = /\b[0-9]{2}[.][0-9]{2}[.][0-9]{4}\b\s\b[0-9]{2}[:][0-9]{2}\b/g;
-            var regex = new RegExp(expression);
-            var datetime = $('#datetime1').val();
-            if (datetime.match(regex)) {
-                //$('#submit_btn').prop('disabled', false);
-                $('#popup').html("");
-                check1 = 1;
-                count += check1;
-            }
-            //else if ($('#datetime1').val().length === 0){
-            //    empty_check += 1;
-            //}
-            else {
-                //alert('Anfangszeit muss in dem Format 01.01.2020 10:00 angegeben werden!');
-                $('#popup').html(
-                    "Anfangszeit muss in dem Format 01.01.2020 10:00 angegeben werden!");
-                $('#submit_btn').prop('disabled', true);
-            }
-        });
-
-        $('#datetime2').focusout(function () {
-            var expression =
-                /\b[0-9]{2}[.][0-9]{2}[.][0-9]{4}\b\s\b[0-9]{2}[:][0-9]{2}\b/g;
-            var regex = new RegExp(expression);
-            var datetime = $('#datetime2').val();
-            if (datetime.match(regex)) {
-                //$('#submit_btn').prop('disabled', false);
-                $('#popup2').html("");
-                check2 = 1;
-                count += check2;
-            }
-            //else if ($('#datetime2').val().length === 0){
-            //    empty_check += 1;
-            //}
-            else {
-                //alert('Anfangszeit muss in dem Format 01.01.2020 10:00 angegeben werden!');
-                $('#popup2').html(
-                    "Endzeit muss in dem Format 01.01.2020 10:00 angegeben werden!");
-                $('#submit_btn').prop('disabled', true);
-            }
-        });
-
-        $('#mail').focusout(function () {
-            var expression = /\b[0-9]{2}[.][0-9]{2}[.][0-9]{4}\b\s\b[0-9]{2}[:][0-9]{2}\b/g;
-            var regex = new RegExp(expression);
-            var datetime = $('#mail').val();
-            if (datetime.match(regex)) {
-                //$('#submit_btn').prop('disabled', false);
-
-                $('#popup3').html("");
-                check3 = 1;
-                count += check3;
-            }
-            //else if ($('#datetime1').val().length === 0){
-            //    empty_check += 1;
-            //}
-            else {
-                //alert('Anfangszeit muss in dem Format 01.01.2020 10:00 angegeben werden!');
-                $('#popup3').html(
-                    "Erinnerungszeit muss in dem Format 01.01.2020 10:00 angegeben werden!");
-                $('#submit_btn').prop('disabled', true);
-            }
-        });
-        ENDE TEST AUSKOMMENTIEREN (MITTE)
-        /*
-        $('#submit_btn').hover(function(){
-            if (count == 3) {
-                $('#submit_btn').prop('disabled', false);
-                alert(count);
-            } else {
-                alert(count);
-            }
-        });
-        */
-        /*
-        $('#mail').focusout(function () {
-            if (count == 3) {
-                $('#submit_btn').prop('disabled', false);
-            }
-            //else {
-            //  alert(count + 'Es ist leider ein Fehler aufgetreten!');
-            //}
-        });
-        $('#datetime1').focusout(function () {
-            if (count == 3) {
-                $('#submit_btn').prop('disabled', false);
-            }
-            else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
-                $('#submit_btn').prop('disabled', false);
-            }
-        });
-        $('#datetime2').focusout(function () {
-            if (count == 3) {
-                $('#submit_btn').prop('disabled', false);
-            }
-            else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
-                $('#submit_btn').prop('disabled', false);
-            }
-        });
-        $('#question').focusout(function(){
-            if(count == 3){
-                $('#submit_btn').prop('disabled', false);
-            }
-            else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
-                $('#submit_btn').prop('disabled', false);
-            }
-        });
-        $('#btn_row').hover(function(){
-            if(count == 3){
-                $('#submit_btn').prop('disabled', false);
-            }
-            else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
-                $('#submit_btn').prop('disabled', false);
-            }
-        });
-
+    /*
+    ANFANG TEST
+    $('#datetime1').focusout(function () {
+        var expression = /\b[0-9]{2}[.][0-9]{2}[.][0-9]{4}\b\s\b[0-9]{2}[:][0-9]{2}\b/g;
+        var regex = new RegExp(expression);
+        var datetime = $('#datetime1').val();
+        if (datetime.match(regex)) {
+            //$('#submit_btn').prop('disabled', false);
+            $('#popup').html("");
+            check1 = 1;
+            count += check1;
+        }
+        //else if ($('#datetime1').val().length === 0){
+        //    empty_check += 1;
+        //}
+        else {
+            //alert('Anfangszeit muss in dem Format 01.01.2020 10:00 angegeben werden!');
+            $('#popup').html(
+                "Anfangszeit muss in dem Format 01.01.2020 10:00 angegeben werden!");
+            $('#submit_btn').prop('disabled', true);
+        }
     });
-    ENDE AUSKOMMENTIEREN
+
+    $('#datetime2').focusout(function () {
+        var expression =
+            /\b[0-9]{2}[.][0-9]{2}[.][0-9]{4}\b\s\b[0-9]{2}[:][0-9]{2}\b/g;
+        var regex = new RegExp(expression);
+        var datetime = $('#datetime2').val();
+        if (datetime.match(regex)) {
+            //$('#submit_btn').prop('disabled', false);
+            $('#popup2').html("");
+            check2 = 1;
+            count += check2;
+        }
+        //else if ($('#datetime2').val().length === 0){
+        //    empty_check += 1;
+        //}
+        else {
+            //alert('Anfangszeit muss in dem Format 01.01.2020 10:00 angegeben werden!');
+            $('#popup2').html(
+                "Endzeit muss in dem Format 01.01.2020 10:00 angegeben werden!");
+            $('#submit_btn').prop('disabled', true);
+        }
+    });
+
+    $('#mail').focusout(function () {
+        var expression = /\b[0-9]{2}[.][0-9]{2}[.][0-9]{4}\b\s\b[0-9]{2}[:][0-9]{2}\b/g;
+        var regex = new RegExp(expression);
+        var datetime = $('#mail').val();
+        if (datetime.match(regex)) {
+            //$('#submit_btn').prop('disabled', false);
+
+            $('#popup3').html("");
+            check3 = 1;
+            count += check3;
+        }
+        //else if ($('#datetime1').val().length === 0){
+        //    empty_check += 1;
+        //}
+        else {
+            //alert('Anfangszeit muss in dem Format 01.01.2020 10:00 angegeben werden!');
+            $('#popup3').html(
+                "Erinnerungszeit muss in dem Format 01.01.2020 10:00 angegeben werden!");
+            $('#submit_btn').prop('disabled', true);
+        }
+    });
+    ENDE TEST AUSKOMMENTIEREN (MITTE)
+    /*
+    $('#submit_btn').hover(function(){
+        if (count == 3) {
+            $('#submit_btn').prop('disabled', false);
+            alert(count);
+        } else {
+            alert(count);
+        }
+    });
     */
+    /*
+    $('#mail').focusout(function () {
+        if (count == 3) {
+            $('#submit_btn').prop('disabled', false);
+        }
+        //else {
+        //  alert(count + 'Es ist leider ein Fehler aufgetreten!');
+        //}
+    });
+    $('#datetime1').focusout(function () {
+        if (count == 3) {
+            $('#submit_btn').prop('disabled', false);
+        }
+        else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
+            $('#submit_btn').prop('disabled', false);
+        }
+    });
+    $('#datetime2').focusout(function () {
+        if (count == 3) {
+            $('#submit_btn').prop('disabled', false);
+        }
+        else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
+            $('#submit_btn').prop('disabled', false);
+        }
+    });
+    $('#question').focusout(function(){
+        if(count == 3){
+            $('#submit_btn').prop('disabled', false);
+        }
+        else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
+            $('#submit_btn').prop('disabled', false);
+        }
+    });
+    $('#btn_row').hover(function(){
+        if(count == 3){
+            $('#submit_btn').prop('disabled', false);
+        }
+        else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
+            $('#submit_btn').prop('disabled', false);
+        }
+    });
+
+});
+ENDE AUSKOMMENTIEREN
+*/
 
 
     /*

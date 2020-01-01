@@ -27,10 +27,10 @@ public class Reservierung {
     @JoinColumn(name = "pid")
     private Parkplatz pid;
 
-    private LocalDateTime start;
+    private String start;
 //    private Date start;
 
-    private LocalDateTime ende;
+    private String ende;
 //    private Date ende;
 
     //wurde das Parken durch eine Reservierung ausgelöst?
@@ -39,7 +39,7 @@ public class Reservierung {
 
     private boolean beendet;
 
-    public Reservierung(Konsument kid, Parkplatz pid, LocalDateTime start, LocalDateTime ende, boolean resZuParken, boolean beendet) {
+    public Reservierung(Konsument kid, Parkplatz pid, String start, String ende, boolean resZuParken, boolean beendet) {
         this.kid = kid;
         this.pid = pid;
         this.start = start;
