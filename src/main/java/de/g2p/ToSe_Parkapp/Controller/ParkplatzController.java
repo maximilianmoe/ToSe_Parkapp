@@ -36,16 +36,34 @@ public class ParkplatzController {
                                @RequestParam("parkplatzChecked") String checked,
                                @RequestParam("fahrzeugtyp") String fahrzeugtyp) {
         // Example for checking an already existing Standort where no new database entry is created
-        for (Standort standortvariable : standortRepository.findAll()) {
-            if (standortvariable.getStrasse() == standort.getStrasse())
-                if(standortvariable.getHausnummer() == standort.getHausnummer())
-                    if(standortvariable.getPlz() == standort.getPlz()) {
-                        System.out.println(standortvariable.getStrasse());
-                        parkplatz.setOrtid(standortvariable);
-                    }
-        }
+//        for (Standort standortvariable : standortRepository.findAll()) {
+//            System.out.println(standortvariable.getStrasse()+" for schleife 1");
+//            System.out.println(standortvariable.getHausnummer()+" for schleife 1");
+//            System.out.println(standortvariable.getPlz()+" for schleife 1");
+//            System.out.println("");
+//            System.out.println(standort.getStrasse()+" for schleife 2");
+//            System.out.println(standort.getHausnummer()+" for schleife 2");
+//            System.out.println(standort.getPlz()+" for schleife 2");
+//            System.out.println("");
+//            System.out.println("");
+//            System.out.println("");
+//            if (standortvariable.getPlz().equals(standort.getPlz())) {
+//                System.out.println("sout1     plz");
+//
+//                if (standortvariable.getStrasse().equalsIgnoreCase(standort.getStrasse())) {
+//                    System.out.println("sout2      strasse");
+//
+//                    if (standortvariable.getHausnummer().equals(standort.getHausnummer())) {
+//                        System.out.println("sout3     hausnummer");
+//                        System.out.println(standortvariable.getStrasse());
+//                        parkplatz.setOrtid(standortvariable);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
 
-        //parkplatz.setAid has to be Implemented!!
+        //parkplatz.setAnbieterId(findNutzer());
         parkplatz.setStatus("frei");
         parkplatz.setOrtid(standort);
         parkplatz.setBewertung(0);
@@ -73,24 +91,24 @@ public class ParkplatzController {
     public String speziellerParkplatz( Model model) {
         System.out.println("getmapping");
         Parkplatz parkplatz = parkplatzRepository.findByPid(19);
+        Standort standort = standortRepository.findByOrtid(38);
         System.out.println(parkplatz.getBeschreibung());
         model.addAttribute("parkplatz", parkplatz);
         return "spezieller_parkplatz";
     }
 
 
-
-
-
-
-    @GetMapping("/testlauf")
-    @ResponseBody
-    public List<Parkplatz> testlauf() {
-        return parkplatzRepository.findAll();
-    }
-
-
-
-
-
+//    //returns the user
+//    private String findNutzer() {
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        String username;
+//        if (principal instanceof UserDetails) {
+//            username = ((UserDetails) principal).getUsername();
+//            //here you can set all the necessary information with the given user
+//        } else {
+//            username = principal.toString();
+//        }
+//        System.out.println(username);
+//        return username;
+//    }
 }

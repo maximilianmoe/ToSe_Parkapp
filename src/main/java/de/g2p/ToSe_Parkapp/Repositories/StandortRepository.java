@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface StandortRepository extends JpaRepository<Standort, Integer> {
 
     Standort deleteByOrtid(Integer ortid);
+    Standort findByOrtid(Integer ortid);
 }

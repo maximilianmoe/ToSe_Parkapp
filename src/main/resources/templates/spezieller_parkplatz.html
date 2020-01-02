@@ -121,10 +121,10 @@
         <form>
             <div class="card-body">
                 <h5 class="card-title">
-                <p th:each="parkplatz : ${parkplatz}">
-                    <span th:text="${parkplatz.plz}">PLZ</span>
-                    <span th:text="${parkplatz.strasse}">Str.</span>
-                    <span th:text="${parkplatz.hausnummer}">Hausnummer</span>
+                <p th:each="standort : ${standort}">
+                    <span th:text="${standort.plz}">PLZ</span>
+                    <span th:text="${standort.strasse}">Str.</span>
+                    <span th:text="${standort.hausnummer}">Hausnummer</span>
                 </h5>
                 </p>
                 <p class="card-text">Beschreibung: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
