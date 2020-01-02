@@ -19,16 +19,20 @@ public class KonsumentController {
     public String validate() {
         String returnstring = "";
         Konsument konsument = konsumentRepository.findByKid(4);
+        System.out.println(konsument.getSaldo());
+
         if (konsument.getSaldo() < 0)
             returnstring = "Guthaben_ueberzogen";
-        else
+        else {
             returnstring = "guthabenverwaltung";
-
+            System.out.println("ghv weiterleitung");
+        }
         return returnstring;
     }
 
     @GetMapping("/guthabenverwaltung")
-    public String guthaben(Model model) {
+    public String guthabenGet(Model model) {
+        System.out.println("getmapping");
         //kid = 4 for testing
         Konsument konsument = konsumentRepository.findByKid(4);
         model.addAttribute("konsument", konsument);
@@ -36,9 +40,10 @@ public class KonsumentController {
     }
 
     @PostMapping("/guthabenverwaltung")
-    public String guthaben(Konsument konsument, Model model, @RequestParam("button") String button,
+    public String guthabenPost(Konsument konsument, @RequestParam("button") String button,
                            @RequestParam("betrag") double betrag) {
         //kid = 4 for testing
+        System.out.println("postmapping");
         Konsument konsument2 = konsumentRepository.findByKid(4);
         double saldo = konsument2.getSaldo();
 
@@ -49,7 +54,7 @@ public class KonsumentController {
             saldo = saldo - betrag;
 
         konsumentRepository.update(saldo);
-        //redirect to home because the new saldo is not displayed properly
+        //redirect to guthabenweiterleitung because the new saldo is not displayed properly
         return "guthabenweiterleitung";
     }
 }

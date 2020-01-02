@@ -6,6 +6,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class WebController {
 
+    //GetMapping for the testing page
+    @GetMapping("/testweiterleitung")
+    public String testweiterleitung() {
+        return "testweiterleitung";
+    }
+
     //GetMapping for the error page
     @GetMapping("/errorpage")
     public String error() {

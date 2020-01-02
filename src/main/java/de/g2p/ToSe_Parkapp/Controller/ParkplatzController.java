@@ -19,14 +19,19 @@ public class ParkplatzController {
     @Autowired
     StandortRepository standortRepository;
 
-    @GetMapping("/add")
+    @GetMapping("/parkplaetze")
+    public String parkplaetze() {
+        return "parkplaetze";
+    }
+
+    @GetMapping("/parkplatz_hinzufuegen")
     public String add(Model model) {
         model.addAttribute("parkplatz", new Parkplatz());
         model.addAttribute("standort", new Standort());
         return "parkplatz_hinzufuegen";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/parkplatz_hinzufuegen")
     public String addParkplatz(@ModelAttribute Parkplatz parkplatz, @ModelAttribute Standort standort,
                                @RequestParam("parkplatzChecked") String checked,
                                @RequestParam("fahrzeugtyp") String fahrzeugtyp) {
@@ -64,6 +69,20 @@ public class ParkplatzController {
         //Übersichtsseite erstellen und den Namen hier ändern
         return "testweiterleitung";
     }
+
+    @GetMapping("/parkplaetze/speziell")
+    public String speziellerParkplatz( Model model) {
+        System.out.println("getmapping");
+        Parkplatz parkplatz = parkplatzRepository.findByPid(19);
+        System.out.println(parkplatz.getBeschreibung());
+        model.addAttribute("parkplatz", parkplatz);
+        return "spezieller_parkplatz";
+    }
+
+
+
+
+
 
     @GetMapping("/testlauf")
     @ResponseBody
