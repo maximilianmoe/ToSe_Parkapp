@@ -99,9 +99,16 @@ public class NutzerController {
         return "home";
     }
 
-    @PostMapping("/login")
-    public String loginUser(){
-
-        return null;
-    }
+//    //returns the user
+//    private String findNutzer() {
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if (principal instanceof UserDetails) {
+//            String username = ((UserDetails) principal).getUsername();
+//            here you can set all the necessary information with the given user
+//        } else {
+//            username = principal.toString();
+//        }
+//        System.out.println(username);
+//        return username;
+//    }
 }

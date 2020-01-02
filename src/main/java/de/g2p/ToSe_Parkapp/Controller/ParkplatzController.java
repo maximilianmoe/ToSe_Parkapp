@@ -36,15 +36,14 @@ public class ParkplatzController {
                                @RequestParam("parkplatzChecked") String checked,
                                @RequestParam("fahrzeugtyp") String fahrzeugtyp) {
         // Example for checking an already existing Standort where no new database entry is created
-//        for (Standort standortvariable : standortRepository.findAll()) {
-//            if (standortvariable.getStrasse() == standort.getStrasse())
-//                if(standortvariable.getHausnummer() == standort.getHausnummer())
-//                    if(standortvariable.getPlz() == standort.getPlz()) {
-//                        standort.setOrtid(standortvariable.getOrtid());
-//                        Integer ortId = standortvariable.getOrtid()
-//                        parkplatz.setOrtid(ortId);
-//                    }
-//        }
+        for (Standort standortvariable : standortRepository.findAll()) {
+            if (standortvariable.getStrasse() == standort.getStrasse())
+                if(standortvariable.getHausnummer() == standort.getHausnummer())
+                    if(standortvariable.getPlz() == standort.getPlz()) {
+                        System.out.println(standortvariable.getStrasse());
+                        parkplatz.setOrtid(standortvariable);
+                    }
+        }
 
         //parkplatz.setAid has to be Implemented!!
         parkplatz.setStatus("frei");

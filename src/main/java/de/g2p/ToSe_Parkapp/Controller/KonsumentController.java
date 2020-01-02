@@ -16,7 +16,7 @@ public class KonsumentController {
     KonsumentRepository konsumentRepository;
 
     @GetMapping("/guthaben")
-    public String validate() {
+    public String validate(Model model) {
         String returnstring = "";
         Konsument konsument = konsumentRepository.findByKid(4);
         System.out.println(konsument.getSaldo());
@@ -26,6 +26,8 @@ public class KonsumentController {
         else {
             returnstring = "guthabenverwaltung";
             System.out.println("ghv weiterleitung");
+            model.addAttribute("konsument", konsument);
+
         }
         return returnstring;
     }
@@ -43,7 +45,6 @@ public class KonsumentController {
     public String guthabenPost(Konsument konsument, @RequestParam("button") String button,
                            @RequestParam("betrag") double betrag) {
         //kid = 4 for testing
-        System.out.println("postmapping");
         Konsument konsument2 = konsumentRepository.findByKid(4);
         double saldo = konsument2.getSaldo();
 
@@ -57,4 +58,17 @@ public class KonsumentController {
         //redirect to guthabenweiterleitung because the new saldo is not displayed properly
         return "guthabenweiterleitung";
     }
+
+//    //returns the user
+//    private String findNutzer() {
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        String username;
+//        if (principal instanceof UserDetails) {
+//            username = ((UserDetails) principal).getUsername();
+//        } else {
+//            username = principal.toString();
+//        }
+//        System.out.println(username);
+//        return username;
+//    }
 }
