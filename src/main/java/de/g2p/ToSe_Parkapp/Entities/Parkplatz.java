@@ -64,4 +64,6 @@ public class Parkplatz {
         this.beschreibung = beschreibung;
         this.parkgebuehr = parkgebuehr;
     }
+
+    public Integer getOrtId() {return ortid.getOrtid();}
 }

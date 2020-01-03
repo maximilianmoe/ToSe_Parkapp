@@ -37,21 +37,22 @@ public class NutzerController {
     @PostMapping("/registrieren")
     public String addUser(@ModelAttribute Nutzer nutzer, @ModelAttribute Konsument konsument,
                           @ModelAttribute Anbieter anbieter, @RequestParam("nutzertyp") String nutzertyp,
-                          @RequestParam("fahrzeugtyp") String fahrzeugtyp) {
+                          @RequestParam("fahrzeugtyp") String fahrzeugtyp, @RequestParam("email") String email,
+                          @RequestParam("username") String username) {
 
-        System.out.println("vor duplicate");
         //boolean duplicate = nutzerRepository.findByEmailAdresse("mmm@gmx.de").isPresent();
-        System.out.println("duplicate");
-
-        System.out.println(nutzer.getEmailAdresse());
-
 
         //if(!duplicate) {
             nutzer.setAdmin(false);
             nutzer.setSperrung(false);
+            nutzer.setSaldo(0);
+            nutzer.setEmailAdresse(email);
+            nutzer.setBenutzername(username);
+
             //Set all values for Anbieter
             if(nutzertyp.contains("anbieter")) {
                 anbieter.setNid(nutzer.getNidNutzer());
+                nutzer.setRolle("anbieter");
                 //Set fahrzeugtyp for anbieter
                 if(fahrzeugtyp.contains("van"))
                     konsument.setFahrzeugtyp("van");
@@ -69,12 +70,14 @@ public class NutzerController {
             else if(nutzertyp.contains("konsument")) {
                 konsument.setNid(nutzer.getNidNutzer());
                 konsumentRepository.save(konsument);
+                nutzer.setRolle("konsument");
                 System.out.println("save Konsument");
             }
             //Set all values for both
             else if(nutzertyp.contains("beides")){
                 anbieter.setNid(nutzer.getNidNutzer());
                 konsument.setNid(nutzer.getNidNutzer());
+                nutzer.setRolle("beides");
                 //Set fahrzeugtyp for both
                 if(fahrzeugtyp.contains("van"))
                     konsument.setFahrzeugtyp("van");
@@ -142,7 +145,7 @@ public class NutzerController {
     @GetMapping("/mein_profil")
     public String profilGet(Model model) {
         //nid=14 for testing
-        Nutzer nutzer = nutzerRepository.findByNid(13);
+        Nutzer nutzer = nutzerRepository.findByNid(14);
         Konsument konsument = konsumentRepository.findByNid(nutzer);
         model.addAttribute("nutzer", nutzer);
         model.addAttribute("konsument", konsument);

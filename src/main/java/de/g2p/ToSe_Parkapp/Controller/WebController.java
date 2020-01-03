@@ -1,10 +1,16 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
+import de.g2p.ToSe_Parkapp.Entities.Nutzer;
+import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class WebController {
+
+    @Autowired
+    NutzerRepository nutzerRepository;
 
     //GetMapping for the Login-Page for IP-Adress (or localhost) only
     @GetMapping("/")
@@ -24,11 +30,25 @@ public class WebController {
         return "error_page";
     }
 
+
     //GetMapping for the home page
     @GetMapping("/home")
     public String home() {
         return "home";
     }
+    //remove {id} when spring security is in place
+    @GetMapping("/home-{id}")
+    public String homeAdmin(@PathVariable("id") Integer id) {
+        String returnstring = "";
+        Nutzer nutzer = nutzerRepository.findByNid(id);
+        if(nutzer.getAdmin() == true)
+            returnstring = "home_admin";
+        else
+            returnstring = "home";
+        return returnstring;
+    }
+
+
 
     //GetMapping for the Login Page
     @GetMapping("/login")
@@ -47,6 +67,16 @@ public class WebController {
         return "passwort_zurueckgesetzt";
     }
 
+    @GetMapping("/admin_alle_ausstehenden_reservierungen")
+    public String adminRes() {
+        return "admin_alle_ausstehenden_reservierungen";
+    }
+
+    @GetMapping("/admin_vergangene_transaktionen")
+    public String adminTrans() {
+        return "admin_vergangene_transaktionen";
+    }
+
 
 
     //GetMapping for the buttons on the home page if there is no mapping in other classes
@@ -55,11 +85,6 @@ public class WebController {
     @GetMapping("/suche")
     public String suche() {
         return "parkplaetze";
-    }
-
-    @GetMapping("/spezieller_parkplatz")
-    public String speziellerParkplatz() {
-        return "spezieller_parkplatz";
     }
 
     @GetMapping("/aktueller_parkplatz")

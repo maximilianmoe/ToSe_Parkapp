@@ -32,7 +32,7 @@ public class AdminController {
     }
 
     @PostMapping("/sperren")
-    public String sperrenPost(@RequestParam("nutzerid") Integer nid, @RequestParam("button") Integer button, Model model) {
+    public String sperrenPost(@RequestParam("nutzerid") Integer nid, @RequestParam("buttonNutzer") Integer button, Model model) {
         Nutzer nutzer = nutzerRepository.findByNid(nid);
         String returnstring = "";
         if (button.equals(1)) {
@@ -77,5 +77,21 @@ public class AdminController {
 
         nutzerRepository.delete(nutzer);
         return "nutzer_geloescht";
+    }
+
+    @PostMapping("/rechteAendern")
+    public String rechteAendern(@RequestParam("nutzerid2") Integer nid, @RequestParam("buttonAdmin") Integer button) {
+        if (button.equals(1)) {
+            nutzerRepository.updateAdmin(nid, true);
+            System.out.println("Nutzer mit nid " + nid + " wurden Adminrechte erteilt ");
+        }
+        else if (button.equals(2)) {
+            nutzerRepository.updateAdmin(nid, false);
+            System.out.println("Nutzer mit nid " + nid + " wurden Adminrechte entzogen ");
+
+        }
+
+        //evtl. noch eine bestätigungsseite?
+        return "adminseite";
     }
 }

@@ -26,7 +26,14 @@
 
         #input {
             font-size: 20px;
-            margin-top: 80px;
+            margin-top: 25px;
+        }
+        #res {
+            margin-top: 60px;
+        }
+
+        #trans {
+            margin-top: 30px;
         }
     </style>
 
@@ -71,29 +78,52 @@
     </div>
 </nav>
 <div class="container">
-    <div id="sperren">
-        <h1>Nutzer sperren/entsperren</h1>
-            <form th:action="@{/sperren}" method="post">
-                <div id="input">
-                    <input type="text" th:name="nutzerid" placeholder="Nutzer-Id">
-                        <div>
-                            <button type="submit" th:name="button" th:value="1" >Nutzer entsperren</button>
-                            <div><button type="submit" th:name="button" th:value="2" >Nutzer sperren</button></div>
-                        </div>
-                </div>
-            </form>
-    </div>
-    <div id="sperren">
-        <h1>Nutzer löschen</h1>
-            <form th:action="@{/loeschen}" method="post">
-                <div id="input">
-                    <input type="text" th:name="nid" placeholder="Nutzer-Id">
-                    <div>
-                        <button type="submit">Nutzer löschen</button>
+    <div class="row">
+        <div class="col" id="sperren">
+            <h1>Nutzer sperren/entsperren</h1>
+                <form th:action="@{/sperren}" method="post">
+                    <div id="input">
+                        <input type="text" th:name="nutzerid" placeholder="Nutzer-Id">
+                            <div>
+                                <button type="submit" th:name="buttonNutzer" th:value="1" >Nutzer entsperren</button>
+                                <div><button type="submit" th:name="buttonNutzer" th:value="2" >Nutzer sperren</button></div>
+                            </div>
                     </div>
-                </div>
-            </form>
+                </form>
+        </div>
+        <div id="sperren">
+            <h1>Nutzer löschen</h1>
+                <form th:action="@{/loeschen}" method="post">
+                    <div id="input">
+                        <input type="text" th:name="nid" placeholder="Nutzer-Id">
+                        <div>
+                            <button type="submit">Nutzer löschen</button>
+                        </div>
+                    </div>
+                </form>
+        </div>
     </div>
+    <div id="res">
+        <div id="res">
+            <h1> Ausstehende Reservierungen </h1>
+            <a href="admin_alle_ausstehenden_reservierungen"><button type="submit">Ausstehende Reservierungen</button></a>
+        </div>
+        <div id="trans">
+            <h1>Vergangene Transaktionen</h1>
+            <a href="admin_vergangene_transaktionen"><button type="submit">Vergangene Transaktionen</button></a>
+        </div>
+        <div id="trans">
+            <h1>Adminrechte Verwalten</h1>
+                <form th:action="@{/rechteAendern}" method="post">
+                    <input type="text" th:name="nutzerid2" placeholder="Nutzer-Id">
+                    <div>
+                        <button type="submit" th:name="buttonAdmin" th:value="1">Adminrechte erteilen</button>
+                        <div><button type="submit" th:name="buttonAdmin" th:value="2">Adminrechte entziehen</button></div>
+                    </div>
+                </form>
+        </div>
+    </div>
+
 </div>
 
 </body>

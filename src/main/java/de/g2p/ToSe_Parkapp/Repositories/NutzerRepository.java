@@ -28,4 +28,9 @@ public interface NutzerRepository extends JpaRepository<Nutzer, Integer> {
     @Modifying
     @Query(value = "update nutzer set sperrung = :sperrung where nid = :nid",nativeQuery = true)
     void updateSperrung(@Param("nid") Integer nid,@Param("sperrung") boolean sperrung);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update nutzer set admin = :admin where nid = :nid", nativeQuery = true)
+    void updateAdmin(@Param("nid") Integer nid, @Param("admin") boolean admin);
 }

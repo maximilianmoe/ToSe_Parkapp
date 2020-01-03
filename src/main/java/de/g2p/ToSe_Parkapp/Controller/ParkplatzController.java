@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 public class ParkplatzController {
 
@@ -34,7 +32,8 @@ public class ParkplatzController {
     @PostMapping("/parkplatz_hinzufuegen")
     public String addParkplatz(@ModelAttribute Parkplatz parkplatz, @ModelAttribute Standort standort,
                                @RequestParam("parkplatzChecked") String checked,
-                               @RequestParam("fahrzeugtyp") String fahrzeugtyp) {
+                               @RequestParam("fahrzeugtyp") String fahrzeugtyp,
+                               @RequestParam("zeitbegrenzung") Integer zeitbegrenzung, Model model) {
         // Example for checking an already existing Standort where no new database entry is created
 //        for (Standort standortvariable : standortRepository.findAll()) {
 //            System.out.println(standortvariable.getStrasse()+" for schleife 1");
@@ -63,11 +62,13 @@ public class ParkplatzController {
 //            }
 //        }
 
+
         //parkplatz.setAnbieterId(findNutzer());
         parkplatz.setStatus("frei");
         parkplatz.setOrtid(standort);
         parkplatz.setBewertung(0);
         parkplatz.setBewertungsanzahl(0);
+        parkplatz.setZeitbegrenzung(zeitbegrenzung);
 
         //Sets Parkplatz to private if the box for "privater Parkplatz" is checked
         if(checked.contains("1"))
@@ -83,17 +84,26 @@ public class ParkplatzController {
         parkplatzRepository.save(parkplatz);
         standortRepository.save(standort);
 
+        //getting an Overview page after adding a new Parkplatz
+        model.addAttribute("parkplatz", parkplatz);
+        model.addAttribute("standort", standort);
+        speziellerParkplatz(model);
+
         //Übersichtsseite erstellen und den Namen hier ändern
-        return "testweiterleitung";
+        return "spezieller_parkplatz";
+    }
+
+    @GetMapping("/spezieller_parkplatz")
+    public String speziellerParkplatz(Model model) {
+        return "spezieller_parkplatz";
     }
 
     @GetMapping("/parkplaetze_speziell")
-    public String speziellerParkplatz( Model model) {
-        System.out.println("getmapping");
-        Parkplatz parkplatz = parkplatzRepository.findByPid(19);
-        Standort standort = standortRepository.findByOrtid(38);
-        System.out.println(parkplatz.getBeschreibung());
+    public String parkplatzSpeziell (Model model) {
+        Parkplatz parkplatz = parkplatzRepository.findByPid(31);
+        Standort standort = standortRepository.findByOrtid(parkplatz.getOrtId());
         model.addAttribute("parkplatz", parkplatz);
+        model.addAttribute("standort", standort);
         return "spezieller_parkplatz";
     }
 

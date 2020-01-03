@@ -28,6 +28,8 @@ public class Nutzer {
     @Column(name = "emailadresse")
     private String emailAdresse;
 
+    private String benutzername;
+
     private String passwort;
 
     private Integer saldo;
@@ -39,7 +41,7 @@ public class Nutzer {
     private String rolle;
 
     public Nutzer(String vorname, String nachname, String emailAdresse, String passwort,
-                  boolean admin, boolean sperrung, Integer saldo, String rolle) {
+                  boolean admin, boolean sperrung, Integer saldo, String rolle, String benutzername) {
         this.vorname = vorname;
         this.nachname = nachname;
         this.emailAdresse = emailAdresse;
@@ -48,15 +50,18 @@ public class Nutzer {
         this.sperrung = sperrung;
         this.saldo = saldo;
         this.rolle = rolle;
+        this.benutzername = benutzername;
     }
 
-    public Nutzer(String vorname, String nachname, String emailAdresse, String passwort, Integer saldo, String rolle) {
+    public Nutzer(String vorname, String nachname, String emailAdresse, String passwort, Integer saldo,
+                  String rolle, String benutzername) {
         this.vorname = vorname;
         this.nachname = nachname;
         this.emailAdresse = emailAdresse;
         this.passwort = passwort;
         this.saldo = saldo;
         this.rolle = rolle;
+        this.benutzername = benutzername;
     }
 
     public Nutzer getNidNutzer() {
@@ -66,5 +71,7 @@ public class Nutzer {
     public Integer getNidInteger() {return nid;}
 
     public boolean getSperrung() {return sperrung;}
+
+    public boolean getAdmin() {return admin;}
 
 }
