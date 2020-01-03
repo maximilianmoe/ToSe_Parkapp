@@ -91,7 +91,7 @@
                 <a class="nav-link" href="testweiterleitung">Profil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="guthabenverwaltung">Guthaben</a>
+                <a class="nav-link" href="guthaben">Guthaben</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="login.html" id="navbarDropdown" role="button"
@@ -99,7 +99,7 @@
                     Parkplätze
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Meine Parkplätze</a>
+                    <a class="dropdown-item" href="testweiterleitung">Meine Parkplätze</a>
                     <a class="dropdown-item" href="parkplatz_hinzufuegen">Parkplatz hinzufügen</a>
                     <a class="dropdown-item" href="parkplaetze">Alle Parkplätze</a>
                 </div>
@@ -121,10 +121,10 @@
         <form>
             <div class="card-body">
                 <h5 class="card-title">
-                <p th:each="parkplatz : ${parkplatz}">
-                    <span th:text="${parkplatz.plz}">PLZ</span>
-                    <span th:text="${parkplatz.strasse}">Str.</span>
-                    <span th:text="${parkplatz.hausnummer}">Hausnummer</span>
+                <p th:each="standort : ${standort}">
+                    <span th:text="${standort.plz}">PLZ</span>
+                    <span th:text="${standort.strasse}">Str.</span>
+                    <span th:text="${standort.hausnummer}">Hausnummer</span>
                 </h5>
                 </p>
                 <p class="card-text">Beschreibung: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

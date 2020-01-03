@@ -87,7 +87,7 @@
                 <a class="nav-link" href="testweiterleitung">Profil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="guthabenverwaltung">Guthaben</a>
+                <a class="nav-link" href="guthaben">Guthaben</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="login.html" id="navbarDropdown" role="button"
@@ -95,7 +95,7 @@
                     Parkplätze
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Meine Parkplätze</a>
+                    <a class="dropdown-item" href="parkplaetze/speziell">Meine Parkplätze</a>
                     <a class="dropdown-item" href="parkplatz_hinzufuegen">Parkplatz hinzufügen</a>
                     <a class="dropdown-item" href="parkplaetze">Alle Parkplätze</a>
                 </div>
@@ -111,30 +111,28 @@
     </div>
 </nav>
 <div class="container">
-    <form action="#" th:action="@{/home}" method="post">
         <div class="row" id="row1" >
-            <div class="tile_input" th:name="input" th:value="suche" id="input_1">
+            <div class="tile_input" id="input_1">
                 <p id="field1" class="text-center"><a href="parkplaetze">Suche</a></p>
             </div>
-            <div class="tile_input" th:name="input" th:value="parkplatz" id="input_2">
+            <div class="tile_input" id="input_2">
                 <p id="field2" class="text-center"><a href="spezieller_parkplatz">Parkplatz</a></p>
             </div>
-            <div class="tile_input" th:name="input" th:value="guthaben" id="input_1">
+            <div class="tile_input" id="input_1">
                 <p id="field1" class="text-center"><a href="guthaben">Guthaben</a></p>
             </div>
         </div>
         <div class="row">
-            <div class="tile_input" th:name="input" th:value="profil" id="input_2">
+            <div class="tile_input" id="input_2">
                 <p id="field2" class="text-center"><a href="testweiterleitung">Profil</a></p>
             </div>
-            <div class="tile_input" th:name="input" th:value="parkplatz_aktuell" id="input_1">
+            <div class="tile_input" id="input_1">
                 <p id="field1" class="text-center"><a href="spezieller_parkplatz">aktueller Parkplatz</a></p>
             </div>
-            <div class="tile_input" th:name="input" th:value="kontakt" id="input_2">
+            <div class="tile_input" id="input_2">
                 <p id="field2" class="text-center"><a href="testweiterleitung">Kontakt</a></p>
             </div>
         </div>
-    </form>
 </div>
 
 </body>
