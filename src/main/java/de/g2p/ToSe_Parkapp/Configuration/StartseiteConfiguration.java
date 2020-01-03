@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
          */
             @Override
             public void addViewControllers(ViewControllerRegistry registry) {
-                registry.addViewController("/").setViewName("/startseite.html");
+                registry.addViewController("/").setViewName("/home.html");
                 registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
             }
         }
