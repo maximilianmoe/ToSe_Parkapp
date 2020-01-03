@@ -27,11 +27,9 @@ public class Reservierung {
     @JoinColumn(name = "pid")
     private Parkplatz pid;
 
-    private String start;
-//    private Date start;
+    private Date start;
 
-    private String ende;
-//    private Date ende;
+    private Date ende;
 
     //wurde das Parken durch eine Reservierung ausgelöst?
     @Column(name = "REMARK")
@@ -39,7 +37,7 @@ public class Reservierung {
 
     private boolean beendet;
 
-    public Reservierung(Konsument kid, Parkplatz pid, String start, String ende, boolean resZuParken, boolean beendet) {
+    public Reservierung(Konsument kid, Parkplatz pid, Date start, Date ende, boolean resZuParken, boolean beendet) {
         this.kid = kid;
         this.pid = pid;
         this.start = start;

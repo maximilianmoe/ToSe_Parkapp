@@ -29,25 +29,22 @@ public class Parken {
     @JoinColumn(name = "pid")
     private Parkplatz pid;
 
-//    private Date start;
 
-    private String start;
+    private Date start;
 
-    private String ende;
+    private Date ende;
 
-//    private Date ende;
 
 
     @Column(name = "EIGENBEL")
     private boolean eigenbelegt;
 
-    private LocalDateTime erinnerung;
-//    private Date erinnerung;
+    private Date erinnerung;
 
     private boolean freigabe;
 
-    public Parken(Konsument kid, Parkplatz pid, String start, String ende, boolean eigenbelegt,
-                  LocalDateTime erinnerung, boolean freigabe) {
+    public Parken(Konsument kid, Parkplatz pid, Date start, Date ende, boolean eigenbelegt,
+                  Date erinnerung, boolean freigabe) {
         this.kid = kid;
         this.pid = pid;
         this.start = start;
