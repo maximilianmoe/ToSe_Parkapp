@@ -1,5 +1,7 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
+import de.g2p.ToSe_Parkapp.Entities.Anbieter;
+import de.g2p.ToSe_Parkapp.Entities.Konsument;
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.KonsumentRepository;
@@ -8,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class NutzerController {
@@ -26,19 +26,79 @@ public class NutzerController {
 
 
     @GetMapping("/registrieren")
-    public String registration() {
+    public String registration(Model model) {
+        model.addAttribute("nutzer", new Nutzer());
+        model.addAttribute("konsument", new Konsument());
+        model.addAttribute("anbieter", new Anbieter());
+        String fahrzeugtyp = "kleinwagen";
+        model.addAttribute("fahrzeugtyp", fahrzeugtyp);
+        System.out.println("getmapping");
         return "registrieren";
     }
 
-    @PostMapping("/registrieren")
-    public String addUser(@ModelAttribute Nutzer nutzer, Model model){
-//        String asf = request.getParameter("vorname");
-//        String sdf = request.getParameter("nachname");
-//        String emailadresse = request.getParameter("emailadresse");
-//        String passwort = request.getParameter("passwort");
-        //Nutzer nutzer = new Nutzer(vorname, nachname, emailadresse, passwort);
 
-        return nutzer.getNachname();
+    @PostMapping("/registrieren")
+    public String addUser(@ModelAttribute Nutzer nutzer, @ModelAttribute Konsument konsument,
+                          @ModelAttribute Anbieter anbieter, @RequestParam("nutzertyp") String nutzertyp,
+                          @RequestParam("fahrzeugtyp") String fahrzeugtyp) {
+
+        System.out.println("vor duplicate");
+        //boolean duplicate = nutzerRepository.findByEmailAdresse("mmm@gmx.de").isPresent();
+        System.out.println("duplicate");
+
+        System.out.println(nutzer.getEmailAdresse());
+
+
+        //if(!duplicate) {
+            nutzer.setAdmin(false);
+            nutzer.setSperrung(false);
+            //Set all values for Anbieter
+            if(nutzertyp.contains("anbieter")) {
+                anbieter.setNid(nutzer.getNid());
+                //Set fahrzeugtyp for anbieter
+                if(fahrzeugtyp.contains("van"))
+                    konsument.setFahrzeugtyp("van");
+                else if(fahrzeugtyp.contains("kombi"))
+                    konsument.setFahrzeugtyp("kombi");
+                else if(fahrzeugtyp.contains("suv"))
+                    konsument.setFahrzeugtyp("suv");
+                else if(fahrzeugtyp.contains("kleinwagen"))
+                    konsument.setFahrzeugtyp("kleinwagen");
+
+                anbieterRepository.save(anbieter);
+                System.out.println("save anbieter");
+            }
+            //Set all values for Konsument
+            else if(nutzertyp.contains("konsument")) {
+                konsument.setNid(nutzer.getNid());
+                konsumentRepository.save(konsument);
+                System.out.println("save Konsument");
+            }
+            //Set all values for both
+            else if(nutzertyp.contains("beides")){
+                anbieter.setNid(nutzer.getNid());
+                konsument.setNid(nutzer.getNid());
+                //Set fahrzeugtyp for both
+                if(fahrzeugtyp.contains("van"))
+                    konsument.setFahrzeugtyp("van");
+                else if(fahrzeugtyp.contains("kombi"))
+                    konsument.setFahrzeugtyp("kombi");
+                else if(fahrzeugtyp.contains("suv"))
+                    konsument.setFahrzeugtyp("suv");
+                else if(fahrzeugtyp.contains("kleinwagen"))
+                    konsument.setFahrzeugtyp("kleinwagen");
+
+                anbieterRepository.save(anbieter);
+                konsumentRepository.save(konsument);
+                System.out.println("save anbieter and konsument");
+            }
+        //}
+
+        System.out.println(nutzer.getEmailAdresse());
+        nutzerRepository.save(nutzer);
+        System.out.println("save nutzer");
+
+        return "home";
     }
 
     @PostMapping("/login")

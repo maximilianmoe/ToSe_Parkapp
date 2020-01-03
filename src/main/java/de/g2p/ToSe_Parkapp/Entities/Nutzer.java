@@ -3,8 +3,8 @@ package de.g2p.ToSe_Parkapp.Entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -31,7 +31,7 @@ public class Nutzer {
     private boolean sperrung;
 
     public Nutzer(String vorname, String nachname, String emailAdresse, String passwort,
-                  boolean admin, boolean sperrung, Historie ... historie) {
+                  boolean admin, boolean sperrung) {
         this.vorname = vorname;
         this.nachname = nachname;
         this.emailAdresse = emailAdresse;
@@ -46,4 +46,9 @@ public class Nutzer {
         this.emailAdresse = emailAdresse;
         this.passwort = passwort;
     }
+
+    public Nutzer getNid() {
+        return this;
+    }
+
 }

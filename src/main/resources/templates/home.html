@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleafe.org" lang="de-De">
+
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -15,20 +17,61 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
-        #header {
-            text-align: center;
-            margin-top: 60px;
+        body {
+            background-color: lightslategray;
         }
 
+        #input_1 {
+            height: 300px;
+            width: 300px;
+            background-color: #5D5C61;
+            margin: 30px;
+            border-radius: 5%;
+        }
+
+        #input_2 {
+            height: 300px;
+            width: 300px;
+            background-color: #7395AE;
+            margin: 30px;
+            border-radius: 5%;
+        }
+
+        #input_3 {
+            height: 300px;
+            width: 300px;
+            background-color: green;
+            margin: 30px;
+            border-radius: 5%;
+        }
+
+        #row1 {
+            margin-top: 50px;
+        }
+
+        .tile_input {
+            text-align: center;
+            vertical-align: middle;
+            line-height: 300px;
+        }
+
+        #field1 {
+            font-size: 200%;
+            color: #8590AA;
+        }
+
+        #field2 {
+            font-size: 200%;
+            color: #66FCF1;
+        }
     </style>
-    <title>testweiterleitung</title>
-    <!--    *****************************************************************************   -->
-    <!--    diese Seite existiert nur als überbrückung für noch nicht existierende Seiten   -->
-    <!--    *****************************************************************************   -->
-
 </head>
-<body>
 
+<body>
+<!--
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
+    Alte Navbar; Bei neuer kann ich Farbe selbst auswählen!!
+-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
     <a class="navbar-brand" href="home">{Logo}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -67,6 +110,34 @@
         </form>
     </div>
 </nav>
-    <h2 id="header">Weiterleitung erfolgreich</h2>
+<div class="container">
+    <form action="#" th:action="@{/home}" method="post">
+        <div class="row" id="row1" >
+            <div class="tile_input" th:name="input" th:value="suche" id="input_1">
+                <p id="field1" class="text-center"><a href="parkplaetze">Suche</a></p>
+            </div>
+            <div class="tile_input" th:name="input" th:value="parkplatz" id="input_2">
+                <p id="field2" class="text-center"><a href="spezieller_parkplatz">Parkplatz</a></p>
+            </div>
+            <div class="tile_input" th:name="input" th:value="guthaben" id="input_1">
+                <p id="field1" class="text-center"><a href="guthaben">Guthaben</a></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="tile_input" th:name="input" th:value="profil" id="input_2">
+                <p id="field2" class="text-center"><a href="testweiterleitung">Profil</a></p>
+            </div>
+            <div class="tile_input" th:name="input" th:value="parkplatz_aktuell" id="input_1">
+                <p id="field1" class="text-center"><a href="spezieller_parkplatz">aktueller Parkplatz</a></p>
+            </div>
+            <div class="tile_input" th:name="input" th:value="kontakt" id="input_2">
+                <p id="field2" class="text-center"><a href="testweiterleitung">Kontakt</a></p>
+            </div>
+        </div>
+    </form>
+</div>
+
 </body>
+
+
 </html>

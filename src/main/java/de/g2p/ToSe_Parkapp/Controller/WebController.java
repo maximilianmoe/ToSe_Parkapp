@@ -1,45 +1,45 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
-import de.g2p.ToSe_Parkapp.Entities.Nutzer;
-import de.g2p.ToSe_Parkapp.Entities.Standort;
-import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class WebController {
 
-    @Autowired
-    NutzerRepository nutzerRepository;
-
-    @GetMapping("/logintest")
-    public String index(Model model) {
-        model.addAttribute("nutzer", new Nutzer());
-        model.addAttribute("standort", new Standort());
-        return "logintest";
+    //GetMapping for the testing page
+    @GetMapping("/testweiterleitung")
+    public String testweiterleitung() {
+        return "testweiterleitung";
     }
 
-    @PostMapping("/logintest")
-    @ResponseBody
-    public String login(@ModelAttribute Nutzer nutzer, @ModelAttribute Standort standort) {
-        return standort.getStrasse()+" "+nutzer.getNachname();
+    //GetMapping for the error page
+    @GetMapping("/errorpage")
+    public String error() {
+        return "error_page";
     }
 
+    //GetMapping for the home page
     @GetMapping("/home")
     public String home() {
         return "home";
     }
 
-    //GetMapping for the error page
-    @GetMapping("/error")
-    public String error() {
-        return "error-page";
+
+    //GetMapping for the buttons on the home page if there is no mapping in other classes
+    //Profil and Kontakt has to be added later when the html pages are done
+
+    @GetMapping("/suche")
+    public String suche() {
+        return "parkplaetze";
     }
 
+    @GetMapping("/spezieller_parkplatz")
+    public String speziellerParkplatz() {
+        return "spezieller_parkplatz";
+    }
 
-
-
-
+    @GetMapping("/aktueller_parkplatz")
+    public String aktuellerParkplatz() {
+        return "spezieller_parkplatz";
+    }
 }

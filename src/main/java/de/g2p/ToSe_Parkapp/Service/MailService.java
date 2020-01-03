@@ -1,11 +1,12 @@
 package de.g2p.ToSe_Parkapp.Service;
 
-import org.hibernate.validator.constraints.URL;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
+
+import java.util.Properties;
 
 
 /**
@@ -13,47 +14,50 @@ import org.springframework.stereotype.Component;
  * This class creates a simple email.
  */
 @Component
-public class MailService{
+public class MailService implements EmailService {
 
-    public JavaMailSender mailSender;
+
+    private JavaMailSenderImpl mailSender;
+
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        mailSender.setUsername("good2park.service@gmail.com");
+        mailSender.setPassword("mllljnhjikjejikm");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+
+        return mailSender;
+    }
 
     /**
-     * @param to The email address of the user the email is send to.
+     * @param to      The email address of the user the email is send to.
      * @param subject The subject of the email.
-     * @param text The text or body of the email which is send to the user.
+     * @param text    The text or body of the email which is send to the user.
      */
-    public void sendMail(String to, String subject, String text) {
+    @Override
+    public void sendSimpleMessage(String to, String subject, String text) {
+        getJavaMailSender();
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("good2park.service@gmail.com");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
-        mailSender.send(message);
-    }
-    @Bean
-    public SimpleMailMessage templateRegistration(){
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setText("Um die Registrierung abzuschließen und dich zu verifizieren klicke auf diesen Link: ");
-        return message;
-    }
-    @Bean
-    public SimpleMailMessage templatePassword(){
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setText("Um dein Passwort zurückzusetzten klicke auf diesen Link: ");
-        return message;
-    }
-    @Bean
-    public SimpleMailMessage templateReminder(){
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setText("In einer halben Stunde läuft dein Parkplatz ab");
-        return message;
+
+        try {
+            mailSender.send(message); //This line produces the exception
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Can't send message");
+        }
+
+
     }
 }
-
-   /* Die Templates können nach folgendem Beispiel verwendet werden: https://www.baeldung.com/spring-email
-
-   @Autowired
-    public SimpleMailMessage template;
-...
-        String text = String.format(template.getText(), templateArgs);
-        sendSimpleMessage(to, subject, text);
-*/
