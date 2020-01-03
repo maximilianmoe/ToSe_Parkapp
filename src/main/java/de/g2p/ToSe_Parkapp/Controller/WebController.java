@@ -6,6 +6,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class WebController {
 
+    //GetMapping for the Homepage for IP-Adress (or localhost) only
+    @GetMapping("/")
+    public String homepage() {
+        return "home";
+    }
+
     //GetMapping for the testing page
     @GetMapping("/testweiterleitung")
     public String testweiterleitung() {

@@ -12,9 +12,5 @@ import org.springframework.transaction.annotation.Transactional;
 public interface KonsumentRepository extends JpaRepository<Konsument, Integer> {
 
     Konsument findByKid(Integer kid);
-
-    @Transactional
-    @Modifying
-    @Query(value = "update konsument set saldo = :saldo where kid = 4", nativeQuery = true)
-    void update(@Param("saldo") double saldo);
+    Konsument findByNid(Integer nid);
 }

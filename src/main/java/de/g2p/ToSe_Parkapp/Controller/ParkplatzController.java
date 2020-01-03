@@ -87,7 +87,7 @@ public class ParkplatzController {
         return "testweiterleitung";
     }
 
-    @GetMapping("/parkplaetze/speziell")
+    @GetMapping("/parkplaetze_speziell")
     public String speziellerParkplatz( Model model) {
         System.out.println("getmapping");
         Parkplatz parkplatz = parkplatzRepository.findByPid(19);

@@ -18,60 +18,26 @@
     </script>
     <style>
         body {
-            background-color: lightslategray;
+            background-color: white;
         }
 
-        #input_1 {
-            height: 300px;
-            width: 300px;
-            background-color: #5D5C61;
-            margin: 30px;
-            border-radius: 5%;
-        }
-
-        #input_2 {
-            height: 300px;
-            width: 300px;
-            background-color: #7395AE;
-            margin: 30px;
-            border-radius: 5%;
-        }
-
-        #input_3 {
-            height: 300px;
-            width: 300px;
-            background-color: green;
-            margin: 30px;
-            border-radius: 5%;
-        }
-
-        #row1 {
-            margin-top: 50px;
-        }
-
-        .tile_input {
+        #successful{
+            font-size: 30px;
+            margin-top: 120px;
             text-align: center;
-            vertical-align: middle;
-            line-height: 300px;
         }
-
-        #field1 {
-            font-size: 200%;
-            color: #8590AA;
+        #btn{
+            margin-top: 30px;
+            font-size: 10px;
         }
-
-        #field2 {
-            font-size: 200%;
-            color: #66FCF1;
+        #ueberschrift {
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
 
 <body>
-<!--
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
-    Alte Navbar; Bei neuer kann ich Farbe selbst auswählen!!
--->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
     <a class="navbar-brand" href="home">{Logo}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -111,28 +77,23 @@
     </div>
 </nav>
 <div class="container">
-        <div class="row" id="row1" >
-            <div class="tile_input" id="input_1">
-                <a class="dropdown-item" href="parkplaetze">Alle Parkplätze</a>
-            </div>
-            <div class="tile_input" id="input_2">
-                <a class="dropdown-item" href="parkplaetze_speziell">Meine Parkplätze</a>
-            </div>
-            <div class="tile_input" id="input_1">
-                <a class="dropdown-item" href="guthaben">Guthaben</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="tile_input" id="input_2">
-                <a class="dropdown-item" href="adminseite">Profil</a>
-            </div>
-            <div class="tile_input" id="input_1">
-                <a class="dropdown-item" href="testweiterleitung">Meine Reservierungen</a>
-            </div>
-            <div class="tile_input" id="input_2">
-                <a class="dropdown-item" href="testweiterleitung">Kontakt</a>
+    <h2 id="ueberschrift">Sperrung</h2>
+    <form action="#">
+        <div class="text-center" id="successful">
+            <div class="form-group" >
+                <label>Die Bearbeitung war erfolgreich!</label>
+                <div> <label>Folgender Nutzer wurde gesperrt:</label> </div>
+                <div>
+                    <p th:text="${nutzer.vorname+' '+nutzer.nachname}"></p>
+                </div>
+                <div id="btn">
+                    <button type="submit" class="btn btn-outline-secondary btn-lg">
+                        <a href="adminseite">Zurück zur Adminseite</a>
+                    </button>
+                </div>
             </div>
         </div>
+    </form>
 </div>
 
 </body>

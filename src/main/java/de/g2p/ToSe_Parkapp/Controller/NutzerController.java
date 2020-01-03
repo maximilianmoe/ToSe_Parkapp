@@ -52,7 +52,7 @@ public class NutzerController {
             nutzer.setSperrung(false);
             //Set all values for Anbieter
             if(nutzertyp.contains("anbieter")) {
-                anbieter.setNid(nutzer.getNid());
+                anbieter.setNid(nutzer.getNidNutzer());
                 //Set fahrzeugtyp for anbieter
                 if(fahrzeugtyp.contains("van"))
                     konsument.setFahrzeugtyp("van");
@@ -68,14 +68,14 @@ public class NutzerController {
             }
             //Set all values for Konsument
             else if(nutzertyp.contains("konsument")) {
-                konsument.setNid(nutzer.getNid());
+                konsument.setNid(nutzer.getNidNutzer());
                 konsumentRepository.save(konsument);
                 System.out.println("save Konsument");
             }
             //Set all values for both
             else if(nutzertyp.contains("beides")){
-                anbieter.setNid(nutzer.getNid());
-                konsument.setNid(nutzer.getNid());
+                anbieter.setNid(nutzer.getNidNutzer());
+                konsument.setNid(nutzer.getNidNutzer());
                 //Set fahrzeugtyp for both
                 if(fahrzeugtyp.contains("van"))
                     konsument.setFahrzeugtyp("van");
@@ -98,6 +98,48 @@ public class NutzerController {
 
         return "home";
     }
+
+    @GetMapping("/guthaben")
+    public String validate(Model model) {
+        String returnstring = "";
+        Nutzer nutzer = nutzerRepository.findByNid(13);
+
+        if (nutzer.getSaldo() < 0)
+            returnstring = "Guthaben_ueberzogen";
+        else {
+            returnstring = "guthabenverwaltung";
+            model.addAttribute("nutzer", nutzer);
+
+        }
+        return returnstring;
+    }
+
+    @GetMapping("/guthabenverwaltung")
+    public String guthabenGet(Model model) {
+        //nid = 13 for testing
+        Nutzer nutzer = nutzerRepository.findByNid(13);
+        model.addAttribute("nutzer", nutzer);
+        return "guthabenverwaltung";
+    }
+
+    @PostMapping("/guthabenverwaltung")
+    public String guthabenPost(Nutzer nutzer, @RequestParam("button") String button,
+                               @RequestParam("betrag") Integer betrag) {
+        //nid = 13 for testing
+        Nutzer nutzer2 = nutzerRepository.findByNid(13);
+        Integer saldo = nutzer2.getSaldo();
+
+        //Check which button was pressed (Aufladen or Auszahlen)
+        if (button.contains("1"))
+            saldo = saldo + betrag;
+        else if (button.contains("2"))
+            saldo = saldo - betrag;
+
+        nutzerRepository.updateSaldo(saldo, nutzer2.getSaldo());
+        //redirect to guthabenweiterleitung because the new saldo is not displayed properly
+        return "guthabenweiterleitung";
+    }
+
 
 //    //returns the user
 //    private String findNutzer() {
