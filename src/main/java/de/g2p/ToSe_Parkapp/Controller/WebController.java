@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class WebController {
 
-    //GetMapping for the Homepage for IP-Adress (or localhost) only
+    //GetMapping for the Login-Page for IP-Adress (or localhost) only
     @GetMapping("/")
-    public String homepage() {
-        return "home";
+    public String loginpage() {
+        return "login";
     }
 
     //GetMapping for the testing page
@@ -29,6 +29,24 @@ public class WebController {
     public String home() {
         return "home";
     }
+
+    //GetMapping for the Login Page
+    @GetMapping("/login")
+    public String loginGet() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginPost() {
+        //test if the given username and password are correct
+        return "home";
+    }
+
+    @GetMapping("/passwort_zurueckgesetzt")
+    public String passwortZurueck() {
+        return "passwort_zurueckgesetzt";
+    }
+
 
 
     //GetMapping for the buttons on the home page if there is no mapping in other classes

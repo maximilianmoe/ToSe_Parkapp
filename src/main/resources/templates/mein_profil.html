@@ -60,7 +60,7 @@
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
-    <a class="navbar-brand" href="#">{Logo}</a>
+    <a class="navbar-brand" href="home">{Logo}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -68,13 +68,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="home">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Profil</a>
+                <a class="nav-link" href="mein_profil">Profil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="guthabenverwaltung.html">Guthaben</a>
+                <a class="nav-link" href="guthaben">Guthaben</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="login.html" id="navbarDropdown" role="button"
@@ -82,13 +82,13 @@
                     Parkplätze
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Meine Parkplätze</a>
-                    <a class="dropdown-item" href="parkplatz_hinzufügen.html">Parkplatz hinzufügen</a>
-                    <a class="dropdown-item" href="parkplaetze.html">Alle Parkplätze</a>
+                    <a class="dropdown-item" href="parkplaetze_speziell">Meine Parkplätze</a>
+                    <a class="dropdown-item" href="parkplatz_hinzufuegen">Parkplatz hinzufügen</a>
+                    <a class="dropdown-item" href="parkplaetze">Alle Parkplätze</a>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Einstellungen</a>
+                <a class="nav-link" href="testweiterleitung">Einstellungen</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -106,7 +106,7 @@
             <h4 class="h_6">Vorname: </h6>
         </div>
         <div class="col">
-            <h4 class="h_6">Aus Datenbank</h6>
+            <h4 class="h_6" th:text="${nutzer.vorname}"></h6>
         </div>
     </div>
     <div class="row">
@@ -114,7 +114,7 @@
             <h4 class="h_6">Nachname: </h6>
         </div>
         <div class="col">
-            <h4 class="h_6">Aus Datenbank</h6>
+            <h4 class="h_6" th:text="${nutzer.nachname}"></h6>
         </div>
     </div>
     <div class="row">
@@ -122,7 +122,7 @@
             <h4 class="h_6">Kennzeichen: </h6>
         </div>
         <div class="col">
-            <h4 class="h_6">Aus Datenbank</h6>
+            <h4 class="h_6" th:text="${konsument.kennzeichen}"></h6>
         </div>
     </div>
     <div class="row">
@@ -130,7 +130,7 @@
             <h4 class="h_6">Fahrzeugtyp: </h6>
         </div>
         <div class="col">
-            <h4 class="h_6">Aus Datenbank</h6>
+            <h4 class="h_6" th:text="${konsument.fahrzeugtyp}"></h6>
         </div>
     </div>
     <div class="row">
@@ -138,7 +138,7 @@
             <h4 class="h_6">Email Adresse: </h6>
         </div>
         <div class="col">
-            <h4 class="h_6">Aus Datenbank</h6>
+            <h4 class="h_6" th:text="${nutzer.emailAdresse}"></h6>
         </div>
     </div>
     <div class="row">
@@ -146,7 +146,7 @@
             <h4 class="h_6">Mein Passwort: </h6>
         </div>
         <div class="col">
-            <h4 class="h_6">Aus Datenbank</h6>
+            <h4 class="h_6">Aus Datenbank (sollen wir das wirklich ausgeben?)</h6>
         </div>
     </div>
 </div>

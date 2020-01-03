@@ -1,6 +1,7 @@
 package de.g2p.ToSe_Parkapp.Repositories;
 
 import de.g2p.ToSe_Parkapp.Entities.Konsument;
+import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,5 +13,5 @@ import org.springframework.transaction.annotation.Transactional;
 public interface KonsumentRepository extends JpaRepository<Konsument, Integer> {
 
     Konsument findByKid(Integer kid);
-    Konsument findByNid(Integer nid);
+    Konsument findByNid(Nutzer nid);
 }

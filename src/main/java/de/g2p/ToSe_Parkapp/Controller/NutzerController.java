@@ -30,7 +30,6 @@ public class NutzerController {
         model.addAttribute("anbieter", new Anbieter());
         String fahrzeugtyp = "kleinwagen";
         model.addAttribute("fahrzeugtyp", fahrzeugtyp);
-        System.out.println("getmapping");
         return "registrieren";
     }
 
@@ -139,6 +138,17 @@ public class NutzerController {
         //redirect to guthabenweiterleitung because the new saldo is not displayed properly
         return "guthabenweiterleitung";
     }
+
+    @GetMapping("/mein_profil")
+    public String profilGet(Model model) {
+        //nid=14 for testing
+        Nutzer nutzer = nutzerRepository.findByNid(13);
+        Konsument konsument = konsumentRepository.findByNid(nutzer);
+        model.addAttribute("nutzer", nutzer);
+        model.addAttribute("konsument", konsument);
+        return "mein_profil";
+    }
+
 
 
 //    //returns the user

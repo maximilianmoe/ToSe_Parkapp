@@ -31,11 +31,6 @@ public class AdminController {
         return "adminseite";
     }
 
-    @GetMapping("/sperren")
-    public String sperrenGet() {
-        return "adminseite";
-    }
-
     @PostMapping("/sperren")
     public String sperrenPost(@RequestParam("nutzerid") Integer nid, @RequestParam("button") Integer button, Model model) {
         Nutzer nutzer = nutzerRepository.findByNid(nid);
@@ -54,40 +49,33 @@ public class AdminController {
         return returnstring;
     }
 
-    @GetMapping("/loeschen")
-    public String loeschenGet() {
-        return "adminseite";
-    }
-
     @PostMapping("/loeschen")
     public String loeschenPost(@RequestParam("nid") Integer nid) {
         Nutzer nutzer = nutzerRepository.findByNid(nid);
-        System.out.println(nutzer);
 
+        //erstes if nur beim testen, da werte mit null in db existieren
         if (nutzer.getRolle()== null)
             System.out.println("nutzerrolle = null");
         else {
-            System.out.println("else fall");
             if (nutzer.getRolle().contains("beides")) {
-                System.out.println("erstes if");
-                Anbieter anbieter = anbieterRepository.findByNid(nid);
-                System.out.println(anbieter);
-                Konsument konsument = konsumentRepository.findByNid(nid);
+                Anbieter anbieter = anbieterRepository.findByNid(nutzer);
+                System.out.println(anbieterRepository.findByNid(nutzer));
+                Konsument konsument = konsumentRepository.findByNid(nutzer);
                 System.out.println(konsument);
                 konsumentRepository.delete(konsument);
                 anbieterRepository.delete(anbieter);
             } else if (nutzer.getRolle().contains("anbieter")) {
-                Anbieter anbieter = anbieterRepository.findByNid(nid);
+                Anbieter anbieter = anbieterRepository.findByNid(nutzer);
                 System.out.println(anbieter);
                 anbieterRepository.delete(anbieter);
             } else if (nutzer.getRolle().contains("konsument")) {
-                Konsument konsument = konsumentRepository.findByNid(nid);
+                Konsument konsument = konsumentRepository.findByNid(nutzer);
                 System.out.println(konsument);
                 konsumentRepository.delete(konsument);
             }
         }
 
         nutzerRepository.delete(nutzer);
-        return "nutzer_gesperrt";
+        return "nutzer_geloescht";
     }
 }

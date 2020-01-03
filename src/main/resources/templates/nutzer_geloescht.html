@@ -77,15 +77,12 @@
     </div>
 </nav>
 <div class="container">
-    <h2 id="ueberschrift">Entsperrung</h2>
+    <h2 id="ueberschrift">Sperrung</h2>
     <form action="#">
         <div class="text-center" id="successful">
             <div class="form-group" >
                 <label>Die Bearbeitung war erfolgreich!</label>
-                <div> <label>Folgender Nutzer wurde entsperrt:</label> </div>
-                <div>
-                    <p th:text="${nutzer.vorname+' '+nutzer.nachname}"></p>
-                </div>
+                <div> <label>Nutzer wurde erfolgreich gelöscht!</label> </div>
                 <div id="btn">
                     <button type="submit" class="btn btn-outline-secondary btn-lg">
                         <a href="adminseite">Zurück zur Adminseite</a>
