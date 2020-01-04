@@ -43,7 +43,7 @@ public class NutzerController {
         //boolean duplicate = nutzerRepository.findByEmailAdresse("mmm@gmx.de").isPresent();
 
         //if(!duplicate) {
-            nutzer.setAdmin(false);
+            nutzer.setAdmin("nutzer");
             nutzer.setSperrung(false);
             nutzer.setSaldo(0);
             nutzer.setEmailAdresse(email);

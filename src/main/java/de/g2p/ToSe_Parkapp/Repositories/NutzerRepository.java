@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface NutzerRepository extends JpaRepository<Nutzer, Integer> {
 
     Nutzer findByNid(Integer nid);
-    Optional<Nutzer> findByEmailAdresse (String email);
+    Optional<Nutzer> findByBenutzername (String benutzername);
 
     @Query(value = "select * from nutzer where nid = :nid ", nativeQuery = true)
     Integer findByNidInteger(@Param("nid")Integer nid);

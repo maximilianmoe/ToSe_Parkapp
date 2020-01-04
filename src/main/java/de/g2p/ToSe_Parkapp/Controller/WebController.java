@@ -12,10 +12,10 @@ public class WebController {
     @Autowired
     NutzerRepository nutzerRepository;
 
-    //GetMapping for the Login-Page for IP-Adress (or localhost) only
+    //GetMapping for the homepage for IP-Adress (or localhost) only
     @GetMapping("/")
-    public String loginpage() {
-        return "login";
+    public String homeGet() {
+        return "home";
     }
 
     //GetMapping for the testing page
@@ -41,13 +41,12 @@ public class WebController {
     public String homeAdmin(@PathVariable("id") Integer id) {
         String returnstring = "";
         Nutzer nutzer = nutzerRepository.findByNid(id);
-        if(nutzer.getAdmin() == true)
+        if(nutzer.getAdmin().equalsIgnoreCase("admin"))
             returnstring = "home_admin";
         else
             returnstring = "home";
         return returnstring;
     }
-
 
 
     //GetMapping for the Login Page
