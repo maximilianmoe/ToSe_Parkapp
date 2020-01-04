@@ -24,6 +24,11 @@ public class ReservierungController {
 
 //    MailService mailService = new MailService();
 
+    @GetMapping("/meine_reservierungen")
+    public String reservierungenGet() {
+        return "meine_reservierungen";
+    }
+
     @GetMapping("/reserve")
     public String reserve(Model model) {
 //        mailService.sendSimpleMessage("lehnermaxi@yahoo.de", "Test", "test");

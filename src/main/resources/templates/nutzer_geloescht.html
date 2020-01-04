@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleafe.org" lang="de-De">
+
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -15,20 +17,27 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
-        #header {
-            text-align: center;
-            margin-top: 60px;
+        body {
+            background-color: white;
         }
 
+        #successful{
+            font-size: 30px;
+            margin-top: 120px;
+            text-align: center;
+        }
+        #btn{
+            margin-top: 30px;
+            font-size: 10px;
+        }
+        #ueberschrift {
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
-    <title>testweiterleitung</title>
-    <!--    *****************************************************************************   -->
-    <!--    diese Seite existiert nur als überbrückung für noch nicht existierende Seiten   -->
-    <!--    *****************************************************************************   -->
-
 </head>
-<body>
 
+<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
     <a class="navbar-brand" href="home">{Logo}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -67,6 +76,24 @@
         </form>
     </div>
 </nav>
-    <h2 id="header">Weiterleitung erfolgreich</h2>
+<div class="container">
+    <h2 id="ueberschrift">Sperrung</h2>
+    <form action="#">
+        <div class="text-center" id="successful">
+            <div class="form-group" >
+                <label>Die Bearbeitung war erfolgreich!</label>
+                <div> <label>Nutzer wurde erfolgreich gelöscht!</label> </div>
+                <div id="btn">
+                    <button type="submit" class="btn btn-outline-secondary btn-lg">
+                        <a href="adminseite">Zurück zur Adminseite</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 </body>
+
+
 </html>

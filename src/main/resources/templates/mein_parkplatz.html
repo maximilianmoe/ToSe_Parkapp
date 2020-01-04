@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleafe.org" lang="de-De">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- NÖTIG um Interaktivität zu aktivieren-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <style>
+        #green_square {
+            background-color: greenyellow;
+            text-align: center;
+        }
+
+        #orange_square {
+            background-color: orange;
+            text-align: center;
+        }
+
+        #red_square {
+            background-color: red;
+            text-align: center;
+        }
+
+        .hintergrund_bild {
+            width: 100%;
+            height: 400px;
+        }
+
+        #zeit_input {
+            text-align: center;
+        }
+
+        .card-title {
+            text-align: center;
+        }
+
+        .col {
+            text-align: center;
+        }
+
+        #ueberschrift {
+            text-align: center;
+        }
+
+        #btn {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #farbe {
+            text-align: center;
+        }
+
+        #popup {
+            color: red;
+        }
+
+        #popup2 {
+            color: red;
+        }
+
+        #popup3 {
+            color: red;
+        }
+
+        #h_5 {
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
+        #reg{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
+    <a class="navbar-brand" href="home">{Logo}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="mein_profil">Profil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="guthaben">Guthaben</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="login.html" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Parkplätze
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="parkplaetze_speziell">Meine Parkplätze</a>
+                    <a class="dropdown-item" href="parkplatz_hinzufuegen">Parkplatz hinzufügen</a>
+                    <a class="dropdown-item" href="parkplaetze">Alle Parkplätze</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="testweiterleitung">Einstellungen</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<div class="container">
+    <div class="card mb-3">
+        <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
+        <div class="card-body">
+            <h5 class="card-title">PLZ + Ort + Str. + Hausnummer</h5>
+            <p class="card-text">Beschreibung: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <div>
+                <p>Fahrzeugtypen:</p>
+                <p>Parkgebühr:</p>
+                <p>Strafgebühr:</p>
+                <p>Parkhöchstdauer:</p>
+            </div>
+        </div>
+        <form>
+            <select class="form-control" id="belegt">
+                <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
+                <option>Der Parkplatz ist frei</option>
+                <option>Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden</option>
+                <option>Ich belege den Parkplatz</option>
+            </select>
+
+            <div id="question">
+                <h5 id="h_5">Wollen sie ihren privaten Parkplatz wieder entfernen?</h5>
+            </div>
+            <div id="reg">
+                <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
+                    Parkplatz dauerhaft entfernen</button>
+            </div>
+        </form>
+        <div class="card-footer" id="farbe">
+            <img th:src="@{images/parkplatz3.jpg}" src="../static/images/P_Symbol.png" alt="Private/Icon">
+            <small class="text-muted"></small>
+        </div>
+    </div>
+</div>
+<script>
+    /*
+    Folgende Funktion sorgt dafür, dass wenn Nein! (man will keine Erinnerungsmail erhalten)
+    ausgewählt wird das Input-Fenster zur Angabe der Zeit, wann man die Mail erhalten
+    möchte ausgegraut/disabled wird.
+    Der Zweite Teil sorgt dafür, dass dies auch wieder enabled wird, sobald Ja! ausgewählt wird.
+    Der dritte Teil sorgt dafür, dass sich die Farbe des Footers abhängig von der Auswahl des
+    Statuses automatisch ändert.
+*/
+
+    /*
+        Hab erfolgreich die meisten Probleme behoben. Alter Code ist noch da ABER auskommentiert!
+        Einziges mir AKTUELL bekanntes PROBLEM:
+        Wenn in 3.datetime input feld ('#mail') schon etwas im falschen Format eingegeben wurde und dann
+        im Nachhinein noch Nein! ausgewählt wird, so bleibt das geschriebene im falschen Format in dem
+        Feld und das Feld ist nicht mehr zugänig. (Gelöst!!)
+        Neuer Fehler: Button wird nicht mehr aktiviert da @param: count nur 2 annimmt und nicht mehr 3.
+        ---> YESSSS!!
+        ---> Jetzt auch gelöst!
+    */
+
+    $(document).ready(function () {
+        $('#belegt').change(function () {
+            if ($(this).find('option:selected').text() == 'Der Parkplatz ist frei') {
+                //$('#farbe').attr("green_square");
+                //jQuery("div").prev("farbe").attr("id", "green_square");
+                $(".card-footer").attr('id', 'green_square');
+            }
+            if ($(this).find('option:selected').text() ==
+                'Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden') {
+                $(".card-footer").attr('id', 'orange_square');
+            }
+            if ($(this).find('option:selected').text() == 'Ich belege den Parkplatz') {
+                $(".card-footer").attr('id', 'red_square');
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

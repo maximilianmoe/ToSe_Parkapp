@@ -1,16 +1,10 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
-import de.g2p.ToSe_Parkapp.Entities.Standort;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.cdi.Eager;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class WebController {
@@ -18,22 +12,16 @@ public class WebController {
     @Autowired
     NutzerRepository nutzerRepository;
 
-    @GetMapping("/logintest")
-    public String index(Model model) {
-        model.addAttribute("nutzer", new Nutzer());
-        model.addAttribute("standort", new Standort());
-        return "logintest";
+    //GetMapping for the Login-Page for IP-Adress (or localhost) only
+    @GetMapping("/")
+    public String loginpage() {
+        return "login";
     }
 
-    @PostMapping("/logintest")
-    @ResponseBody
-    public String login(@ModelAttribute Nutzer nutzer, @ModelAttribute Standort standort) {
-        return standort.getStrasse()+" "+nutzer.getNachname();
-    }
-
-    @GetMapping("/home")
-    public String home() {
-        return "home";
+    //GetMapping for the testing page
+    @GetMapping("/testweiterleitung")
+    public String testweiterleitung() {
+        return "testweiterleitung";
     }
 
     //GetMapping for the error page
@@ -43,7 +31,64 @@ public class WebController {
     }
 
 
+    //GetMapping for the home page
+    @GetMapping("/home")
+    public String home() {
+        return "home";
+    }
+    //remove {id} when spring security is in place
+    @GetMapping("/home-{id}")
+    public String homeAdmin(@PathVariable("id") Integer id) {
+        String returnstring = "";
+        Nutzer nutzer = nutzerRepository.findByNid(id);
+        if(nutzer.getAdmin() == true)
+            returnstring = "home_admin";
+        else
+            returnstring = "home";
+        return returnstring;
+    }
 
 
 
+    //GetMapping for the Login Page
+    @GetMapping("/login")
+    public String loginGet() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginPost() {
+        //test if the given username and password are correct
+        return "home";
+    }
+
+    @GetMapping("/passwort_zurueckgesetzt")
+    public String passwortZurueck() {
+        return "passwort_zurueckgesetzt";
+    }
+
+    @GetMapping("/admin_alle_ausstehenden_reservierungen")
+    public String adminRes() {
+        return "admin_alle_ausstehenden_reservierungen";
+    }
+
+    @GetMapping("/admin_vergangene_transaktionen")
+    public String adminTrans() {
+        return "admin_vergangene_transaktionen";
+    }
+
+
+
+    //GetMapping for the buttons on the home page if there is no mapping in other classes
+    //Profil and Kontakt has to be added later when the html pages are done
+
+    @GetMapping("/suche")
+    public String suche() {
+        return "parkplaetze";
+    }
+
+    @GetMapping("/aktueller_parkplatz")
+    public String aktuellerParkplatz() {
+        return "spezieller_parkplatz";
+    }
 }
