@@ -33,4 +33,9 @@ public interface NutzerRepository extends JpaRepository<Nutzer, Integer> {
     @Modifying
     @Query(value = "update nutzer set admin = :admin where nid = :nid", nativeQuery = true)
     void updateAdmin(@Param("nid") Integer nid, @Param("admin") boolean admin);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update nutzer set passwort = :passwort where emailadresse = :emailadresse", nativeQuery = true)
+    void updatePasswort(@Param("emailadresse") String emailadress, @Param("passwort") String password);
 }

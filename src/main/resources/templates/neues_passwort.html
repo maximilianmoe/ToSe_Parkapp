@@ -4,22 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login</title>
+    <title>Neues Passwort</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style type="text/css">
-        .login-form {
+        .newpw-form {
             width: 340px;
             margin: 50px auto;
         }
-        .login-form form {
+        .newpw-form form {
             margin-bottom: 15px;
             background: #f7f7f7;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
             padding: 30px;
         }
-        .login-form h2 {
+        .newpw-form h2 {
             margin: 0 0 15px;
         }
         .form-control, .btn {
@@ -30,40 +30,50 @@
             font-size: 15px;
             font-weight: bold;
         }
-        #pwvergessen{
-            text-align:center
-        }
-        #welcome{
+        #newpw{
             text-align: center;
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
-        #login{
+        #resettext{
             font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 15px;
         }
     </style>
 </head>
 <body>
 <div>
-    <h2 id="welcome">Willommen bei Good2Park</h2>
+    <h2 id="newpw">Neues Passwort setzten!</h2>
 </div>
 <p></p>
-<div class="login-form">
-    <form action="#" th:action="@{/login}" method="post">
-        <h2 class="text-center" id="login">Log in</h2>
+<div class="newpw-form">
+    <form action="#" th:action="@{/newpassword}" method="post">
+        <h2 class="text-center" id="resettext">Geben Sie ihre E-Mail Adresse und Ihr neues Passwort ein.</h2>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Username" required="required">
-        </div>
-        <div class="form-group">
-            <input type="password" class="form-control" placeholder="Passwort" required="required">
+            <input type="email" class="form-control" th:name="emailaddresse" th:value=*{nutzer.emailAdresse} placeholder="E-Mail" required="required">
         </div>
         <div class="form-group">
-            <a href="home"><button type="submit" class="btn btn-primary btn-block">Log In</button></a>
+            <input type="password" class="form-control" id="pw1" th:name="newPassword" placeholder="Passwort" required="required">
         </div>
-        <div class="clearfix" id="pwvergessen">
-            <a href="/passwordreset" class="text-center">Passwort vergessen?</a>
+        <div class="form-group">
+            <input type="password" class="form-control" id="pw2" placeholder="Passwort bestätigen" required="required">
         </div>
-    </form>
-    <p class="text-center"><a href="registrieren">Account erstellen</a></p>
+        <div class="form-group">
+            <a href="passwort_zurueckgesetzt.html"><button type="submit" class="btn btn-primary btn-block">Senden</button></a>
+        </div>
+
 </div>
+<script>
+    $('#pw2').focusout(function () {
+        var pw1 = $('#pw1').val();
+        var pw2 = $('#pw2').val();
+        if (pw1 != pw2) {
+            alert('Passwörter stimmen nicht überein!');
+            $('#btn').prop('disabled', true);
+        } else {
+            $('#btn').prop('disabled', false);
+        }
+    });
+</script>
 </body>
 </html>
+
