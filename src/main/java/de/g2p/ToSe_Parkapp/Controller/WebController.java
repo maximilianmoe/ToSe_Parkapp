@@ -2,8 +2,10 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
+import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -36,18 +38,18 @@ public class WebController {
     public String home() {
         return "home";
     }
+
     //remove {id} when spring security is in place
     @GetMapping("/home-{id}")
     public String homeAdmin(@PathVariable("id") Integer id) {
         String returnstring = "";
         Nutzer nutzer = nutzerRepository.findByNid(id);
-        if(nutzer.getAdmin() == true)
+        if (nutzer.getAdmin() == true)
             returnstring = "home_admin";
         else
             returnstring = "home";
         return returnstring;
     }
-
 
 
     //GetMapping for the Login Page
@@ -64,7 +66,7 @@ public class WebController {
 
     @GetMapping("/passwort_zurueckgesetzt")
     public String passwortZurueck() {
-        return "passwort_zurueckgesetzt";
+        return "email_bestaetigt";
     }
 
     @GetMapping("/admin_alle_ausstehenden_reservierungen")
@@ -78,9 +80,8 @@ public class WebController {
     }
 
 
-
     //GetMapping for the buttons on the home page if there is no mapping in other classes
-    //Profil and Kontakt has to be added later when the html pages are done
+    // ToDo Profil and Kontakt has to be added later when the html pages are done
 
     @GetMapping("/suche")
     public String suche() {
@@ -91,4 +92,56 @@ public class WebController {
     public String aktuellerParkplatz() {
         return "spezieller_parkplatz";
     }
+
+
+    //GetMapping for getting an E-Mail to set a new password.
+    @GetMapping("/passwordreset")
+    public String resetPasswordGet(Model model) {
+        model.addAttribute("nutzer", new Nutzer());
+        return "passwort_zuruecksetzten";
+    }
+
+    //PostMapping for getting an E-Mail to set a new password.
+    @PostMapping("/passwordreset")
+    public String resetPasswordPost(@RequestParam("emailaddresse") String emailaddress) {
+
+        /*ToDo try convert a String into a HTML hyperlink so that the User ust has to click on it in the mail instead of copy and pasting the url. Following is a example how to do this...
+        String url = "stackoverflow.com/questions/ask";
+        String someVariable = "testUrl";
+        Html entryLink = new Html("<a target=\"_blank\" href=\"" + url + "\">" + someVariable + "</a>");*/
+
+        MailService mailService = new MailService();
+        String resetLink = "localhost:8080/newpassword";
+        mailService.sendSimpleMessage(emailaddress, "Passwort zurücksetzten", "Bitte öffnen Sie auf folgenden Link, durch kopieren und einfügen im Browser, um Ihr Passwort zurückzusetzten: \n" + resetLink);
+
+        return "email_bestaetigt";
+    }
+
+
+    //GetMapping for setting the new password.
+    @GetMapping("/newpassword")
+    public String newPasswordGet(Model model) {
+
+        model.addAttribute("nutzer", new Nutzer());
+
+        return "neues_passwort";
+    }
+
+    //PostMapping for setting the new password.
+    @PostMapping("/newpassword")
+    public String newPasswordPost(@ModelAttribute Nutzer nutzer, @RequestParam("emailaddresse") String emailaddress, @RequestParam("newPassword") String password) {
+
+        boolean check = nutzerRepository.findByEmailAdresse(emailaddress).isPresent();
+        String returnString = "";
+        if (check) {
+            nutzerRepository.updatePasswort(emailaddress, password);
+            returnString = "passwort_zurueckgesetzt";
+        } else {
+            returnString = "error_page";
+        }
+        return returnString;
+    }
+
+
 }
+

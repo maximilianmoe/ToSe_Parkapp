@@ -2,12 +2,15 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.Parkplatz;
 import de.g2p.ToSe_Parkapp.Entities.Standort;
+import de.g2p.ToSe_Parkapp.Fahrzeugtyp;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
 import de.g2p.ToSe_Parkapp.Repositories.StandortRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class ParkplatzController {
@@ -17,58 +20,33 @@ public class ParkplatzController {
     @Autowired
     StandortRepository standortRepository;
 
-    @GetMapping("/parkplaetze")
-    public String parkplaetze() {
-        return "parkplaetze";
-    }
-
-    @GetMapping("/parkplatz_hinzufuegen")
+    @GetMapping("/add")
     public String add(Model model) {
         model.addAttribute("parkplatz", new Parkplatz());
         model.addAttribute("standort", new Standort());
         return "parkplatz_hinzufuegen";
     }
 
-    @PostMapping("/parkplatz_hinzufuegen")
+    @PostMapping("/add")
     public String addParkplatz(@ModelAttribute Parkplatz parkplatz, @ModelAttribute Standort standort,
                                @RequestParam("parkplatzChecked") String checked,
-                               @RequestParam("fahrzeugtyp") String fahrzeugtyp,
-                               @RequestParam("zeitbegrenzung") Integer zeitbegrenzung, Model model) {
+                               @RequestParam("fahrzeugtyp") String fahrzeugtyp) {
         // Example for checking an already existing Standort where no new database entry is created
 //        for (Standort standortvariable : standortRepository.findAll()) {
-//            System.out.println(standortvariable.getStrasse()+" for schleife 1");
-//            System.out.println(standortvariable.getHausnummer()+" for schleife 1");
-//            System.out.println(standortvariable.getPlz()+" for schleife 1");
-//            System.out.println("");
-//            System.out.println(standort.getStrasse()+" for schleife 2");
-//            System.out.println(standort.getHausnummer()+" for schleife 2");
-//            System.out.println(standort.getPlz()+" for schleife 2");
-//            System.out.println("");
-//            System.out.println("");
-//            System.out.println("");
-//            if (standortvariable.getPlz().equals(standort.getPlz())) {
-//                System.out.println("sout1     plz");
-//
-//                if (standortvariable.getStrasse().equalsIgnoreCase(standort.getStrasse())) {
-//                    System.out.println("sout2      strasse");
-//
-//                    if (standortvariable.getHausnummer().equals(standort.getHausnummer())) {
-//                        System.out.println("sout3     hausnummer");
-//                        System.out.println(standortvariable.getStrasse());
-//                        parkplatz.setOrtid(standortvariable);
-//                        break;
+//            if (standortvariable.getStrasse() == standort.getStrasse())
+//                if(standortvariable.getHausnummer() == standort.getHausnummer())
+//                    if(standortvariable.getPlz() == standort.getPlz()) {
+//                        standort.setOrtid(standortvariable.getOrtid());
+//                        Integer ortId = standortvariable.getOrtid()
+//                        parkplatz.setOrtid(ortId);
 //                    }
-//                }
-//            }
 //        }
 
-
-        //parkplatz.setAnbieterId(findNutzer());
+        //parkplatz.setAid has to be Implemented!!
         parkplatz.setStatus("frei");
         parkplatz.setOrtid(standort);
         parkplatz.setBewertung(0);
         parkplatz.setBewertungsanzahl(0);
-        parkplatz.setZeitbegrenzung(zeitbegrenzung);
 
         //Sets Parkplatz to private if the box for "privater Parkplatz" is checked
         if(checked.contains("1"))
@@ -84,41 +62,18 @@ public class ParkplatzController {
         parkplatzRepository.save(parkplatz);
         standortRepository.save(standort);
 
-        //getting an Overview page after adding a new Parkplatz
-        model.addAttribute("parkplatz", parkplatz);
-        model.addAttribute("standort", standort);
-        speziellerParkplatz(model);
-
         //Übersichtsseite erstellen und den Namen hier ändern
-        return "spezieller_parkplatz";
+        return "testweiterleitung";
     }
 
-    @GetMapping("/spezieller_parkplatz")
-    public String speziellerParkplatz(Model model) {
-        return "spezieller_parkplatz";
-    }
-
-    @GetMapping("/parkplaetze_speziell")
-    public String parkplatzSpeziell (Model model) {
-        Parkplatz parkplatz = parkplatzRepository.findByPid(31);
-        Standort standort = standortRepository.findByOrtid(parkplatz.getOrtId());
-        model.addAttribute("parkplatz", parkplatz);
-        model.addAttribute("standort", standort);
-        return "spezieller_parkplatz";
+    @GetMapping("/testlauf")
+    @ResponseBody
+    public List<Parkplatz> testlauf() {
+        return parkplatzRepository.findAll();
     }
 
 
-//    //returns the user
-//    private String findNutzer() {
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String username;
-//        if (principal instanceof UserDetails) {
-//            username = ((UserDetails) principal).getUsername();
-//            //here you can set all the necessary information with the given user
-//        } else {
-//            username = principal.toString();
-//        }
-//        System.out.println(username);
-//        return username;
-//    }
+
+
+
 }
