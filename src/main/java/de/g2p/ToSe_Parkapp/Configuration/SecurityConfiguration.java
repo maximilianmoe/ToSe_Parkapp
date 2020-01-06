@@ -31,22 +31,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //sets the configuration on the auth object
         auth.userDetailsService(userDetailsService);
-
-
-//                .dataSource(dataSource)
-//                .usersByUsernameQuery("select benutzername, passwort, gesperrt from nutzer " +
-//                        "where benutzername = ?")
-//                .authoritiesByUsernameQuery("select benutzername, admin from nutzer where benutzername = ?");
-
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 //add all other html sites and check the "hasRole" function again!
-                .antMatchers("/adminseite").authenticated()
-                .antMatchers("/testweiterleitung").authenticated()
-                .antMatchers("/home").authenticated()
+                .antMatchers("/**").authenticated()
+                .antMatchers("/home_admin").hasRole("admin")
+                .antMatchers("/home").hasRole("nutzer")
                 .and().formLogin();
     }
 }

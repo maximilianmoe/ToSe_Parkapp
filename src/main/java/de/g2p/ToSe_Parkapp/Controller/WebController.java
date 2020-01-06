@@ -2,9 +2,16 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
+import de.g2p.ToSe_Parkapp.Service.MyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 public class WebController {
@@ -15,7 +22,7 @@ public class WebController {
     //GetMapping for the homepage for IP-Adress (or localhost) only
     @GetMapping("/")
     public String homeGet() {
-        return "home";
+        return "redirect:/home";
     }
 
     //GetMapping for the testing page
@@ -30,24 +37,17 @@ public class WebController {
         return "error_page";
     }
 
-
-    //GetMapping for the home page
+    //GetMapping for the homepage
     @GetMapping("/home")
-    public String home() {
-        return "home";
-    }
-    //remove {id} when spring security is in place
-    @GetMapping("/home-{id}")
-    public String homeAdmin(@PathVariable("id") Integer id) {
+    public String homeAdmin() {
+        Nutzer nutzer = findNutzer();
         String returnstring = "";
-        Nutzer nutzer = nutzerRepository.findByNid(id);
         if(nutzer.getAdmin().equalsIgnoreCase("admin"))
             returnstring = "home_admin";
         else
             returnstring = "home";
         return returnstring;
     }
-
 
     //GetMapping for the Login Page
     @GetMapping("/login")
@@ -89,5 +89,17 @@ public class WebController {
     @GetMapping("/aktueller_parkplatz")
     public String aktuellerParkplatz() {
         return "spezieller_parkplatz";
+    }
+
+    public Nutzer findNutzer() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String benutzername = "";
+        if(principal instanceof UserDetails) {
+            benutzername = ((UserDetails) principal).getUsername();
+        }
+        else
+            benutzername = principal.toString();
+        Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
+        return nutzer;
     }
 }
