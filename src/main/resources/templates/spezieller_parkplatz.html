@@ -123,49 +123,49 @@
         <img th:src="@{images/parkplatz3.jpg}">
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
 
-        <form>
+        <form action="#" th:action="@{/special_parkingslot}" method="post">
             <div class="card-body">
                 <h5 class="card-title">
                 <p>
                     <span>PLZ: </span>
-                    <span th:text="${standort.plz}"></span>
+<!--                    <span th:text="${standort.plz}"></span>-->
                 </p>
                     <p>
                     <span>Straße: </span>
-                    <span th:text="${standort.strasse}"></span>
-                    <span th:text="${standort.hausnummer}"></span>
+<!--                    <span th:text="${standort.strasse}"></span>-->
+<!--                    <span th:text="${standort.hausnummer}"></span>-->
                 </p>
                 </h5>
                 <p>
                     <span>Beschreibung: </span>
-                    <span th:text="${parkplatz.beschreibung}"></span>
+<!--                    <span th:text="${parkplatz.beschreibung}"></span>-->
                 </p>
 
                 <div class="col">
                     <div class="row">
                         <p>
                             <span>Fahrzeugtypen:  </span>
-                            <span th:text="${parkplatz.fahrzeugtyp}"></span>
+<!--                            <span th:text="${parkplatz.fahrzeugtyp}"></span>-->
                         </p>
                     </div>
                     <div class="row">
                         <p>
                             <span>Parkgebühr:  </span>
-                            <span th:text="${parkplatz.parkgebuehr}"></span>
+<!--                            <span th:text="${parkplatz.parkgebuehr}"></span>-->
                             <span> Euro</span>
                         </p>
                     </div>
                     <div class="row">
                         <p>
                             <span>Strafgebühr:  </span>
-                            <span th:text="${parkplatz.strafgebuehr}"></span>
+<!--                            <span th:text="${parkplatz.strafgebuehr}"></span>-->
                             <span> Euro</span>
                          </p>
                     </div>
                     <div class="row">
                         <p>
                             <span>Parkhöchstdauer:  </span>
-                            <span th:text="${parkplatz.zeitbegrenzung}"></span>
+<!--                            <span th:text="${parkplatz.zeitbegrenzung}"></span>-->
                             <span> Minuten</span>
                         </p>
                     </div>
@@ -182,36 +182,35 @@
             <h5 id="ueberschrift">Parkplatz Reservieren:</h5>
             <div class="row">
                 <div class="col">
-                    <h6>Anfanngszeit & Datum:</h6>
-                    <input type="datetime-local" id="datetime1" th:value="*{reservierung.start}" th:name="startDatum" class="form-control"
-                           placeholder="Bsp.: 01.01.2020 10:00">
+                    <h6>Anfanngsdatum:</h6>
+                    <input type="date" id="date1" th:name="startDatum" class="form-control"
+                           placeholder="Bsp.: 01.01.2020">
                     <span id="popup"></span>
                 </div>
                 <div class="col">
-                    <h6>Endzeit & Datum:</h6>
-                    <input type="datetime-local" id="datetime2" th:value="*{reservierung.ende}" th:name="endeDatum" class="form-control"
+                    <h6>Enddatum:</h6>
+                    <input type="date" id="date2" th:name="endeDatum" class="form-control"
                            placeholder="Bsp.: 01.01.2020 13:00">
                     <span id="popup2"></span>
                 </div>
             </div>
             <div class="row">
-                <!--
                 <div class="col">
                     <div class="form-group">
-                        <h6>Wollen Sie eine Erinnerungsmail erhalten?</h6>
-                        <select id="question" class="form-control"th:name="parkplatzChecked">
-                            <option value="1">Ja!</option>
-                            <option value="2">Nein!</option>
-                        </select>
+                        <h6>Anfangszeit</h6>
+                        <input type="time" id="time1" th:name="startZeit" class="form-control"
+                           placeholder="Bsp.: 12:00">
+                    <span id="popup3"></span>
                     </div>
                 </div>
 
                 <div class="col">
-                    <h6 id="mail_txt">Wann wollen Sie die Erinnerungsmail erhalten?</h6>
-                    <input type="text" class="form-control" id="mail" placeholder="Bsp.: 01.01.2020 08:00">
-                    <span id="popup3"></span>
+                    <h6>Endzeit</h6>
+                        <input type="time" id="time2" th:name="endeZeit" class="form-control"
+                           placeholder="Bsp.: 13:00">
+                    <span id="popup4"></span>
                 </div>
-                -->
+
                 <div class="container">
                     <h6 id="reminder">Sie erhalten automatisch 30 Minuten vor ihrem Reservierungsbeginn eine
                         Erinnerungsmail!</h6>

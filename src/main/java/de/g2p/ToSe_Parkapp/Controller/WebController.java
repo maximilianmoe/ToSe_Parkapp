@@ -105,7 +105,7 @@ public class WebController {
     @PostMapping("/passwordreset")
     public String resetPasswordPost(@RequestParam("emailaddresse") String emailaddress) {
 
-        /*ToDo try convert a String into a HTML hyperlink so that the User ust has to click on it in the mail instead of copy and pasting the url. Following is a example how to do this...
+        /*TODO try convert a String into a HTML hyperlink so that the User ust has to click on it in the mail instead of copy and pasting the url. Following is a example how to do this...
         String url = "stackoverflow.com/questions/ask";
         String someVariable = "testUrl";
         Html entryLink = new Html("<a target=\"_blank\" href=\"" + url + "\">" + someVariable + "</a>");*/
@@ -137,6 +137,7 @@ public class WebController {
             nutzerRepository.updatePasswort(emailaddress, password);
             returnString = "passwort_zurueckgesetzt";
         } else {
+//            TODO change errror_page to specific error_page for this content
             returnString = "error_page";
         }
         return returnString;
