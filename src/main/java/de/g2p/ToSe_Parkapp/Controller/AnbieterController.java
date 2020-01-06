@@ -10,19 +10,5 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/anbieter")
 public class AnbieterController {
-
-    @Autowired
-    AnbieterRepository anbieterRepository;
-
-    @GetMapping("/getall")
-    public List<Anbieter> findAll(){
-        return anbieterRepository.findAll();
-    }
-
-    public String insertOne(){
-        //anbieterRepository.save(new Anbieter());
-        return "redirect:/anbieter/getall";
-    }
 }

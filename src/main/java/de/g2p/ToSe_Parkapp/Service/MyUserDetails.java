@@ -14,12 +14,14 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyUserDetails implements UserDetails {
 
+    private Nutzer nutzer;
     private String benutzername;
     private String passwort;
     private boolean gesperrt;
     private List<GrantedAuthority> authorities;
 
     public MyUserDetails(Nutzer nutzer) {
+        this.nutzer = nutzer;
         this.benutzername = nutzer.getBenutzername();
         this.passwort = nutzer.getPasswort();
         this.gesperrt = nutzer.getSperrung();
@@ -66,5 +68,9 @@ public class MyUserDetails implements UserDetails {
         else if(gesperrt == false)
             returnvalue = true;
         return returnvalue;
+    }
+
+    public Nutzer getUserDetails() {
+        return nutzer;
     }
 }

@@ -3,15 +3,21 @@ package de.g2p.ToSe_Parkapp.Controller;
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import de.g2p.ToSe_Parkapp.Service.MyUserDetailService;
+import de.g2p.ToSe_Parkapp.Service.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.logging.Logger;
 
 @Controller
 public class WebController {
@@ -22,7 +28,7 @@ public class WebController {
     //GetMapping for the homepage for IP-Adress (or localhost) only
     @GetMapping("/")
     public String homeGet() {
-        return "redirect:/home";
+        return "home";
     }
 
     //GetMapping for the testing page
@@ -49,17 +55,7 @@ public class WebController {
         return returnstring;
     }
 
-    //GetMapping for the Login Page
-    @GetMapping("/login")
-    public String loginGet() {
-        return "login";
-    }
 
-    @PostMapping("/login")
-    public String loginPost() {
-        //test if the given username and password are correct
-        return "home";
-    }
 
     @GetMapping("/passwort_zurueckgesetzt")
     public String passwortZurueck() {
@@ -76,6 +72,30 @@ public class WebController {
         return "admin_vergangene_transaktionen";
     }
 
+    //GetMapping for the Login Page
+    @GetMapping("/login")
+    public String loginGet() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginPost(Model model, HttpSession session) {
+        return "home";
+    }
+
+    //GetMapping for the logout page and redirect to the login form
+    @GetMapping("/logout")
+    public String logoutGet() {
+        return "logout";
+    }
+    @PostMapping("/logout")
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "login?logout";
+    }
 
 
     //GetMapping for the buttons on the home page if there is no mapping in other classes
@@ -94,11 +114,11 @@ public class WebController {
     public Nutzer findNutzer() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String benutzername = "";
-        if(principal instanceof UserDetails) {
+        if(principal instanceof UserDetails)
             benutzername = ((UserDetails) principal).getUsername();
-        }
         else
             benutzername = principal.toString();
+
         Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
         return nutzer;
     }

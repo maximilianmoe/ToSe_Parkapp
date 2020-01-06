@@ -30,8 +30,6 @@ public class NutzerController {
         model.addAttribute("nutzer", new Nutzer());
         model.addAttribute("konsument", new Konsument());
         model.addAttribute("anbieter", new Anbieter());
-        String fahrzeugtyp = "kleinwagen";
-        model.addAttribute("fahrzeugtyp", fahrzeugtyp);
         return "registrieren";
     }
 
@@ -47,6 +45,7 @@ public class NutzerController {
         if (duplicate) {
             //add this to the hmtl page
             System.out.println("Duplicate Nutzer");
+            return "registrieren";
         }
         else {
             nutzer.setAdmin("nutzer");
@@ -54,7 +53,6 @@ public class NutzerController {
             nutzer.setSaldo(0);
             nutzer.setEmailAdresse(email);
             nutzer.setBenutzername(benutzername);
-            System.out.println(benutzername);
 
             //Set all values for Anbieter
             if (nutzertyp.contains("anbieter")) {
@@ -71,14 +69,12 @@ public class NutzerController {
                     konsument.setFahrzeugtyp("kleinwagen");
 
                 anbieterRepository.save(anbieter);
-                System.out.println("save anbieter");
             }
             //Set all values for Konsument
             else if (nutzertyp.contains("konsument")) {
                 konsument.setNid(nutzer.getNidNutzer());
                 konsumentRepository.save(konsument);
                 nutzer.setRolle("konsument");
-                System.out.println("save Konsument");
             }
             //Set all values for both
             else if (nutzertyp.contains("beides")) {
@@ -97,11 +93,9 @@ public class NutzerController {
 
                 anbieterRepository.save(anbieter);
                 konsumentRepository.save(konsument);
-                System.out.println("save anbieter and konsument");
             }
             System.out.println(nutzer.getBenutzername());
             nutzerRepository.save(nutzer);
-            System.out.println("save nutzer");
         }
 
             return "home";
@@ -125,7 +119,6 @@ public class NutzerController {
 
     @GetMapping("/guthabenverwaltung")
     public String guthabenGet(Model model) {
-        //nid = 13 for testing
         Nutzer nutzer = findNutzer();
         model.addAttribute("nutzer", nutzer);
         return "guthabenverwaltung";
@@ -134,7 +127,7 @@ public class NutzerController {
     @PostMapping("/guthabenverwaltung")
     public String guthabenPost(Nutzer nutzer, @RequestParam("button") String button,
                                @RequestParam("betrag") Integer betrag) {
-        //nid = 13 for testing
+
         Nutzer nutzer2 = findNutzer();
         Integer saldo = nutzer2.getSaldo();
 
@@ -144,7 +137,7 @@ public class NutzerController {
         else if (button.contains("2"))
             saldo = saldo - betrag;
 
-        nutzerRepository.updateSaldo(saldo, nutzer2.getSaldo());
+        nutzerRepository.updateSaldo(saldo, nutzer2.getNid());
         //redirect to guthabenweiterleitung because the new saldo is not displayed properly
         return "guthabenweiterleitung";
     }
@@ -163,12 +156,11 @@ public class NutzerController {
     public Nutzer findNutzer() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String benutzername = "";
-        if(principal instanceof UserDetails) {
+        if(principal instanceof UserDetails)
             benutzername = ((UserDetails) principal).getUsername();
-            System.out.println(benutzername);
-        }
         else
             benutzername = principal.toString();
+
         Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
         return nutzer;
     }
