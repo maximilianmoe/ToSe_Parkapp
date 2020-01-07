@@ -20,8 +20,6 @@ public interface NutzerRepository extends JpaRepository<Nutzer, Integer> {
     @Query(value = "select * from nutzer where benutzername = :benutzername", nativeQuery = true)
     Nutzer findByBenutzernameNO(@Param("benutzername") String benutzername);
 
-    Optional<Nutzer> findByEmailAdresse(String emailadresse);
-
     @Query(value = "select * from nutzer where nid = :nid ", nativeQuery = true)
     Integer findByNidInteger(@Param("nid")Integer nid);
 
