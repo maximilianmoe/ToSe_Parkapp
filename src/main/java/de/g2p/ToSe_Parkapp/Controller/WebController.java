@@ -2,13 +2,9 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
-import de.g2p.ToSe_Parkapp.Service.MyUserDetailService;
-import de.g2p.ToSe_Parkapp.Service.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -17,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.logging.Logger;
 
 @Controller
 public class WebController {
@@ -54,8 +49,6 @@ public class WebController {
             returnstring = "home";
         return returnstring;
     }
-
-
 
     @GetMapping("/passwort_zurueckgesetzt")
     public String passwortZurueck() {
@@ -95,6 +88,21 @@ public class WebController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "login?logout";
+    }
+
+    @GetMapping("/parkplatz_allgemein")
+    public String parkplatzAllg() {
+        String returnstring = "";
+        Nutzer nutzer = findNutzer();
+
+        if(nutzer.getRolle().equalsIgnoreCase("beides"))
+            returnstring = "parkplaetze_anbieter";
+        else if(nutzer.getRolle().equalsIgnoreCase("anbieter"))
+            returnstring="parkplaetze_beides";
+        else if (nutzer.getRolle().equalsIgnoreCase("konsument"))
+            returnstring = "parkplaetze_konsument";
+
+        return returnstring;
     }
 
 
