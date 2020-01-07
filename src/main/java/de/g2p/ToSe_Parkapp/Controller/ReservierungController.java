@@ -53,7 +53,7 @@ public class ReservierungController {
         String returnString = "";
         Nutzer nutzer = findNutzer();
 
-        if (/*nutzer.getSaldo() < parkplatz.getParkgebuehr()*/false) {
+        if (nutzer.getSaldo() < parkplatz.getParkgebuehr()) {
 //            TODO change errror_page to specific error_page for this content
             returnString = "error_page";
         }else{
