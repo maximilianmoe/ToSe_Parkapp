@@ -27,9 +27,13 @@ public class ReservierungController {
     @Autowired
     NutzerRepository nutzerRepository;
     @Autowired
+    AnbieterRepository anbieterRepository;
+    @Autowired
     KonsumentRepository konsumentRepository;
     @Autowired
     ParkplatzRepository parkplatzRepository;
+    @Autowired
+    StandortRepository standortRepository;
 
 
     @GetMapping("/meine_reservierungen")
@@ -37,14 +41,21 @@ public class ReservierungController {
         return "meine_reservierungen";
     }
 
-    @GetMapping("/special_parkingslot-{id}")
-    public String reserve(Model model, @PathVariable("id") Integer id) {
-        Parkplatz parkplatz = parkplatzRepository.findByPid(id);
+
+
+    @GetMapping("/special_parkingslot")
+    public String reserve(Model model, @RequestParam("special-parkingslot") String aid) {
+        //TODO find a solution for the id issue (-> how the Parkplatz is selected)
+        System.out.println(aid);
+        Nutzer nutzer = findNutzer();
+        //TODO change aid
+        Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
+        Standort standort = parkplatzRepository.findByOrtid(parkplatz.getOrtId());
+        model.addAttribute("standort", standort);
         model.addAttribute("reservierung", new Reservierung());
         model.addAttribute("parken", new Parken());
         model.addAttribute("parkplatz", parkplatz);
         return "spezieller_parkplatz";
-
     }
 
     @PostMapping("/special_parkingslot")
@@ -78,6 +89,7 @@ public class ReservierungController {
             System.out.println("1");
 
             //Saves all data in the database
+            //TODO wird hier wirklich nur in parken gespeichert oder auch in reservierung?
             parkenRepository.save(parken);
             System.out.println("2");
 //           TODO throws exception when comming to this code... don't no why, says that 'saldo' isn't in 'field list'....

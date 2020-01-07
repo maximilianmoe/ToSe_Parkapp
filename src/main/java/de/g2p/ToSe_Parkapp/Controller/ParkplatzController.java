@@ -1,9 +1,6 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
-import de.g2p.ToSe_Parkapp.Entities.Anbieter;
-import de.g2p.ToSe_Parkapp.Entities.Nutzer;
-import de.g2p.ToSe_Parkapp.Entities.Parkplatz;
-import de.g2p.ToSe_Parkapp.Entities.Standort;
+import de.g2p.ToSe_Parkapp.Entities.*;
 import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
@@ -31,9 +28,18 @@ public class ParkplatzController {
 
     @GetMapping("/parkplatz_hinzufuegen")
     public String add(Model model) {
-        model.addAttribute("parkplatz", new Parkplatz());
-        model.addAttribute("standort", new Standort());
-        return "parkplatz_hinzufuegen";
+        Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
+        String returnstring = "";
+        //Checks if anbieter already has a Parkplatz
+        if (anbieter.getParkplatz() == true) {
+            returnstring = "error_bereits_ein_parkplatz";
+        }
+        else {
+            model.addAttribute("parkplatz", new Parkplatz());
+            model.addAttribute("standort", new Standort());
+            returnstring = "parkplatz_hinzufuegen";
+        }
+        return returnstring;
     }
 
     @PostMapping("/parkplatz_hinzufuegen")
@@ -51,31 +57,31 @@ public class ParkplatzController {
 //                    }
 //        }
 
+            Anbieter aid = anbieterRepository.findByNid(findNutzer());
+            parkplatz.setAnbieterId(aid);
+            parkplatz.setStatus("frei");
+            parkplatz.setOrtid(standort);
+            parkplatz.setBewertung(0);
+            parkplatz.setBewertungsanzahl(0);
 
+            //Sets Parkplatz to private if the box for "privater Parkplatz" is checked
+            if (checked.contains("1")) {
+                parkplatz.setPrivat(true);
+                parkplatz.setZeitbegrenzung(0);
+                parkplatz.setParkgebuehr(0);
+                parkplatz.setStrafgebuehr(0);
+            } else if (checked.contains("2"))
+                parkplatz.setPrivat(false);
 
-        Anbieter aid = anbieterRepository.findByNid(findNutzer());
-        parkplatz.setAnbieterId(aid);
-        parkplatz.setStatus("frei");
-        parkplatz.setOrtid(standort);
-        parkplatz.setBewertung(0);
-        parkplatz.setBewertungsanzahl(0);
+            //Sets Fahrzeugtyp if box is checked
+            if (fahrzeugtyp.contains("on"))
+                parkplatz.setFahrzeugtyp(fahrzeugtyp);
 
-        //Sets Parkplatz to private if the box for "privater Parkplatz" is checked
-        if(checked.contains("1"))
-            parkplatz.setPrivat(true);
-        else if (checked.contains("2"))
-            parkplatz.setPrivat(false);
-
-        //Sets Fahrzeugtyp if box is checked
-        if(fahrzeugtyp.contains("on"))
-            parkplatz.setFahrzeugtyp(fahrzeugtyp);
-
-        //Saves all data in the database
-        parkplatzRepository.save(parkplatz);
-        standortRepository.save(standort);
-
-        //Übersichtsseite erstellen und den Namen hier ändern
-        return "testweiterleitung";
+            //Saves all data in the database
+            parkplatzRepository.save(parkplatz);
+            anbieterRepository.updateParkplatz(true, aid.getAid());
+            standortRepository.save(standort);
+            return "special_parkingslot_own";
     }
 
     @GetMapping("/parkplaetze_medialist")
@@ -96,6 +102,19 @@ public class ParkplatzController {
             returnstring = "parkplaetze_konsument";
 
         return returnstring;
+    }
+
+    //returns the Parkplatz after it is created
+    @GetMapping("/special_parkingslot_own")
+    public String ownParkingslot(Model model) {
+        Nutzer nutzer = findNutzer();
+        Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
+        Standort standort = standortRepository.findByOrtid(parkplatz.getOrtId());
+        model.addAttribute("parkplatz",parkplatz);
+        model.addAttribute("standort", standort);
+        model.addAttribute("reservierung", new Reservierung());
+        model.addAttribute("parken", new Parken());
+        return "spezieller_parkplatz";
     }
 
     public Nutzer findNutzer() {

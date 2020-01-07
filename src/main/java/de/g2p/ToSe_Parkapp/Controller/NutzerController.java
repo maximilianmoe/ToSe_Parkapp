@@ -60,13 +60,13 @@ public class NutzerController {
                 nutzer.setRolle("anbieter");
                 //Set fahrzeugtyp for anbieter
                 if (fahrzeugtyp.contains("van"))
-                    konsument.setFahrzeugtyp("van");
+                    konsument.setFahrzeugtyp("Van");
                 else if (fahrzeugtyp.contains("kombi"))
-                    konsument.setFahrzeugtyp("kombi");
+                    konsument.setFahrzeugtyp("Kombi");
                 else if (fahrzeugtyp.contains("suv"))
-                    konsument.setFahrzeugtyp("suv");
+                    konsument.setFahrzeugtyp("SUV");
                 else if (fahrzeugtyp.contains("kleinwagen"))
-                    konsument.setFahrzeugtyp("kleinwagen");
+                    konsument.setFahrzeugtyp("Kleinwagen");
 
                 anbieterRepository.save(anbieter);
             }
@@ -83,13 +83,13 @@ public class NutzerController {
                 nutzer.setRolle("beides");
                 //Set fahrzeugtyp for both
                 if (fahrzeugtyp.contains("van"))
-                    konsument.setFahrzeugtyp("van");
+                    konsument.setFahrzeugtyp("Van");
                 else if (fahrzeugtyp.contains("kombi"))
-                    konsument.setFahrzeugtyp("kombi");
+                    konsument.setFahrzeugtyp("Kombi");
                 else if (fahrzeugtyp.contains("suv"))
-                    konsument.setFahrzeugtyp("suv");
+                    konsument.setFahrzeugtyp("SUV");
                 else if (fahrzeugtyp.contains("kleinwagen"))
-                    konsument.setFahrzeugtyp("kleinwagen");
+                    konsument.setFahrzeugtyp("Kleinwagen");
 
                 anbieterRepository.save(anbieter);
                 konsumentRepository.save(konsument);
