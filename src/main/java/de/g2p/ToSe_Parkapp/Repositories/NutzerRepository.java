@@ -14,7 +14,10 @@ import java.util.Optional;
 public interface NutzerRepository extends JpaRepository<Nutzer, Integer> {
 
     Nutzer findByNid(Integer nid);
-    Optional<Nutzer> findByEmailAdresse (String email);
+    Optional<Nutzer> findByBenutzername (String benutzername);
+
+    @Query(value = "select * from nutzer where benutzername = :benutzername", nativeQuery = true)
+    Nutzer findByBenutzernameNO(@Param("benutzername") String benutzername);
 
     @Query(value = "select * from nutzer where nid = :nid ", nativeQuery = true)
     Integer findByNidInteger(@Param("nid")Integer nid);
@@ -38,4 +41,5 @@ public interface NutzerRepository extends JpaRepository<Nutzer, Integer> {
     @Modifying
     @Query(value = "update nutzer set passwort = :passwort where emailadresse = :emailadresse", nativeQuery = true)
     void updatePasswort(@Param("emailadresse") String emailadress, @Param("passwort") String password);
+
 }

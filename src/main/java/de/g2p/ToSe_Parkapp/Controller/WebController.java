@@ -2,11 +2,23 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
+import de.g2p.ToSe_Parkapp.Service.MyUserDetailService;
+import de.g2p.ToSe_Parkapp.Service.MyUserDetails;
 import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.logging.Logger;
 
 @Controller
 public class WebController {
@@ -14,10 +26,10 @@ public class WebController {
     @Autowired
     NutzerRepository nutzerRepository;
 
-    //GetMapping for the Login-Page for IP-Adress (or localhost) only
+    //GetMapping for the homepage for IP-Adress (or localhost) only
     @GetMapping("/")
-    public String loginpage() {
-        return "login";
+    public String homeGet() {
+        return "home";
     }
 
     //GetMapping for the testing page
@@ -32,24 +44,20 @@ public class WebController {
         return "error_page";
     }
 
-
-    //GetMapping for the home page
+    //GetMapping for the homepage
     @GetMapping("/home")
-    public String home() {
-        return "home";
-    }
-
-    //remove {id} when spring security is in place
-    @GetMapping("/home-{id}")
-    public String homeAdmin(@PathVariable("id") Integer id) {
+    public String homeAdmin() {
+        Nutzer nutzer = findNutzer();
         String returnstring = "";
-        Nutzer nutzer = nutzerRepository.findByNid(id);
+        if(nutzer.getAdmin().equalsIgnoreCase("admin"))
+
         if (nutzer.getAdmin() == true)
             returnstring = "home_admin";
         else
             returnstring = "home";
         return returnstring;
     }
+
 
 
     //GetMapping for the Login Page
@@ -79,6 +87,30 @@ public class WebController {
         return "admin_vergangene_transaktionen";
     }
 
+    //GetMapping for the Login Page
+    @GetMapping("/login")
+    public String loginGet() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginPost(Model model, HttpSession session) {
+        return "home";
+    }
+
+    //GetMapping for the logout page and redirect to the login form
+    @GetMapping("/logout")
+    public String logoutGet() {
+        return "logout";
+    }
+    @PostMapping("/logout")
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "login?logout";
+    }
 
     //GetMapping for the buttons on the home page if there is no mapping in other classes
     // ToDo Profil and Kontakt has to be added later when the html pages are done
@@ -116,6 +148,19 @@ public class WebController {
 
         return "email_bestaetigt";
     }
+
+    public Nutzer findNutzer() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String benutzername = "";
+        if(principal instanceof UserDetails)
+            benutzername = ((UserDetails) principal).getUsername();
+        else
+            benutzername = principal.toString();
+
+        Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
+        return nutzer;
+    }
+}
 
 
     //GetMapping for setting the new password.

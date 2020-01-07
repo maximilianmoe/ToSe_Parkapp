@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -38,12 +37,12 @@ public class AdminController {
         if (button.equals(1)) {
             nutzer.setSperrung(false);
             nutzerRepository.updateSperrung(nutzer.getNid(), false);
-            returnstring = "nutzer_entsperrt";
+            returnstring = "redirect:/nutzer_entsperrt";
         }
         else if(button.equals(2)) {
             nutzer.setSperrung(true);
             nutzerRepository.updateSperrung(nutzer.getNid(), true);
-            returnstring = "nutzer_gesperrt";
+            returnstring = "redirect:/nutzer_gesperrt";
         }
         model.addAttribute("nutzer", nutzer);
         return returnstring;
@@ -59,18 +58,14 @@ public class AdminController {
         else {
             if (nutzer.getRolle().contains("beides")) {
                 Anbieter anbieter = anbieterRepository.findByNid(nutzer);
-                System.out.println(anbieterRepository.findByNid(nutzer));
                 Konsument konsument = konsumentRepository.findByNid(nutzer);
-                System.out.println(konsument);
                 konsumentRepository.delete(konsument);
                 anbieterRepository.delete(anbieter);
             } else if (nutzer.getRolle().contains("anbieter")) {
                 Anbieter anbieter = anbieterRepository.findByNid(nutzer);
-                System.out.println(anbieter);
                 anbieterRepository.delete(anbieter);
             } else if (nutzer.getRolle().contains("konsument")) {
                 Konsument konsument = konsumentRepository.findByNid(nutzer);
-                System.out.println(konsument);
                 konsumentRepository.delete(konsument);
             }
         }
@@ -82,11 +77,11 @@ public class AdminController {
     @PostMapping("/rechteAendern")
     public String rechteAendern(@RequestParam("nutzerid2") Integer nid, @RequestParam("buttonAdmin") Integer button) {
         if (button.equals(1)) {
-            nutzerRepository.updateAdmin(nid, true);
+            nutzerRepository.updateAdmin(nid, "admin");
             System.out.println("Nutzer mit nid " + nid + " wurden Adminrechte erteilt ");
         }
         else if (button.equals(2)) {
-            nutzerRepository.updateAdmin(nid, false);
+            nutzerRepository.updateAdmin(nid, "nutzer");
             System.out.println("Nutzer mit nid " + nid + " wurden Adminrechte entzogen ");
 
         }

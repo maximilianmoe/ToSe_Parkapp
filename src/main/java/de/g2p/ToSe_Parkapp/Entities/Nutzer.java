@@ -34,14 +34,14 @@ public class Nutzer {
 
     private Integer saldo;
 
-    private boolean admin;
+    private String admin;
 
     private boolean sperrung;
 
     private String rolle;
 
     public Nutzer(String vorname, String nachname, String emailAdresse, String passwort,
-                  boolean admin, boolean sperrung, Integer saldo, String rolle, String benutzername) {
+                  String admin, boolean sperrung, Integer saldo, String rolle, String benutzername) {
         this.vorname = vorname;
         this.nachname = nachname;
         this.emailAdresse = emailAdresse;
@@ -72,6 +72,6 @@ public class Nutzer {
 
     public boolean getSperrung() {return sperrung;}
 
-    public boolean getAdmin() {return admin;}
+    public String getAdmin() {return admin;}
 
 }

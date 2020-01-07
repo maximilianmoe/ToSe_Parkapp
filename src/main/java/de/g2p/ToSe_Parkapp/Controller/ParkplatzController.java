@@ -1,11 +1,16 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
+import de.g2p.ToSe_Parkapp.Entities.Anbieter;
+import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import de.g2p.ToSe_Parkapp.Entities.Parkplatz;
 import de.g2p.ToSe_Parkapp.Entities.Standort;
-import de.g2p.ToSe_Parkapp.Fahrzeugtyp;
+import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
+import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
 import de.g2p.ToSe_Parkapp.Repositories.StandortRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +24,10 @@ public class ParkplatzController {
     ParkplatzRepository parkplatzRepository;
     @Autowired
     StandortRepository standortRepository;
+    @Autowired
+    NutzerRepository nutzerRepository;
+    @Autowired
+    AnbieterRepository anbieterRepository;
 
     @GetMapping("/add")
     public String add(Model model) {
@@ -42,7 +51,10 @@ public class ParkplatzController {
 //                    }
 //        }
 
-        //parkplatz.setAid has to be Implemented!!
+
+
+        Anbieter aid = anbieterRepository.findByNid(findNutzer());
+        parkplatz.setAnbieterId(aid);
         parkplatz.setStatus("frei");
         parkplatz.setOrtid(standort);
         parkplatz.setBewertung(0);
@@ -75,5 +87,16 @@ public class ParkplatzController {
 
 
 
+    public Nutzer findNutzer() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String benutzername = "";
+        if(principal instanceof UserDetails)
+            benutzername = ((UserDetails) principal).getUsername();
+        else
+            benutzername = principal.toString();
+
+        Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
+        return nutzer;
+    }
 
 }
