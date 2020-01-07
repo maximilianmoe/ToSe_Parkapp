@@ -69,7 +69,8 @@ public class ReservierungController {
             //Saves all data in the database
             parkenRepository.save(parken);
             System.out.println("2");
-            reservierungenRepository.save(reservierung);
+//           TODO throws exception when comming to this code... don't no why, says that 'saldo' isn't in 'field list'....
+//            reservierungenRepository.save(reservierung);
             System.out.println("3");
 
 //           TODO Übersichtsseite erstellen und den Namen hier ändern
