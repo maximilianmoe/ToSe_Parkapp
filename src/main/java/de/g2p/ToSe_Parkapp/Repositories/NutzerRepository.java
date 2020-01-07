@@ -38,7 +38,7 @@ public interface NutzerRepository extends JpaRepository<Nutzer, Integer> {
     @Transactional
     @Modifying
     @Query(value = "update nutzer set admin = :admin where nid = :nid", nativeQuery = true)
-    void updateAdmin(@Param("nid") Integer nid, @Param("admin") boolean admin);
+    void updateAdmin(@Param("nid") Integer nid, @Param("admin") String admin);
 
     @Transactional
     @Modifying

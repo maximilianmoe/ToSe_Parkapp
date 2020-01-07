@@ -43,5 +43,9 @@ public class Konsument {
         this.reserviert = reserviert;
     }
 
+    public Konsument getKidKonsument() {
+        return this;
+    }
+
 
 }

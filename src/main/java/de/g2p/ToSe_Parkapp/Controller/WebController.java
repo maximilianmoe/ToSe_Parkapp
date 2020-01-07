@@ -93,21 +93,6 @@ public class WebController {
         return "login?logout";
     }
 
-    @GetMapping("/parkplatz_allgemein")
-    public String parkplatzAllg() {
-        String returnstring = "";
-        Nutzer nutzer = findNutzer();
-
-        if(nutzer.getRolle().equalsIgnoreCase("beides"))
-            returnstring = "parkplaetze_anbieter";
-        else if(nutzer.getRolle().equalsIgnoreCase("anbieter"))
-            returnstring="parkplaetze_beides";
-        else if (nutzer.getRolle().equalsIgnoreCase("konsument"))
-            returnstring = "parkplaetze_konsument";
-
-        return returnstring;
-    }
-
 
     //GetMapping for the buttons on the home page if there is no mapping in other classes
     // ToDo Profil and Kontakt has to be added later when the html pages are done

@@ -1,10 +1,12 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.*;
-import de.g2p.ToSe_Parkapp.Repositories.ParkenRepository;
-import de.g2p.ToSe_Parkapp.Repositories.ReservierungenRepository;
+import de.g2p.ToSe_Parkapp.Repositories.*;
 import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,12 @@ public class ReservierungController {
     ParkenRepository parkenRepository;
     @Autowired
     ReservierungenRepository reservierungenRepository;
+    @Autowired
+    NutzerRepository nutzerRepository;
+    @Autowired
+    KonsumentRepository konsumentRepository;
+    @Autowired
+    ParkplatzRepository parkplatzRepository;
 
 
     @GetMapping("/meine_reservierungen")
@@ -29,17 +37,20 @@ public class ReservierungController {
         return "meine_reservierungen";
     }
 
-    @GetMapping("/special_parkingslot")
-    public String reserve(Model model) {
+    @GetMapping("/special_parkingslot-{id}")
+    public String reserve(Model model, @PathVariable("id") Integer id) {
+        Parkplatz parkplatz = parkplatzRepository.findByPid(id);
         model.addAttribute("reservierung", new Reservierung());
         model.addAttribute("parken", new Parken());
+        model.addAttribute("parkplatz", parkplatz);
         return "spezieller_parkplatz";
 
     }
 
     @PostMapping("/special_parkingslot")
-    public String reserveParkplatz(@ModelAttribute Nutzer nutzer, @ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @ModelAttribute Konsument konsument, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
+    public String reserveParkplatz( @ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @ModelAttribute Konsument konsument, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
         String returnString = "";
+        Nutzer nutzer = findNutzer();
 
         if (/*nutzer.getSaldo() < parkplatz.getParkgebuehr()*/false) {
 //            TODO change errror_page to specific error_page for this content
@@ -47,7 +58,7 @@ public class ReservierungController {
         }else{
             reservierung.setBeendet(false);
             reservierung.setResZuParken(true);
-            reservierung.setKid(konsument);
+            reservierung.setKid((konsumentRepository.findByNid(nutzer.getNidNutzer())).getKidKonsument());
             reservierung.setPid(parkplatz);
 
             //Convert time and date
@@ -115,5 +126,17 @@ public class ReservierungController {
         cal.add(Calendar.MINUTE, -30);
         java.sql.Date sqlDate = new java.sql.Date(cal.getTime().getTime());
         return sqlDate;
+    }
+
+    public Nutzer findNutzer() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String benutzername = "";
+        if(principal instanceof UserDetails)
+            benutzername = ((UserDetails) principal).getUsername();
+        else
+            benutzername = principal.toString();
+
+        Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
+        return nutzer;
     }
 }
