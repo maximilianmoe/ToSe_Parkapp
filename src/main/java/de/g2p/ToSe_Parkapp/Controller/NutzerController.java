@@ -94,7 +94,6 @@ public class NutzerController {
                 anbieterRepository.save(anbieter);
                 konsumentRepository.save(konsument);
             }
-            System.out.println(nutzer.getBenutzername());
             nutzerRepository.save(nutzer);
         }
 

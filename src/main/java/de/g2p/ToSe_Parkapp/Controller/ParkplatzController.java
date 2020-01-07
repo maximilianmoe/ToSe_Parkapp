@@ -29,14 +29,14 @@ public class ParkplatzController {
     @Autowired
     AnbieterRepository anbieterRepository;
 
-    @GetMapping("/add")
+    @GetMapping("/parkplatz_hinzufuegen")
     public String add(Model model) {
         model.addAttribute("parkplatz", new Parkplatz());
         model.addAttribute("standort", new Standort());
         return "parkplatz_hinzufuegen";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/parkplatz_hinzufuegen")
     public String addParkplatz(@ModelAttribute Parkplatz parkplatz, @ModelAttribute Standort standort,
                                @RequestParam("parkplatzChecked") String checked,
                                @RequestParam("fahrzeugtyp") String fahrzeugtyp) {
@@ -78,14 +78,25 @@ public class ParkplatzController {
         return "testweiterleitung";
     }
 
-    @GetMapping("/testlauf")
-    @ResponseBody
-    public List<Parkplatz> testlauf() {
-        return parkplatzRepository.findAll();
+    @GetMapping("/parkplaetze_medialist")
+    public String parkMedia() {
+        return "parkplaetze_medialist";
     }
 
+    @GetMapping("/parkplatz_allgemein")
+    public String parkplatzAllg() {
+        String returnstring = "";
+        Nutzer nutzer = findNutzer();
 
+        if(nutzer.getRolle().equalsIgnoreCase("anbieter"))
+            returnstring = "parkplaetze_anbieter";
+        else if(nutzer.getRolle().equalsIgnoreCase("beides"))
+            returnstring="parkplaetze_beides";
+        else if (nutzer.getRolle().equalsIgnoreCase("konsument"))
+            returnstring = "parkplaetze_konsument";
 
+        return returnstring;
+    }
 
     public Nutzer findNutzer() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
