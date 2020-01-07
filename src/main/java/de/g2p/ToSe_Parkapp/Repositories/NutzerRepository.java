@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface NutzerRepository extends JpaRepository<Nutzer, Integer> {
 
+    Optional<Nutzer> findByEmailAdresse(String emailadresse);
     Nutzer findByNid(Integer nid);
     Optional<Nutzer> findByBenutzername (String benutzername);
 

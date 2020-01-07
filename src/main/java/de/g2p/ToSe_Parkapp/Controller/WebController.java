@@ -157,7 +157,7 @@ public class WebController {
         Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
         return nutzer;
     }
-}
+
 
 
     //GetMapping for setting the new password.
