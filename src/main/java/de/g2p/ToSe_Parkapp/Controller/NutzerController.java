@@ -148,7 +148,7 @@ public class NutzerController {
         Konsument konsument = konsumentRepository.findByNid(nutzer);
         model.addAttribute("nutzer", nutzer);
         model.addAttribute("konsument", konsument);
-        return "mein_profil";
+        return "mein_profil_beides";
     }
 
 
