@@ -37,18 +37,30 @@ public class ReservierungController {
 
 
     @GetMapping("/meine_reservierungen")
-    public String reservierungenGet() {
+    public String reservierungenGet(Model model) {
+        Konsument konsument = konsumentRepository.findByNid(findNutzer());
+        if (reservierungenRepository.findByKid(konsument) == null) {
+            model.addAttribute("reservierungen", null);
+        }
+        else
+            model.addAttribute("reservierungen", reservierungenRepository.findByKid(konsument));
         return "meine_reservierungen";
     }
 
-
+    @PostMapping("/meine_reservierungen")
+    public String reservierungenPost(@ModelAttribute Reservierung reservierung) {
+        //TODO insert the method for deleting the Reservierung from the database
+        System.out.println(reservierung);
+        reservierungenRepository.delete(reservierung);
+        return "home";
+    }
 
     @GetMapping("/special_parkingslot")
     public String reserve(Model model, @RequestParam("special-parkingslot") String aid) {
         //TODO find a solution for the id issue (-> how the Parkplatz is selected)
         System.out.println(aid);
         Nutzer nutzer = findNutzer();
-        //TODO change aid
+        //TODO change aid -> now it only finds the Parkplatz of the currently logged in user
         Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
         Standort standort = parkplatzRepository.findByOrtid(parkplatz.getOrtId());
         model.addAttribute("standort", standort);
@@ -120,12 +132,6 @@ public class ReservierungController {
             ex2.printStackTrace();
             return null;
         }
-    }
-
-    @GetMapping("reservierung_stornieren")
-    public String stornierenGet() {
-        //TODO insert the method for deleting the Reservierung from the database
-        return "home";
     }
 
     public java.sql.Date convertSql(Date dt){
