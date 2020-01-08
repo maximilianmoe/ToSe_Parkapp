@@ -128,17 +128,55 @@
     <div class="card mb-3">
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
         <div class="card-body">
-            <h5 class="card-title">PLZ + Ort + Str. + Hausnummer</h5>
-            <p class="card-text">Beschreibung: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <div>
-                <p>Fahrzeugtypen:</p>
-                <p>Parkgebühr:</p>
-                <p>Strafgebühr:</p>
-                <p>Parkhöchstdauer:</p>
+            <h5 class="card-title">
+                <p>
+                    <span>PLZ: </span>
+                    <span th:text="${standort.plz}"></span>
+                </p>
+                <p>
+                    <span>Straße: </span>
+                    <span th:text="${standort.strasse}"></span>
+                    <span th:text="${standort.hausnummer}"></span>
+                </p>
+            </h5>
+            <p>
+                <span>Beschreibung: </span>
+                <span th:text="${parkplatz.beschreibung}"></span>
+            </p>
+
+            <div class="col">
+                <div class="row">
+<!--                    TODO should we show the Parkplatztyp on the page?-->
+<!--                    <p>-->
+<!--                        <span>Parkplatztyp:  </span>-->
+<!--                        <span th:text="${parkplatz.privat}"></span>-->
+<!--                    </p>-->
+                    <p>
+                        <span>Fahrzeugtypen:  </span>
+                        <span th:text="${parkplatz.fahrzeugtyp}"></span>
+                    </p>
+                </div>
+                <div class="row">
+                    <p>
+                        <span>Parkgebühr:  </span>
+                        <span th:text="${parkplatz.parkgebuehr}"></span>
+                        <span> Euro</span>
+                    </p>
+                </div>
+                <div class="row">
+                    <p>
+                        <span>Strafgebühr:  </span>
+                        <span th:text="${parkplatz.strafgebuehr}"></span>
+                        <span> Euro</span>
+                    </p>
+                </div>
+                <div class="row">
+                    <p>
+                        <span>Parkhöchstdauer:  </span>
+                        <span th:text="${parkplatz.zeitbegrenzung}"></span>
+                        <span> Minuten</span>
+                    </p>
+                </div>
             </div>
         </div>
         <form>
@@ -154,12 +192,16 @@
             </div>
             <div id="reg">
                 <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
+                    <form hidden th:action="@{/deleteParkplatz}" method="post"></form>
                     Parkplatz dauerhaft entfernen</button>
+<!--                TODO add a PopUp and ask if the user really wants do delete the Parkplatz
+                        and add the form above to the "yes" button-->
             </div>
         </form>
         <div class="card-footer" id="farbe">
             <img th:src="@{images/parkplatz3.jpg}" src="../static/images/P_Symbol.png" alt="Private/Icon">
             <small class="text-muted"></small>
+<!--            TODO change how the picture is displayed (like in spezieller_Parkplatz)-->
         </div>
     </div>
 </div>

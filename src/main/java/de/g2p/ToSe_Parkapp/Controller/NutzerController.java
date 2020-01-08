@@ -6,6 +6,7 @@ import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.KonsumentRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,8 @@ public class NutzerController {
 
     @Autowired
     KonsumentRepository konsumentRepository;
+
+
 
     @GetMapping("/registrieren")
     public String registration(Model model) {
@@ -97,7 +100,28 @@ public class NutzerController {
             nutzerRepository.save(nutzer);
         }
 
-            return "home";
+            return "login";
+    }
+
+    @GetMapping("/mein_profil")
+    public String profilGet(Model model) {
+        Nutzer nutzer = findNutzer();
+        String returnstring = "";
+        model.addAttribute("nutzer", nutzer);
+        if (nutzer.getRolle().equalsIgnoreCase("anbieter")) {
+            returnstring = "mein_profil_anbieter";
+            model.addAttribute("anbieter", anbieterRepository.findByNid(nutzer.getNidNutzer()));
+        }
+        else if (nutzer.getRolle().equalsIgnoreCase("beides")) {
+            returnstring = "mein_profil_beides";
+            model.addAttribute("anbieter", anbieterRepository.findByNid(nutzer.getNidNutzer()));
+            model.addAttribute("konsument", konsumentRepository.findByNid(nutzer.getNidNutzer()));
+        }
+        else if (nutzer.getRolle().equalsIgnoreCase("konsument")) {
+            returnstring = "mein_profil_konsument";
+            model.addAttribute("konsument", konsumentRepository.findByNid(nutzer.getNidNutzer()));
+        }
+        return returnstring;
     }
 
 
@@ -139,16 +163,6 @@ public class NutzerController {
         nutzerRepository.updateSaldo(saldo, nutzer2.getNid());
         //redirect to guthabenweiterleitung because the new saldo is not displayed properly
         return "guthabenweiterleitung";
-    }
-
-    @GetMapping("/mein_profil")
-    public String profilGet(Model model) {
-        //nid=14 for testing
-        Nutzer nutzer = findNutzer();
-        Konsument konsument = konsumentRepository.findByNid(nutzer);
-        model.addAttribute("nutzer", nutzer);
-        model.addAttribute("konsument", konsument);
-        return "mein_profil_beides";
     }
 
 

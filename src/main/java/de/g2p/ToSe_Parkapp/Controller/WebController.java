@@ -91,7 +91,7 @@ public class WebController {
     }
 
     @PostMapping("/login")
-    public String loginPost(Model model, HttpSession session) {
+    public String loginPost(Model model) {
         return "home";
     }
 

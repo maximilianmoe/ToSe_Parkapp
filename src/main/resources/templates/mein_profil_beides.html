@@ -149,18 +149,14 @@
             <h4 class="h_6">Guthaben: </h4>
         </div>
         <div class="col">
-            <h4 class="h_6" th:text="${nutzer.saldo}">
+            <h4>
+<!--                TODO the saldo is displayed too far in the middle and not on the right-->
+                <span class="h_6" th:text="${nutzer.saldo}"></span>
+                <span> €</span>
             </h4>
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <h4 class="h_6">Umsatz: </h4>
-        </div>
-        <div class="col">
-            <h4 class="h_6" th:text="${anbieter.umsatz}">
-            </h4>
-        </div>
     </div>
     <div class="row">
         <div class="col">

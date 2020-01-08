@@ -108,13 +108,30 @@ public class ParkplatzController {
     @GetMapping("/special_parkingslot_own")
     public String ownParkingslot(Model model) {
         Nutzer nutzer = findNutzer();
-        Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
-        Standort standort = standortRepository.findByOrtid(parkplatz.getOrtId());
-        model.addAttribute("parkplatz",parkplatz);
-        model.addAttribute("standort", standort);
-        model.addAttribute("reservierung", new Reservierung());
-        model.addAttribute("parken", new Parken());
-        return "spezieller_parkplatz";
+        Anbieter anbieter = anbieterRepository.findByNid(nutzer);
+        String returnstring = "";
+        if(anbieter.getParkplatz() == false)
+            returnstring = "error_noch_kein_parkplatz";
+        else if (anbieter.getParkplatz() == true) {
+            Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
+            Standort standort = standortRepository.findByOrtid(parkplatz.getOrtId());
+            model.addAttribute("parkplatz", parkplatz);
+            model.addAttribute("standort", standort);
+            returnstring = "mein_parkplatz";
+        }
+        return returnstring;
+    }
+
+    @PostMapping("/delete_parkplatz")
+    public String deleteParkplatz() {
+        //TODO add the method to delete the Parkplatz from the Database and change the "parkplatz" attribute
+        // in table Konsument to false
+        return "home";
+    }
+
+    @GetMapping("/error_noch_kein_parkplatz")
+    public String errorKeinParkplatz() {
+        return "error_noch_kein_parkplatz";
     }
 
     public Nutzer findNutzer() {

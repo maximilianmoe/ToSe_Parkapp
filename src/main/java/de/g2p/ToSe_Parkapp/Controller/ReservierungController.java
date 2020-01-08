@@ -122,6 +122,12 @@ public class ReservierungController {
         }
     }
 
+    @GetMapping("reservierung_stornieren")
+    public String stornierenGet() {
+        //TODO insert the method for deleting the Reservierung from the database
+        return "home";
+    }
+
     public java.sql.Date convertSql(Date dt){
 
         Calendar cal = Calendar.getInstance();
