@@ -6,6 +6,7 @@ import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.KonsumentRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
+import de.g2p.ToSe_Parkapp.Repositories.ReservierungenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,9 @@ public class AdminController {
 
     @Autowired
     KonsumentRepository konsumentRepository;
+
+    @Autowired
+    ReservierungenRepository reservierungenRepository;
 
     @GetMapping("/adminseite")
     public String adminseite() {
@@ -88,5 +92,16 @@ public class AdminController {
 
         //evtl. noch eine bestätigungsseite?
         return "adminseite";
+    }
+
+    @GetMapping("/admin_alle_ausstehenden_reservierungen")
+    public String adminResGet(Model model) {
+        model.addAttribute("reservierungen",reservierungenRepository.findAll());
+        return "admin_alle_ausstehenden_reservierungen";
+    }
+
+    @GetMapping("/admin_vergangene_transaktionen")
+    public String adminTrans() {
+        return "admin_vergangene_transaktionen";
     }
 }
