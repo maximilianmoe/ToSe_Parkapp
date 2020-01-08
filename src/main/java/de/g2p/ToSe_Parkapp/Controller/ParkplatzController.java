@@ -65,13 +65,15 @@ public class ParkplatzController {
             parkplatz.setBewertungsanzahl(0);
 
             //Sets Parkplatz to private if the box for "privater Parkplatz" is checked
-            if (checked.contains("1")) {
+            if (checked.contains("1"))
                 parkplatz.setPrivat(true);
+            else if (checked.contains("2")) {
+                parkplatz.setPrivat(false);
                 parkplatz.setZeitbegrenzung(0);
                 parkplatz.setParkgebuehr(0);
                 parkplatz.setStrafgebuehr(0);
-            } else if (checked.contains("2"))
-                parkplatz.setPrivat(false);
+                System.out.println(parkplatz.getStrafgebuehr());
+            }
 
             //Sets Fahrzeugtyp if box is checked
             if (fahrzeugtyp.contains("on"))
@@ -81,7 +83,7 @@ public class ParkplatzController {
             parkplatzRepository.save(parkplatz);
             anbieterRepository.updateParkplatz(true, aid.getAid());
             standortRepository.save(standort);
-            return "special_parkingslot_own";
+            return "mein_parkplatz";
     }
 
     @GetMapping("/parkplaetze_medialist")
@@ -121,6 +123,7 @@ public class ParkplatzController {
         }
         return returnstring;
     }
+    
 
     @PostMapping("/delete_parkplatz")
     public String deleteParkplatz() {

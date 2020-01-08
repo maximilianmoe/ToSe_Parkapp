@@ -50,6 +50,7 @@
 <div class="login-form">
     <form action="login" th:action="@{/login}" method="post">
         <div th:if="${param.error}" class="alert error">Benutzername oder Passwort ungültig</div>
+<!--        TODO try to add a red background for the error alert please-->
         <div th:if="${param.logout}" class="alert alert-success">Sie wurden erfolgreich abgemeldet</div>
         <h2 class="text-center" id="login">Log in</h2>
         <div class="form-group">
