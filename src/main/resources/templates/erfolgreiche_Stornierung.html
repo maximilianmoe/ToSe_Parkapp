@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleafe.org" lang="de-De">
 
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -59,23 +58,23 @@
 <div class="container">
     <div class="row">
         <div id="bild">
-            <img  th:src="@{images/error.jpg}" src="../static/images/error.jpg" id="error_jpg" alt="error_image"/>
+            <img th:src="@{images/very-nice.jpg}" src="../static/images/very-nice.jpg" id="error_jpg">
         </div>
 
     </div>
     <div class="row" id="error_msg">
         <div class="col-md-12">
             <div class="error-template">
-                <h1>
-                    Oops!
-                </h1>
+                <h3>
+                    Reservierung wurde erfolgreich storniert!
+                </h3>
                 <div class="error-details">
-                    Es ist leider ein Fehler aufgetreten!
+                    Ihre Liste der austehenden Reservierungen wurde aktualisiert.
                 </div>
                 <div class="error-actions">
                     <a href="home" class="btn btn-outline-secondary btn-lg">
                         <span class="glyphicon glyphicon-home"></span>
-                        Zurück zur Startseite
+                        Zurück zum Homescreen
                     </a>
                 </div>
             </div>
