@@ -74,16 +74,6 @@ public class WebController {
         return "email_bestaetigt";
     }
 
-    @GetMapping("/admin_alle_ausstehenden_reservierungen")
-    public String adminRes() {
-        return "admin_alle_ausstehenden_reservierungen";
-    }
-
-    @GetMapping("/admin_vergangene_transaktionen")
-    public String adminTrans() {
-        return "admin_vergangene_transaktionen";
-    }
-
     //GetMapping for the Login Page
     @GetMapping("/login")
     public String loginGet() {
