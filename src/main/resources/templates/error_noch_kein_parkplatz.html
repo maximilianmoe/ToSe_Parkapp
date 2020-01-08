@@ -18,60 +18,26 @@
     </script>
     <style>
         body {
-            background-color: lightslategray;
+            background-color: white;
         }
 
-        #input_1 {
-            height: 300px;
-            width: 300px;
-            background-color: #5D5C61;
-            margin: 30px;
-            border-radius: 5%;
-        }
-
-        #input_2 {
-            height: 300px;
-            width: 300px;
-            background-color: #7395AE;
-            margin: 30px;
-            border-radius: 5%;
-        }
-
-        #input_3 {
-            height: 300px;
-            width: 300px;
-            background-color: green;
-            margin: 30px;
-            border-radius: 5%;
-        }
-
-        #row1 {
-            margin-top: 50px;
-        }
-
-        .tile_input {
+        #successful{
+            font-size: 30px;
+            margin-top: 120px;
             text-align: center;
-            vertical-align: middle;
-            line-height: 300px;
         }
-
-        #field1 {
-            font-size: 200%;
-            color: #8590AA;
+        #btn{
+            margin-top: 30px;
+            font-size: 10px;
         }
-
-        #field2 {
-            font-size: 200%;
-            color: #66FCF1;
+        #ueberschrift {
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
 
 <body>
-<!--
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
-    Alte Navbar; Bei neuer kann ich Farbe selbst auswählen!!
--->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
     <a class="navbar-brand" href="home">{Logo}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -89,41 +55,51 @@
             <li class="nav-item">
                 <a class="nav-link" href="guthaben">Guthaben</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="parkplatz_allgemein">Parkplätze</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="login.html" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Parkplätze
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="parkplaetze_speziell">Meine Parkplätze</a>
+                    <a class="dropdown-item" href="parkplatz_hinzufuegen">Parkplatz hinzufügen</a>
+                    <a class="dropdown-item" href="parkplaetze">Alle Parkplätze</a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="testweiterleitung">Einstellungen</a>
             </li>
         </ul>
-        <button type="submit" class="btn btn-outline-secondary">
-            <a href="logout">Logout</a>
-        </button>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </div>
 </nav>
 <div class="container">
-        <div class="row" id="row1" >
-            <div class="tile_input" id="input_1">
-                <a class="dropdown-item" href="parkplaetze">Alle Parkplätze</a>
-            </div>
-            <div class="tile_input" id="input_2">
-                <a class="dropdown-item" href="parkplatz_allgemein">Meine Parkplätze</a>
-            </div>
-            <div class="tile_input" id="input_1">
-                <a class="dropdown-item" href="guthaben">Guthaben</a>
+    <h2 id="ueberschrift">Es ist ein Fehler aufgetreten!</h2>
+    <form action="#">
+        <div class="text-center" id="successful">
+            <div class="form-group" >
+                <div> <label>
+                    <span>Sie haben noch keinen Parkplatz angelegt. </span>
+                    <span>Wenn sie einen neuen Anlegen möchten, </span>
+                    <span>klicken sie auf den Link oder wählen im </span>
+                    <span>Menü "Parkplatz hinzufügen" aus</span>
+                </label> </div>
+                <div id="btn">
+                    <button type="submit" class="btn btn-outline-secondary btn-lg">
+                        <a href="parkplatz_hinzufuegen">Parkplatz hinzufügen</a>
+                    </button>
+                </div>
+                <div id="btn">
+                    <button type="submit" class="btn btn-outline-secondary btn-lg">
+                        <a href="home">Zurück zur Startseite</a>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="tile_input" id="input_2">
-                <a class="dropdown-item" href="mein_profil">Profil</a>
-            </div>
-            <div class="tile_input" id="input_1">
-                <a class="dropdown-item" href="meine_reservierungen">Meine Reservierung</a>
-            </div>
-            <div class="tile_input" id="input_2">
-                <a class="dropdown-item" href="adminseite">Adminseite</a>
-            </div>
-        </div>
+    </form>
 </div>
 
 </body>

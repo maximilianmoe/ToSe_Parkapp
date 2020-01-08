@@ -27,4 +27,8 @@ public class Anbieter  {
         this.aid = aid;
         this.parkplatz = parkplatz;
     }
+
+    public boolean getParkplatz() {
+        return parkplatz;
+    }
 }

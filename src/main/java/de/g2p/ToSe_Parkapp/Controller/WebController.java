@@ -1,7 +1,11 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
+import de.g2p.ToSe_Parkapp.Entities.Anbieter;
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
+import de.g2p.ToSe_Parkapp.Entities.Parkplatz;
+import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
+import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
 import de.g2p.ToSe_Parkapp.Service.MyUserDetailService;
 import de.g2p.ToSe_Parkapp.Service.MyUserDetails;
 import de.g2p.ToSe_Parkapp.Service.MailService;
@@ -22,6 +26,10 @@ public class WebController {
 
     @Autowired
     NutzerRepository nutzerRepository;
+    @Autowired
+    AnbieterRepository anbieterRepository;
+    @Autowired
+    ParkplatzRepository parkplatzRepository;
 
     //GetMapping for the homepage for IP-Adress (or localhost) only
     @GetMapping("/")
@@ -41,11 +49,19 @@ public class WebController {
         return "error_page";
     }
 
+    @GetMapping("/error_bereits_ein_parkplatz")
+    public String errorExistierenderParkplatz() {
+        return "error_bereits_ein_parkplatz";
+    }
+
     //GetMapping for the homepage
     @GetMapping("/home")
-    public String homeAdmin() {
+    public String homeAdmin(Model model) {
         Nutzer nutzer = findNutzer();
         String returnstring = "";
+        //Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNidIntegerParam(nutzer.getNid()));
+        //model.addAttribute("parkplatz", parkplatz);
+        //System.out.println(parkplatz.getPid()+"   "+parkplatz.getBeschreibung());
         if(nutzer.getAdmin().equalsIgnoreCase("admin"))
             returnstring = "home_admin";
         else
@@ -75,7 +91,7 @@ public class WebController {
     }
 
     @PostMapping("/login")
-    public String loginPost(Model model, HttpSession session) {
+    public String loginPost(Model model) {
         return "home";
     }
 

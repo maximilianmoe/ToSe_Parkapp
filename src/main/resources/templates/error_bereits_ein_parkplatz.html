@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleafe.org" xmlns="http://www.w3.org/1999/html" lang="de-De">
+<html xmlns:th="http://www.thymeleafe.org" lang="de-De">
 
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -16,44 +17,22 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
-        #head {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            text-align: center;
-            margin-top: 50px;
-            margin-bottom: 50px;
+        body {
+            background-color: white;
         }
 
-        .input {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-
-
-        #checkbox {
-            margin: 10px;
-        }
-
-        #reg {
+        #successful{
+            font-size: 30px;
+            margin-top: 120px;
             text-align: center;
         }
-
+        #btn{
+            margin-top: 30px;
+            font-size: 10px;
+        }
         #ueberschrift {
             text-align: center;
-            margin-top: 2%;
-            margin-bottom: 2%;
-        }
-
-        #my_profile {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-        }
-
-        .h_6 {
-            text-align: center;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-        }
-        .row{
-            margin: 1%;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -98,61 +77,26 @@
     </div>
 </nav>
 <div class="container">
-    <div id="ueberschrift">
-        <h2 id="my_profile">Mein Profil</h2>
-    </div>
-    <div class="row">
-        <div class="col test">
-            <h4 class="h_6">Vorname: </h6>
+    <h2 id="ueberschrift">Es ist ein Fehler aufgetreten!</h2>
+    <form action="#">
+        <div class="text-center" id="successful">
+            <div class="form-group" >
+                <div> <label>
+                    <span>Sie haben bereits einen Parkplatz angelegt. </span>
+                    <span>Wenn sie einen neuen Anlegen möchten, </span>
+                    <span>löschen sie bitte den bereits bestehenden!</span>
+                </label> </div>
+                <div id="btn">
+                    <button type="submit" class="btn btn-outline-secondary btn-lg">
+                        <a href="home">Zurück zur Startseite</a>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="col">
-            <h4 class="h_6" th:text="${nutzer.vorname}"></h6>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h4 class="h_6">Nachname: </h6>
-        </div>
-        <div class="col">
-            <h4 class="h_6" th:text="${nutzer.nachname}"></h6>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h4 class="h_6">Kennzeichen: </h6>
-        </div>
-        <div class="col">
-            <h4 class="h_6" th:text="${konsument.kennzeichen}"></h6>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h4 class="h_6">Fahrzeugtyp: </h6>
-        </div>
-        <div class="col">
-            <h4 class="h_6" th:text="${konsument.fahrzeugtyp}"></h6>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h4 class="h_6">Email Adresse: </h6>
-        </div>
-        <div class="col">
-            <h4 class="h_6" th:text="${nutzer.emailAdresse}"></h6>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h4 class="h_6">Mein Passwort: </h6>
-        </div>
-        <div class="col">
-            <h4 class="h_6">Aus Datenbank (sollen wir das wirklich ausgeben?)</h6>
-        </div>
-    </div>
+    </form>
 </div>
-<script>
 
-</script>
 </body>
+
 
 </html>
