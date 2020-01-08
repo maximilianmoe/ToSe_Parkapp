@@ -108,8 +108,7 @@
 </nav>
 <div class="container" id="anfang">
     <div class="row" id="last">
-        <div class="col-3"></div>
-        <div class="col-6">
+        <div class="col">
             <div id="trans">
                 <h3>Adminrechte Verwalten</h3>
                 <form th:action="@{/rechteAendern}" method="post">
@@ -128,7 +127,12 @@
                 </form>
             </div>
         </div>
-        <div class="col-3"></div>
+        <div class="col">
+            <div id="amount2">
+                <h3>Volumen gesamter Zahlungsverkehr aller User:</h3>
+                <p><span>400.59</span> EUR</p>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col" id="sperren">
