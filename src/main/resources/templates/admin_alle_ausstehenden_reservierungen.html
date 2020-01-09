@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleafe.org" lang="de-De">
+
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -15,20 +16,20 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
-        #header {
+        #h_3 {
             text-align: center;
-            margin-top: 60px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin-top: 5%;
+            margin-bottom: 3%;
         }
 
+        #ueberschrift {
+            text-align: center;
+        }
     </style>
-    <title>testweiterleitung</title>
-    <!--    *****************************************************************************   -->
-    <!--    diese Seite existiert nur als überbrückung für noch nicht existierende Seiten   -->
-    <!--    *****************************************************************************   -->
-
 </head>
-<body>
 
+<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
     <a class="navbar-brand" href="home">{Logo}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -57,16 +58,86 @@
                     <a class="dropdown-item" href="parkplaetze">Alle Parkplätze</a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="testweiterleitung">Einstellungen</a>
-            </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-        </form>
     </div>
 </nav>
-    <h2 id="header">Weiterleitung erfolgreich</h2>
+<div class="container">
+    <div id="ueberschrift">
+        <h3 id="h_3">Alle ausstehenden Reservierungen aller Nutzer</h3>
+    </div>
+    <div id="table_div">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Reservierungs-ID</th>
+                <th scope="col">Nuzer-ID</th>
+                <th scope="col">Parkplatz-ID</th>
+                <th scope="col">Ort</th>
+                <th scope="col">Anfangs-Datum</th>
+                <th scope="col">Anfangs-Zeit</th>
+                <th scope="col">End-Datum</th>
+                <th scope="col">End-Datum</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>12</td>
+                <td>2</td>
+                <td>Passau</td>
+                <td>10.01.2020</td>
+                <td>10:00</td>
+                <td>10.01.2020</td>
+                <td>13:00</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>23</td>
+                <td>3</td>
+                <td>München</td>
+                <td>15.01.2020</td>
+                <td>12:00</td>
+                <td>15.01.2020</td>
+                <td>17:00</td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td>33</td>
+                <td>27</td>
+                <td>Linz</td>
+                <td>20.01.2020</td>
+                <td>15:00</td>
+                <td>21.01.2020</td>
+                <td>15:00</td>
+            </tr>
+            <tr>
+                <td>24</td>
+                <td>32</td>
+                <td>32</td>
+                <td>Freising</td>
+                <td>25.01.2020</td>
+                <td>18:00</td>
+                <td>26.01.2020</td>
+                <td>10:00</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>44</td>
+                <td>42</td>
+                <td>Ulm</td>
+                <td>29.01.2020</td>
+                <td>14:00</td>
+                <td>29.01.2020</td>
+                <td>21:00</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+
+</script>
 </body>
+
 </html>

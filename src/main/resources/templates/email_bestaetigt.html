@@ -41,9 +41,10 @@
         #error_jpg {
             position: absolute;
             left: 50%;
-            margin-left: -150px;
+            margin-left: -200px;
             height: 300px;
-            width: 300px;
+            width: 450px;
+            /*460 × 306*/
             margin-top: 15px;
             border-radius: 2%;
         }
@@ -58,7 +59,7 @@
 <div class="container">
     <div class="row">
         <div id="bild">
-            <img th:src="@{images/very-nice.jpg}" src="../static/images/very-nice.jpg" id="error_jpg">
+            <img th:src="@{images/pleasewait.jpg}" src="../static/images/pleasewait.jpg" id="error_jpg">
         </div>
 
     </div>
@@ -66,10 +67,10 @@
         <div class="col-md-12">
             <div class="error-template">
                 <h3>
-                    Passwort wurde erfolgreich zurückgesetzt!
+                    E-Mail verschickt.
                 </h3>
                 <div class="error-details">
-                    Sie können sich nun mit dem neuen Passwort wieder anmelden.
+                    Sie bekommen nun eine E-Mail welche einen Link zum Setzen eines neuen Passworts beinhaltet.
                 </div>
                 <div class="error-actions">
                     <a href="login" class="btn btn-outline-secondary btn-lg">

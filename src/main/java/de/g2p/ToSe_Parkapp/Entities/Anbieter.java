@@ -21,14 +21,14 @@ public class Anbieter  {
     @JoinColumn(name = "nid")
     private Nutzer nid;
 
-
-    private double umsatz;
-
     private boolean parkplatz;
 
     public Anbieter(Integer aid, double umsatz, boolean parkplatz) {
         this.aid = aid;
-        this.umsatz = umsatz;
         this.parkplatz = parkplatz;
+    }
+
+    public boolean getParkplatz() {
+        return parkplatz;
     }
 }

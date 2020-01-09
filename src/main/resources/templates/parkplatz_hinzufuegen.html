@@ -64,7 +64,7 @@
                 <a class="nav-link" href="home">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="testweiterleitung">Profil</a>
+                <a class="nav-link" href="mein_profil">Profil</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="guthaben">Guthaben</a>
@@ -75,7 +75,7 @@
                     Parkplätze
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="testweiterleitung">Meine Parkplätze</a>
+                    <a class="dropdown-item" href="parkplaetze_speziell">Meine Parkplätze</a>
                     <a class="dropdown-item" href="parkplatz_hinzufuegen">Parkplatz hinzufügen</a>
                     <a class="dropdown-item" href="parkplaetze">Alle Parkplätze</a>
                 </div>
@@ -161,27 +161,27 @@
             <div class="col" >
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="suv">SUV
+                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="SUV">SUV
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="kleinwagen">Kleinwagen
+                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="Kleinwagen">Kleinwagen
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="van">Van
+                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="Van">Van
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="kombi">Kombi
+                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="Kombi">Kombi
                     </label>
                 </div>
             </div>
             <div class="col">
-                <input type="text" th:value="*{parkplatz.zeitbegrenzung}" name="zeitbegrenzung" class="form-control" placeholder="Parkhöchstdauer in min (MAX 999)"
+                <input type="text" th:name="zeitbegrenzung" class="form-control" placeholder="Parkhöchstdauer in min (MAX 999)"
                        id="parkhoechstdauer">
             </div>
             <!--

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleafe.org" xmlns="http://www.w3.org/1999/html" lang="de-De">
+
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -15,20 +16,49 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
-        #header {
+        #head {
+            font-family: Georgia, 'Times New Roman', Times, serif;
             text-align: center;
-            margin-top: 60px;
+            margin-top: 50px;
+            margin-bottom: 50px;
         }
 
+        .input {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+
+
+        #checkbox {
+            margin: 10px;
+        }
+
+        #reg {
+            text-align: center;
+        }
+
+        #ueberschrift {
+            text-align: center;
+            margin-top: 2%;
+            margin-bottom: 2%;
+        }
+
+        #my_profile {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .h_6 {
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        .row{
+            margin: 1%;
+        }
     </style>
-    <title>testweiterleitung</title>
-    <!--    *****************************************************************************   -->
-    <!--    diese Seite existiert nur als überbrückung für noch nicht existierende Seiten   -->
-    <!--    *****************************************************************************   -->
-
 </head>
-<body>
 
+<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
     <a class="navbar-brand" href="home">{Logo}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -67,6 +97,62 @@
         </form>
     </div>
 </nav>
-    <h2 id="header">Weiterleitung erfolgreich</h2>
+<div class="container">
+    <div id="ueberschrift">
+        <h2 id="my_profile">Mein Profil</h2>
+    </div>
+    <div class="row">
+        <div class="col test">
+            <h4 class="h_6">Vorname: </h6>
+        </div>
+        <div class="col">
+            <h4 class="h_6" th:text="${nutzer.vorname}"></h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h4 class="h_6">Nachname: </h6>
+        </div>
+        <div class="col">
+            <h4 class="h_6" th:text="${nutzer.nachname}"></h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h4 class="h_6">Kennzeichen: </h6>
+        </div>
+        <div class="col">
+            <h4 class="h_6" th:text="${konsument.kennzeichen}"></h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h4 class="h_6">Fahrzeugtyp: </h6>
+        </div>
+        <div class="col">
+            <h4 class="h_6" th:text="${konsument.fahrzeugtyp}"></h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h4 class="h_6">Email Adresse: </h6>
+        </div>
+        <div class="col">
+            <h4 class="h_6" th:text="${nutzer.emailAdresse}"></h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h4 class="h_6">Mein Passwort: </h6>
+        </div>
+        <div class="col">
+            <h4 class="h_6">Aus Datenbank (sollen wir das wirklich ausgeben?)</h6>
+        </div>
+    </div>
+</div>
+<script>
+
+</script>
 </body>
+
 </html>

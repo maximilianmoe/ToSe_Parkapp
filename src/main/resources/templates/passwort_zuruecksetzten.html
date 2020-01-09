@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de-De" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Passwort Zurücksetzten</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .pwreset-form {
+            width: 340px;
+            margin: 50px auto;
+        }
+
+        .pwreset-form form {
+            margin-bottom: 15px;
+            background: #f7f7f7;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+        .pwreset-form h2 {
+            margin: 0 0 15px;
+        }
+
+        .form-control, .btn {
+            min-height: 38px;
+            border-radius: 2px;
+        }
+
+        .btn {
+            font-size: 15px;
+            font-weight: bold;
+        }
+        #pwreset{
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        #pwvergessen {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h2 id="pwreset">Passwort zurücksetzten!</h2>
+</div>
+<p></p>
+<div class="pwreset-form">
+    <form action="#" th:action="@{/passwordreset}" method="post">
+        <h2 class="text-center" id="pwvergessen">Bitte gib deine E-Mail-Adresse ein, um nach deinem Konto zu suchen.</h2>
+        <div class="form-group">
+            <input type="email" class="form-control" th:name="emailaddresse"placeholder="E-Mail" required="required">
+        </div>
+
+        <div class="form-group">
+            <a href="email_bestaetigt.html">
+                <button type="submit" class="btn btn-primary btn-block">Senden</button>
+            </a>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

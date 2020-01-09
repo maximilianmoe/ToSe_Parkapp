@@ -14,13 +14,4 @@ import java.util.List;
 
 @Controller
 public class StandortController {
-
-    @Autowired
-    StandortRepository standortRepository;
-
-    @GetMapping("/testlauf2")
-    public List<Standort> testlauf2() {
-        return standortRepository.findAll();
-    }
-
 }

@@ -46,6 +46,37 @@
         <h2 id="head">Registrierung </h2>
     </div>
     <form class="input" action="#" th:action="@{/registrieren}" method="post">
+
+        <div class="row input">
+            <div class="col">
+                <input type="text" th:value="*{nutzer.emailAdresse}" th:name="email" class="form-control" id="mail1" placeholder="E-Mail">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" id="mail2" placeholder="E-Mail bestätigen">
+            </div>
+        </div>
+        <div class="row input">
+            <div class="col">
+                <input type="password" th:name="passwort" class="form-control" id="pw1"
+                       placeholder="Passwort">
+            </div>
+            <div class="col">
+                <input type="password" class="form-control" id="pw2" placeholder="Passwort bestätigen">
+            </div>
+        </div>
+        <div class="row input">
+            <div class="col">
+                <select th:name="nutzertyp" class="form-control" id="nutzungs_art">
+                    <option selected disabled>Wie wollen Sie G2P nutzen?</option>
+                    <option th:value="konsument">Konsument</option>
+                    <option th:value="anbieter">Anbieter</option>
+                    <option th:value="beides">Beides</option>
+                </select>
+            </div>
+            <div class="col">
+                <input type="text" th:name="username" class="form-control" placeholder="Username">
+            </div>
+        </div>
         <div class="row input">
             <div class="col">
                 <input type="text" th:value="*{nutzer.vorname}" th:name="vorname" class="form-control"
@@ -56,16 +87,7 @@
                        placeholder="Nachname">
             </div>
         </div>
-        <div class="row input">
-            <div class="container">
-                <select th:name="nutzertyp" class="form-control" id="nutzungs_art">
-                    <option selected disabled>Wie wollen Sie G2P nutzen?</option>
-                    <option th:value="konsument">Konsument</option>
-                    <option th:value="anbieter">Anbieter</option>
-                    <option th:value="beides">Beides</option>
-                </select>
-            </div>
-        </div>
+
         <div class="row input">
             <div class="col">
                 <input type="text" th:value="*{konsument.kennzeichen}" th:name="kennzeichen"
@@ -86,24 +108,6 @@
                 </select>
             </div>
         </div>
-        <div class="row input">
-            <div class="col">
-                <input type="text" th:value="*{nutzer.emailAdresse}" th:name="emailadresse"
-                       class="form-control" id="mail1" placeholder="E-Mail">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" id="mail2" placeholder="E-Mail bestätigen">
-            </div>
-        </div>
-        <div class="row input">
-            <div class="col">
-                <input type="text" th:value="*{nutzer.passwort}" th:name="passwort" class="form-control" id="pw1"
-                       placeholder="Passwort">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" id="pw2" placeholder="Passwort bestätigen">
-            </div>
-        </div>
         <div class="form-group" id="checkbox">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="gridCheck">
@@ -113,7 +117,7 @@
             </div>
         </div>
         <div id="reg">
-            <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">Registrieren</button>
+            <a href="home"><button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">Registrieren</button></a>
         </div>
     </form>
 
