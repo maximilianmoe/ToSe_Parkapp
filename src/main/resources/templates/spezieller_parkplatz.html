@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleafe.org" lang="de-De">
 
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -71,10 +71,15 @@
         #popup3 {
             color: red;
         }
+
         #reminder {
             text-align: center;
             margin-bottom: 2%;
             color: lightslategray;
+        }
+
+        .card-footer {
+            height: 50px;
         }
     </style>
 </head>
@@ -97,25 +102,16 @@
             <li class="nav-item">
                 <a class="nav-link" href="guthaben">Guthaben</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="login.html" id="navbarDropdown" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Parkplätze
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="parkplaetze_speziell">Meine Parkplätze</a>
-                    <a class="dropdown-item" href="parkplatz_hinzufuegen">Parkplatz hinzufügen</a>
-                    <a class="dropdown-item" href="parkplaetze">Alle Parkplätze</a>
-                </div>
+            <li class="nav-item">
+                <a class="nav-link" href="parkplatz_allgemein">Parkplätze</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="testweiterleitung">Einstellungen</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        <button type="submit" class="btn btn-outline-secondary">
+            <a href="logout">Logout</a>
+        </button>
     </div>
 </nav>
 <div class="container">
@@ -126,15 +122,15 @@
         <form action="#" th:action="@{/special_parkingslot}" method="post">
             <div class="card-body">
                 <h5 class="card-title">
-                <p>
-                    <span>PLZ: </span>
-                    <span th:text="${standort.plz}"></span>
-                </p>
                     <p>
-                    <span>Straße: </span>
-                    <span th:text="${standort.strasse}"></span>
-                    <span th:text="${standort.hausnummer}"></span>
-                </p>
+                        <span>PLZ: </span>
+                        <span th:text="${standort.plz}"></span>
+                    </p>
+                    <p>
+                        <span>Straße: </span>
+                        <span th:text="${standort.strasse}"></span>
+                        <span th:text="${standort.hausnummer}"></span>
+                    </p>
                 </h5>
                 <p>
                     <span>Beschreibung: </span>
@@ -144,27 +140,27 @@
                 <div class="col">
                     <div class="row">
                         <p>
-                            <span>Fahrzeugtypen:  </span>
+                            <span>Fahrzeugtypen: </span>
                             <span th:text="${parkplatz.fahrzeugtyp}"></span>
                         </p>
                     </div>
                     <div class="row">
                         <p>
-                            <span>Parkgebühr:  </span>
+                            <span>Parkgebühr: </span>
                             <span th:text="${parkplatz.parkgebuehr}"></span>
                             <span> Euro</span>
                         </p>
                     </div>
                     <div class="row">
                         <p>
-                            <span>Strafgebühr:  </span>
+                            <span>Strafgebühr: </span>
                             <span th:text="${parkplatz.strafgebuehr}"></span>
                             <span> Euro</span>
-                         </p>
+                        </p>
                     </div>
                     <div class="row">
                         <p>
-                            <span>Parkhöchstdauer:  </span>
+                            <span>Parkhöchstdauer: </span>
                             <span th:text="${parkplatz.zeitbegrenzung}"></span>
                             <span> Minuten</span>
                         </p>
@@ -172,13 +168,6 @@
                 </div>
             </div>
 
-            <select class="form-control" id="belegt">
-                <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
-                <option value="1">Der Parkplatz ist frei</option>
-                <option value="2">Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden
-                </option>
-                <option value="3">Ich belege den Parkplatz</option>
-            </select>
             <h5 id="ueberschrift">Parkplatz Reservieren:</h5>
             <div class="row">
                 <div class="col">
@@ -199,15 +188,14 @@
                     <div class="form-group">
                         <h6>Anfangszeit</h6>
                         <input type="time" id="time1" th:name="startZeit" class="form-control"
-                           placeholder="Bsp.: 12:00">
-                    <span id="popup3"></span>
+                               placeholder="Bsp.: 12:00">
+                        <span id="popup3"></span>
                     </div>
                 </div>
 
                 <div class="col">
                     <h6>Endzeit</h6>
-                        <input type="time" id="time2" th:name="endeZeit" class="form-control"
-                           placeholder="Bsp.: 13:00">
+                    <input type="time" id="time2" th:name="endeZeit" class="form-control" placeholder="Bsp.: 13:00">
                     <span id="popup4"></span>
                 </div>
 
@@ -225,20 +213,19 @@
             </div>
         </form>
         <div class="card-footer" id="farbe">
-            <img src="../static/images/P_Symbol.png" alt="Private/Icon">
             <small class="text-muted"></small>
         </div>
     </div>
 </div>
 <script>
     /*
-        Folgende Funktion sorgt dafür, dass wenn Nein! (man will keine Erinnerungsmail erhalten)
-        ausgewählt wird das Input-Fenster zur Angabe der Zeit, wann man die Mail erhalten
-        möchte ausgegraut/disabled wird.
-        Der Zweite Teil sorgt dafür, dass dies auch wieder enabled wird, sobald Ja! ausgewählt wird.
-        Der dritte Teil sorgt dafür, dass sich die Farbe des Footers abhängig von der Auswahl des
-        Statuses automatisch ändert.
-    */
+    Folgende Funktion sorgt dafür, dass wenn Nein! (man will keine Erinnerungsmail erhalten)
+    ausgewählt wird das Input-Fenster zur Angabe der Zeit, wann man die Mail erhalten
+    möchte ausgegraut/disabled wird.
+    Der Zweite Teil sorgt dafür, dass dies auch wieder enabled wird, sobald Ja! ausgewählt wird.
+    Der dritte Teil sorgt dafür, dass sich die Farbe des Footers abhängig von der Auswahl des
+    Statuses automatisch ändert.
+*/
 
     /*
         Hab erfolgreich die meisten Probleme behoben. Alter Code ist noch da ABER auskommentiert!
@@ -367,46 +354,46 @@
     });
     */
     /*
-    $('#mail').focusout(function () {
-        if (count == 3) {
-            $('#submit_btn').prop('disabled', false);
-        }
-        //else {
-        //  alert(count + 'Es ist leider ein Fehler aufgetreten!');
-        //}
-    });
-    $('#datetime1').focusout(function () {
-        if (count == 3) {
-            $('#submit_btn').prop('disabled', false);
-        }
-        else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
-            $('#submit_btn').prop('disabled', false);
-        }
-    });
-    $('#datetime2').focusout(function () {
-        if (count == 3) {
-            $('#submit_btn').prop('disabled', false);
-        }
-        else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
-            $('#submit_btn').prop('disabled', false);
-        }
-    });
-    $('#question').focusout(function(){
-        if(count == 3){
-            $('#submit_btn').prop('disabled', false);
-        }
-        else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
-            $('#submit_btn').prop('disabled', false);
-        }
-    });
-    $('#btn_row').hover(function(){
-        if(count == 3){
-            $('#submit_btn').prop('disabled', false);
-        }
-        else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
-            $('#submit_btn').prop('disabled', false);
-        }
-    });
+$('#mail').focusout(function () {
+if (count == 3) {
+$('#submit_btn').prop('disabled', false);
+}
+//else {
+//  alert(count + 'Es ist leider ein Fehler aufgetreten!');
+//}
+});
+$('#datetime1').focusout(function () {
+if (count == 3) {
+$('#submit_btn').prop('disabled', false);
+}
+else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
+$('#submit_btn').prop('disabled', false);
+}
+});
+$('#datetime2').focusout(function () {
+if (count == 3) {
+$('#submit_btn').prop('disabled', false);
+}
+else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
+$('#submit_btn').prop('disabled', false);
+}
+});
+$('#question').focusout(function(){
+if(count == 3){
+$('#submit_btn').prop('disabled', false);
+}
+else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
+$('#submit_btn').prop('disabled', false);
+}
+});
+$('#btn_row').hover(function(){
+if(count == 3){
+$('#submit_btn').prop('disabled', false);
+}
+else if(count ==2 && $('#question').find('option:selected').text() == 'Nein!'){
+$('#submit_btn').prop('disabled', false);
+}
+});
 
 });
 ENDE AUSKOMMENTIEREN
@@ -498,15 +485,15 @@ ENDE AUSKOMMENTIEREN
             });
     */
     /*
-    $(document).on("submit", "form", function(e){
-        var expression = /\b[0-9]{2}[.][0-9]{2}[.][0-9]{4}\b\s\b[0-9]{2}[:][0-9]{2}\b/g;
-        var regex = new RegExp(expression);
-        var datetime = $('#datetime1').val();
-        if(!datetime.match(regex)){
-            alert(alter);
-            $('#popup').html("Anfangszeit muss in dem Format 01.01.2020 10:00 angegeben werden!");
-        }
-    });
+$(document).on("submit", "form", function(e){
+var expression = /\b[0-9]{2}[.][0-9]{2}[.][0-9]{4}\b\s\b[0-9]{2}[:][0-9]{2}\b/g;
+var regex = new RegExp(expression);
+var datetime = $('#datetime1').val();
+if(!datetime.match(regex)){
+alert(alter);
+$('#popup').html("Anfangszeit muss in dem Format 01.01.2020 10:00 angegeben werden!");
+}
+});
 */
 
     /*

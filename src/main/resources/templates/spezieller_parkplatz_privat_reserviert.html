@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleafe.org" lang="de-De">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- NÖTIG um Interaktivität zu aktivieren-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <style>
+        #green_square {
+            background-color: greenyellow;
+            text-align: center;
+        }
+
+        #orange_square {
+            background-color: orange;
+            text-align: center;
+        }
+
+        #red_square {
+            background-color: red;
+            text-align: center;
+        }
+
+        .hintergrund_bild {
+            width: 100%;
+        }
+
+        #zeit_input {
+            text-align: center;
+        }
+
+        .card-title {
+            text-align: center;
+        }
+
+        .col {
+            text-align: center;
+        }
+
+        #ueberschrift {
+            text-align: center;
+        }
+
+        #btn {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #farbe {
+            text-align: center;
+        }
+
+        #popup {
+            color: red;
+        }
+
+        #popup2 {
+            color: red;
+        }
+
+        #popup3 {
+            color: red;
+        }
+
+        #reminder {
+            text-align: center;
+            margin-bottom: 2%;
+            color: lightslategray;
+        }
+
+        .card-footer {
+            height: 50px;
+        }
+
+        #res {
+            text-align: center;
+            color: lightslategrey;
+        }
+
+        #ueberzogen {
+            text-align: center;
+            color: lightslategrey;
+        }
+
+        .txt {
+            margin: 2%;
+        }
+
+        .button {
+            text-align: center;
+        }
+
+        #btn1 {
+            margin-left: 2%;
+            margin-right: 2%;
+        }
+
+        #btn2 {
+            margin: 2%;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
+    <a class="navbar-brand" href="home">{Logo}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="mein_profil">Profil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="guthaben">Guthaben</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="parkplatz_allgemein">Parkplätze</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="testweiterleitung">Einstellungen</a>
+            </li>
+        </ul>
+        <button type="submit" class="btn btn-outline-secondary">
+            <a href="logout">Logout</a>
+        </button>
+    </div>
+</nav>
+<div class="container">
+    <div class="card mb-3">
+        <img th:src="@{images/parkplatz3.jpg}">
+        <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
+
+        <form action="#" th:action="@{/special_parkingslot}" method="post">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <p>
+                        <span>PLZ: </span>
+                        <span th:text="${standort.plz}"></span>
+                    </p>
+                    <p>
+                        <span>Straße: </span>
+                        <span th:text="${standort.strasse}"></span>
+                        <span th:text="${standort.hausnummer}"></span>
+                    </p>
+                </h5>
+                <p>
+                    <span>Beschreibung: </span>
+                    <span th:text="${parkplatz.beschreibung}"></span>
+                </p>
+
+                <div class="col">
+                    <div class="row">
+                        <p>
+                            <span>Fahrzeugtypen: </span>
+                            <span th:text="${parkplatz.fahrzeugtyp}"></span>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                            <span>Parkgebühr: </span>
+                            <span th:text="${parkplatz.parkgebuehr}"></span>
+                            <span> Euro</span>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                            <span>Strafgebühr: </span>
+                            <span th:text="${parkplatz.strafgebuehr}"></span>
+                            <span> Euro</span>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                            <span>Parkhöchstdauer: </span>
+                            <span th:text="${parkplatz.zeitbegrenzung}"></span>
+                            <span> Minuten</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="txt">
+                <h6 id="res">Sie haben diesen Parkplatz erfolgreich reserviert!</h6>
+                <h6 id="ueberzogen">Bitte beachten Sie, dass falls Sie den Parkplatz nicht rechtzeitig zum Ende
+                    ihrer Reservierung freigeben, wird eine Strafgebühr automatisch von ihrem Guthaben abgezogen.
+                </h6>
+            </div>
+            <div class="button">
+                <button type="button" class="btn btn-outline-secondary btn-lg" id="btn1">Ich beparke jetzt</button>
+                <button type="button" class="btn btn-outline-secondary btn-lg" id="btn2">Reservierung
+                    stornieren</button>
+            </div>
+        </form>
+        <div class="card-footer" id="farbe">
+            <small class="text-muted"></small>
+        </div>
+    </div>
+</div>
+<script>
+    /*
+    Folgende Funktion sorgt dafür, dass wenn Nein! (man will keine Erinnerungsmail erhalten)
+    ausgewählt wird das Input-Fenster zur Angabe der Zeit, wann man die Mail erhalten
+    möchte ausgegraut/disabled wird.
+    Der Zweite Teil sorgt dafür, dass dies auch wieder enabled wird, sobald Ja! ausgewählt wird.
+    Der dritte Teil sorgt dafür, dass sich die Farbe des Footers abhängig von der Auswahl des
+    Statuses automatisch ändert.
+*/
+
+    /*
+        Hab erfolgreich die meisten Probleme behoben. Alter Code ist noch da ABER auskommentiert!
+        Einziges mir AKTUELL bekanntes PROBLEM:
+        Wenn in 3.datetime input feld ('#mail') schon etwas im falschen Format eingegeben wurde und dann
+        im Nachhinein noch Nein! ausgewählt wird, so bleibt das geschriebene im falschen Format in dem
+        Feld und das Feld ist nicht mehr zugänig. (Gelöst!!)
+        Neuer Fehler: Button wird nicht mehr aktiviert da @param: count nur 2 annimmt und nicht mehr 3.
+        ---> YESSSS!!
+        ---> Jetzt auch gelöst!
+    */
+
+    $(document).ready(function () {
+        $('#question').change(function () {
+            if ($(this).find('option:selected').text() == 'Nein!') {
+                $('#mail').prop('disabled', true);
+                $('#mail_txt').css('color', 'lightgrey');
+                //$('#submit_btn').prop('disabled', false);
+                $('#popup3').html("");
+                var input_check = $('#mail').val();
+                if (input_check.length > 0) {
+                    input_check = "";
+                    $('#mail').val(input_check);
+                }
+            }
+        });
+        $('#question').change(function () {
+            if ($(this).find('option:selected').text() == 'Ja!') {
+                $('#mail').prop('disabled', false);
+                $('#mail_txt').css('color', 'black');
+            }
+        });
+        $('#belegt').change(function () {
+            if ($(this).find('option:selected').text() == 'Der Parkplatz ist frei') {
+                //$('#farbe').attr("green_square");
+                //jQuery("div").prev("farbe").attr("id", "green_square");
+                $(".card-footer").attr('id', 'green_square');
+            }
+            if ($(this).find('option:selected').text() ==
+                'Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden') {
+                $(".card-footer").attr('id', 'orange_square');
+            }
+            if ($(this).find('option:selected').text() == 'Ich belege den Parkplatz') {
+                $(".card-footer").attr('id', 'red_square');
+            }
+        });
+        var check1 = 0;
+        var check2 = 0;
+        var check3 = 0;
+        var count = 0;
+</script>
+</body>
+
+</html>
