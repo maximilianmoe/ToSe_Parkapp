@@ -81,18 +81,33 @@
         .card-footer {
             height: 50px;
         }
+
+        #res {
+            text-align: center;
+            color: lightslategrey;
+        }
+
+        #ueberzogen {
+            text-align: center;
+            color: lightslategrey;
+        }
+
+        .txt {
+            margin: 2%;
+        }
+
+        .button {
+            text-align: center;
+        }
+
+        #btn1 {
+            margin: 1.5%;
+        }
     </style>
 </head>
 
 <body>
-
 <nav th:replace="layouts :: navbar"></nav>
-<!--
-    ACHTUNG:
-    Mit folgendem "Befehl" kann man Nav Bar aus layouts.html beziehen. Aktuell noch auskommentiert, da es
-    nur funktioniert, wenn der Server läuft und ich auf die Seite nicht komme!!
-<nav th:replace="layouts :: navbar"></nav>
--->
 <div class="container">
     <div class="card mb-3">
         <img th:src="@{images/parkplatz3.jpg}">
@@ -146,49 +161,24 @@
                     </div>
                 </div>
             </div>
-
-            <h5 id="ueberschrift">Parkplatz Reservieren:</h5>
-            <div class="row">
-                <div class="col">
-                    <h6>Anfanngsdatum:</h6>
-                    <input type="date" id="date1" th:name="startDatum" class="form-control"
-                           placeholder="Bsp.: 01.01.2020">
-                    <span id="popup"></span>
-                </div>
-                <div class="col">
-                    <h6>Enddatum:</h6>
-                    <input type="date" id="date2" th:name="endeDatum" class="form-control"
-                           placeholder="Bsp.: 01.01.2020 13:00">
-                    <span id="popup2"></span>
-                </div>
+            <!--
+                ÄNDERUNG:
+                Bei öffentlichen Parkplätzen können wir nie 100% sagen, ob der Parkplatz frei ist.
+                Deshalb entfernen der Option der Parkplatz ist frei.
+            -->
+            <select class="form-control" id="belegt">
+                <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
+                <option value="2">Der Parkplatz ist aktuell frei, aber könnte auch demnächst wieder
+                    belegt werden
+                </option>
+                <option value="3">Ich belege den Parkplatz</option>
+            </select>
+            <div class="txt">
+                <h6 id="ueberzogen">Bitte markieren Sie auch öffentliche Parkplätze als beparkt.
+                </h6>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <h6>Anfangszeit</h6>
-                        <input type="time" id="time1" th:name="startZeit" class="form-control"
-                               placeholder="Bsp.: 12:00">
-                        <span id="popup3"></span>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <h6>Endzeit</h6>
-                    <input type="time" id="time2" th:name="endeZeit" class="form-control" placeholder="Bsp.: 13:00">
-                    <span id="popup4"></span>
-                </div>
-
-                <div class="container">
-                    <h6 id="reminder">Sie erhalten automatisch 30 Minuten vor ihrem Reservierungsbeginn eine
-                        Erinnerungsmail!</h6>
-                </div>
-            </div>
-            <div id="btn_row">
-                <div id="btn">
-                    <button type="submit" class="btn btn-outline-secondary btn-lg" id="submit_btn">
-                        Parkplatz Reservieren
-                    </button>
-                </div>
+            <div class="button">
+                <button type="button" class="btn btn-outline-secondary btn-lg" id="btn1">Bestätigen</button>
             </div>
         </form>
         <div class="card-footer" id="farbe">
