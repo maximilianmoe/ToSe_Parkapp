@@ -60,7 +60,7 @@ public class ReservierungController {
         model.addAttribute("reservierung", new Reservierung());
         model.addAttribute("parken", new Parken());
         model.addAttribute("parkplatz", parkplatz);
-        return "spezieller_parkplatz";
+        return "spezieller_parkplatz_privat";
     }
 
     @PostMapping("/special_parkingslot")

@@ -104,7 +104,7 @@ public class WebController {
 
     @GetMapping("/aktueller_parkplatz")
     public String aktuellerParkplatz() {
-        return "spezieller_parkplatz";
+        return "spezieller_parkplatz_privat";
     }
 
     @GetMapping("/kontakt")
