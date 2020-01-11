@@ -252,25 +252,23 @@
                         </td>
                     </div>
                     <div class="col-1">
-                       <!-- <td th:switch="${parkplatz.status}">
-                            <div th:case="frei" >
-                                <div id="ampel_green">
 
-                                </div>
+                        <div th:if="${parkplatz.status == 'frei'}">
+                            <div id="ampel_green">
+                                &nbsp;
                             </div>
-                            <div th:case="besetzt">
-                                <div id="ampel_red"/>
-
+                        </div>
+                        <div th:if="${parkplatz.status == 'besetzt'}">
+                            <div id="ampel_red">
+                                &nbsp;
                             </div>
+                        </div>
+                        <div th:if="${parkplatz.status == 'fremdbesetzt'}">
+                            <div id="ampel_orange">
+                                &nbsp;
                             </div>
-                            <div th:case="fremdbesetzt">
-                                <div id="ampel_orange"/>
-
-                            </div>
-                            </div>
-                        </td>-->
-
-                    </div>
+                        </div>
+                        </div>
                 </div>
             </div>
         </li>
