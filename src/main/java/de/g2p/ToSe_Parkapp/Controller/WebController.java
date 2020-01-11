@@ -101,7 +101,6 @@ public class WebController {
 
 
     //GetMapping for the buttons on the home page if there is no mapping in other classes
-    // ToDo Profil and Kontakt has to be added later when the html pages are done
 
     @GetMapping("/suche")
     public String suche() {
@@ -113,6 +112,8 @@ public class WebController {
         return "spezieller_parkplatz";
     }
 
+    @GetMapping("/kontakt")
+    public String kontakt(){return "kontakt";}
 
     //GetMapping for getting an E-Mail to set a new password.
     @GetMapping("/passwordreset")
