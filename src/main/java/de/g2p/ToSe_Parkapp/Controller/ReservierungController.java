@@ -2,9 +2,7 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.*;
 import de.g2p.ToSe_Parkapp.Repositories.*;
-import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -32,8 +28,6 @@ public class ReservierungController {
     KonsumentRepository konsumentRepository;
     @Autowired
     ParkplatzRepository parkplatzRepository;
-    @Autowired
-    StandortRepository standortRepository;
 
 
 
@@ -63,8 +57,6 @@ public class ReservierungController {
         Nutzer nutzer = findNutzer();
         //TODO change aid -> now it only finds the Parkplatz of the currently logged in user
         Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
-        Standort standort = parkplatzRepository.findByOrtid(parkplatz.getOrtId());
-        model.addAttribute("standort", standort);
         model.addAttribute("reservierung", new Reservierung());
         model.addAttribute("parken", new Parken());
         model.addAttribute("parkplatz", parkplatz);

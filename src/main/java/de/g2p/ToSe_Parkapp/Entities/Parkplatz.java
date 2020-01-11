@@ -1,6 +1,5 @@
 package de.g2p.ToSe_Parkapp.Entities;
 
-import de.g2p.ToSe_Parkapp.Fahrzeugtyp;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,10 +29,6 @@ public class Parkplatz {
     @Column(name = "ZEITBEGR")
     private Integer zeitbegrenzung;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ortid", referencedColumnName = "ortId")
-    private Standort ortid;
-
     private Integer bewertung;
 
     @Column(name = "BEWANZ")
@@ -49,21 +44,35 @@ public class Parkplatz {
 
     private String beschreibung;
 
-    public Parkplatz(String fahrzeugtyp, String status, boolean privat, Integer zeitbegrenzung, Standort ortid,
+    private String strasse;
+
+    private Integer plz;
+
+    private Integer hausnummer;
+
+    private String latitude;
+
+    private String longitude;
+
+
+    public Parkplatz(String fahrzeugtyp, String status, boolean privat, Integer zeitbegrenzung,
                      Integer bewertung, Integer bewertungsanzahl, Anbieter anbieterId, @NotNull Integer strafgebuehr,
-                     String beschreibung, Integer parkgebuehr) {
+                     String beschreibung, Integer parkgebuehr, String strasse, Integer plz, Integer hausnummer, String latitude, String longitude) {
         this.fahrzeugtyp = fahrzeugtyp;
         this.status = status;
         this.privat = privat;
         this.zeitbegrenzung = zeitbegrenzung;
-        this.ortid = ortid;
         this.bewertung = bewertung;
         this.bewertungsanzahl = bewertungsanzahl;
         this.anbieterId = anbieterId;
         this.strafgebuehr = strafgebuehr;
         this.beschreibung = beschreibung;
         this.parkgebuehr = parkgebuehr;
+        this.strasse = strasse;
+        this.plz = plz;
+        this.hausnummer = hausnummer;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public Integer getOrtId() {return ortid.getOrtid();}
 }

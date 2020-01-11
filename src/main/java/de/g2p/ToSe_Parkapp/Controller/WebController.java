@@ -1,13 +1,9 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
-import de.g2p.ToSe_Parkapp.Entities.Anbieter;
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
-import de.g2p.ToSe_Parkapp.Entities.Parkplatz;
 import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
-import de.g2p.ToSe_Parkapp.Service.MyUserDetailService;
-import de.g2p.ToSe_Parkapp.Service.MyUserDetails;
 import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class WebController {

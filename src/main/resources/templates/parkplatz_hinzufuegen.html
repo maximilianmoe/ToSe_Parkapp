@@ -58,7 +58,7 @@
     <form action="#" th:action="@{/parkplatz_hinzufuegen}" method="post">
         <div class="row" id="row1">
             <div class="col">
-                <input type="text" th:value="*{standort.plz}" th:name="plz" class="form-control" placeholder="PLZ">
+                <input type="text" th:value="*{parkplatz.plz}" th:name="plz" class="form-control" placeholder="PLZ">
             </div>
             <!--
         <div class="col">
@@ -66,11 +66,11 @@
         </div>
     -->
             <div class="col-4">
-                <input type="text" th:value="*{standort.strasse}" th:name="strasse" class="form-control"
+                <input type="text" th:value="*{parkplatz.strasse}" th:name="strasse" class="form-control"
                        placeholder="Straße">
             </div>
             <div class="col-2">
-                <input type="text" th:value="*{standort.hausnummer}" th:name="hausnummer" class="form-control"
+                <input type="text" th:value="*{parkplatz.hausnummer}" th:name="hausnummer" class="form-control"
                        placeholder="Hausnummer">
             </div>
         </div>
