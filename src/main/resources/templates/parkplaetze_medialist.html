@@ -51,10 +51,6 @@
             display: inline-block
         }
 
-        #ampel {
-            text-align: center;
-        }
-
         #green_square {
             background-color: greenyellow;
             text-align: center;
@@ -99,6 +95,11 @@
             object-fit: cover;
         }
 
+        /*
+        #ampel{
+            background-color: red;
+        }
+        */
         #ampel_green {
             background-color: greenyellow;
             object-fit: cover;
@@ -125,41 +126,23 @@
         .data{
             line-height: 1;
         }
+        .item{
+            margin-top: 0.5%;
+            margin-bottom: 0.5%;
+        }
+        #maps{
+            text-align: center;
+            margin-top: 0.5%;
+            margin-bottom: 1%;
+        }
+        #maps2{
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
-    <a class="navbar-brand" href="home">{Logo}</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="home">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="testweiterleitung">Profil</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="guthabenverwaltung">Guthaben</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="login.html" id="navbarDropdown" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Parkplätze
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Mein Parkplatze</a>
-                    <a class="dropdown-item" href="parkplatz_hinzufuegen">Parkplatz hinzufügen</a>
-                    <a class="dropdown-item" href="parkplaetze">Alle Parkplätze</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
+<nav th:replace="layouts :: navbar"></nav>
 <div class="container">
     <div class="row">
         <div class="container" id="suche">
@@ -174,46 +157,145 @@
             </div>
         </div>
     </div>
-    <!--
-        WICHTIG!!!!!!!!!!!!!!!!!!
-        Hier muss noch Google Maps eingebunden werden!
+    <!-- TODO WICHTIG!!!!!!!!!!!!!!!!!!     Hier muss noch Google Maps eingebunden werden!
     -->
+    <div class="container">
+        <div id="maps">
+            <iframe id="maps2" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d21122.415631945158!2d13.4527989!3d48.56576525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sde!2sde!4v1578753826267!5m2!1sde!2sde" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        </div>
+    </div>
 
+    <div class="container">
     <ul class="list-unstyled">
-        <li class="media">
+        <li class="media" th:each="parkplatz : *{parkplaetze}">
             <img th:src="@{images/parkplatz3.jpg}" src="../static/images/parkplatz3.jpg"  class="mr-3 new_img" alt="Bild von Parkplatz">
-            <div class="media-body">
-                <div class="row">
+            <div class="media-body" >
+                <div class="row" style="cursor: pointer;" onclick="window.location='/special_parkingslot/{id}(id = ${parkplatz.pid})';">
                     <div class="col-8">
-                        <h5 class="mt-0 mb-1">PLZ + STR + Hausnummer</h5>
+<!--                        TODO hier darunter pl=r, str, hausnummer einfügen. Aus Standort, where ortid passt zu parkplatz -->
+                        <h5 class="mt-0 mb-1">
+                            <span th:text="${parkplatz.plz}"></span>
+                            <span>  </span>
+                            <span th:text="${parkplatz.strasse}"></span>
+                            <span>  </span>
+                            <span th:text="${parkplatz.hausnummer}"></span>
+                        </h5>
                         <div class="data">
-                            <p>Fahrzeugtypen: </p>
-                            <p>Parkgebühr:</p>
-                            <p>Strafgebühr:</p>
-                            <p>Parkhöchstdauer:</p>
-                            <p>Parkplatz Art: Öffentlich</p>
+                            <p>
+                                <span>Fahrzeugtyp:  </span>
+                                <span th:text="${parkplatz.fahrzeugtyp}"></span>
+                            </p>
+                            <p>
+                                <span>Parkgebühr:  </span>
+                                <span th:text="${parkplatz.parkgebuehr}"></span>
+                                <span>€</span>
+
+                            </p>
+                            <p>
+                                <span>Strafgebühr:  </span>
+                                <span th:text="${parkplatz.strafgebuehr}"></span>
+                                <span>€</span>
+                            </p>
+                            <p>
+                                <span>Parkhöchstdauer:  </span>
+                                <span th:text="${parkplatz.zeitbegrenzung}"></span>
+                                <span >Minuten</span>
+
+                            </p>
+                            <p>
+                                <span>Parkplatz-Art:  </span>
+                                <span th:if="${parkplatz.privat == true}">privat</span>
+                                <span th:unless="${parkplatz.privat == true}">öffentlich</span>
+                            </p>
+<!--                        TODO Link auf das ganze mit href="/special_parkingslot"+id; id für jeden einzelnen parkplatz unterschiedlich-->
+
+                            <a href="/special_parkingslot/{id}(id = ${parkplatz.pid})">Text</a><br />
                         </div>
                     </div>
-                    <div class="col-3">
-                        <div id="stars">
-                            <p class="fa fa-star checked"></p>
-                            <p class="fa fa-star checked"></p>
-                            <p class="fa fa-star checked"></p>
-                            <p class="fa fa-star checked"></p>
-                            <p class="fa fa-star"></p>
-                        </div>
+                    <div class="col-3" >
+                       <td th:switch="${parkplatz.bewertung}">
+                           <div th:case="0">
+                               <div id="stars">
+                               <p class="fa fa-star "></p>
+                               <p class="fa fa-star "></p>
+                               <p class="fa fa-star "></p>
+                               <p class="fa fa-star "></p>
+                               <p class="fa fa-star"></p>
+                               </div>
+                           </div>
+                           <div th:case="1">
+                               <div id="stars">
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star "></p>
+                               <p class="fa fa-star "></p>
+                               <p class="fa fa-star "></p>
+                               <p class="fa fa-star"></p>
+                               </div>
+                           </div>
+                           <div th:case="2">
+                               <div id="stars">
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star "></p>
+                               <p class="fa fa-star "></p>
+                               <p class="fa fa-star"></p>
+                               </div>
+                           </div>
+                           <div th:case="3">
+                               <div id="stars">
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star "></p>
+                               <p class="fa fa-star"></p>
+                               </div>
+                           </div>
+                           <div th:case="4">
+                               <div id="stars">
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star"></p>
+                               </div>
+                           </div>
+                           <div th:case="5">
+                               <div id="stars">
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star checked"></p>
+                               <p class="fa fa-star checked"></p>
+                               </div>
+                           </div>
+                        </td>
                     </div>
+
                     <div class="col-1">
-                        <div id="ampel_green">
-                            &nbsp;
+
+                        <div th:if="${parkplatz.status == 'frei'}">
+                            <div id="ampel_green">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div th:if="${parkplatz.status == 'besetzt'}">
+                            <div id="ampel_red">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div th:if="${parkplatz.status == 'fremdbesetzt'}">
+                            <div id="ampel_orange">
+                                &nbsp;
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </li>
-        <li class="media my-4">
+        <!--<li class="media my-4">
             <img th:src="@{images/parkplatz7.jpg}" src="../static/images/parkplatz7.jpg" class="mr-3 new_img" alt="...">
             <div class="media-body">
+
                 <div class="row">
                     <div class="col-8">
                         <h5 class="mt-0 mb-1">PLZ + STR + Hausnummer</h5>
@@ -272,8 +354,9 @@
                     </div>
                 </div>
             </div>
-        </li>
+        </li>-->
     </ul>
+    </div>
 
 </div>
 

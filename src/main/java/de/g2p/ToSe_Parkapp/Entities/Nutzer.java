@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 public class Nutzer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Cascade(CascadeType.DELETE)
     private Integer nid;
 

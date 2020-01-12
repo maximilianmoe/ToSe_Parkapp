@@ -44,12 +44,13 @@
 </head>
 <body>
 <div>
-    <h2 id="welcome">Willommen bei Good2Park</h2>
+    <h2 id="welcome">Willkommen bei Good2Park</h2>
 </div>
 <p></p>
 <div class="login-form">
     <form action="login" th:action="@{/login}" method="post">
         <div th:if="${param.error}" class="alert error">Benutzername oder Passwort ungültig</div>
+<!--        TODO try to add a red background for the error alert please-->
         <div th:if="${param.logout}" class="alert alert-success">Sie wurden erfolgreich abgemeldet</div>
         <h2 class="text-center" id="login">Log in</h2>
         <div class="form-group">
@@ -62,7 +63,7 @@
             <a href="home"><button type="submit" class="btn btn-primary btn-block">Log In</button></a>
         </div>
         <div class="clearfix" id="pwvergessen">
-            <a href="/passwordreset" class="text-center">Passwort vergessen?</a>
+            <a href="passwordreset" class="text-center">Passwort vergessen?</a>
         </div>
     </form>
     <p class="text-center"><a href="registrieren">Account erstellen</a></p>

@@ -1,13 +1,9 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
-import de.g2p.ToSe_Parkapp.Entities.Anbieter;
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
-import de.g2p.ToSe_Parkapp.Entities.Parkplatz;
 import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
-import de.g2p.ToSe_Parkapp.Service.MyUserDetailService;
-import de.g2p.ToSe_Parkapp.Service.MyUserDetails;
 import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class WebController {
@@ -74,16 +69,6 @@ public class WebController {
         return "email_bestaetigt";
     }
 
-    @GetMapping("/admin_alle_ausstehenden_reservierungen")
-    public String adminRes() {
-        return "admin_alle_ausstehenden_reservierungen";
-    }
-
-    @GetMapping("/admin_vergangene_transaktionen")
-    public String adminTrans() {
-        return "admin_vergangene_transaktionen";
-    }
-
     //GetMapping for the Login Page
     @GetMapping("/login")
     public String loginGet() {
@@ -91,7 +76,7 @@ public class WebController {
     }
 
     @PostMapping("/login")
-    public String loginPost(Model model, HttpSession session) {
+    public String loginPost(Model model) {
         return "home";
     }
 
@@ -111,7 +96,6 @@ public class WebController {
 
 
     //GetMapping for the buttons on the home page if there is no mapping in other classes
-    // ToDo Profil and Kontakt has to be added later when the html pages are done
 
     @GetMapping("/suche")
     public String suche() {
@@ -120,9 +104,11 @@ public class WebController {
 
     @GetMapping("/aktueller_parkplatz")
     public String aktuellerParkplatz() {
-        return "spezieller_parkplatz";
+        return "spezieller_parkplatz_privat";
     }
 
+    @GetMapping("/kontakt")
+    public String kontakt(){return "kontakt";}
 
     //GetMapping for getting an E-Mail to set a new password.
     @GetMapping("/passwordreset")

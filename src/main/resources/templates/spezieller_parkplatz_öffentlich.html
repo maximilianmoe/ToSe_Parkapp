@@ -33,7 +33,6 @@
 
         .hintergrund_bild {
             width: 100%;
-            height: 400px;
         }
 
         #zeit_input {
@@ -73,17 +72,36 @@
             color: red;
         }
 
-        #h_5 {
+        #reminder {
             text-align: center;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            margin-top: 1%;
-            margin-bottom: 1%;
+            margin-bottom: 2%;
+            color: lightslategray;
         }
-        #reg{
-            text-align: center;
-        }
-        .card-footer{
+
+        .card-footer {
             height: 50px;
+        }
+
+        #res {
+            text-align: center;
+            color: lightslategrey;
+        }
+
+        #ueberzogen {
+            text-align: center;
+            color: lightslategrey;
+        }
+
+        .txt {
+            margin: 2%;
+        }
+
+        .button {
+            text-align: center;
+        }
+
+        #btn1 {
+            margin: 1.5%;
         }
     </style>
 </head>
@@ -92,79 +110,79 @@
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
     <div class="card mb-3">
+        <img th:src="@{images/parkplatz3.jpg}">
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
-        <div class="card-body">
-            <h5 class="card-title">
-                <p>
-                    <span th:text="${parkplatz.plz}"></span>
-                    <span> </span>
-                    <span th:text="${parkplatz.strasse}"></span>
-                    <span> </span>
-                    <span th:text="${parkplatz.hausnummer}"></span>
-                </p>
-            </h5>
-            <p>
-                <span>Beschreibung: </span>
-                <span th:text="${parkplatz.beschreibung}"></span>
-            </p>
 
-            <div class="col">
-                <div class="row">
-<!--                    TODO should we show the Parkplatztyp on the page?-->
-<!--                    <p>-->
-<!--                        <span>Parkplatztyp:  </span>-->
-<!--                        <span th:text="${parkplatz.privat}"></span>-->
-<!--                    </p>-->
+        <form action="#" th:action="@{/special_parkingslot}" method="post">
+            <div class="card-body">
+                <h5 class="card-title">
                     <p>
-                        <span>Fahrzeugtypen:  </span>
-                        <span th:text="${parkplatz.fahrzeugtyp}"></span>
+                        <span>PLZ: </span>
+                        <span th:text="${parkplatz.plz}"></span>
                     </p>
-                </div>
-                <div class="row">
                     <p>
-                        <span>Parkgebühr:  </span>
-                        <span th:text="${parkplatz.parkgebuehr}"></span>
-                        <span> Euro</span>
+                        <span>Straße: </span>
+                        <span th:text="${parkplatz.strasse}"></span>
+                        <span th:text="${parkplatz.hausnummer}"></span>
                     </p>
-                </div>
-                <div class="row">
-                    <p>
-                        <span>Strafgebühr:  </span>
-                        <span th:text="${parkplatz.strafgebuehr}"></span>
-                        <span> Euro</span>
-                    </p>
-                </div>
-                <div class="row">
-                    <p>
-                        <span>Parkhöchstdauer:  </span>
-                        <span th:text="${parkplatz.zeitbegrenzung}"></span>
-                        <span> Minuten</span>
-                    </p>
+                </h5>
+                <p>
+                    <span>Beschreibung: </span>
+                    <span th:text="${parkplatz.beschreibung}"></span>
+                </p>
+
+                <div class="col">
+                    <div class="row">
+                        <p>
+                            <span>Fahrzeugtypen: </span>
+                            <span th:text="${parkplatz.fahrzeugtyp}"></span>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                            <span>Parkgebühr: </span>
+                            <span th:text="${parkplatz.parkgebuehr}"></span>
+                            <span> Euro</span>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                            <span>Strafgebühr: </span>
+                            <span th:text="${parkplatz.strafgebuehr}"></span>
+                            <span> Euro</span>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                            <span>Parkhöchstdauer: </span>
+                            <span th:text="${parkplatz.zeitbegrenzung}"></span>
+                            <span> Minuten</span>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <form>
+            <!--
+                ÄNDERUNG:
+                Bei öffentlichen Parkplätzen können wir nie 100% sagen, ob der Parkplatz frei ist.
+                Deshalb entfernen der Option der Parkplatz ist frei.
+            -->
             <select class="form-control" id="belegt">
                 <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
-                <option>Der Parkplatz ist frei</option>
-                <option>Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden</option>
-                <option>Ich belege den Parkplatz</option>
+                <option value="2">Der Parkplatz ist aktuell frei, aber könnte auch demnächst wieder
+                    belegt werden
+                </option>
+                <option value="3">Ich belege den Parkplatz</option>
             </select>
-
-            <div id="question">
-                <h5 id="h_5">Wollen sie ihren privaten Parkplatz wieder entfernen?</h5>
+            <div class="txt">
+                <h6 id="ueberzogen">Bitte markieren Sie auch öffentliche Parkplätze als beparkt.
+                </h6>
             </div>
-            <div id="reg">
-                <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
-                    <form hidden th:action="@{/deleteParkplatz}" method="post"></form>
-                    Parkplatz dauerhaft entfernen</button>
-<!--                TODO add a PopUp and ask if the user really wants do delete the Parkplatz
-                        and add the form above to the "yes" button-->
+            <div class="button">
+                <button type="button" class="btn btn-outline-secondary btn-lg" id="btn1">Bestätigen</button>
             </div>
         </form>
         <div class="card-footer" id="farbe">
             <small class="text-muted"></small>
-<!--            TODO change how the picture is displayed (like in spezieller_Parkplatz)-->
         </div>
     </div>
 </div>
@@ -190,6 +208,25 @@
     */
 
     $(document).ready(function () {
+        $('#question').change(function () {
+            if ($(this).find('option:selected').text() == 'Nein!') {
+                $('#mail').prop('disabled', true);
+                $('#mail_txt').css('color', 'lightgrey');
+                //$('#submit_btn').prop('disabled', false);
+                $('#popup3').html("");
+                var input_check = $('#mail').val();
+                if (input_check.length > 0) {
+                    input_check = "";
+                    $('#mail').val(input_check);
+                }
+            }
+        });
+        $('#question').change(function () {
+            if ($(this).find('option:selected').text() == 'Ja!') {
+                $('#mail').prop('disabled', false);
+                $('#mail_txt').css('color', 'black');
+            }
+        });
         $('#belegt').change(function () {
             if ($(this).find('option:selected').text() == 'Der Parkplatz ist frei') {
                 //$('#farbe').attr("green_square");
@@ -204,7 +241,10 @@
                 $(".card-footer").attr('id', 'red_square');
             }
         });
-    });
+        var check1 = 0;
+        var check2 = 0;
+        var check3 = 0;
+        var count = 0;
 </script>
 </body>
 

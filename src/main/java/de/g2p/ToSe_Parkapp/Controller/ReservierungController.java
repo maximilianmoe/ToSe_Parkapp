@@ -2,9 +2,7 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.*;
 import de.g2p.ToSe_Parkapp.Repositories.*;
-import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -32,38 +28,66 @@ public class ReservierungController {
     KonsumentRepository konsumentRepository;
     @Autowired
     ParkplatzRepository parkplatzRepository;
-    @Autowired
-    StandortRepository standortRepository;
+
 
 
     @GetMapping("/meine_reservierungen")
-    public String reservierungenGet() {
+    public String reservierungenGet(Model model) {
+        Konsument konsument = konsumentRepository.findByNid(findNutzer());
+        if (reservierungenRepository.findByKid(konsument) == null) {
+            model.addAttribute("reservierungen", null);
+        }
+        else
+            model.addAttribute("reservierungen", reservierungenRepository.findByKid(konsument));
         return "meine_reservierungen";
     }
 
+    @PostMapping("/meine_reservierungen")
+    public String reservierungenPost(@ModelAttribute Reservierung reservierung) {
+        //TODO insert the method for deleting the Reservierung from the database
+        System.out.println(reservierung);
+        reservierungenRepository.delete(reservierung);
+        return "home";
+    }
+
+    @GetMapping("/special_parkingslot/{id}")
+    public String reserve(Model model){
+        String returnString="";
+        Nutzer nutzer=findNutzer();
+//        Parkplatz parkplatz = parkplatzRepository.findByPid());
+        Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
+
+        if (parkplatz.isPrivat())
+            returnString = "spezieller_parkplatz_privat";
+        else returnString = "spezieller_parkplatz_öffentlich";
+
+        model.addAttribute("reservierung", new Reservierung());
+        model.addAttribute("parken", new Parken());
+        model.addAttribute("parkplatz", parkplatz);
+
+        return returnString;
+    }
 
 
-    @GetMapping("/special_parkingslot")
+    /*@GetMapping("/special_parkingslot/{id}")
     public String reserve(Model model, @RequestParam("special-parkingslot") String aid) {
         //TODO find a solution for the id issue (-> how the Parkplatz is selected)
         System.out.println(aid);
         Nutzer nutzer = findNutzer();
-        //TODO change aid
+        //TODO change aid -> now it only finds the Parkplatz of the currently logged in user
         Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
-        Standort standort = parkplatzRepository.findByOrtid(parkplatz.getOrtId());
-        model.addAttribute("standort", standort);
         model.addAttribute("reservierung", new Reservierung());
         model.addAttribute("parken", new Parken());
         model.addAttribute("parkplatz", parkplatz);
-        return "spezieller_parkplatz";
-    }
+        return "spezieller_parkplatz_privat";
+    }*/
 
     @PostMapping("/special_parkingslot")
-    public String reserveParkplatz( @ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @ModelAttribute Konsument konsument, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
+    public String reserveParkplatz( @ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
         String returnString = "";
         Nutzer nutzer = findNutzer();
 
-        if (/*nutzer.getSaldo() < parkplatz.getParkgebuehr()*/false) {
+        if (nutzer.getSaldo() < parkplatz.getParkgebuehr()) {
 //            TODO change errror_page to specific error_page for this content
             returnString = "error_page";
         }else{
@@ -93,6 +117,7 @@ public class ReservierungController {
             parkenRepository.save(parken);
             System.out.println("2");
 //           TODO throws exception when comming to this code... don't no why, says that 'saldo' isn't in 'field list'....
+
 //            reservierungenRepository.save(reservierung);
             System.out.println("3");
 

@@ -30,37 +30,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
-    <a class="navbar-brand" href="home">{Logo}</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="home">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="mein_profil">Profil</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="guthaben">Guthaben</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="login.html" id="navbarDropdown" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Parkplätze
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="parkplaetze_speziell">Meine Parkplätze</a>
-                    <a class="dropdown-item" href="parkplatz_hinzufuegen">Parkplatz hinzufügen</a>
-                    <a class="dropdown-item" href="parkplaetze">Alle Parkplätze</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
+<nav th:replace="layouts :: navbar"></nav>
 <div class="container">
     <div id="ueberschrift">
         <h3 id="h_3">Alle ausstehenden Reservierungen aller Nutzer</h3>
@@ -70,65 +40,23 @@
             <thead>
             <tr>
                 <th scope="col">Reservierungs-ID</th>
-                <th scope="col">Nuzer-ID</th>
-                <th scope="col">Parkplatz-ID</th>
-                <th scope="col">Ort</th>
-                <th scope="col">Anfangs-Datum</th>
-                <th scope="col">Anfangs-Zeit</th>
-                <th scope="col">End-Datum</th>
-                <th scope="col">End-Datum</th>
+                <th scope="col">Konsumenten-ID</th>
+<!--                <th scope="col">Parkplatz-ID</th>-->
+<!--                <th scope="col">Ort</th>-->
+                <th scope="col">Anfangsdatum</th>
+<!--                <th scope="col">Anfangs-Zeit</th>-->
+                <th scope="col">Enddatum</th>
+<!--                <th scope="col">End-Zeit</th>-->
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>12</td>
-                <td>2</td>
-                <td>Passau</td>
-                <td>10.01.2020</td>
-                <td>10:00</td>
-                <td>10.01.2020</td>
-                <td>13:00</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>23</td>
-                <td>3</td>
-                <td>München</td>
-                <td>15.01.2020</td>
-                <td>12:00</td>
-                <td>15.01.2020</td>
-                <td>17:00</td>
-            </tr>
-            <tr>
-                <td>20</td>
-                <td>33</td>
-                <td>27</td>
-                <td>Linz</td>
-                <td>20.01.2020</td>
-                <td>15:00</td>
-                <td>21.01.2020</td>
-                <td>15:00</td>
-            </tr>
-            <tr>
-                <td>24</td>
-                <td>32</td>
-                <td>32</td>
-                <td>Freising</td>
-                <td>25.01.2020</td>
-                <td>18:00</td>
-                <td>26.01.2020</td>
-                <td>10:00</td>
-            </tr>
-            <tr>
-                <td>34</td>
-                <td>44</td>
-                <td>42</td>
-                <td>Ulm</td>
-                <td>29.01.2020</td>
-                <td>14:00</td>
-                <td>29.01.2020</td>
-                <td>21:00</td>
+            <tr th:each="reservierung : ${reservierungen}">
+                <td><span th:text="${reservierung.rid}">Reservierungs-ID</span></td>
+<!--                TODO konsumentenid change the type, it is also only displayed as the entity-->
+                <td><span th:text="${reservierung.kid}">Konsumenten-ID</span></td>
+<!--                <td><span th:text="${reservierung.pid}">Parkplatz-ID</span></td>-->
+                <td><span th:text="${reservierung.start}">Startenddatum</span></td>
+                <td><span th:text="${reservierung.start}">Enddatum</span></td>
             </tr>
             </tbody>
         </table>

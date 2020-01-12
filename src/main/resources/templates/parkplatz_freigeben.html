@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -18,20 +19,21 @@
     <style>
         #h_3 {
             text-align: center;
-            font-family: Georgia, 'Times New Roman', Times, serif;
             margin-top: 5%;
             margin-bottom: 3%;
+            align-content: center;
         }
 
         #ueberschrift {
             text-align: center;
         }
 
-        .table_btn {
-            /*
+        #reg {
+            margin-top: 2%;
             text-align: center;
-            */
         }
+
+
 
         * {
             margin: 0;
@@ -80,11 +82,7 @@
             color: #c59b08;
         }
 
-        #freigeben_btn{
-            text-align: center;
-        }
-
-
+        /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
     </style>
 </head>
 
@@ -92,59 +90,17 @@
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
     <div id="ueberschrift">
-        <h3 id="h_3">Meine aktuellen Reservierungen</h3>
+        <h3 id="h_3">Danke für die Nutzung unserer App!</h3>
+        <h4 id="h_4">Sie haben den Parkplatz-Nr.: <i>{Parkplatz-Nr}</i> beparkt.</h4>
+        <h4 id="h_4">Hiermit bestätigen Sie, dass Sie den Parkplatz wieder verlassen haben.</h4>
     </div>
-    <div id="table_div">
-        <table class="table table-striped">
-            <thead>
-<!--            TODO get Thymeleaf to work on the table-->
-            <tr>
-                <!--
-                <th scope="col">Reservierungs-ID</th>
-                <th scope="col">Parkplatz-ID</th>
-               <th scope="col">Ort</th>
-               <th scope="col">Anfangs-Datum</th>
-                <th scope="col">Anfangs-Zeit</th>
-                <th scope="col">End-Datum</th>
-                <th scope="col">End-Zeit</th>
-                <th scope="col">Reservierung stornieren</th>
-                -->
-                <th scope="col">Reservierungs-ID</th>
-                <th scope="col">Parkplatz-ID</th>
-                <th scope="col">PLZ</th>
-                <th scope="col">Anfang</th>
-                <th scope="col">Ende</th>
-                <th scope="col">Stornieren</th>
-                <th scope="col">Beparken</th>
-                <th scope="col">Parkplatz Freigeben</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="reservierung : ${reservierungen}">
-                <td><span th:text="${reservierung.rid}">Reservierungs-ID</span></td>
-                <td><span th:text="${reservierung.pid}">Parkplatz-ID</span></td>
-                <!-- TODO noch mit thymeleafe verbinden -->
-                <td><span>PLZ</span></td>
-<!--                TODO change the type of pid, because it only displays the entity code-->
-                <td><span th:text="${reservierung.start}">Anfangszeit</span></td>
-                <td><span th:text="${reservierung.ende}">Endzeit</span></td>
-                <td class="table_btn">
-                    <button type="submit" class="btn btn-outline-secondary btn-sm"
-                            id="submit_btn">Stornieren</button>
-                </td>
-                <td class="table_btn">
-                    <button type="submit" class="btn btn-outline-secondary btn-sm"
-                            id="submit_btn">Beparken</button>
-                </td>
-                <td class="table_btn" id="freigeben_btn">
-                    <button type="submit" class="btn btn-outline-secondary btn-sm"
-                            data-toggle="modal"
-                            data-target="#exampleModal">Freigeben</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div id="reg">
+        <button type="button" class="btn btn-outline-secondary btn-lg" data-toggle="modal"
+                data-target="#exampleModal">
+            Ich habe den Parkplatz wieder verlassen
+        </button>
     </div>
+    <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -178,6 +134,13 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="reg">
+        <form action="home.html">
+            <button type="submit" class="btn btn-outline-secondary btn-lg">
+                Zurück zum Homescreen
+            </button>
+        </form>
     </div>
 </div>
 
