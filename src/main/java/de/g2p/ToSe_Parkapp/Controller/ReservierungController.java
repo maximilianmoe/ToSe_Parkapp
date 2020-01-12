@@ -31,30 +31,34 @@ public class ReservierungController {
 
 
     @GetMapping("/meine_reservierungen")
-    public String reservierungenGet(Model model) {
+    public String reservierungenGet(Model model, @RequestParam("pid") int pid) {
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
+        Parkplatz parkplatz = parkplatzRepository.findByPid(pid);
         if (reservierungenRepository.findByKid(konsument) == null) {
             model.addAttribute("reservierungen", null);
         }
         else
             model.addAttribute("reservierungen", reservierungenRepository.findByKid(konsument));
+
+        model.addAttribute("parkplatz", parkplatz);
         return "meine_reservierungen";
     }
 
     @PostMapping("/meine_reservierungen")
-    public String reservierungenPost(@ModelAttribute Reservierung reservierung) {
+    public String reservierungenPost(@ModelAttribute Reservierung reservierung, @ModelAttribute Parkplatz parkplatz, @RequestParam("rate") int stars, @RequestParam("pid") int pid) {
         //TODO insert the method for deleting the Reservierung from the database
+        parkplatzRepository.findByPid(pid).setBewertung(stars);
         System.out.println(reservierung);
         reservierungenRepository.delete(reservierung);
         return "home";
     }
 
     @GetMapping("/special_parkingslot/{id}")
-    public String reserve(Model model){
+    public String reserve(Model model, @PathVariable String id){
         String returnString="";
         Nutzer nutzer=findNutzer();
         Anbieter anbieter = anbieterRepository.findByNid(nutzer.getNidNutzer());
-        Parkplatz parkplatz = parkplatzRepository.findByPid(anbieter.getPid());
+        Parkplatz parkplatz = parkplatzRepository.findByPid(Integer.parseInt(id));
 
         if (parkplatz.isPrivat())
             returnString = "spezieller_parkplatz_privat";
