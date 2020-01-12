@@ -50,7 +50,26 @@ public class ReservierungController {
         return "home";
     }
 
-    @GetMapping("/special_parkingslot")
+    @GetMapping("/special_parkingslot/{id}")
+    public String reserve(Model model){
+        String returnString="";
+        Nutzer nutzer=findNutzer();
+//        Parkplatz parkplatz = parkplatzRepository.findByPid());
+        Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
+
+        if (parkplatz.isPrivat())
+            returnString = "spezieller_parkplatz_privat";
+        else returnString = "spezieller_parkplatz_öffentlich";
+
+        model.addAttribute("reservierung", new Reservierung());
+        model.addAttribute("parken", new Parken());
+        model.addAttribute("parkplatz", parkplatz);
+
+        return returnString;
+    }
+
+
+    /*@GetMapping("/special_parkingslot/{id}")
     public String reserve(Model model, @RequestParam("special-parkingslot") String aid) {
         //TODO find a solution for the id issue (-> how the Parkplatz is selected)
         System.out.println(aid);
@@ -61,10 +80,10 @@ public class ReservierungController {
         model.addAttribute("parken", new Parken());
         model.addAttribute("parkplatz", parkplatz);
         return "spezieller_parkplatz_privat";
-    }
+    }*/
 
     @PostMapping("/special_parkingslot")
-    public String reserveParkplatz( @ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @ModelAttribute Konsument konsument, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
+    public String reserveParkplatz( @ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
         String returnString = "";
         Nutzer nutzer = findNutzer();
 
