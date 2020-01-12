@@ -165,13 +165,14 @@
         </div>
     </div>
 
+    <div class="container">
     <ul class="list-unstyled">
         <li class="media" th:each="parkplatz : *{parkplaetze}">
             <img th:src="@{images/parkplatz3.jpg}" src="../static/images/parkplatz3.jpg"  class="mr-3 new_img" alt="Bild von Parkplatz">
             <div class="media-body" >
-                <div class="row">
+                <div class="row" style="cursor: pointer;" onclick="window.location='/special_parkingslot/{id}(id = ${parkplatz.pid})';">
                     <div class="col-8">
-<!--                        TODO hier darunter plr, str, hausnummer einfügen. Aus Standort, where ortid passt zu parkplatz -->
+<!--                        TODO hier darunter pl=r, str, hausnummer einfügen. Aus Standort, where ortid passt zu parkplatz -->
                         <h5 class="mt-0 mb-1">
                             <span th:text="${parkplatz.plz}"></span>
                             <span>  </span>
@@ -355,6 +356,7 @@
             </div>
         </li>-->
     </ul>
+    </div>
 
 </div>
 
