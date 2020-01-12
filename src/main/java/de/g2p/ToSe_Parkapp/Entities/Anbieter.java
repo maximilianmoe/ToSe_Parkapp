@@ -23,6 +23,10 @@ public class Anbieter  {
 
     private boolean parkplatz;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pid")
+    private Parkplatz pid;
+
     public Anbieter(Integer aid, double umsatz, boolean parkplatz) {
         this.aid = aid;
         this.parkplatz = parkplatz;
@@ -30,5 +34,8 @@ public class Anbieter  {
 
     public boolean getParkplatz() {
         return parkplatz;
+    }
+    public Integer getPid(){
+        return pid.getPid();
     }
 }

@@ -6,6 +6,7 @@ import de.g2p.ToSe_Parkapp.Entities.Parkplatz;
 import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

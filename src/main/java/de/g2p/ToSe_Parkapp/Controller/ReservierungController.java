@@ -30,7 +30,6 @@ public class ReservierungController {
     ParkplatzRepository parkplatzRepository;
 
 
-
     @GetMapping("/meine_reservierungen")
     public String reservierungenGet(Model model) {
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
@@ -54,8 +53,8 @@ public class ReservierungController {
     public String reserve(Model model){
         String returnString="";
         Nutzer nutzer=findNutzer();
-//        Parkplatz parkplatz = parkplatzRepository.findByPid());
-        Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
+        Anbieter anbieter = anbieterRepository.findByNid(nutzer.getNidNutzer());
+        Parkplatz parkplatz = parkplatzRepository.findByPid(anbieter.getPid());
 
         if (parkplatz.isPrivat())
             returnString = "spezieller_parkplatz_privat";
@@ -82,7 +81,7 @@ public class ReservierungController {
         return "spezieller_parkplatz_privat";
     }*/
 
-    @PostMapping("/special_parkingslot")
+    @PostMapping("/special_parkingslot/{id}")
     public String reserveParkplatz( @ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
         String returnString = "";
         Nutzer nutzer = findNutzer();
@@ -117,8 +116,7 @@ public class ReservierungController {
             parkenRepository.save(parken);
             System.out.println("2");
 //           TODO throws exception when comming to this code... don't no why, says that 'saldo' isn't in 'field list'....
-
-//            reservierungenRepository.save(reservierung);
+            reservierungenRepository.save(reservierung);
             System.out.println("3");
 
 //           TODO Übersichtsseite erstellen und den Namen hier ändern
