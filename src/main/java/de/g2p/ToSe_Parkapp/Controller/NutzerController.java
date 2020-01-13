@@ -99,7 +99,6 @@ public class NutzerController {
             }
             nutzerRepository.save(nutzer);
         }
-
             return "login";
     }
 

@@ -44,5 +44,9 @@ public class Konsument {
         return this;
     }
 
+    public boolean getBelegt() {
+        return belegt;
+    }
+
 
 }

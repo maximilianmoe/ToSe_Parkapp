@@ -91,6 +91,7 @@
 <body>
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
+    <form th:action="@{/meine_reservierungen}" method="post">
     <div id="ueberschrift">
         <h3 id="h_3">Meine aktuellen Reservierungen</h3>
     </div>
@@ -120,26 +121,29 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="reservierung : ${reservierungen}">
+            <tr th:if="${reservierungen} == 0">
+                <td colspan="8">Sie haben noch keinen Parkplatz reserviert</td>
+            </tr>
+            <tr th:unless="${reservierungen} == 0" th:each="reservierung : ${reservierungen}">
                 <td><span th:text="${reservierung.rid}">Reservierungs-ID</span></td>
-                <td><span th:text="${reservierung.pid}" th:name="pid">Parkplatz-ID</span></td>
+                <td><span th:text="${parkplatz.pid}">Parkplatz-ID</span></td>
                 <!-- TODO noch mit thymeleafe verbinden -->
-                <td><span>PLZ</span></td>
-<!--                TODO change the type of pid, because it only displays the entity code-->
+                <td><span th:text="${parkplatz.plz}">PLZ</span></td>
                 <td><span th:text="${reservierung.start}">Anfangszeit</span></td>
                 <td><span th:text="${reservierung.ende}">Endzeit</span></td>
                 <td class="table_btn">
                     <button type="submit" class="btn btn-outline-secondary btn-sm"
-                            id="submit_btn">Stornieren</button>
+                            id="submit_btn" th:name="button" th:value="stornieren" th>Stornieren</button>
+
                 </td>
                 <td class="table_btn">
                     <button type="submit" class="btn btn-outline-secondary btn-sm"
-                            id="submit_btn">Beparken</button>
+                            id="submit_btn" th:name="button" th:value="beparken">Beparken</button>
                 </td>
                 <td class="table_btn" id="freigeben_btn">
-                    <button type="submit" class="btn btn-outline-secondary btn-sm"
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
                             data-toggle="modal"
-                            data-target="#exampleModal">Freigeben</button>
+                            data-target="#exampleModal" th:name="button" th:value="freigeben">Freigeben</button>
                 </td>
             </tr>
             </tbody>
@@ -160,6 +164,7 @@
                 -->
                 <div class="modal-body">
                     <div class="rate">
+<!--                        TODO the stars are not clickable &ndash;&gt; cannot be saved-->
                         <input type="number" id="star5" th:name="rate" th:value="5" />
                         <label for="star5" title="text">5 stars</label>
                         <input type="number" id="star4" th:name="rate" th:value="4" />
@@ -173,12 +178,13 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary" data-dismiss="modal">Zurück</button>
-                    <button type="submit" class="btn btn-primary">Speichern</button>
+                    <button type="submit" class="btn btn-secondary" th:name="button" th:value="zurueck" data-dismiss="modal">Zurück</button>
+                    <button type="submit" class="btn btn-primary" th:name="button" th:value="speichern">Speichern</button>
                 </div>
             </div>
         </div>
     </div>
+    </form>
 </div>
 
 <script>

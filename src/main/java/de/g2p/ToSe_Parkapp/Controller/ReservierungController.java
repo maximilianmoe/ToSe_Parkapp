@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -31,59 +32,69 @@ public class ReservierungController {
 
 
     @GetMapping("/meine_reservierungen")
-    public String reservierungenGet(Model model, @RequestParam("pid") int pid) {
+    public String reservierungenGet(Model model) {
+        String returnstring="";
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
-        Parkplatz parkplatz = parkplatzRepository.findByPid(pid);
-        if (reservierungenRepository.findByKid(konsument) == null) {
-            model.addAttribute("reservierungen", null);
-        }
-        else
-            model.addAttribute("reservierungen", reservierungenRepository.findByKid(konsument));
+        if (konsument.getBelegt())
+            model.addAttribute("reservierungen", 0);
+        else {
+            Reservierung reservierung = reservierungenRepository.findByKid(konsument);
+            Parkplatz parkplatz = parkplatzRepository.findByPid(reservierung.getPidInteger());
+            if (reservierungenRepository.findByKid(konsument) == null) {
+                model.addAttribute("reservierungen", 0);
+            } else
+                model.addAttribute("reservierungen", reservierung);
 
-        model.addAttribute("parkplatz", parkplatz);
+            model.addAttribute("parkplatz", parkplatz);
+        }
         return "meine_reservierungen";
     }
 
     @PostMapping("/meine_reservierungen")
-    public String reservierungenPost(@ModelAttribute Reservierung reservierung, @ModelAttribute Parkplatz parkplatz, @RequestParam("rate") int stars, @RequestParam("pid") int pid) {
+    public String reservierungenPost(@RequestParam("rate") Integer stars, /*@RequestParam ("pid") Integer pid,*/
+                                     @RequestParam("button") String button) throws InterruptedException {
         //TODO insert the method for deleting the Reservierung from the database
-        parkplatzRepository.findByPid(pid).setBewertung(stars);
-        System.out.println(reservierung);
-        reservierungenRepository.delete(reservierung);
-        return "home";
+        String returnstring="meine_reservierungen";
+        Konsument konsument = konsumentRepository.findByNid(findNutzer());
+        Reservierung reservierung = reservierungenRepository.findByKid(konsument.getKidKonsument());
+        Parkplatz parkplatz = parkplatzRepository.findByPid(reservierung.getPidInteger());
+        System.out.println(parkplatz);
+
+        if(parkplatz.getStatus().equalsIgnoreCase("belegt")) {
+            if (button.contains("freigeben")) {
+                while (!button.contains("speichern") || !button.contains("zurueck"))
+                    wait(100);
+                if (button.contains("speichern")) {
+                    System.out.println("freigeben");
+                    System.out.println(stars);
+                    Integer bewertungsanzahl = parkplatz.getBewertungsanzahl() + 1;
+                    System.out.println(bewertungsanzahl);
+                    parkplatzRepository.updateBewertung(stars, bewertungsanzahl, parkplatz.getPid());
+                    returnstring = "meine_reservierungen";
+                    //reservierungenRepository.delete(reservierung);
+                }
+            }
+        }
+        else if (button.contains("stornieren")) {
+            System.out.println("stornieren");
+            returnstring = "home";
+//            reservierungenRepository.delete(reservierung);
+
+        }
+        else if (button.contains("beparken")) {
+            System.out.println("beparken");
+            returnstring = "meine_reservierungen";
+            //TODO finish the Parken part
+//            Parken parken = new Parken();
+//            parken.setStart();
+//            parken.setEnde();
+//            parken.setKid(konsument);
+//            parken.setPid(parkplatz);
+            //parken.setStart(sqlDate);
+            //parkenRepository.save();
+        }
+        return returnstring;
     }
-
-    @GetMapping("/special_parkingslot/{id}")
-    public String reserve(Model model, @PathVariable String id){
-        String returnString="";
-        System.out.println(id);
-        Nutzer nutzer=findNutzer();
-        Anbieter anbieter = anbieterRepository.findByNid(nutzer.getNidNutzer());
-        Parkplatz parkplatz = parkplatzRepository.findByPid(Integer.parseInt(id));
-
-        if (parkplatz.isPrivat())
-            returnString = "spezieller_parkplatz_privat";
-        else returnString = "spezieller_parkplatz_öffentlich";
-
-
-        model.addAttribute("parkplatz", parkplatz);
-
-        return returnString;
-    }
-
-
-    /*@GetMapping("/special_parkingslot/{id}")
-    public String reserve(Model model, @RequestParam("special-parkingslot") String aid) {
-        //TODO find a solution for the id issue (-> how the Parkplatz is selected)
-        System.out.println(aid);
-        Nutzer nutzer = findNutzer();
-        //TODO change aid -> now it only finds the Parkplatz of the currently logged in user
-        Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
-        model.addAttribute("reservierung", new Reservierung());
-        model.addAttribute("parken", new Parken());
-        model.addAttribute("parkplatz", parkplatz);
-        return "spezieller_parkplatz_privat";
-    }*/
 
     @PostMapping("/special_parkingslot/{id}")
     public String reserveParkplatz( @ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
