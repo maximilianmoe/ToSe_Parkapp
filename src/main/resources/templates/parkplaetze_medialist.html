@@ -27,46 +27,6 @@
             margin-bottom: 20px;
         }
 
-        .green_dot {
-            height: 25px;
-            width: 25px;
-            background-color: greenyellow;
-            border-radius: 50%;
-            display: inline-block
-        }
-
-        .yellow_dot {
-            height: 25px;
-            width: 25px;
-            background-color: orange;
-            border-radius: 50%;
-            display: inline-block
-        }
-
-        .red_dot {
-            height: 25px;
-            width: 25px;
-            background-color: red;
-            border-radius: 50%;
-            display: inline-block
-        }
-
-        #green_square {
-
-            background-color: greenyellow;
-            text-align: center;
-        }
-
-        #orange_square {
-            background-color: orange;
-            text-align: center;
-        }
-
-        #red_square {
-            background-color: red;
-            text-align: center;
-        }
-
         .checked {
             color: orange;
         }
@@ -163,6 +123,15 @@
             margin-top: 1%;
             margin-bottom: 1%;
         }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            background-color: grey;
+            border-radius: 0.5%;
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
     </style>
 </head>
 
@@ -184,10 +153,15 @@
     </div>
     <!-- TODO WICHTIG!!!!!!!!!!!!!!!!!!     Hier muss noch Google Maps eingebunden werden!
     -->
+    <!--
     <div class="container">
         <div id="maps">
             <iframe id="maps2" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d21122.415631945158!2d13.4527989!3d48.56576525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sde!2sde!4v1578753826267!5m2!1sde!2sde" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
         </div>
+    </div>
+    -->
+    <div class="container">
+        <div id="map"></div>
     </div>
 
     <div class="container">
@@ -384,7 +358,46 @@
     </div>
 
 </div>
+<script>
+    // The following example creates a marker in Stockholm, Sweden using a DROP
+    // animation. Clicking on the marker will toggle the animation between a BOUNCE
+    // animation and no animation.
 
+    var marker;
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: {
+                lat: 48.572052,
+                lng: 13.455946
+            }
+        });
+
+        marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            position: {
+                lat: 48.572052,
+                lng: 13.455946
+            }
+        });
+        marker.addListener('click', toggleBounce);
+    }
+
+    function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+            marker.setAnimation(null);
+        } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjjzixYKFLOyGeDW_1PPP9nmLeAQA3wk0&callback=initMap">
+</script>
+</script>
 </body>
 
 
