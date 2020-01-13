@@ -41,7 +41,6 @@
             <tr>
                 <th scope="col">Reservierungs-ID</th>
                 <th scope="col">Konsumenten-ID</th>
-<!--                <th scope="col">Parkplatz-ID</th>-->
 <!--                <th scope="col">Ort</th>-->
                 <th scope="col">Anfangsdatum</th>
 <!--                <th scope="col">Anfangs-Zeit</th>-->
@@ -50,13 +49,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="reservierung : ${reservierungen}">
+            <tr th:if="${reservierungen} == 0">
+                <td colspan="4"> <h3>Es existieren im Moment keine ausstehenden Reservierungen</h3></td>
+            </tr>
+            <tr th:unless="${reservierungen} == 0" th:each="reservierung : ${reservierungen}">
                 <td><span th:text="${reservierung.rid}">Reservierungs-ID</span></td>
-<!--                TODO konsumentenid change the type, it is also only displayed as the entity-->
-                <td><span th:text="${reservierung.kid}">Konsumenten-ID</span></td>
-<!--                <td><span th:text="${reservierung.pid}">Parkplatz-ID</span></td>-->
+<!--                TODO konsumentenid change the type, it is only displayed as the entity-->
+<!--                <td><span th:text="${konsument.kid}" th:each="konsument : ${konsumenten}" -->
+<!--                          th:if="konsument = reservierung.kid">Konsumenten-ID</span></td>-->
+<!--                -->
                 <td><span th:text="${reservierung.start}">Startenddatum</span></td>
-                <td><span th:text="${reservierung.start}">Enddatum</span></td>
+                <td><span th:text="${reservierung.ende}">Enddatum</span></td>
             </tr>
             </tbody>
         </table>

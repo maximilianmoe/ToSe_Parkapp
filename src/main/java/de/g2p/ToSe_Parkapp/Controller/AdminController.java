@@ -96,7 +96,14 @@ public class AdminController {
 
     @GetMapping("/admin_alle_ausstehenden_reservierungen")
     public String adminResGet(Model model) {
-        model.addAttribute("reservierungen",reservierungenRepository.findAll());
+
+        if (reservierungenRepository.count() == 0) {
+            model.addAttribute("reservierungen", 0);
+        } else {
+            model.addAttribute("reservierungen", reservierungenRepository.findAll());
+            model.addAttribute("konsumenten", konsumentRepository.findAll());
+        }
+
         return "admin_alle_ausstehenden_reservierungen";
     }
 

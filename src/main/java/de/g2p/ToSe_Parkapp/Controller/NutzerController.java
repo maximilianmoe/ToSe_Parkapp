@@ -43,10 +43,10 @@ public class NutzerController {
                           @RequestParam("fahrzeugtyp") String fahrzeugtyp, @RequestParam("email") String email,
                           @RequestParam("username") String benutzername) {
 
-        boolean duplicate = nutzerRepository.findByBenutzername("mmm@gmx.de").isPresent();
+        boolean duplicate = nutzerRepository.findByBenutzername(benutzername).isPresent();
 
         if (duplicate) {
-            //add this to the hmtl page
+            //TODO add this to the hmtl page
             System.out.println("Duplicate Nutzer");
             return "registrieren";
         }

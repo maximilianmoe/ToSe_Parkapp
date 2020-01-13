@@ -27,6 +27,10 @@
             margin-bottom: 20px;
         }
 
+        #button {
+            text-align: right;
+        }
+
         .green_dot {
             height: 25px;
             width: 25px;
@@ -138,6 +142,7 @@
         #maps2{
             width: 100%;
         }
+
     </style>
 </head>
 
@@ -170,8 +175,8 @@
         <li class="media" th:each="parkplatz : *{parkplaetze}">
             <img th:src="@{images/parkplatz3.jpg}" src="../static/images/parkplatz3.jpg"
                     class="mr-3 new_img" alt="Bild von Parkplatz">
-            <div class="media-body" >
-                <div class="row" style="cursor: pointer;" onclick="window.location='/special_parkingslot/{id}(id = ${parkplatz.pid})';">
+            <div class="media-body">
+                <div class="row">
                     <div class="col-8">
 <!--                        TODO hier darunter pl=r, str, hausnummer einfügen. Aus Standort, where ortid passt zu parkplatz -->
                         <h5 class="mt-0 mb-1">
@@ -208,8 +213,6 @@
                                 <span th:if="${parkplatz.privat == true}">privat</span>
                                 <span th:unless="${parkplatz.privat == true}">öffentlich</span>
                             </p>
-<!--                        TODO Link auf das ganze mit href="/special_parkingslot"+id; id für jeden einzelnen parkplatz unterschiedlich-->
-                            <a href="/special_parkingslot/{id}(id = ${parkplatz.pid})">Text</a><br />
                         </div>
                     </div>
                     <div class="col-3" >
@@ -268,8 +271,15 @@
                                <p class="fa fa-star checked"></p>
                                </div>
                            </div>
-                        </td>
+                           <div >
+                               <form th:action="@{/parkplaetze_medialist}" method="post">
+                                   <!--                            TODO set the position of the button on the bottom right-->
+                                   <button th:name="button" th:value="${parkplatz.pid}" class="btn btn-outline-secondary btn-lg" type="submit">Zum Parkplatz</button>
+                               </form>
+                           </div>
+                       </td>
                     </div>
+
 
                     <div class="col-1">
 
@@ -278,12 +288,12 @@
                                 &nbsp;
                             </div>
                         </div>
-                        <div th:if="${parkplatz.status == 'besetzt'}">
+                        <div th:if="${parkplatz.status == 'belegt'}">
                             <div id="ampel_red">
                                 &nbsp;
                             </div>
                         </div>
-                        <div th:if="${parkplatz.status == 'fremdbesetzt'}">
+                        <div th:if="${parkplatz.status == 'fremdbelegt'}">
                             <div id="ampel_orange">
                                 &nbsp;
                             </div>

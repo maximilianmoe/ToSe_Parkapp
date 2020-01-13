@@ -56,6 +56,7 @@ public class ReservierungController {
     @GetMapping("/special_parkingslot/{id}")
     public String reserve(Model model, @PathVariable String id){
         String returnString="";
+        System.out.println(id);
         Nutzer nutzer=findNutzer();
         Anbieter anbieter = anbieterRepository.findByNid(nutzer.getNidNutzer());
         Parkplatz parkplatz = parkplatzRepository.findByPid(Integer.parseInt(id));
@@ -64,8 +65,7 @@ public class ReservierungController {
             returnString = "spezieller_parkplatz_privat";
         else returnString = "spezieller_parkplatz_öffentlich";
 
-        model.addAttribute("reservierung", new Reservierung());
-        model.addAttribute("parken", new Parken());
+
         model.addAttribute("parkplatz", parkplatz);
 
         return returnString;

@@ -109,11 +109,12 @@
 <body>
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
+    <form th:action="@{/spezieller_parkplatz_öffentlich}" method="post">
     <div class="card mb-3">
         <img th:src="@{images/parkplatz3.jpg}">
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
 
-        <form action="#" th:action="@{/special_parkingslot/{id}" method="post">
+<!--        <form action="#" th:action="@{/special_parkingslot/{id}" method="post">-->
             <div class="card-body">
                 <h5 class="card-title">
                     <p>
@@ -166,25 +167,29 @@
                 Bei öffentlichen Parkplätzen können wir nie 100% sagen, ob der Parkplatz frei ist.
                 Deshalb entfernen der Option der Parkplatz ist frei.
             -->
-            <select class="form-control" id="belegt">
+            <select class="form-control" id="belegt" th:name="belegung">
                 <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
-                <option value="2">Der Parkplatz ist aktuell frei, aber könnte auch demnächst wieder
+                <option th:value="fremdbelegt">Der Parkplatz ist aktuell frei, aber könnte auch demnächst wieder
                     belegt werden
                 </option>
-                <option value="3">Ich belege den Parkplatz</option>
+                <option th:value="belegt">Ich belege den Parkplatz</option>
             </select>
             <div class="txt">
                 <h6 id="ueberzogen">Bitte markieren Sie auch öffentliche Parkplätze als beparkt.
                 </h6>
             </div>
             <div class="button">
-                <button type="button" class="btn btn-outline-secondary btn-lg" id="btn1">Bestätigen</button>
+                <a href="parkbestaetigung_oeffentlich">
+                    <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn1"
+                            th:name="pid" th:value="${parkplatz.pid}">Bestätigen</button>
+                </a>
             </div>
-        </form>
+<!--        </form>-->
         <div class="card-footer" id="farbe">
             <small class="text-muted"></small>
         </div>
     </div>
+    </form>
 </div>
 <script>
     /*
