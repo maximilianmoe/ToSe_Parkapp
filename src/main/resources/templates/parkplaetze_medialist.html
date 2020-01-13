@@ -52,6 +52,7 @@
         }
 
         #green_square {
+
             background-color: greenyellow;
             text-align: center;
         }
@@ -101,27 +102,39 @@
         }
         */
         #ampel_green {
+            /*
             background-color: greenyellow;
             object-fit: cover;
             height: 100%;
             width: 30px;
             float: right;
+            */
+            width: 30px;
+            background-color: greenyellow;
         }
 
         #ampel_orange {
+            /*
             background-color: orange;
             object-fit: cover;
             height: 100%;
             width: 30px;
             float: right;
+            */
+            width: 30px;
+            background-color: orange;
         }
 
         #ampel_red {
+            /*
             background-color: red;
             object-fit: cover;
             height: 100%;
             width: 30px;
             float: right;
+            */
+            width: 30px;
+            background-color: red;
         }
         .data{
             line-height: 1;
@@ -137,6 +150,18 @@
         }
         #maps2{
             width: 100%;
+        }
+        /*
+        class flex neu eingefügt!
+         */
+        .flex{
+            display: flex;
+            height: auto;
+            min-height: 100%;
+        }
+        li{
+            margin-top: 1%;
+            margin-bottom: 1%;
         }
     </style>
 </head>
@@ -273,17 +298,17 @@
 
                     <div class="col-1">
 
-                        <div th:if="${parkplatz.status == 'frei'}">
+                        <div class="flex" th:if="${parkplatz.status == 'frei'}">
                             <div id="ampel_green">
                                 &nbsp;
                             </div>
                         </div>
-                        <div th:if="${parkplatz.status == 'besetzt'}">
+                        <div class="flex" th:if="${parkplatz.status == 'besetzt'}">
                             <div id="ampel_red">
                                 &nbsp;
                             </div>
                         </div>
-                        <div th:if="${parkplatz.status == 'fremdbesetzt'}">
+                        <div class="flex" th:if="${parkplatz.status == 'fremdbesetzt'}">
                             <div id="ampel_orange">
                                 &nbsp;
                             </div>
