@@ -105,27 +105,39 @@
         }
         */
         #ampel_green {
+            /*
             background-color: greenyellow;
             object-fit: cover;
             height: 100%;
             width: 30px;
             float: right;
+            */
+            width: 30px;
+            background-color: greenyellow;
         }
 
         #ampel_orange {
+            /*
             background-color: orange;
             object-fit: cover;
             height: 100%;
             width: 30px;
             float: right;
+            */
+            width: 30px;
+            background-color: orange;
         }
 
         #ampel_red {
+            /*
             background-color: red;
             object-fit: cover;
             height: 100%;
             width: 30px;
             float: right;
+            */
+            width: 30px;
+            background-color: red;
         }
         .data{
             line-height: 1;
@@ -141,6 +153,27 @@
         }
         #maps2{
             width: 100%;
+        }
+        /*
+        class flex neu eingefügt!
+         */
+        .flex{
+            display: flex;
+            height: auto;
+            min-height: 100%;
+        }
+        li{
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            background-color: grey;
+            border-radius: 0.5%;
+            margin-top: 1%;
+            margin-bottom: 1%;
         }
 
     </style>
@@ -164,10 +197,15 @@
     </div>
     <!-- TODO WICHTIG!!!!!!!!!!!!!!!!!!     Hier muss noch Google Maps eingebunden werden!
     -->
+    <!--
     <div class="container">
         <div id="maps">
             <iframe id="maps2" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d21122.415631945158!2d13.4527989!3d48.56576525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sde!2sde!4v1578753826267!5m2!1sde!2sde" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
         </div>
+    </div>
+    -->
+    <div class="container">
+        <div id="map"></div>
     </div>
 
     <div class="container">
@@ -175,7 +213,7 @@
         <li class="media" th:each="parkplatz : *{parkplaetze}">
             <img th:src="@{images/parkplatz3.jpg}" src="../static/images/parkplatz3.jpg"
                     class="mr-3 new_img" alt="Bild von Parkplatz">
-            <div class="media-body">
+            <div class="media-body" >
                 <div class="row">
                     <div class="col-8">
 <!--                        TODO hier darunter pl=r, str, hausnummer einfügen. Aus Standort, where ortid passt zu parkplatz -->
@@ -283,16 +321,15 @@
 
                     <div class="col-1">
 
-                        <div th:if="${parkplatz.status == 'frei'}">
+                        <div class="flex" th:if="${parkplatz.status == 'frei'}">
                             <div id="ampel_green">
                                 &nbsp;
                             </div>
                         </div>
-                        <div th:if="${parkplatz.status == 'belegt'}">
+                        <div class="flex" th:if="${parkplatz.status == 'belegt'}">
                             <div id="ampel_red">
                                 &nbsp;
                             </div>
-                        </div>
                         <div th:if="${parkplatz.status == 'fremdbelegt'}">
                             <div id="ampel_orange">
                                 &nbsp;
@@ -369,7 +406,46 @@
     </div>
 
 </div>
+<script>
+    // The following example creates a marker in Stockholm, Sweden using a DROP
+    // animation. Clicking on the marker will toggle the animation between a BOUNCE
+    // animation and no animation.
 
+    var marker;
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: {
+                lat: 48.572052,
+                lng: 13.455946
+            }
+        });
+
+        marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            position: {
+                lat: 48.572052,
+                lng: 13.455946
+            }
+        });
+        marker.addListener('click', toggleBounce);
+    }
+
+    function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+            marker.setAnimation(null);
+        } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjjzixYKFLOyGeDW_1PPP9nmLeAQA3wk0&callback=initMap">
+</script>
+</script>
 </body>
 
 
