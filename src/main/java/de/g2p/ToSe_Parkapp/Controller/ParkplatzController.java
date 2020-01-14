@@ -63,6 +63,7 @@ public class ParkplatzController {
         parkplatz.setStatus("frei");
         parkplatz.setBewertung(0);
         parkplatz.setBewertungsanzahl(0);
+        parkplatz.setGesamtbewertung(0);
 
         //Sets Parkplatz to private if the box for "privater Parkplatz" is checked
         if (checked.contains("1"))
@@ -174,6 +175,8 @@ public class ParkplatzController {
     public String deleteParkplatz() {
         //TODO add the method to delete the Parkplatz from the Database and change the "parkplatz" attribute
         // in table Konsument to false
+
+        //parkplatzRepository.delete(parkplatz);
         return "home";
     }
 

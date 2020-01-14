@@ -51,29 +51,24 @@ public class ReservierungController {
     }
 
     @PostMapping("/meine_reservierungen")
-    public String reservierungenPost(@RequestParam("rate") Integer stars, /*@RequestParam ("pid") Integer pid,*/
+    public String reservierungenPost(@RequestParam("rate") Integer stars,
                                      @RequestParam("button") String button) throws InterruptedException {
         //TODO insert the method for deleting the Reservierung from the database
         String returnstring="meine_reservierungen";
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
         Reservierung reservierung = reservierungenRepository.findByKid(konsument.getKidKonsument());
         Parkplatz parkplatz = parkplatzRepository.findByPid(reservierung.getPidInteger());
-        System.out.println(parkplatz);
 
-        if(parkplatz.getStatus().equalsIgnoreCase("belegt")) {
-            if (button.contains("freigeben")) {
-                while (!button.contains("speichern") || !button.contains("zurueck"))
-                    wait(100);
-                if (button.contains("speichern")) {
-                    System.out.println("freigeben");
-                    System.out.println(stars);
+        if (button.contains("freigebenSpeichern") || button.contains("freigebenZurueck")) {
+                if (button.contains("freigebenSpeichern")) {
+                    Integer gesamtbewertung = parkplatz.getGesamtbewertung()+stars;
                     Integer bewertungsanzahl = parkplatz.getBewertungsanzahl() + 1;
-                    System.out.println(bewertungsanzahl);
-                    parkplatzRepository.updateBewertung(stars, bewertungsanzahl, parkplatz.getPid());
-                    returnstring = "meine_reservierungen";
-                    //reservierungenRepository.delete(reservierung);
+                    Integer bewertung = (gesamtbewertung)/bewertungsanzahl;
+                    parkplatzRepository.updateBewertung(bewertung, bewertungsanzahl, gesamtbewertung, parkplatz.getPid());
                 }
-            }
+                    returnstring = "meine_reservierungen";
+                //TODO löschen einbinden;
+                    //reservierungenRepository.delete(reservierung);
         }
         else if (button.contains("stornieren")) {
             System.out.println("stornieren");
@@ -98,6 +93,8 @@ public class ReservierungController {
 
     @PostMapping("/special_parkingslot/{id}")
     public String reserveParkplatz( @ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
+        //TODO kann diese methode in @GetMapping("/meinparkplatz") ausgelagert werden?
+        //-->weil dort wird der aktuelle Parkplatz bereits gespeichert
         String returnString = "";
         Nutzer nutzer = findNutzer();
 

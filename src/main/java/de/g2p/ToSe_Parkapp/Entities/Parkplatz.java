@@ -34,6 +34,8 @@ public class Parkplatz {
     @Column(name = "BEWANZ")
     private Integer bewertungsanzahl;
 
+    private Integer gesamtbewertung;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "aid")
     private Anbieter anbieterId;
@@ -57,7 +59,8 @@ public class Parkplatz {
 
     public Parkplatz(String fahrzeugtyp, String status, boolean privat, Integer zeitbegrenzung,
                      Integer bewertung, Integer bewertungsanzahl, Anbieter anbieterId, @NotNull Integer strafgebuehr,
-                     String beschreibung, Integer parkgebuehr, String strasse, Integer plz, Integer hausnummer, String latitude, String longitude) {
+                     String beschreibung, Integer parkgebuehr, String strasse, Integer plz, Integer hausnummer,
+                     String latitude, String longitude, Integer gesamtbewertung) {
         this.fahrzeugtyp = fahrzeugtyp;
         this.status = status;
         this.privat = privat;
@@ -73,6 +76,7 @@ public class Parkplatz {
         this.hausnummer = hausnummer;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.gesamtbewertung = gesamtbewertung;
     }
 
 }
