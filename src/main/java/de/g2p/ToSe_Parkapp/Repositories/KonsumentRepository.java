@@ -14,4 +14,9 @@ public interface KonsumentRepository extends JpaRepository<Konsument, Integer> {
 
     Konsument findByKid(Integer kid);
     Konsument findByNid(Nutzer nid);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update konsument set pbel = :pbel where kid = :kid", nativeQuery = true)
+    void updateParkplatzBelegt(@Param("pbel") boolean pbel, @Param("kid") Integer kid) ;
 }

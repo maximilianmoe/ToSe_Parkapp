@@ -22,6 +22,7 @@
 <body>
 <nav th:replace="layouts :: navbar"></nav>
 <div id="page">
+    <form th:action="@{/parkbestaetigung_oeffentlich}" method="post">
     <div>
         <h3>
             <span>Der Anbieter </span>
@@ -31,11 +32,13 @@
     </div>
     <div>
         <h3>
-            <span th:name="button" th:value="1">Zum Freigeben bitte hier klicken</span>
+            <!--th:value="${konsument.compareParken(parken)}"-->
+            <span th:name="parkplatz" th:value="${parkplatz}"  >Zum Freigeben bitte hier klicken</span>
         </h3>
         <a href="parkplaetze_medialist"><button type="submit" class="btn btn-outline-secondary btn-lg">Freigeben</button></a>
 
     </div>
+    </form>
 </div>
 
 </body>

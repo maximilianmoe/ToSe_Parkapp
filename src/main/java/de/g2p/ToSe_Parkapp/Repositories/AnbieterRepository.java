@@ -28,4 +28,5 @@ public interface AnbieterRepository extends JpaRepository<Anbieter, Integer> {
 
 
 
+
 }
