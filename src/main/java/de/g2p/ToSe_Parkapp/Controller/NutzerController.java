@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class NutzerController {
 
@@ -30,6 +32,8 @@ public class NutzerController {
 
     @GetMapping("/registrieren")
     public String registration(Model model) {
+        List<Nutzer> nutzer = nutzerRepository.findAll();
+        model.addAttribute("nutzerlist", nutzer);
         model.addAttribute("nutzer", new Nutzer());
         model.addAttribute("konsument", new Konsument());
         model.addAttribute("anbieter", new Anbieter());

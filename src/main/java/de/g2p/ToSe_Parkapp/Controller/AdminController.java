@@ -41,12 +41,12 @@ public class AdminController {
         if (button.equals(1)) {
             nutzer.setSperrung(false);
             nutzerRepository.updateSperrung(nutzer.getNid(), false);
-            returnstring = "redirect:/nutzer_entsperrt";
+            returnstring = "/nutzer_entsperrt";
         }
         else if(button.equals(2)) {
             nutzer.setSperrung(true);
             nutzerRepository.updateSperrung(nutzer.getNid(), true);
-            returnstring = "redirect:/nutzer_gesperrt";
+            returnstring = "/nutzer_gesperrt";
         }
         model.addAttribute("nutzer", nutzer);
         return returnstring;

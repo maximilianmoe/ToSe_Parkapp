@@ -8,6 +8,7 @@ import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -73,5 +74,13 @@ public class Nutzer {
     public boolean getSperrung() {return sperrung;}
 
     public String getAdmin() {return admin;}
+
+    public String compareBenutzername(List<Nutzer> nutzers) {
+        for (Nutzer nutzer : nutzers) {
+            if(nutzer.getBenutzername().equals(this.benutzername))
+                return nutzer.getBenutzername();
+        }
+        return null;
+    }
 
 }
