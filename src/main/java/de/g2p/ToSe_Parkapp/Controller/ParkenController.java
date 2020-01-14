@@ -30,7 +30,6 @@ public class ParkenController {
         System.out.println(status);
         parkplatzRepository.updateStatus(status, pid);
 
-        //TODO maybe add a confirmation page for button Bestätigen
         return "parkbestaetigung_oeffentlich";
     }
 

@@ -22,7 +22,8 @@ public interface ParkplatzRepository extends JpaRepository<Parkplatz, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update parkplatz set bewertung = :bewertung, bewanz = :bewanz where pid = :pid", nativeQuery = true)
-    void updateBewertung(@Param("bewertung") Integer bewertung,@Param("bewanz") Integer bewanz, @Param("pid") Integer pid);
+    @Query(value = "update parkplatz set bewertung = :bewertung, bewanz = :bewanz, gesamtbewertung = :gesamtbewertung where pid = :pid", nativeQuery = true)
+    void updateBewertung(@Param("bewertung") Integer bewertung,@Param("bewanz") Integer bewanz,
+                         @Param("gesamtbewertung") Integer gesamtbewertung, @Param("pid") Integer pid);
 
 }

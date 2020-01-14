@@ -96,8 +96,6 @@ public class AdminController {
 
     @GetMapping("/admin_alle_ausstehenden_reservierungen")
     public String adminResGet(Model model) {
-        //TODO get kid to work on the HTML Page
-
         if (reservierungenRepository.count() == 0) {
             model.addAttribute("reservierungen", 0);
         } else {
