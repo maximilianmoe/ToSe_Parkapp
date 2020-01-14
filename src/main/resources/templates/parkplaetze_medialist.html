@@ -31,6 +31,7 @@
             text-align: right;
         }
 
+        /*
         .green_dot {
             height: 25px;
             width: 25px;
@@ -69,6 +70,7 @@
             background-color: red;
             text-align: center;
         }
+        */
 
         .checked {
             color: orange;
@@ -114,16 +116,11 @@
             */
             width: 30px;
             background-color: greenyellow;
+            object-fit: cover;
         }
 
         #ampel_orange {
-            /*
-            background-color: orange;
             object-fit: cover;
-            height: 100%;
-            width: 30px;
-            float: right;
-            */
             width: 30px;
             background-color: orange;
         }
@@ -138,6 +135,7 @@
             */
             width: 30px;
             background-color: red;
+            object-fit: cover;
         }
         .data{
             line-height: 1;
@@ -174,6 +172,18 @@
             border-radius: 0.5%;
             margin-top: 1%;
             margin-bottom: 1%;
+        }
+        /*
+        Button wird rechts oben angezeigt
+        #btn_link{
+            float: right;
+        }
+        */
+
+        #btn_link_div{
+            position: absolute;
+            bottom: 0;
+            right: 0;
         }
 
     </style>
@@ -309,10 +319,10 @@
                                <p class="fa fa-star checked"></p>
                                </div>
                            </div>
-                           <div >
+                           <div id="btn_link_div">
                                <form th:action="@{/parkplaetze_medialist}" method="post">
                                    <!--                            TODO set the position of the button on the bottom right-->
-                                   <button th:name="button" th:value="${parkplatz.pid}" class="btn btn-outline-secondary btn-lg" type="submit">Zum Parkplatz</button>
+                                   <button id="btn_link" th:name="button" th:value="${parkplatz.pid}" class="btn btn-outline-secondary btn-lg" type="submit">Zum Parkplatz</button>
                                </form>
                            </div>
                        </td>
@@ -330,6 +340,7 @@
                             <div id="ampel_red">
                                 &nbsp;
                             </div>
+                        </div>
                         <div class="flex" th:if="${parkplatz.status == 'fremdbelegt'}">
                             <div id="ampel_orange">
                                 &nbsp;
@@ -444,7 +455,6 @@
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjjzixYKFLOyGeDW_1PPP9nmLeAQA3wk0&callback=initMap">
-</script>
 </script>
 </body>
 
