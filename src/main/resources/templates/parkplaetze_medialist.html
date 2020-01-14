@@ -175,6 +175,18 @@
             margin-top: 1%;
             margin-bottom: 1%;
         }
+        /*
+        Button wird rechts oben angezeigt
+        #btn_link{
+            float: right;
+        }
+        */
+
+        #btn_link_div{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
 
     </style>
 </head>
@@ -309,10 +321,10 @@
                                <p class="fa fa-star checked"></p>
                                </div>
                            </div>
-                           <div >
+                           <div id="btn_link_div">
                                <form th:action="@{/parkplaetze_medialist}" method="post">
                                    <!--                            TODO set the position of the button on the bottom right-->
-                                   <button th:name="button" th:value="${parkplatz.pid}" class="btn btn-outline-secondary btn-lg" type="submit">Zum Parkplatz</button>
+                                   <button id="btn_link" th:name="button" th:value="${parkplatz.pid}" class="btn btn-outline-secondary btn-lg" type="submit">Zum Parkplatz</button>
                                </form>
                            </div>
                        </td>
