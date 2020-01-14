@@ -73,7 +73,9 @@
                     <option th:value="beides">Beides</option>
                 </select>
             </div>
-            <div class="col">
+            <div>
+<!--            TODO th:if ändern , dass input immer angezeigt wird, und nur mit all-->
+<!--            <div class="col" th:if="${nutzer.compareBenutzername(nutzerlist)} == false">-->
                 <input type="text" th:name="username" class="form-control" placeholder="Username">
             </div>
         </div>

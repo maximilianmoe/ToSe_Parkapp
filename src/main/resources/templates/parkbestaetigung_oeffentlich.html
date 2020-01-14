@@ -25,15 +25,15 @@
     <div>
         <h3>
             <span>Der Anbieter </span>
-            <span th:text="anbieter"></span>
+<!--            <span th:text="anbieter"></span>-->
             <span>bedankt sich für die Nutzung seines Parkplatzes.</span>
         </h3>
     </div>
     <div>
         <h3>
-            <span>Zum Freigeben bitte hier klicken</span>
+            <span th:name="button" th:value="1">Zum Freigeben bitte hier klicken</span>
         </h3>
-        <button type="submit" class="btn btn-outline-secondary btn-lg">Freigeben</button>
+        <a href="parkplaetze_medialist"><button type="submit" class="btn btn-outline-secondary btn-lg">Freigeben</button></a>
 
     </div>
 </div>

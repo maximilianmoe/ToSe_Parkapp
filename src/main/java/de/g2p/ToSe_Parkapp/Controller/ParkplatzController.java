@@ -85,8 +85,13 @@ public class ParkplatzController {
     }
 
     @GetMapping("/parkbestaetigung_oeffentlich")
-    public String parkbesOeffentlichGet() {
+    public String parkbesOeffentlichGet(Model model) {
         return "parkbestaetigung_oeffentlich";
+    }
+
+    @PostMapping("/parkbestaetigung_oeffentlich")
+    public String parkbesOeffentlichPost() {
+        return null;
     }
 
     @GetMapping("/spezieller_parkplatz_privat")
