@@ -39,28 +39,32 @@
         }
 
         #error_jpg {
+            /*
             position: absolute;
             left: 50%;
             margin-left: -150px;
             height: 300px;
             width: 300px;
-            margin-top: 15px;
+
+             */
+            max-height: 300px;
+            max-width: 300px;
+            margin-top: 3%;
             border-radius: 2%;
         }
 
         #error_msg {
-            margin-top: 275px;
+            /*
+            Vorerst leer
+             */
         }
     </style>
 </head>
 
 <body>
 <div class="container">
-    <div class="row">
-        <div id="bild">
-            <img th:src="@{images/very-nice.jpg}" src="../static/images/very-nice.jpg" id="error_jpg">
-        </div>
-
+    <div id="bild">
+        <img th:src="@{images/very-nice.jpg}" src="../static/images/very-nice.jpg" id="error_jpg">
     </div>
     <div class="row" id="error_msg">
         <div class="col-md-12">
