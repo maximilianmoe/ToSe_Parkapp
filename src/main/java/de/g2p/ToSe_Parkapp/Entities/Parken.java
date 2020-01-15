@@ -36,21 +36,25 @@ public class Parken {
 
 
 
-    @Column(name = "EIGENBEL")
-    private boolean eigenbelegt;
+    @Column(name = "oeffentlich")
+    private boolean oeffentlich;
 
     private Date erinnerung;
 
     private boolean freigabe;
 
-    public Parken(Konsument kid, Parkplatz pid, Date start, Date ende, boolean eigenbelegt,
+    public Parken(Konsument kid, Parkplatz pid, Date start, Date ende, boolean oeffentlich,
                   Date erinnerung, boolean freigabe) {
         this.kid = kid;
         this.pid = pid;
         this.start = start;
         this.ende = ende;
-        this.eigenbelegt = eigenbelegt;
+        this.oeffentlich = oeffentlich;
         this.erinnerung = erinnerung;
         this.freigabe = freigabe;
+    }
+
+    public boolean getOeffentlich() {
+        return oeffentlich;
     }
 }

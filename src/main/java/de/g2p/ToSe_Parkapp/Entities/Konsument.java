@@ -48,5 +48,8 @@ public class Konsument {
         return belegt;
     }
 
+    public boolean getReserviert() {
+        return reserviert;
+    }
 
 }

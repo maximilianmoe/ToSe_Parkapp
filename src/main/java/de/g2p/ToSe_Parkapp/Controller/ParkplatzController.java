@@ -1,15 +1,14 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.*;
-import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
-import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
-import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
+import de.g2p.ToSe_Parkapp.Repositories.*;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +27,10 @@ public class ParkplatzController {
     NutzerRepository nutzerRepository;
     @Autowired
     AnbieterRepository anbieterRepository;
+    @Autowired
+    KonsumentRepository konsumentRepository;
+    @Autowired
+    ParkenRepository parkenRepository;
 
     @GetMapping("/parkplatz_hinzufuegen")
     public String add(Model model) {
@@ -85,15 +88,24 @@ public class ParkplatzController {
         return "mein_parkplatz";
     }
 
-    @GetMapping("/parkbestaetigung_oeffentlich")
-    public String parkbesOeffentlichGet(Model model) {
-        return "parkbestaetigung_oeffentlich";
-    }
+//    @GetMapping("/parkbestaetigung_oeffentlich")
+//    public String parkbesOeffentlichGet(ModelMap model) {
+//        System.out.println("GetMapping parkbest");
+//        Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
+//        Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
+//        model.addAttribute("parkplatz", parkplatz);
+//        return "parkbestaetigung_oeffentlich";
+//    }
 
-    @PostMapping("/parkbestaetigung_oeffentlich")
-    public String parkbesOeffentlichPost() {
-        return null;
-    }
+//    @PostMapping("/parkbestaetigung_oeffentlich")
+//    public String parkbesOeffentlichPost(@RequestParam("button") String button) {
+//        if (button.contains("freigebenSpeichern")) {
+//
+//        } else if (button.contains("freigebenZurueck")) {
+//
+//        }
+//        return null;
+//    }
 
     @GetMapping("/spezieller_parkplatz_privat")
     public String spezParkplatzPrivatGet(Model model) {
@@ -101,8 +113,38 @@ public class ParkplatzController {
         return "spezieller_parkplatz_privat";
     }
 
+    @PostMapping("/spezieller_parkplatz_öffentlich")
+    public String spezParkplatzOeffentlichPost(@RequestParam("pid") Integer pid, @RequestParam("belegung") String belegt,
+                                               @ModelAttribute Parken parken) {
+
+        System.out.println(pid +"  PostMapping speziellerÖffentlich");
+        Konsument konsument = konsumentRepository.findByNid(findNutzer());
+        parken.setKid(konsument);
+        parken.setPid(parkplatzRepository.findByPid(pid));
+        parken.setOeffentlich(true);
+        String returnstring = "";
+        String status = "frei";
+        if (belegt.contains("fremdbelegt")) {
+            status = "fremdbelegt";
+            returnstring = "parkplaetze_medialist";
+
+        }
+        else if (belegt.contains("belegt")) {
+            konsumentRepository.updatebelegt(true, konsument.getKid());
+            status ="belegt";
+            returnstring = "meine_reservierungen";
+
+        }
+        System.out.println(status);
+        parkenRepository.save(parken);
+        parkplatzRepository.updateStatus(status, pid);
+
+        return returnstring;
+    }
+
     @GetMapping("/spezieller_parkplatz_öffentlich")
     public String spezParkplatzOeffentlichGet(Model model) {
+        model.addAttribute("parkplaetze", parkplatzRepository.findAll());
         System.out.println("getMapping spezieller öffentlicher Parkplatz");
         return "spezieller_parkplatz_öffentlich";
     }

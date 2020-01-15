@@ -146,6 +146,12 @@
                             data-target="#exampleModal" th:name="button" th:value="freigeben">Freigeben</button>
                 </td>
             </tr>
+            <tr th:if="${parken} == 0">
+                <td>Keine öffentlichen Parkplätze beparkt</td>
+            </tr>
+            <tr th:unless="${parken} == 0">
+                <td></td>
+            </tr>
             </tbody>
         </table>
     </div>

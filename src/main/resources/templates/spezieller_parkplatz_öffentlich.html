@@ -109,7 +109,7 @@
 <body>
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
-    <form th:action="@{/spezieller_parkplatz_öffentlich}" method="post">
+    <form th:action="@{/spezieller_parkplatz_öffentlich}" method="post" modelattribute="parkplatz">
     <div class="card mb-3">
         <img th:src="@{images/parkplatz3.jpg}">
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
@@ -179,10 +179,10 @@
                 </h6>
             </div>
             <div class="button">
-                <a href="parkbestaetigung_oeffentlich">
+
                     <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn1"
                             th:name="pid" th:value="${parkplatz.pid}">Bestätigen</button>
-                </a>
+
             </div>
 <!--        </form>-->
         <div class="card-footer" id="farbe">
