@@ -169,9 +169,7 @@
             -->
             <select class="form-control" id="belegt" th:name="belegung">
                 <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
-                <option th:value="fremdbelegt">Der Parkplatz ist aktuell frei, aber könnte auch demnächst wieder
-                    belegt werden
-                </option>
+                <option th:value="fremdbelegt">Der Parkplatz ist aktuell frei, aber könnte auch demnächst wieder belegt werden</option>
                 <option th:value="belegt">Ich belege den Parkplatz</option>
             </select>
             <div class="txt">
@@ -181,7 +179,7 @@
             <div class="button">
 
                     <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn1"
-                            th:name="pid" th:value="${parkplatz.pid}">Bestätigen</button>
+                            th:name="pid" th:value="${parkplatz.pid}" disabled>Bestätigen</button>
 
             </div>
 <!--        </form>-->
@@ -213,43 +211,32 @@
     */
 
     $(document).ready(function () {
-        $('#question').change(function () {
-            if ($(this).find('option:selected').text() == 'Nein!') {
-                $('#mail').prop('disabled', true);
-                $('#mail_txt').css('color', 'lightgrey');
-                //$('#submit_btn').prop('disabled', false);
-                $('#popup3').html("");
-                var input_check = $('#mail').val();
-                if (input_check.length > 0) {
-                    input_check = "";
-                    $('#mail').val(input_check);
-                }
-            }
-        });
-        $('#question').change(function () {
-            if ($(this).find('option:selected').text() == 'Ja!') {
-                $('#mail').prop('disabled', false);
-                $('#mail_txt').css('color', 'black');
-            }
-        });
         $('#belegt').change(function () {
-            if ($(this).find('option:selected').text() == 'Der Parkplatz ist frei') {
+            if ($(this).find('option:selected').text() == 'Ist der Parkplatz aktuell belegt?') {
                 //$('#farbe').attr("green_square");
                 //jQuery("div").prev("farbe").attr("id", "green_square");
-                $(".card-footer").attr('id', 'green_square');
+                //$(".card-footer").attr('id', 'green_square');
+                $('#btn1').prop('disabled', true);
             }
+            /*
             if ($(this).find('option:selected').text() ==
                 'Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden') {
+            */
+            if ($(this).find('option:selected').text() == 'Der Parkplatz ist aktuell frei, aber könnte auch demnächst wieder belegt werden') {
                 $(".card-footer").attr('id', 'orange_square');
+                $('#btn1').prop('disabled', false);
             }
             if ($(this).find('option:selected').text() == 'Ich belege den Parkplatz') {
                 $(".card-footer").attr('id', 'red_square');
+                $('#btn1').prop('disabled', false);
             }
+
         });
         var check1 = 0;
         var check2 = 0;
         var check3 = 0;
         var count = 0;
+    });
 </script>
 </body>
 
