@@ -81,6 +81,7 @@
         }
         #reg{
             text-align: center;
+            margin-top: 1%;
         }
         .card-footer{
             height: 50px;
@@ -150,13 +151,18 @@
                 <option>Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden</option>
                 <option>Ich belege den Parkplatz</option>
             </select>
+            <div id="reg">
+                <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
+                    <form hidden th:action="@{/deleteParkplatz}" method="post"></form>
+                    Bestätigen</button>
+            </div>
 
             <div id="question">
                 <h5 id="h_5">Wollen sie ihren privaten Parkplatz wieder entfernen?</h5>
             </div>
             <div id="reg">
                 <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
-                    <form hidden th:action="@{/deleteParkplatz}" method="post"></form>
+                    <form hidden th:value="${parkplatz.pid}" method="post"></form>
                     Parkplatz dauerhaft entfernen</button>
 <!--                TODO add a PopUp and ask if the user really wants do delete the Parkplatz
                         and add the form above to the "yes" button-->
