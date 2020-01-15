@@ -107,7 +107,8 @@
                     <span class="input-group-text" id="inputGroup-sizing-lg">EUR</span>
                 </div>
                 <input class="form-control" th:name="betrag" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                       placeholder="Betrag" type="number" id="geld_input">
+                       placeholder="Betrag" type="number" min="0" max="10000" pattern="0 + \.[0-9]*[1-9][0-9]*$"
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57" id="geld_input" required>
             </div>
         </div>
         <div id="aufladen">
@@ -132,6 +133,13 @@
 </div>
 </div>
 <script>
+    /*
+    $("#geld_input").focusout(function () {
+       if((this).val()==null || ("#geld_input").val()<0){
+           alert("ALter was bei dir schief!");
+       };
+    });
+    */
     /*
     $(document).ready(function(){
         $('#auszahlen').on('click', function (e){

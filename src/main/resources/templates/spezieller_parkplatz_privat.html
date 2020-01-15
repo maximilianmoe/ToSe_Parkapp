@@ -98,7 +98,7 @@
         <img th:src="@{images/parkplatz3.jpg}">
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
 
-        <form action="#" th:action="@{/special_parkingslot}" method="post">
+        <form action="#" th:action="@{/special_parkingslot}" method="post" onsubmit="openModal()" id="myForm">
             <div class="card-body">
                 <h5 class="card-title">
                     <p>
@@ -196,7 +196,11 @@
         </div>
     </div>
 </div>
+
+
+
 <script>
+
     /*
     Folgende Funktion sorgt dafür, dass wenn Nein! (man will keine Erinnerungsmail erhalten)
     ausgewählt wird das Input-Fenster zur Angabe der Zeit, wann man die Mail erhalten

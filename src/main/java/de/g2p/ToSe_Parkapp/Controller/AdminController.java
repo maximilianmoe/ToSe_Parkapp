@@ -41,12 +41,12 @@ public class AdminController {
         if (button.equals(1)) {
             nutzer.setSperrung(false);
             nutzerRepository.updateSperrung(nutzer.getNid(), false);
-            returnstring = "redirect:/nutzer_entsperrt";
+            returnstring = "/nutzer_entsperrt";
         }
         else if(button.equals(2)) {
             nutzer.setSperrung(true);
             nutzerRepository.updateSperrung(nutzer.getNid(), true);
-            returnstring = "redirect:/nutzer_gesperrt";
+            returnstring = "/nutzer_gesperrt";
         }
         model.addAttribute("nutzer", nutzer);
         return returnstring;
@@ -96,7 +96,13 @@ public class AdminController {
 
     @GetMapping("/admin_alle_ausstehenden_reservierungen")
     public String adminResGet(Model model) {
-        model.addAttribute("reservierungen",reservierungenRepository.findAll());
+        if (reservierungenRepository.count() == 0) {
+            model.addAttribute("reservierungen", 0);
+        } else {
+            model.addAttribute("reservierungen", reservierungenRepository.findAll());
+            model.addAttribute("konsumenten", konsumentRepository.findAll());
+        }
+
         return "admin_alle_ausstehenden_reservierungen";
     }
 

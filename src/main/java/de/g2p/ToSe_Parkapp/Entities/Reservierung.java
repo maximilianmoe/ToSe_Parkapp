@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -44,6 +45,18 @@ public class Reservierung {
         this.ende = ende;
         this.resZuParken = resZuParken;
         this.beendet = beendet;
+    }
+
+    public Integer getPidInteger() {
+        return pid.getPid();
+    }
+
+    public Integer compareWithKonsument(List<Konsument> konsumenten) {
+        for (Konsument konsument : konsumenten) {
+            if(konsument == this.kid)
+                return konsument.getKid();
+        }
+        return null;
     }
 
 

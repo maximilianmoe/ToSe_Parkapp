@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class NutzerController {
 
@@ -30,6 +32,8 @@ public class NutzerController {
 
     @GetMapping("/registrieren")
     public String registration(Model model) {
+        List<Nutzer> nutzer = nutzerRepository.findAll();
+        model.addAttribute("nutzerlist", nutzer);
         model.addAttribute("nutzer", new Nutzer());
         model.addAttribute("konsument", new Konsument());
         model.addAttribute("anbieter", new Anbieter());
@@ -43,10 +47,10 @@ public class NutzerController {
                           @RequestParam("fahrzeugtyp") String fahrzeugtyp, @RequestParam("email") String email,
                           @RequestParam("username") String benutzername) {
 
-        boolean duplicate = nutzerRepository.findByBenutzername("mmm@gmx.de").isPresent();
+        boolean duplicate = nutzerRepository.findByBenutzername(benutzername).isPresent();
 
         if (duplicate) {
-            //add this to the hmtl page
+            //TODO add this to the hmtl page
             System.out.println("Duplicate Nutzer");
             return "registrieren";
         }
@@ -99,7 +103,6 @@ public class NutzerController {
             }
             nutzerRepository.save(nutzer);
         }
-
             return "login";
     }
 

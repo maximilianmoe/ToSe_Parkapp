@@ -132,8 +132,8 @@
             <h4 class="h_6">Parkplatz erstellt: </h4>
         </div>
         <div class="col">
-            <h4 class="h_6" th:text="${anbieter.parkplatz}">
-            </h4>
+            <h4 class="h_6" th:if="${anbieter.parkplatz} == true">Ja</h4>
+            <h4 class="h_6" th:unless="${anbieter.parkplatz} == true">Nein</h4>
         </div>
     </div>
 </div>

@@ -17,6 +17,7 @@ public interface AnbieterRepository extends JpaRepository<Anbieter, Integer> {
     Anbieter findByAid(Integer aid);
     Anbieter findByNid(Nutzer nid);
 
+
     @Query(value = "select aid from anbieter where nid = :nid ", nativeQuery = true)
     Anbieter findByNidIntegerParam(@Param("nid")Integer nid);
 
@@ -24,4 +25,7 @@ public interface AnbieterRepository extends JpaRepository<Anbieter, Integer> {
     @Modifying
     @Query(value = "update anbieter set parkplatz = :parkplatz where aid = :aid", nativeQuery = true)
     void updateParkplatz(@Param("parkplatz") boolean parkplatz, @Param("aid") Integer aid) ;
+
+
+
 }

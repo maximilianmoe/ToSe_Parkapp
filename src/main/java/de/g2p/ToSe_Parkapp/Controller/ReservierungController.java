@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -30,60 +31,70 @@ public class ReservierungController {
     ParkplatzRepository parkplatzRepository;
 
 
-
     @GetMapping("/meine_reservierungen")
     public String reservierungenGet(Model model) {
+        String returnstring="";
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
-        if (reservierungenRepository.findByKid(konsument) == null) {
-            model.addAttribute("reservierungen", null);
+        if (konsument.getBelegt())
+            model.addAttribute("reservierungen", 0);
+        else {
+            Reservierung reservierung = reservierungenRepository.findByKid(konsument);
+            Parkplatz parkplatz = parkplatzRepository.findByPid(reservierung.getPidInteger());
+            if (reservierungenRepository.findByKid(konsument) == null) {
+                model.addAttribute("reservierungen", 0);
+            } else
+                model.addAttribute("reservierungen", reservierung);
+
+            model.addAttribute("parkplatz", parkplatz);
         }
-        else
-            model.addAttribute("reservierungen", reservierungenRepository.findByKid(konsument));
         return "meine_reservierungen";
     }
 
     @PostMapping("/meine_reservierungen")
-    public String reservierungenPost(@ModelAttribute Reservierung reservierung) {
+    public String reservierungenPost(@RequestParam("rate") Integer stars,
+                                     @RequestParam("button") String button) throws InterruptedException {
         //TODO insert the method for deleting the Reservierung from the database
-        System.out.println(reservierung);
-        reservierungenRepository.delete(reservierung);
-        return "home";
+        String returnstring="meine_reservierungen";
+        Konsument konsument = konsumentRepository.findByNid(findNutzer());
+        Reservierung reservierung = reservierungenRepository.findByKid(konsument.getKidKonsument());
+        Parkplatz parkplatz = parkplatzRepository.findByPid(reservierung.getPidInteger());
+
+        if (button.contains("freigebenSpeichern") || button.contains("freigebenZurueck")) {
+                if (button.contains("freigebenSpeichern")) {
+                    Integer gesamtbewertung = parkplatz.getGesamtbewertung()+stars;
+                    Integer bewertungsanzahl = parkplatz.getBewertungsanzahl() + 1;
+                    Integer bewertung = (gesamtbewertung)/bewertungsanzahl;
+                    parkplatzRepository.updateBewertung(bewertung, bewertungsanzahl, gesamtbewertung, parkplatz.getPid());
+                }
+                    returnstring = "meine_reservierungen";
+                //TODO löschen einbinden;
+                    //reservierungenRepository.delete(reservierung);
+        }
+        else if (button.contains("stornieren")) {
+            System.out.println("stornieren");
+            returnstring = "home";
+//            reservierungenRepository.delete(reservierung);
+
+        }
+        else if (button.contains("beparken")) {
+            System.out.println("beparken");
+            returnstring = "meine_reservierungen";
+            //TODO finish the Parken part
+//            Parken parken = new Parken();
+//            parken.setStart();
+//            parken.setEnde();
+//            parken.setKid(konsument);
+//            parken.setPid(parkplatz);
+            //parken.setStart(sqlDate);
+            //parkenRepository.save();
+        }
+        return returnstring;
     }
 
-    @GetMapping("/special_parkingslot/{id}")
-    public String reserve(Model model){
-        String returnString="";
-        Nutzer nutzer=findNutzer();
-//        Parkplatz parkplatz = parkplatzRepository.findByPid());
-        Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
-
-        if (parkplatz.isPrivat())
-            returnString = "spezieller_parkplatz_privat";
-        else returnString = "spezieller_parkplatz_öffentlich";
-
-        model.addAttribute("reservierung", new Reservierung());
-        model.addAttribute("parken", new Parken());
-        model.addAttribute("parkplatz", parkplatz);
-
-        return returnString;
-    }
-
-
-    /*@GetMapping("/special_parkingslot/{id}")
-    public String reserve(Model model, @RequestParam("special-parkingslot") String aid) {
-        //TODO find a solution for the id issue (-> how the Parkplatz is selected)
-        System.out.println(aid);
-        Nutzer nutzer = findNutzer();
-        //TODO change aid -> now it only finds the Parkplatz of the currently logged in user
-        Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
-        model.addAttribute("reservierung", new Reservierung());
-        model.addAttribute("parken", new Parken());
-        model.addAttribute("parkplatz", parkplatz);
-        return "spezieller_parkplatz_privat";
-    }*/
-
-    @PostMapping("/special_parkingslot")
+    @PostMapping("/special_parkingslot/{id}")
     public String reserveParkplatz( @ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
+        //TODO kann diese methode in @GetMapping("/meinparkplatz") ausgelagert werden?
+        //-->weil dort wird der aktuelle Parkplatz bereits gespeichert
         String returnString = "";
         Nutzer nutzer = findNutzer();
 
@@ -117,8 +128,7 @@ public class ReservierungController {
             parkenRepository.save(parken);
             System.out.println("2");
 //           TODO throws exception when comming to this code... don't no why, says that 'saldo' isn't in 'field list'....
-
-//            reservierungenRepository.save(reservierung);
+            reservierungenRepository.save(reservierung);
             System.out.println("3");
 
 //           TODO Übersichtsseite erstellen und den Namen hier ändern
