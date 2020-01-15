@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
-import java.util.List;
 
 
 @Getter
@@ -49,12 +48,8 @@ public class Konsument {
         return belegt;
     }
 
-    public Parkplatz compareParken(List<Parken> parkens) {
-        for (Parken parken : parkens) {
-            if (this.getKidKonsument() == parken.getKid())
-                return parken.getPid();
-        }
-        return null;
+    public boolean getReserviert() {
+        return reserviert;
     }
 
 }

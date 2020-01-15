@@ -18,5 +18,6 @@ public interface KonsumentRepository extends JpaRepository<Konsument, Integer> {
     @Transactional
     @Modifying
     @Query(value = "update konsument set pbel = :pbel where kid = :kid", nativeQuery = true)
-    void updateParkplatzBelegt(@Param("pbel") boolean pbel, @Param("kid") Integer kid) ;
+    void updatebelegt(@Param("pbel") boolean pbel, @Param("kid") Integer kid);
+
 }

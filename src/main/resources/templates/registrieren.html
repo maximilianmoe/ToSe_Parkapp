@@ -37,6 +37,10 @@
         #reg {
             text-align: center;
         }
+
+        .red_text{
+            color: red;
+        }
     </style>
 </head>
 
@@ -73,10 +77,10 @@
                     <option th:value="beides">Beides</option>
                 </select>
             </div>
-            <div>
-<!--            TODO th:if ändern , dass input immer angezeigt wird, und nur mit all-->
-<!--            <div class="col" th:if="${nutzer.compareBenutzername(nutzerlist)} == false">-->
-                <input type="text" th:name="username" class="form-control" placeholder="Username">
+            <div class="col">
+                <!--            TODO th:if ändern , dass input immer angezeigt wird, und nur mit all-->
+                <!--            <div class="col" th:if="${nutzer.compareBenutzername(nutzerlist)} == false">-->
+                <input type="text" id="username" th:name="username" class="form-control" placeholder="Username">
             </div>
         </div>
         <div class="row input">
@@ -108,6 +112,18 @@
                     <option th:value="van">Van</option>
                     <option th:value="kombi">Kombi</option>
                 </select>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div id="warning" class="col">
+                    <span class="red_text" id="red_text1"></span><br>
+                    <span class="red_text" id="red_text3"></span>
+                </div>
+                <div id="warning" class="col">
+                    <span class="red_text" id="red_text2"></span><br>
+                    <span class="red_text" id="red_text4"></span>
+                </div>
             </div>
         </div>
         <div class="form-group" id="checkbox">
@@ -190,20 +206,23 @@
         var mail1 = $('#mail1').val();
         var mail2 = $('#mail2').val();
         if (mail1 != mail2) {
-            alert('Die zwei eingegebenen Email Adressen stimmer nicht überein!');
+            $('#red_text2').html("Die zwei eingegebenen Email Adressen stimmer nicht überein!");
+            //alert('Die zwei eingegebenen Email Adressen stimmer nicht überein!');
             $('#btn').prop('disabled', true);
         } else {
             $('#btn').prop('disabled', false);
+            $('#red_text2').html("");
         }
     });
     $('#pw2').focusout(function () {
         var pw1 = $('#pw1').val();
         var pw2 = $('#pw2').val();
         if (pw1 != pw2) {
-            alert('Passwörter stimmen nicht überein!');
+            $('#red_text3').html("Passwörter stimmen nicht überein!");
             $('#btn').prop('disabled', true);
         } else {
             $('#btn').prop('disabled', false);
+            $('#red_text3').html("");
         }
     });
     $('#btn').focus(function () {
@@ -238,14 +257,29 @@
         var kennz = $('#kennzeichen').val();
         if(kennz.match(regex)){
             $('#btn').prop('disabled', false);
+            $('#red_text4').html("");
         }
         else{
-            alert('Kennzeichen muss in dem Format PA-XY-123 (Nur Großbuchstaben) angegeben werden!');
+            $('#red_text4').html("Kennzeichen muss in dem Format PA-XY-123 (Nur Großbuchstaben) angegeben werden!");
             $('#btn').prop('disabled', true);
         }
     });
 
-    <!--    $('#fahrzeug_art').val($("#fahrzeug_art option:first").val());-->
+    $('#mail1').focusout(function(){
+        var expression = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+        var regex = new RegExp(expression);
+        var mail = $('#mail1').val();
+        if(mail.match(regex)){
+            $('#btn').prop('disabled', false);
+            $('#red_text1').html("");
+        }
+        else{
+            $('#red_text1').html("Bitte geben Sie eine gültige E-mail Adresse ein.");
+            $('#btn').prop('disabled', true);
+        }
+    });
+
+    //   $('#fahrzeug_art').val($("#fahrzeug_art option:first").val());
 </script>
 </body>
 

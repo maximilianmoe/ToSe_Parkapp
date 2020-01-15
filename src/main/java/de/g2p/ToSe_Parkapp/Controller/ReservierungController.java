@@ -35,7 +35,7 @@ public class ReservierungController {
     public String reservierungenGet(Model model) {
         String returnstring="";
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
-        if (konsument.getBelegt())
+        if (!konsument.getReserviert())
             model.addAttribute("reservierungen", 0);
         else {
             Reservierung reservierung = reservierungenRepository.findByKid(konsument);
@@ -46,6 +46,17 @@ public class ReservierungController {
                 model.addAttribute("reservierungen", reservierung);
 
             model.addAttribute("parkplatz", parkplatz);
+        }
+        if(konsument.getBelegt()) {
+            Parken parken = parkenRepository.findByKid(konsument);
+            System.out.println(parken.getParkid()+"  parkid "+parken.getOeffentlich()+"  öffentlich");
+            if(parken.getOeffentlich()) {
+                System.out.println(parken + "  belegt");
+                model.addAttribute("parken", parken);
+            }
+        } else {
+            System.out.println("nicht belegt");
+            model.addAttribute("parken", 0);
         }
         return "meine_reservierungen";
     }
