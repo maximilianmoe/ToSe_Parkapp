@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class ReservierungController {
@@ -33,7 +33,6 @@ public class ReservierungController {
 
     @GetMapping("/meine_reservierungen")
     public String reservierungenGet(Model model) {
-        String returnstring="";
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
         if (!konsument.getReserviert())
             model.addAttribute("reservierungen", 0);
@@ -47,39 +46,76 @@ public class ReservierungController {
 
             model.addAttribute("parkplatz", parkplatz);
         }
+
+        //alle öffentlichen beparkten Parkplätze anzeigen
+        List<Parken> parkenList = parkenRepository.findAll();
+        Parken parken = null;
         if(konsument.getBelegt()) {
-            Parken parken = parkenRepository.findByKid(konsument);
+            for (Parken parken1: parkenList) {
+                if (konsument.getKidKonsument() == parken1.getKid() || parken1.isFreigabe()) {
+                    parken = parken1;
+                }
+            }
+            assert parken != null;
             System.out.println(parken.getParkid()+"  parkid "+parken.getOeffentlich()+"  öffentlich");
+
+            Parkplatz parkplatz = parkplatzRepository.findByPid(parken.getPidParkplatz());
             if(parken.getOeffentlich()) {
                 System.out.println(parken + "  belegt");
+                model.addAttribute("parkplatzParken", parkplatz);
                 model.addAttribute("parken", parken);
+            } else {
+                model.addAttribute("parken", 0);
             }
         } else {
             System.out.println("nicht belegt");
             model.addAttribute("parken", 0);
+
         }
         return "meine_reservierungen";
     }
 
     @PostMapping("/meine_reservierungen")
-    public String reservierungenPost(@RequestParam("rate") Integer stars,
+    public String reservierungenPost(@RequestParam("rateRes") Integer starsRes, @RequestParam("rateParken") Integer starsParken,
                                      @RequestParam("button") String button) throws InterruptedException {
         //TODO insert the method for deleting the Reservierung from the database
         String returnstring="meine_reservierungen";
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
+        List<Parken> parkenList = parkenRepository.findAll();
+        Parken parken = null;
+        for (Parken parken1: parkenList) {
+            if (konsument.getKidKonsument() == parken1.getKid() || parken1.isFreigabe()) {
+                parken = parken1;
+            }
+        }
         Reservierung reservierung = reservierungenRepository.findByKid(konsument.getKidKonsument());
-        Parkplatz parkplatz = parkplatzRepository.findByPid(reservierung.getPidInteger());
+        Parkplatz parkplatzRes = parkplatzRepository.findByPid(reservierung.getPidInteger());
+        assert parken != null;
+        Parkplatz parkplatzPark = parkplatzRepository.findByPid(parken.getPidParkplatz());
 
-        if (button.contains("freigebenSpeichern") || button.contains("freigebenZurueck")) {
-                if (button.contains("freigebenSpeichern")) {
-                    Integer gesamtbewertung = parkplatz.getGesamtbewertung()+stars;
-                    Integer bewertungsanzahl = parkplatz.getBewertungsanzahl() + 1;
+        if (button.contains("freigebenSpeichernRes") || button.contains("freigebenZurueckRes")) {
+                if (button.contains("freigebenSpeichernRes")) {
+                    Integer gesamtbewertung = parkplatzRes.getGesamtbewertung()+starsRes;
+                    Integer bewertungsanzahl = parkplatzRes.getBewertungsanzahl() + 1;
                     Integer bewertung = (gesamtbewertung)/bewertungsanzahl;
-                    parkplatzRepository.updateBewertung(bewertung, bewertungsanzahl, gesamtbewertung, parkplatz.getPid());
+                    parkplatzRepository.updateBewertung(bewertung, bewertungsanzahl, gesamtbewertung, parkplatzRes.getPid());
                 }
-                    returnstring = "meine_reservierungen";
+                returnstring = "meine_reservierungen";
                 //TODO löschen einbinden;
-                    //reservierungenRepository.delete(reservierung);
+            parkenRepository.updateFreigabe(true, parken.getParkid());
+            //reservierungenRepository.delete(reservierung);
+        }
+        if (button.contains("freigebenSpeichernParken") || button.contains("freigebenZurueckParken")) {
+            if (button.contains("freigebenSpeichernParken")) {
+                Integer gesamtbewertung = parkplatzRes.getGesamtbewertung()+starsParken;
+                Integer bewertungsanzahl = parkplatzRes.getBewertungsanzahl() + 1;
+                Integer bewertung = (gesamtbewertung)/bewertungsanzahl;
+                parkplatzRepository.updateBewertung(bewertung, bewertungsanzahl, gesamtbewertung, parkplatzPark.getPid());
+            }
+            returnstring = "meine_reservierungen";
+            //TODO löschen einbinden;
+            parkenRepository.updateFreigabe(true, parken.getParkid());
+            //reservierungenRepository.delete(reservierung);
         }
         else if (button.contains("stornieren")) {
             System.out.println("stornieren");
@@ -104,8 +140,6 @@ public class ReservierungController {
 
     @PostMapping("/special_parkingslot/{id}")
     public String reserveParkplatz( @ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
-        //TODO kann diese methode in @GetMapping("/meinparkplatz") ausgelagert werden?
-        //-->weil dort wird der aktuelle Parkplatz bereits gespeichert
         String returnString = "";
         Nutzer nutzer = findNutzer();
 

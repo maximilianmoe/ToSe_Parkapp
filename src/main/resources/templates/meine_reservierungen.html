@@ -85,6 +85,7 @@
         }
 
 
+
     </style>
 </head>
 
@@ -100,16 +101,6 @@
             <thead>
 <!--            TODO get Thymeleaf to work on the table-->
             <tr>
-                <!--
-                <th scope="col">Reservierungs-ID</th>
-                <th scope="col">Parkplatz-ID</th>
-               <th scope="col">Ort</th>
-               <th scope="col">Anfangs-Datum</th>
-                <th scope="col">Anfangs-Zeit</th>
-                <th scope="col">End-Datum</th>
-                <th scope="col">End-Zeit</th>
-                <th scope="col">Reservierung stornieren</th>
-                -->
                 <th scope="col">Reservierungs-ID</th>
                 <th scope="col">Parkplatz-ID</th>
                 <th scope="col">PLZ</th>
@@ -146,14 +137,40 @@
                             data-target="#exampleModal" th:name="button" th:value="freigeben">Freigeben</button>
                 </td>
             </tr>
-            <tr th:if="${parken} == 0">
-                <td>Keine öffentlichen Parkplätze beparkt</td>
-            </tr>
-            <tr th:unless="${parken} == 0">
-                <td></td>
-            </tr>
             </tbody>
         </table>
+            <div id="ueberschrift">
+                <h3 id="h_3">Meine aktuell beparkten Parkplätze</h3>
+            </div>
+            <div id="table_div">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Park-ID</th>
+                            <th scope="col">Parkplatz-ID</th>
+                            <th scope="col">Anfang</th>
+                            <th scope="col">Ende</th>
+                            <th scope="col">Parkplatz Freigeben</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${parken} == 0">
+                            <td colspan="5">Sie haben noch keine öffentlichen Parkplätze beparkt</td>
+                        </tr>
+                        <tr th:unless="${parken} == 0">
+                            <td><span th:text="${parken.parkid}">Parkid</span></td>
+                            <td><span th:text="${parkplatzParken.pid}">Parkid</span></td>
+                            <td><span th:text="${parken.start}">Start</span></td>
+                            <td><span th:text="${parken.ende}">Ende</span></td>
+                            <td class="table_btn" id="freigeben_btn">
+                                <button type="button" class="btn btn-outline-secondary btn-sm"
+                                        data-toggle="modal"
+                                        data-target="#exampleModal2" th:name="button" th:value="freigeben">Freigeben</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -170,25 +187,59 @@
                 -->
                 <div class="modal-body">
                     <div class="rate">
-                        <input type="radio" id="star5" th:name="rate" th:value="5"/>
+                        <input type="radio" id="star5" th:name="rateRes" th:value="5"/>
                         <label for="star5" title="5 stars">5 stars</label>
-                        <input type="radio" id="star4" th:name="rate" th:value="4"/>
+                        <input type="radio" id="star4" th:name="rateRes" th:value="4"/>
                         <label for="star4" title="4 stars">4 stars</label>
-                        <input type="radio" id="star3" th:name="rate" th:value="3"/>
+                        <input type="radio" id="star3" th:name="rateRes" th:value="3"/>
                         <label for="star3" title="3 stars">3 stars</label>
-                        <input type="radio" id="star2" th:name="rate" th:value="2"/>
+                        <input type="radio" id="star2" th:name="rateRes" th:value="2"/>
                         <label for="star2" title="2 stars">2 stars</label>
-                        <input type="radio" id="star1" th:name="rate" th:value="1"/>
+                        <input type="radio" id="star1" th:name="rateRes" th:value="1"/>
                         <label for="star1" title="1 star">1 star</label>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary" th:name="button" th:value="freigebenZurueck" data-dismiss="modal">Zurück</button>
-                    <button type="submit" class="btn btn-primary" th:name="button" th:value="freigebenSpeichern">Speichern</button>
+                    <button type="submit" class="btn btn-secondary" th:name="button" th:value="freigebenZurueckRes" data-dismiss="modal">Zurück</button>
+                    <button type="submit" class="btn btn-primary" th:name="button" th:value="freigebenSpeichernRes">Speichern</button>
                 </div>
             </div>
         </div>
     </div>
+        <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Bitte bewerten Sie den Parkplatz</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!--
+                    <form hidden></form>
+                    -->
+                    <div class="modal-body">
+                        <div class="rate">
+                            <input type="radio" id="star5" th:name="rateParken" th:value="5"/>
+                            <label for="star5" title="5 stars">5 stars</label>
+                            <input type="radio" id="star4" th:name="rateParken" th:value="4"/>
+                            <label for="star4" title="4 stars">4 stars</label>
+                            <input type="radio" id="star3" th:name="rateParken" th:value="3"/>
+                            <label for="star3" title="3 stars">3 stars</label>
+                            <input type="radio" id="star2" th:name="rateParken" th:value="2"/>
+                            <label for="star2" title="2 stars">2 stars</label>
+                            <input type="radio" id="star1" th:name="rateParken" th:value="1"/>
+                            <label for="star1" title="1 star">1 star</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-secondary" th:name="button" th:value="freigebenZurueckParken" data-dismiss="modal">Zurück</button>
+                        <button type="submit" class="btn btn-primary" th:name="button" th:value="freigebenSpeichernParken">Speichern</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 
