@@ -1,46 +1,40 @@
 package de.g2p.ToSe_Parkapp.Service;
 
-
-import de.g2p.ToSe_Parkapp.Entities.Anbieter;
-import de.g2p.ToSe_Parkapp.Entities.Parkplatz;
+import de.g2p.ToSe_Parkapp.Entities.Bilder;
 import de.g2p.ToSe_Parkapp.Exception.FileStorageException;
 import de.g2p.ToSe_Parkapp.Exception.MyFileNotFoundException;
-import de.g2p.ToSe_Parkapp.Repositories.DBFileRepository;
+import de.g2p.ToSe_Parkapp.Repositories.BilderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
-
-https://www.callicoder.com/spring-boot-file-upload-download-jpa-hibernate-mysql-database-example/
 
 @Service
 public class DBFileStorageService {
 
     @Autowired
-    private DBFileRepository dbFileRepository;
+    private BilderRepository dbFileRepository;
 
-    public Parkplatz storeFile(MultipartFile file) {
+    public Bilder storeFile(MultipartFile file) {
         // Normalize file name
-        String strasse = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
         try {
             // Check if the file's name contains invalid characters
-            if(strasse.contains("..")) {
-                throw new FileStorageException("Sorry! Filename contains invalid path sequence " );
+            if(fileName.contains("..")) {
+                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
 
-            Parkplatz parkplatz = new Parkplatz( file.getFahrzeugtyp() );
+            Bilder dbFile = new Bilder(fileName, file.getContentType(), file.getBytes());
 
-            return dbFileRepository.save(parkplatz);
+            return dbFileRepository.save(dbFile);
         } catch (IOException ex) {
-            throw new FileStorageException("Could not store file. Please try again!", ex);
+            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
         }
     }
 
-    public Parkplatz getFile(String fileId) {
+    public Bilder getFile(String fileId) {
         return dbFileRepository.findById(fileId)
                 .orElseThrow(() -> new MyFileNotFoundException("File not found with id " + fileId));
     }
