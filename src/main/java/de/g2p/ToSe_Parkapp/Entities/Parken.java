@@ -57,4 +57,8 @@ public class Parken {
     public boolean getOeffentlich() {
         return oeffentlich;
     }
+
+    public Integer getPidParkplatz() {
+        return pid.getPid();
+    }
 }

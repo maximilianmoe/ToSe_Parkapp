@@ -50,16 +50,6 @@ public class ParkplatzController {
     public String addParkplatz(@ModelAttribute Parkplatz parkplatz,
                                @RequestParam("parkplatzChecked") String checked,
                                @RequestParam("fahrzeugtyp") String fahrzeugtyp) {
-        // Example for checking an already existing Standort where no new database entry is created
-//        for (Standort standortvariable : standortRepository.findAll()) {
-//            if (standortvariable.getStrasse() == standort.getStrasse())
-//                if(standortvariable.getHausnummer() == standort.getHausnummer())
-//                    if(standortvariable.getPlz() == standort.getPlz()) {
-//                        standort.setOrtid(standortvariable.getOrtid());
-//                        Integer ortId = standortvariable.getOrtid()
-//                        parkplatz.setOrtid(ortId);
-//                    }
-//        }
 
         Anbieter aid = anbieterRepository.findByNid(findNutzer());
         parkplatz.setAnbieterId(aid);
@@ -132,7 +122,7 @@ public class ParkplatzController {
         else if (belegt.contains("belegt")) {
             konsumentRepository.updatebelegt(true, konsument.getKid());
             status ="belegt";
-            returnstring = "meine_reservierungen";
+            returnstring = "home";
 
         }
         System.out.println(status);
@@ -151,9 +141,16 @@ public class ParkplatzController {
 
     @GetMapping("/parkplaetze_medialist")
     public String parkMediaGet(Model model) {
-        List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
-        model.addAttribute("parkplaetze", parkplaetze);
-        return "parkplaetze_medialist";
+        String returnstring = "";
+        Konsument konsument = konsumentRepository.findByNid(findNutzer());
+        if (!konsument.getBelegt()) {
+            List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+            model.addAttribute("parkplaetze", parkplaetze);
+            returnstring = "parkplaetze_medialist";
+        } else {
+            returnstring = "error_bereits_geparkt";
+        }
+        return returnstring;
     }
 
     //handles the redirect to the special_parkingslot page
@@ -202,9 +199,9 @@ public class ParkplatzController {
         Nutzer nutzer = findNutzer();
         Anbieter anbieter = anbieterRepository.findByNid(nutzer);
         String returnstring = "";
-        if (anbieter.getParkplatz() == false)
+        if (!anbieter.getParkplatz())
             returnstring = "error_noch_kein_parkplatz";
-        else if (anbieter.getParkplatz() == true) {
+        else {
             Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
             model.addAttribute("parkplatz", parkplatz);
             returnstring = "mein_parkplatz";
