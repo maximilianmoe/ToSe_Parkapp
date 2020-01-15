@@ -40,12 +40,23 @@
         }
 
         #count {
+            /*
             margin-left: 62%;
+            */
+            margin-left: 1%;
             color: #909090;
         }
 
         #warning {
+            /*
             margin-left: 48%;
+            */
+            color: red;
+        }
+        #warning2 {
+            /*
+            margin-left: 48%;
+            */
             color: red;
         }
     </style>
@@ -58,7 +69,7 @@
     <form action="#" th:action="@{/parkplatz_hinzufuegen}" method="post">
         <div class="row" id="row1">
             <div class="col">
-                <input type="text" th:value="*{parkplatz.plz}" th:name="plz" class="form-control" placeholder="PLZ">
+                <input id="plz" onchange="plzregex();" type="text" th:value="*{parkplatz.plz}" th:name="plz" class="form-control" placeholder="PLZ">
             </div>
             <!--
         <div class="col">
@@ -153,7 +164,7 @@
             </div>
             <div class="col">
                 <input type="text" th:name="zeitbegrenzung" class="form-control"
-                       placeholder="Parkhöchstdauer in min (MAX 999)" id="parkhoechstdauer">
+                       placeholder="Parkhöchstdauer in Min (MAX 999)" id="parkhoechstdauer">
             </div>
         </div>
         <div class="row" id="row">
@@ -165,7 +176,6 @@
                     <textarea class="form-control" th:value="*{parkplatz.beschreibung}" name="beschreibung"
                               id="beschreibung" aria-label="With textarea"
                               placeholder="Limitiert auf 255 Zeichen"></textarea>
-
                 </div>
             </div>
         </div>
@@ -175,8 +185,11 @@
             </div>
         </div>
         <div class="row">
-            <div id="warning">
+            <div class="col" id="warning">
                 <span id="too_much"></span>
+            </div>
+            <div class="col" id="warning2">
+                <span id="red_text"></span>
             </div>
         </div>
         <div id="reg">
@@ -240,7 +253,38 @@
             } else {
                 $('#remainingC').html("Verbleibende Zeichen: " + (maxchar));
             }
-        })
+        });
+
+        $('#plz').focusout(function(){
+            var expression = /\b[0-9]{5}\b/;
+            var regex = new RegExp(expression);
+            var plz = $("#plz").val();
+            if(plz.match(regex)){
+                $('#submit').prop('disabled', false);
+                $('#red_text').html("");
+            }
+            else{
+                $('#submit').prop('disabled', true);
+                $('#red_text').html("Bitte geben Sie eine gültige PLZ ein.");
+            }
+        });
+
+        /*
+        $('#plz').focusout(function () {
+            var expression = /\b[0-9]{5}\b;
+            var regex = new RegExp(expression);
+            var plz = $("#plz").val();
+            if(plz.match(regex)){
+                $('#submit').prop('disabled', false);
+                $('#red_text').html("");
+            }
+            else{
+                $('#submit').prop('disabled', true);
+                $('#red_text').html("Bitte geben Sie eine gültige PLZ ein.");
+            }
+        });
+        */
+
         $('#beschreibung').keyup(function () {
             len = this.value.length
             if (len >= maxchar) {
@@ -266,6 +310,25 @@
             }
         });
     });
+    /*
+    function plzregex() {
+        $('#plz').focusout(function () {
+            var expression = /\b[0-9]{5}\b;
+            var regex = new RegExp(expression);
+            var plz = $("#plz").val();
+            if(plz.match(regex)){
+                $('#submit').prop('disabled', false);
+                $('#red_text').html("");
+            }
+            else{
+                $('#submit').prop('disabled', true);
+                $('#red_text').html("Bitte geben Sie eine gültige PLZ ein.");
+            }
+        });
+    }
+
+     */
+
 </script>
 </body>
 

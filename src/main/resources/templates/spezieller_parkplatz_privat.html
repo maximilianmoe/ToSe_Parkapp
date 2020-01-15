@@ -150,7 +150,7 @@
             <h5 id="ueberschrift">Parkplatz Reservieren:</h5>
             <div class="row">
                 <div class="col">
-                    <h6>Anfanngsdatum:</h6>
+                    <h6>Anfangsdatum:</h6>
                     <input type="date" id="date1" th:name="startDatum" class="form-control"
                            placeholder="Bsp.: 01.01.2020">
                     <span id="popup"></span>
@@ -259,6 +259,34 @@
         var check2 = 0;
         var check3 = 0;
         var count = 0;
+        //Nachfolgende Zeile im Nachhinein hinzugefügt. Nur für den fall, dass jetzt ein Fehler kommt
+        $('#date2').focusout(function () {
+            var date1 = $('#date1').val();
+            var date2 = $('#date2').val();
+            var time1 = $('#time1').val();
+            var time2 = $('#time2').val();
+            if(date1 > date2){
+                alert("Enddatum liegt vor dem angegebenen Anfangsdatum");
+                $('#submit_btn').prop('disabled', true);
+            }
+            else{
+                $('#submit_btn').prop('disabled', false);
+            }
+        });
+        $('#time2').focusout(function () {
+            var date1 = $('#date1').val();
+            var date2 = $('#date2').val();
+            var time1 = $('#time1').val();
+            var time2 = $('#time2').val();
+            if(date1 == date2 && time2 < time1){
+                alert("Endzeit liegt vor der angegebenen Anfangszeit oder Sie haben noch kein Datum eingetragen");
+                $('#submit_btn').prop('disabled', true);
+            }
+            else{
+                $('#submit_btn').prop('disabled', false);
+            }
+        });
+    });
 </script>
 </body>
 
