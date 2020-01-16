@@ -54,7 +54,7 @@
 
         <div class="row input">
             <div class="col">
-                <input type="text" th:value="*{nutzer.emailAdresse}" th:name="email" class="form-control" id="mail1" placeholder="E-Mail">
+                <input type="text" th:value="*{nutzer.emailAdresse}" th:name="email" maxlength="30" class="form-control" id="mail1" placeholder="E-Mail">
             </div>
             <div class="col">
                 <input type="text" class="form-control" id="mail2" placeholder="E-Mail bestätigen">
@@ -62,7 +62,7 @@
         </div>
         <div class="row input">
             <div class="col">
-                <input type="password" th:name="passwort" class="form-control" id="pw1"
+                <input type="password" th:name="passwort" maxlength="100" class="form-control" id="pw1"
                        placeholder="Passwort">
             </div>
             <div class="col">
@@ -86,17 +86,17 @@
                     <p>Dieser Username existiert bereits!</p>
                 </div>
             -->
-                <input type="text" id="username" th:name="username" class="form-control" placeholder="Username">
+                <input type="text" id="username" th:name="username" maxlength="20" class="form-control" placeholder="Username">
             </div>
         </div>
         <div class="row input">
             <div class="col">
                 <input type="text" th:value="*{nutzer.vorname}" th:name="vorname" class="form-control"
-                       placeholder="Vorname">
+                       placeholder="Vorname" maxlength="30">
             </div>
             <div class="col">
                 <input type="text" th:value="*{nutzer.nachname}" th:name="nachname" class="form-control"
-                       placeholder="Nachname">
+                       placeholder="Nachname" maxlength="30">
             </div>
         </div>
 
