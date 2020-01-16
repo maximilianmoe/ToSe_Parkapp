@@ -55,26 +55,26 @@ public class AdminController {
     @PostMapping("/loeschen")
     public String loeschenPost(@RequestParam("nid") Integer nid) {
         Nutzer nutzer = nutzerRepository.findByNid(nid);
+        System.out.println(nutzer.getBenutzername()+"     "+nutzer.getBenutzername());
 
-        //erstes if nur beim testen, da werte mit null in db existieren
-        if (nutzer.getRolle()== null)
-            System.out.println("nutzerrolle = null");
-        else {
-            if (nutzer.getRolle().contains("beides")) {
-                Anbieter anbieter = anbieterRepository.findByNid(nutzer);
-                Konsument konsument = konsumentRepository.findByNid(nutzer);
-                konsumentRepository.delete(konsument);
-                anbieterRepository.delete(anbieter);
-            } else if (nutzer.getRolle().contains("anbieter")) {
-                Anbieter anbieter = anbieterRepository.findByNid(nutzer);
-                anbieterRepository.delete(anbieter);
-            } else if (nutzer.getRolle().contains("konsument")) {
-                Konsument konsument = konsumentRepository.findByNid(nutzer);
-                konsumentRepository.delete(konsument);
-            }
+        if (nutzer.getRolle().equalsIgnoreCase("beides")) {
+            System.out.println("Rolle beides");
+            Anbieter anbieter = anbieterRepository.findByNid(nutzer);
+            //TODO throws an exception when deleting a user
+            Konsument konsument = konsumentRepository.findByNid(nutzer);
+            konsumentRepository.delete(konsument);
+            anbieterRepository.delete(anbieter);
+        } else if (nutzer.getRolle().equalsIgnoreCase("anbieter")) {
+            System.out.println("rolle anbieter");
+            Anbieter anbieter = anbieterRepository.findByNid(nutzer);
+            anbieterRepository.delete(anbieter);
+        } else if (nutzer.getRolle().equalsIgnoreCase("konsument")) {
+            System.out.println("rolle konsument");
+            Konsument konsument = konsumentRepository.findByNid(nutzer);
+            konsumentRepository.delete(konsument);
         }
-
         nutzerRepository.delete(nutzer);
+
         return "nutzer_geloescht";
     }
 
@@ -90,7 +90,6 @@ public class AdminController {
 
         }
 
-        //evtl. noch eine bestätigungsseite?
         return "adminseite";
     }
 

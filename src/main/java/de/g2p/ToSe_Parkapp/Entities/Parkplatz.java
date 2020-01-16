@@ -3,6 +3,8 @@ package de.g2p.ToSe_Parkapp.Entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -37,6 +39,7 @@ public class Parkplatz {
     private Integer gesamtbewertung;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "aid")
     private Anbieter anbieterId;
 
