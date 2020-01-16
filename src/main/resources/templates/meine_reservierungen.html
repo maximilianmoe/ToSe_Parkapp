@@ -187,22 +187,25 @@
                 <form hidden></form>
                 -->
                 <div class="modal-body">
-                    <div class="rate">
-                        <input type="radio" id="star5" th:name="rateRes" th:value="5"/>
+                    <div class="rate" id="div-rate">
+                        <input type="radio" class="star-input" id="star5" th:name="rateRes" th:value="5"/>
                         <label for="star5" title="5 stars">5 stars</label>
-                        <input type="radio" id="star4" th:name="rateRes" th:value="4"/>
+                        <input type="radio" class="star-input" id="star4" th:name="rateRes" th:value="4"/>
                         <label for="star4" title="4 stars">4 stars</label>
-                        <input type="radio" id="star3" th:name="rateRes" th:value="3"/>
+                        <input type="radio" class="star-input" id="star3" th:name="rateRes" th:value="3"/>
                         <label for="star3" title="3 stars">3 stars</label>
-                        <input type="radio" id="star2" th:name="rateRes" th:value="2"/>
+                        <input type="radio" class="star-input" id="star2" th:name="rateRes" th:value="2"/>
                         <label for="star2" title="2 stars">2 stars</label>
-                        <input type="radio" id="star1" th:name="rateRes" th:value="1"/>
+                        <input type="radio" class="star-input" id="star1" th:name="rateRes" th:value="1"/>
                         <label for="star1" title="1 star">1 star</label>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-secondary" th:name="button" th:value="freigebenZurueckRes" data-dismiss="modal">Zurück</button>
-                    <button type="submit" class="btn btn-primary" th:name="button" th:value="freigebenSpeichernRes">Speichern</button>
+                    <!--
+                    <button disabled id="speichern" type="submit" class="btn btn-primary" th:name="button" th:value="freigebenSpeichernRes">Speichern</button>
+                    -->
+                    <button disabled id="speichern" type="submit" class="btn btn-outline-secondary" th:name="button" th:value="freigebenSpeichernRes">Speichern</button>
                 </div>
             </div>
         </div>
@@ -211,7 +214,9 @@
 </div>
 
 <script>
-
+    $('.star-input').click(function () {
+       $('#speichern').prop('disabled', false);
+    });
 </script>
 </body>
 
