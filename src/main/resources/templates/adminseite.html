@@ -79,17 +79,17 @@
             <div id="trans">
                 <h3>Adminrechte Verwalten</h3>
                 <!--                TODO popup erstellen, wenn einem nutzer adminrechte entzogen oder erteilt wurden-->
-                <form th:action="@{/rechteAendern}" method="post">
+                <form id="adminrechte" th:action="@{/rechteAendern}" method="post">
                     <input type="text" class="form-control" th:name="nutzerid2" placeholder="Nutzer-Id">
                     <div class="row">
                         <div class="col">
-                            <button type="button" id="btn-1" class="btn btn-outline-secondary last_btn"
-                                    th:name="buttonAdmin" th:value="1" data-toggle="modal" data-target="#exampleModal2">
+                            <button type="submit" id="btn-1" class="btn btn-outline-secondary last_btn"
+                                    th:name="buttonAdmin" th:value="1">
                                 Adminrechte erteilen</button>
                         </div>
                         <div class="col">
-                            <button type="button" id="btn-2" class="btn btn-outline-secondary last_btn"
-                                    th:name="buttonAdmin" th:value="2" data-toggle="modal" data-target="#exampleModal">
+                            <button type="submit" id="btn-2" class="btn btn-outline-secondary last_btn"
+                                    th:name="buttonAdmin" th:value="2">
                                 Adminrechte entziehen</button>
                         </div>
                     </div>
@@ -194,6 +194,16 @@
         </div>
     </div>
 </div>
+<script>
+    $("#adminrechte").on('submit', function (e) {
+        $("#exampleModal")modal('show');
+        e.preventDefault();
+    });
+    $("#adminrechte").on('submit', function (e) {
+        $("#exampleModal2")modal('show');
+        e.preventDefault();
+    });
+</script>
 </body>
 
 </html>
