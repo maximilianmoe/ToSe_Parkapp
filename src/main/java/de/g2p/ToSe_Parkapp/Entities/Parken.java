@@ -30,27 +30,27 @@ public class Parken {
     private Parkplatz pid;
 
 
-    private Date start;
+    private Date startDatum;
 
-    private Date ende;
-
-
+    private Date endeDatum;
 
     @Column(name = "oeffentlich")
     private boolean oeffentlich;
 
-    private Date erinnerung;
+    private Date erinnerungDatum;
+    private Time erinnerungZeit;
+
 
     private boolean freigabe;
 
-    public Parken(Konsument kid, Parkplatz pid, Date start, Date ende, boolean oeffentlich,
-                  Date erinnerung, boolean freigabe) {
+    public Parken(Konsument kid, Parkplatz pid, Date startDatum, Date endeDatum,
+                  Date erinnerungDatum,Time erinnerungZeit, boolean freigabe) {
         this.kid = kid;
         this.pid = pid;
-        this.start = start;
-        this.ende = ende;
-        this.oeffentlich = oeffentlich;
-        this.erinnerung = erinnerung;
+        this.startDatum = startDatum;
+        this.endeDatum = endeDatum;
+        this.erinnerungDatum = erinnerungDatum;
+        this.erinnerungZeit = erinnerungZeit;
         this.freigabe = freigabe;
     }
 

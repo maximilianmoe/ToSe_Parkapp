@@ -184,7 +184,7 @@ public class ReservierungController {
         return returnstring;
     }
 
-    @PostMapping("/special_parkingslot/{id}")
+    /*@PostMapping("/special_parkingslot/{id}")
     public String reserveParkplatz( @ModelAttribute Parkplatz parkplatz, @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
         String returnString = "";
         Nutzer nutzer = findNutzer();
@@ -218,7 +218,7 @@ public class ReservierungController {
             //TODO wird hier wirklich nur in parken gespeichert oder auch in reservierung?
             parkenRepository.save(parken);
             System.out.println("2");
-//           TODO throws exception when comming to this code... don't no why, says that 'saldo' isn't in 'field list'....
+//           TODO throws exception when comming to this code... don't know why, says that 'saldo' isn't in 'field list'....
             reservierungenRepository.save(reservierung);
             System.out.println("3");
 
@@ -228,13 +228,13 @@ public class ReservierungController {
         return returnString;
     }
 
-    /**
+    *//**
      * This method converts a date and a time, which are given as a String to the format of date
      *
      * @param date date which is given as a String
      * @param time time which is given as a String
      * @return date which includes date and time
-     */
+     *//*
     private Date convertTime(String date, String time) {
         String timestamp = date + " " + time;
         try {
@@ -264,7 +264,7 @@ public class ReservierungController {
         cal.add(Calendar.MINUTE, -30);
         java.sql.Date sqlDate = new java.sql.Date(cal.getTime().getTime());
         return sqlDate;
-    }
+    }*/
 
     public Nutzer findNutzer() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
