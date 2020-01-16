@@ -11,6 +11,7 @@ import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,9 +49,10 @@ public class NutzerController {
     public String addUser(@ModelAttribute Nutzer nutzer, @ModelAttribute Konsument konsument,
                           @ModelAttribute Anbieter anbieter, @RequestParam("nutzertyp") String nutzertyp,
                           @RequestParam("fahrzeugtyp") String fahrzeugtyp, @RequestParam("email") String email,
-                          @RequestParam("username") String benutzername) {
+                          @RequestParam("username") String benutzername, @RequestParam("passwort") String passwort) {
 
         boolean duplicate = nutzerRepository.findByBenutzername(benutzername).isPresent();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         if (duplicate) {
             //TODO add this to the hmtl page
@@ -63,6 +65,8 @@ public class NutzerController {
             nutzer.setSaldo(0);
             nutzer.setEmailAdresse(email);
             nutzer.setBenutzername(benutzername);
+            nutzer.setPasswort(bCryptPasswordEncoder.encode(passwort));
+            System.out.println(nutzer.getPasswort());
 
             //Set all values for Anbieter
             if (nutzertyp.contains("anbieter")) {

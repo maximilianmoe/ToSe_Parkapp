@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleafe.org" lang="de-De">
 
 <head>
-    <title>Nutzer entsperrt</title>
+    <title>Error</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -41,18 +41,23 @@
 <body>
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
-    <h2 id="ueberschrift">Entsperrung</h2>
+    <h2 id="ueberschrift">Es ist ein Fehler aufgetreten!</h2>
     <form action="#">
         <div class="text-center" id="successful">
             <div class="form-group" >
-                <label>Die Bearbeitung war erfolgreich!</label>
-                <div> <label>Folgender Nutzer wurde entsperrt:</label> </div>
-                <div>
-                    <p th:text="${nutzer.vorname+' '+nutzer.nachname}"></p>
+                <div> <label>
+                    <span>Sie haben zu wenig Guthaben auf ihrem Konto. </span>
+                    <span>Bitte Klicken sie auf den Link, </span>
+                    <span>um ihr Guthaben ausreichend aufzuladen </span>
+                </label> </div>
+                <div id="btn">
+                    <button type="submit" class="btn btn-outline-secondary btn-lg">
+                        <a href="guthabenverwaltung">Guthaben aufladen</a>
+                    </button>
                 </div>
                 <div id="btn">
                     <button type="submit" class="btn btn-outline-secondary btn-lg">
-                        <a href="adminseite">Zurück zur Adminseite</a>
+                        <a href="home">Zurück zur Startseite</a>
                     </button>
                 </div>
             </div>

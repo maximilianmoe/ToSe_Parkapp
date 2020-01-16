@@ -24,4 +24,6 @@ public interface KonsumentRepository extends JpaRepository<Konsument, Integer> {
     @Modifying
     @Query(value = "update konsument set pres = :pres where kid = :kid", nativeQuery = true)
     void updateReserviert(@Param("pres") boolean pres, @Param("kid") Integer kid);
+
+
 }

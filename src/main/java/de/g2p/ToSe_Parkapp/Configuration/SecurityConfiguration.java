@@ -25,16 +25,16 @@ import javax.annotation.Resources;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-//    @Bean
-//    public PasswordEncoder getPasswordEncoder() {
-//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(6);
-//        return bCryptPasswordEncoder;
-//    }
-
     @Bean
     public PasswordEncoder getPasswordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
     }
+
+//    @Bean
+//    public PasswordEncoder getPasswordEncoder() {
+//        return NoOpPasswordEncoder.getInstance();
+//    }
 
     @Bean
     public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {

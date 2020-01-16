@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleafe.org" lang="de-De">
 
 <head>
+    <title>Mein Parkplatz</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -92,6 +93,7 @@
 <body>
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
+    <form th:action="@{/mein_parkplatz}" method="post">
     <div class="card mb-3">
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
         <div class="card-body">
@@ -111,11 +113,11 @@
 
             <div class="col">
                 <div class="row">
-<!--                    TODO should we show the Parkplatztyp on the page?-->
-<!--                    <p>-->
-<!--                        <span>Parkplatztyp:  </span>-->
-<!--                        <span th:text="${parkplatz.privat}"></span>-->
-<!--                    </p>-->
+                    <p>
+                        <span>Parkplatztyp:  </span>
+                        <span th:if="${parkplatz.privat == true}">privat</span>
+                        <span th:unless="${parkplatz.privat == true}">öffentlich</span>
+                    </p>
                     <p>
                         <span>Fahrzeugtypen:  </span>
                         <span th:text="${parkplatz.fahrzeugtyp}"></span>
@@ -145,27 +147,28 @@
             </div>
         </div>
         <form>
-            <select class="form-control" id="belegt">
+            <select class="form-control" id="belegt" th:name="auswahl">
                 <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
-                <option>Der Parkplatz ist frei</option>
-                <option>Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden</option>
-                <option>Ich belege den Parkplatz</option>
+                <option th:value="frei">Der Parkplatz ist frei</option>
+                <option th:value="fremdbelegt">Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden</option>
+                <option th:value="belegt">Ich belege den Parkplatz</option>
             </select>
             <div id="reg">
-                <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
-                    <form hidden th:action="@{/deleteParkplatz}" method="post"></form>
+<!--                TODO Button muss disabled sein, bis eine auswahl im dropdown getroffen wurde-->
+                <button th:name="button" th:value="1" type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
                     Bestätigen</button>
             </div>
+        </form>
 
-            <div id="question">
+        <form th:action="@{/parkplatz_entfernen}" method="post">
+        <div id="question">
                 <h5 id="h_5">Wollen sie ihren Parkplatz wieder entfernen?</h5>
             </div>
             <div id="reg">
-                <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
-                    <form hidden th:value="${parkplatz.pid}" method="post"></form>
+                <button th:name="button" th:value="2" type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
                     Parkplatz dauerhaft entfernen</button>
 <!--                TODO add a PopUp and ask if the user really wants do delete the Parkplatz
-                        and add the form above to the "yes" button-->
+                        and add the form above to the "yes" button -> erst nach den tests-->
             </div>
         </form>
         <div class="card-footer" id="farbe">
@@ -173,6 +176,7 @@
 <!--            TODO change how the picture is displayed (like in spezieller_Parkplatz)-->
         </div>
     </div>
+    </form>
 </div>
 <script>
     /*

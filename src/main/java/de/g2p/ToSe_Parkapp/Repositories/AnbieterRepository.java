@@ -27,6 +27,9 @@ public interface AnbieterRepository extends JpaRepository<Anbieter, Integer> {
     void updateParkplatz(@Param("parkplatz") boolean parkplatz, @Param("aid") Integer aid) ;
 
 
-
+    @Transactional
+    @Modifying
+    @Query(value = "update anbieter set pid = :pid where aid = :aid", nativeQuery = true)
+    void updatePid(@Param("pid") Integer pid, @Param("aid") Integer aid) ;
 
 }

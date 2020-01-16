@@ -174,8 +174,8 @@ public class ReservierungController {
             returnstring = "meine_reservierungen";
             //TODO finish the Time part
             Parken parkenSave = new Parken();
-            parkenPrivat.setStart(null);
-            parkenPrivat.setEnde(null);
+            parkenPrivat.setStartDatum(null);
+            parkenPrivat.setEndeDatum(null);
             parkenPrivat.setKid(konsument);
             //parkenPrivat.setPid(parkplatz);
             //parken.setStart(sqlDate);
@@ -231,8 +231,8 @@ public class ReservierungController {
     *//**
      * This method converts a date and a time, which are given as a String to the format of date
      *
-     * @param date date which is given as a String
-     * @param time time which is given as a String
+     * param date date which is given as a String
+     * param time time which is given as a String
      * @return date which includes date and time
      *//*
     private Date convertTime(String date, String time) {
