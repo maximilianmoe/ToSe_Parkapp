@@ -172,6 +172,7 @@
                 </table>
             </div>
     </div>
+<!--        TODO Button speichern disablen wenn noch keine Sterne ausgewählt wurden-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -205,40 +206,6 @@
                 </div>
             </div>
         </div>
-    </div>
-        <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Bitte bewerten Sie den Parkplatz</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <!--
-                    <form hidden></form>
-                    -->
-                    <div class="modal-body">
-                        <div class="rate">
-                            <input type="radio" id="star5" th:name="rateParken" th:value="5"/>
-                            <label for="star5" title="5 stars">5 stars</label>
-                            <input type="radio" id="star4" th:name="rateParken" th:value="4"/>
-                            <label for="star4" title="4 stars">4 stars</label>
-                            <input type="radio" id="star3" th:name="rateParken" th:value="3"/>
-                            <label for="star3" title="3 stars">3 stars</label>
-                            <input type="radio" id="star2" th:name="rateParken" th:value="2"/>
-                            <label for="star2" title="2 stars">2 stars</label>
-                            <input type="radio" id="star1" th:name="rateParken" th:value="1"/>
-                            <label for="star1" title="1 star">1 star</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-secondary" th:name="button" th:value="freigebenZurueckParken" data-dismiss="modal">Zurück</button>
-                        <button type="submit" class="btn btn-primary" th:name="button" th:value="freigebenSpeichernParken">Speichern</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </form>
 </div>

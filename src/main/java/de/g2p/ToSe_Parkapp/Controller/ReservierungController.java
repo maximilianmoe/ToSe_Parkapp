@@ -34,6 +34,7 @@ public class ReservierungController {
     @GetMapping("/meine_reservierungen")
     public String reservierungenGet(Model model) {
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
+        System.out.println("GetMapping meine Reservierungen");
         if (!konsument.getReserviert())
             model.addAttribute("reservierungen", 0);
         else {
@@ -76,7 +77,7 @@ public class ReservierungController {
     }
 
     @PostMapping("/meine_reservierungen")
-    public String reservierungenPost(@RequestParam("rateRes") Integer starsRes, @RequestParam("rateParken") Integer starsParken,
+    public String reservierungenPost(@RequestParam("rateRes") Integer starsRes,
                                      @RequestParam("button") String button) throws InterruptedException {
         //TODO insert the method for deleting the Reservierung from the database
         String returnstring="meine_reservierungen";
@@ -93,6 +94,7 @@ public class ReservierungController {
         assert parken != null;
         Parkplatz parkplatzPark = parkplatzRepository.findByPid(parken.getPidParkplatz());
 
+        //Freigabe für reservierung
         if (button.contains("freigebenSpeichernRes") || button.contains("freigebenZurueckRes")) {
                 if (button.contains("freigebenSpeichernRes")) {
                     Integer gesamtbewertung = parkplatzRes.getGesamtbewertung()+starsRes;
@@ -103,11 +105,19 @@ public class ReservierungController {
                 returnstring = "meine_reservierungen";
                 //TODO löschen einbinden;
             parkenRepository.updateFreigabe(true, parken.getParkid());
-            //reservierungenRepository.delete(reservierung);
+            reservierungenRepository.delete(reservierung);
         }
+
+        //TODO res und Parken werden bei den Sternen nicht unterschieden,
+        // es wird nur bei Konsument gefragt ob öffentlich geparkt oder nicht
+
+        System.out.println("zwischenschritt Freigabe Res und Parken ");
+        //freigabe für Parken
         if (button.contains("freigebenSpeichernParken") || button.contains("freigebenZurueckParken")) {
+            System.out.println("If Schleife Freigeben Parken");
             if (button.contains("freigebenSpeichernParken")) {
-                Integer gesamtbewertung = parkplatzRes.getGesamtbewertung()+starsParken;
+                System.out.println("if Schleife Speichern Parken");
+                Integer gesamtbewertung = parkplatzRes.getGesamtbewertung()+starsRes;
                 Integer bewertungsanzahl = parkplatzRes.getBewertungsanzahl() + 1;
                 Integer bewertung = (gesamtbewertung)/bewertungsanzahl;
                 parkplatzRepository.updateBewertung(bewertung, bewertungsanzahl, gesamtbewertung, parkplatzPark.getPid());
@@ -115,7 +125,8 @@ public class ReservierungController {
             returnstring = "meine_reservierungen";
             //TODO löschen einbinden;
             parkenRepository.updateFreigabe(true, parken.getParkid());
-            //reservierungenRepository.delete(reservierung);
+            System.out.println(parken.isFreigabe());
+            parkenRepository.delete(parken);
         }
         else if (button.contains("stornieren")) {
             System.out.println("stornieren");
