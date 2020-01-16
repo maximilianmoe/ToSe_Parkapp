@@ -320,7 +320,8 @@
                            </div>
                            <div id="btn_link_div">
                                <form th:action="@{/parkplaetze_medialist}" method="post">
-                                   <button id="btn_link" th:name="button" th:value="${parkplatz.pid}" class="btn btn-outline-secondary btn-lg" type="submit">Zum Parkplatz</button>
+                                   <!--                            TODO set the position of the button on the bottom right-->
+                                   <button id="btn_link" th:name="button" th:value="${parkplatz.pid}" class="btn btn-outline-secondary btn-lg" type="submit" >Zum Parkplatz</button>
                                </form>
                            </div>
                        </td>

@@ -98,7 +98,7 @@
         <img th:src="@{images/parkplatz3.jpg}">
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
 
-        <form action="#" th:action="@{/special_parkingslot}" method="post" onsubmit="openModal()" id="myForm">
+        <form action="#" th:action="@{/special_parkingslot/{id}"  method="post" onsubmit="openModal()" id="myForm">
             <div class="card-body">
                 <h5 class="card-title">
                     <p>
@@ -153,12 +153,13 @@
                     <h6>Anfangsdatum:</h6>
                     <input type="date" id="date1" th:name="startDatum" class="form-control"
                            placeholder="Bsp.: 01.01.2020">
+                    <h6>Anfanngsdatum:</h6>
+                    <input type="date" id="date1" th:name="startDatum" class="form-control">
                     <span id="popup"></span>
                 </div>
                 <div class="col">
                     <h6>Enddatum:</h6>
-                    <input type="date" id="date2" th:name="endeDatum" class="form-control"
-                           placeholder="Bsp.: 01.01.2020 13:00">
+                    <input type="date" id="date2" th:name="endeDatum" class="form-control">
                     <span id="popup2"></span>
                 </div>
             </div>
@@ -166,15 +167,14 @@
                 <div class="col">
                     <div class="form-group">
                         <h6>Anfangszeit</h6>
-                        <input type="time" id="time1" th:name="startZeit" class="form-control"
-                               placeholder="Bsp.: 12:00">
+                        <input type="time" id="time1" th:name="startZeit" class="form-control">
                         <span id="popup3"></span>
                     </div>
                 </div>
 
                 <div class="col">
                     <h6>Endzeit</h6>
-                    <input type="time" id="time2" th:name="endeZeit" class="form-control" placeholder="Bsp.: 13:00">
+                    <input type="time" id="time2" th:name="endeZeit" class="form-control" placeholder="Bsp.: 12:00">
                     <span id="popup4"></span>
                 </div>
 

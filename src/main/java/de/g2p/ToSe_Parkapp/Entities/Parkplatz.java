@@ -82,4 +82,5 @@ public class Parkplatz {
         this.gesamtbewertung = gesamtbewertung;
     }
 
+
 }

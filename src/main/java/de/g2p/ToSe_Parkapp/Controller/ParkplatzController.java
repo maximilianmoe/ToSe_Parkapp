@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -28,6 +34,10 @@ public class ParkplatzController {
     KonsumentRepository konsumentRepository;
     @Autowired
     ParkenRepository parkenRepository;
+    @Autowired
+    ReservierungenRepository reservierungenRepository;
+
+    Parkplatz parkplatz;
 
     @GetMapping("/parkplatz_hinzufuegen")
     public String add(Model model) {
@@ -163,7 +173,7 @@ public class ParkplatzController {
 
         for (int i=1; i<=pid; i++) {
             if (button == i) {
-                Parkplatz parkplatz = parkplatzRepository.findByPid(i);
+                parkplatz = parkplatzRepository.findByPid(i);
                 model.addAttribute("parkplatz", parkplatz);
                 if (parkplatz.isPrivat() == true) {
                     returnstring = "spezieller_parkplatz_privat";
@@ -181,6 +191,63 @@ public class ParkplatzController {
 
         return returnstring;
     }
+
+    @PostMapping("/special_parkingslot/{id}")
+    public String reserveParkplatz( @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung, @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate ,@RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) {
+       Time currentTime = Time.valueOf(LocalTime.now());
+
+        String returnString = "";
+        Nutzer nutzer = findNutzer();
+
+        if (nutzer.getSaldo() < parkplatz.getParkgebuehr()) {
+//            TODO change errror_page to specific error_page for this content
+            returnString = "error_page";
+        } else {
+
+            reservierung.setBeendet(false);
+            reservierung.setResZuParken(false);
+            reservierung.setKid((konsumentRepository.findByNid(nutzer.getNidNutzer())).getKidKonsument());
+            reservierung.setPid(parkplatzRepository.findByPid(parkplatz.getPid()));
+
+            //Convert time and date
+            startDate = startDate.substring(0, 10);
+            endDate = endDate.substring(0, 10);
+            startTime = startTime.substring(0, 5);
+            endTime = endTime.substring(0, 5);
+
+            Date endDateConv = convertDate(endDate);
+//            Time endTimeConv = convertTime(endTime);
+            Time endTimeConv = Time.valueOf(endTime);
+            reservierung.setEndeDatum(convertSql(endDateConv));
+            reservierung.setEndeZeit(endTimeConv);
+
+            Date startDateConv = convertDate(startDate);
+//            Time startTimeConv= convertTime(startTime);
+            Time startTimeConv = Time.valueOf(startTime);
+            reservierung.setStartDatum(convertSql(startDateConv));
+            reservierung.setStartZeit(startTimeConv);
+
+            Date reminderDate = endDateConv;
+            Time reminderTime = endTimeConv;
+            parken.setErinnerungDatum(convertSql(reminderDate));
+            parken.setErinnerungZeit(convertSqlReminder(reminderTime));
+//
+//            if(compareTime(currentTime, startTimeConv)) {
+
+                //Saves all data in the database
+                parkenRepository.save(parken);
+                System.out.println("2");
+                reservierungenRepository.save(reservierung);
+                System.out.println("3");
+
+//           TODO Übersichtsseite erstellen und den Namen hier ändern
+                returnString = "testweiterleitung";
+//            }else returnString = "error_page";    //TODO change errror_page to specific error_page for this content
+        }
+        return returnString;
+
+    }
+
 
     @GetMapping("/parkplatz_allgemein")
     public String parkplatzAllg() {
@@ -241,4 +308,68 @@ public class ParkplatzController {
         return nutzer;
     }
 
+    /**
+     * This method converts a time, which are given as a String to the format of Time
+     *
+     * @param time which is given as a String
+     * @return time which includes time
+     */
+    private Time convertTime(String time) {
+
+        try {
+            SimpleDateFormat sdfToTime = new SimpleDateFormat("HH:mm");
+            long time1 =sdfToTime.parse(time).getTime();
+            Time t = new Time(time1);
+            return t;
+        } catch (ParseException ex2) {
+            ex2.printStackTrace();
+            return null;
+        }
+    }
+    /**
+     * This method converts a date, which are given as a String to the format of Date
+     *
+     * @param date time which is given as a String
+     * @return date which includes date
+     */
+    private Date convertDate(String date) {
+        try {
+            SimpleDateFormat stfDate = new SimpleDateFormat("yyyy-MM-dd");
+            Date date2 = stfDate.parse(date);
+            return date2;
+        } catch (ParseException ex2) {
+            ex2.printStackTrace();
+            return null;
+        }
+    }
+
+    public java.sql.Date convertSql(Date date) {
+
+        Calendar cal = Calendar.getInstance();
+        // remove next line if you're always using the current time.
+        cal.setTime(date);
+        java.sql.Date sqlDate = new java.sql.Date(cal.getTime().getTime());
+        return sqlDate;
+    }
+
+    public java.sql.Time convertSqlReminder(Time time) {
+
+        Calendar cal = Calendar.getInstance();
+        // remove next line if you're always using the current time.
+        cal.setTime(time);
+        cal.add(Calendar.MINUTE, -30);
+        java.sql.Time sqlTime = new java.sql.Time(cal.getTime().getTime());
+        return sqlTime;
+    }
+
+    public boolean compareTime(Time currentTime, Time startTime){
+        boolean returnBool;
+        int startInt = Integer.parseInt(startTime.toString());
+        int currentInt = Integer.parseInt(currentTime.toString());
+        returnBool= (startInt - 100) <= currentInt;
+
+        return returnBool;
+    }
 }
+
+

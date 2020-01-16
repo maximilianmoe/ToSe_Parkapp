@@ -6,6 +6,7 @@ import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.KonsumentRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
+import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +28,8 @@ public class NutzerController {
 
     @Autowired
     KonsumentRepository konsumentRepository;
+
+    MailService mailService = new MailService();
 
 
 
@@ -102,7 +105,9 @@ public class NutzerController {
                 konsumentRepository.save(konsument);
             }
             nutzerRepository.save(nutzer);
+            mailService.sendSimpleMessage(email, "Registrierung erfolgreich", "Sie haben sich erfoglreich bei Good2Park registriert.\nSie können die Anwendung ab sofort verwenden.");
         }
+
             return "login";
     }
 
