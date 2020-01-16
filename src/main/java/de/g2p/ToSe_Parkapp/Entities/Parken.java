@@ -54,6 +54,10 @@ public class Parken {
         this.freigabe = freigabe;
     }
 
+    public Parken(boolean oeffentlich) {
+        this.oeffentlich = oeffentlich;
+    }
+
     public boolean getOeffentlich() {
         return oeffentlich;
     }

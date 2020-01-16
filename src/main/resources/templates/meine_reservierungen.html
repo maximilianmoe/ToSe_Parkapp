@@ -134,7 +134,7 @@
                 <td class="table_btn" id="freigeben_btn">
                     <button type="button" class="btn btn-outline-secondary btn-sm"
                             data-toggle="modal"
-                            data-target="#exampleModal" th:name="button" th:value="freigeben">Freigeben</button>
+                            data-target="#exampleModal" th:name="buttonFreigeben" th:value="freigebenRes">Freigeben</button>
                 </td>
             </tr>
             </tbody>
@@ -165,7 +165,7 @@
                             <td class="table_btn" id="freigeben_btn">
                                 <button type="button" class="btn btn-outline-secondary btn-sm"
                                         data-toggle="modal"
-                                        data-target="#exampleModal2" th:name="button" th:value="freigeben">Freigeben</button>
+                                        data-target="#exampleModal" th:name="buttonFreigeben" th:value="freigebenParken">Freigeben</button>
                             </td>
                         </tr>
                     </tbody>
@@ -199,7 +199,14 @@
                         <label for="star1" title="1 star">1 star</label>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" th:unless="${parken} == 0">
+                    <button type="submit" class="btn btn-secondary" th:name="button" th:value="freigebenZurueckParken" data-dismiss="modal">Zurück</button>
+                    <!--
+                    <button disabled id="speichern" type="submit" class="btn btn-primary" th:name="button" th:value="freigebenSpeichernRes">Speichern</button>
+                    -->
+                    <button disabled id="speichern" type="submit" class="btn btn-outline-secondary" th:name="button" th:value="freigebenSpeichernParken">Speichern</button>
+                </div>
+                <div class="modal-footer"th:if="${parken} == 0">
                     <button type="submit" class="btn btn-secondary" th:name="button" th:value="freigebenZurueckRes" data-dismiss="modal">Zurück</button>
                     <!--
                     <button disabled id="speichern" type="submit" class="btn btn-primary" th:name="button" th:value="freigebenSpeichernRes">Speichern</button>

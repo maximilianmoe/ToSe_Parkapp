@@ -140,7 +140,7 @@ public class ParkplatzController {
     public String parkMediaGet(Model model) {
         String returnstring = "";
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
-        if (!konsument.getBelegt()) {
+        if (!konsument.getReserviert()) {
             List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
             model.addAttribute("parkplaetze", parkplaetze);
             returnstring = "parkplaetze_medialist";
@@ -154,7 +154,14 @@ public class ParkplatzController {
     @PostMapping("/parkplaetze_medialist")
     public String parkMediaPost(Model model, @RequestParam("button") Integer button) {
         String returnstring="";
-        for (int i=1; i<=parkplatzRepository.count(); i++) {
+        List<Parkplatz> parkenList = parkplatzRepository.findAll();
+        Integer pid = 1;
+        for (Parkplatz parkplatz : parkenList) {
+            pid = parkplatz.getPid();
+        }
+        System.out.println(pid + "   PID");
+
+        for (int i=1; i<=pid; i++) {
             if (button == i) {
                 Parkplatz parkplatz = parkplatzRepository.findByPid(i);
                 model.addAttribute("parkplatz", parkplatz);
@@ -211,6 +218,7 @@ public class ParkplatzController {
     public String deleteParkplatz() {
         //TODO add the method to delete the Parkplatz from the Database and change the "parkplatz" attribute
         // in table Konsument to false
+        // -> there cant be an active reservierung when deleting a Parkplatz
 
         //parkplatzRepository.delete(parkplatz);
         return "home";
