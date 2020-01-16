@@ -80,11 +80,11 @@
             <div class="col">
                 <!--            TODO th:if ändern , dass input immer angezeigt wird, und nur mit all-->
                 <!--            <div class="col" th:if="${nutzer.compareBenutzername(nutzerlist)} == false">-->
-                <!-- Work in Progress:
-                <div th:if="${}" class="alert alert-danger notification" role="alert">
+            <!--
+                <div th:if="${param.duplicate == true}" class="alert alert-danger notification" role="alert">
                     <p>Dieser Username existiert bereits!</p>
                 </div>
-                -->
+            -->
                 <input type="text" id="username" th:name="username" class="form-control" placeholder="Username">
             </div>
         </div>
