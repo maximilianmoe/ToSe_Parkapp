@@ -199,14 +199,19 @@ public class ParkplatzController {
         return returnstring;
     }
 
-    @PostMapping("/special_parkingslot/{id}")
+    @PostMapping("/special_parkingslot")
     public String reserveParkplatz( @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung,
-                                    @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate,
-                                    @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) throws ParseException {
-       Time currentTime = Time.valueOf(LocalTime.now());
-        System.out.println(currentTime);
+                                    @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate
+                                   /*, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime*/) throws ParseException {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
-        String returnString = "";
+       Time currentTime = Time.valueOf(LocalTime.now());
+       Date currentDate = new Date();
+        System.out.println(currentTime.toString());
+        System.out.println(currentDate.toString());
+
+      String returnString = "testweiterleitung";
         Nutzer nutzer = findNutzer();
 
         if (nutzer.getSaldo() < parkplatz.getParkgebuehr()) {
@@ -220,41 +225,39 @@ public class ParkplatzController {
             reservierung.setPid(parkplatzRepository.findByPid(parkplatz.getPid()));
 
 
-            DateFormat inFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = inFormat.parse(startDate);
-            System.out.println(date + " date");
-
 
             //Convert time and date
-//            startDate = startDate.substring(0, 10);
-//            endDate = endDate.substring(0, 10);
+            startDate = startDate.substring(0, 10);
+            endDate = endDate.substring(0, 10);
 //            startTime = startTime.substring(0, 5);
 //            endTime = endTime.substring(0, 5);
-//
-//            Date endDateConv = convertDate(endDate);
-////            Time endTimeConv = convertTime(endTime);
+
+            Date endDateConv = convertDate(endDate);
 //            Time endTimeConv = Time.valueOf(endTime);
-//            reservierung.setEndeDatum(convertSql(endDateConv));
+            reservierung.setEndeDatum(convertSql(endDateConv));
+//            java.sql.Date endDateSql = new java.sql.Date(endDateConv.getTime());
+//            reservierung.setEndeDatum(endDateSql);
 //            reservierung.setEndeZeit(endTimeConv);
-//
-//            Date startDateConv = convertDate(startDate);
-////            Time startTimeConv= convertTime(startTime);
+
+            Date startDateConv = convertDate(startDate);
 //            Time startTimeConv = Time.valueOf(startTime);
-//            reservierung.setStartDatum(convertSql(startDateConv));
+            reservierung.setStartDatum(convertSql(startDateConv));
+//            java.sql.Date startDateSql = new java.sql.Date(endDateConv.getTime());
+//            reservierung.setEndeDatum(startDateSql);
 //            reservierung.setStartZeit(startTimeConv);
-//
-//            Date reminderDate = endDateConv;
+
+            Date reminderDate = endDateConv;
 //            Time reminderTime = endTimeConv;
-//            parken.setErinnerungDatum(convertSql(reminderDate));
-//            parken.setErinnerungZeit(convertSqlReminder(reminderTime));
-////
-////            if(compareTime(currentTime, startTimeConv)) {
-//
-//                //Saves all data in the database
-//                parkenRepository.save(parken);
-//                System.out.println("2");
-//                reservierungenRepository.save(reservierung);
-//                System.out.println("3");
+            parken.setErinnerungsDatum(convertSql(reminderDate));
+//            parken.setErinnerungsZeit(convertSqlReminder(reminderTime));
+
+//            if(compareTime(currentTime, startTimeConv)) {
+
+                //Saves all data in the database
+                parkenRepository.save(parken);
+                System.out.println("2");
+                reservierungenRepository.save(reservierung);
+                System.out.println("3");
 
 //           TODO Übersichtsseite erstellen und den Namen hier ändern
                 returnString = "home";
