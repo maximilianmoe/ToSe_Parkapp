@@ -249,7 +249,7 @@ public class ParkplatzController {
             Date reminderDate = endDateConv;
 //            Time reminderTime = endTimeConv;
             parken.setErinnerungsdatum(convertSql(reminderDate));
-//            parken.setErinnerungsZeit(convertSqlReminder(reminderTime));
+ //           parken.setErinnerungsZeit(convertSqlReminder(reminderTime));
 
 //            if(compareTime(currentTime, startTimeConv)) {
 
