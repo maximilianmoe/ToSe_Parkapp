@@ -202,14 +202,14 @@ public class ParkplatzController {
     @PostMapping("/special_parkingslot")
     public String reserveParkplatz( @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung,
                                     @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate
-                                   /*, @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime*/) throws ParseException {
+                                   ,@RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) throws ParseException {
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
        Time currentTime = Time.valueOf(LocalTime.now());
        Date currentDate = new Date();
-        System.out.println(currentTime.toString());
-        System.out.println(currentDate.toString());
+        System.out.println(startDate);
+        System.out.println(startTime);
 
       String returnString = "testweiterleitung";
         Nutzer nutzer = findNutzer();
@@ -229,26 +229,26 @@ public class ParkplatzController {
             //Convert time and date
             startDate = startDate.substring(0, 10);
             endDate = endDate.substring(0, 10);
-//            startTime = startTime.substring(0, 5);
-//            endTime = endTime.substring(0, 5);
+            startTime = startTime.substring(0, 5);
+            endTime = endTime.substring(0, 5);
 
             Date endDateConv = convertDate(endDate);
-//            Time endTimeConv = Time.valueOf(endTime);
+         //   Time endTimeConv = Time.valueOf(endTime);
             reservierung.setEndeDatum(convertSql(endDateConv));
 //            java.sql.Date endDateSql = new java.sql.Date(endDateConv.getTime());
 //            reservierung.setEndeDatum(endDateSql);
-//            reservierung.setEndeZeit(endTimeConv);
+            reservierung.setEndTime(convertTime(endTime));
 
             Date startDateConv = convertDate(startDate);
 //            Time startTimeConv = Time.valueOf(startTime);
             reservierung.setStartDatum(convertSql(startDateConv));
 //            java.sql.Date startDateSql = new java.sql.Date(endDateConv.getTime());
 //            reservierung.setEndeDatum(startDateSql);
-//            reservierung.setStartZeit(startTimeConv);
+            reservierung.setStartTime(convertTime(startTime));
 
             Date reminderDate = endDateConv;
 //            Time reminderTime = endTimeConv;
-            parken.setErinnerungsDatum(convertSql(reminderDate));
+            parken.setErinnerungsdatum(convertSql(reminderDate));
 //            parken.setErinnerungsZeit(convertSqlReminder(reminderTime));
 
 //            if(compareTime(currentTime, startTimeConv)) {

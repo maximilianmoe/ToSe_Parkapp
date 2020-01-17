@@ -175,6 +175,7 @@ public class ReservierungController {
             //TODO finish the Time part
             Parken parkenSave = new Parken();
             parkenPrivat.setStart(null);
+            parkenPrivat.setStart(null);
             parkenPrivat.setEnde(null);
             parkenPrivat.setKid(konsument);
             //parkenPrivat.setPid(parkplatz);

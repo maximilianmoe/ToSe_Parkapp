@@ -35,7 +35,7 @@ public class Parken {
     @Column(name = "oeffentlich")
     private boolean oeffentlich;
 
-    private Date erinnerungsDatum;
+    private Date erinnerungsdatum;
 //    private Timestamp erinnerungsZeit;
 
 
@@ -47,7 +47,7 @@ public class Parken {
         this.pid = pid;
         this.start = startDatum;
         this.ende = endeDatum;
-        this.erinnerungsDatum = erinnerungsDatum;
+        this.erinnerungsdatum = erinnerungsDatum;
 //        this.erinnerungsZeit = erinnerungsZeit;
         this.freigabe = freigabe;
     }

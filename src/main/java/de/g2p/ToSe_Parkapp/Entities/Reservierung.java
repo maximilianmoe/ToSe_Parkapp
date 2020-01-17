@@ -36,19 +36,23 @@ public class Reservierung {
     private Date endeDatum;
 //    private Timestamp endeZeit;
 
+    private Time startTime;
+
+    private Time endTime;
+
     //wurde das Parken durch eine Reservierung ausgelöst?
     @Column(name = "REMARK")
     private boolean resZuParken;
 
     private boolean beendet;
 
-    public Reservierung(Konsument kid, Parkplatz pid, Date startDatum,Timestamp startZeit, Date endeDatum,Timestamp endeZeit, boolean resZuParken, boolean beendet) {
+    public Reservierung(Konsument kid, Parkplatz pid, Date startDatum,Timestamp startZeit, Date endeDatum,Timestamp endeZeit, Time startTime, Time endTime, boolean resZuParken, boolean beendet) {
         this.kid = kid;
         this.pid = pid;
         this.startDatum = startDatum;
-//        this.startZeit = startZeit;
         this.endeDatum = endeDatum;
-//        this.endeZeit = endeZeit;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.resZuParken = resZuParken;
         this.beendet = beendet;
     }
