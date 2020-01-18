@@ -114,8 +114,10 @@
                 <th scope="col">Reservierungs-ID</th>
                 <th scope="col">Parkplatz-ID</th>
                 <th scope="col">PLZ</th>
-                <th scope="col">Anfang</th>
-                <th scope="col">Ende</th>
+                <th scope="col">Anfangs-Zeit</th>
+                <th scope="col">Anfangs-Datum</th>
+                <th scope="col">Ende-Zeit</th>
+                <th scope="col">Ende-Datum</th>
                 <th scope="col">Stornieren</th>
                 <th scope="col">Beparken</th>
                 <th scope="col">Parkplatz Freigeben</th>
@@ -130,8 +132,10 @@
                 <td><span th:text="${parkplatz.pid}">Parkplatz-ID</span></td>
                 <!-- TODO noch mit thymeleafe verbinden -->
                 <td><span th:text="${parkplatz.plz}">PLZ</span></td>
-                <td><span th:text="${reservierung.start}">Anfangszeit</span></td>
-                <td><span th:text="${reservierung.ende}">Endzeit</span></td>
+                <td><span th:text="${reservierung.startTime}">Anfangszeit</span></td>
+                <td><span th:text="${reservierung.startDatum}">Anfangsdatum</span></td>
+                <td><span th:text="${reservierung.endTime}">Endzeit</span></td>
+                <td><span th:text="${reservierung.endeDatum}">Enddatum</span></td>
                 <td class="table_btn">
                     <button type="submit" class="btn btn-outline-secondary btn-sm"
                             id="submit_btn" th:name="button" th:value="stornieren" th>Stornieren</button>

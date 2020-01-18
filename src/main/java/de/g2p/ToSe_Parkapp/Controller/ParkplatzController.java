@@ -223,8 +223,7 @@ public class ParkplatzController {
             reservierung.setResZuParken(false);
             reservierung.setKid((konsumentRepository.findByNid(nutzer.getNidNutzer())).getKidKonsument());
             reservierung.setPid(parkplatzRepository.findByPid(parkplatz.getPid()));
-
-
+            konsumentRepository.updateReserviert(true, nutzer.getNid());
 
             //Convert time and date
             startDate = startDate.substring(0, 10);
