@@ -104,6 +104,11 @@
         #btn1 {
             margin: 1.5%;
         }
+
+        #belegtNeu {
+            text-align: center;
+            margin: 30px;
+        }
     </style>
 </head>
 
@@ -168,6 +173,7 @@
                 Bei öffentlichen Parkplätzen können wir nie 100% sagen, ob der Parkplatz frei ist.
                 Deshalb entfernen der Option der Parkplatz ist frei.
             -->
+        <div th:unless="${parkplatz.status} == 'belegt'">
             <select class="form-control" id="belegt" th:name="belegung">
                 <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
                 <option th:value="fremdbelegt">Der Parkplatz ist aktuell frei, aber könnte auch demnächst wieder belegt werden</option>
@@ -183,7 +189,15 @@
                             th:name="pid" th:value="${parkplatz.pid}" disabled>Bestätigen</button>
 
             </div>
+        </div>
+        <div th:if="${parkplatz.status} == 'belegt'" id="belegtNeu">
+            <h6>
+                <span>Der Parkplatz ist im Moment belegt.</span>
+                <span>Bitte warten sie, bis er wieder freigegeben wird</span>
+            </h6>
+        </div>
 <!--        </form>-->
+<!--        TODO farbe sollte immer anzeigen, ob ein parkplatz reserviert ist oder nicht-->
         <div class="card-footer" id="farbe">
             <small class="text-muted"></small>
         </div>

@@ -48,7 +48,19 @@
                 <label>Die Bearbeitung war erfolgreich!</label>
                 <div> <label>Folgender Nutzer wurde entsperrt:</label> </div>
                 <div>
-                    <p th:text="${nutzer.vorname+' '+nutzer.nachname}"></p>
+                    <p>
+                        <span>Nutzer-ID: </span>
+                        <span th:text="${nutzer.nid}"></span>
+                    </p>
+                    <p>
+                        <span>Vorname:</span>
+                        <span th:text="${nutzer.vorname}"></span>
+                    </p>
+                    <p>
+                        <span>Nachname:</span>
+                        <span th:text=${nutzer.nachname}"></span>
+                    </p>
+
                 </div>
                 <div id="btn">
                     <button type="submit" class="btn btn-outline-secondary btn-lg">

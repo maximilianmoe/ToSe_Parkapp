@@ -79,18 +79,21 @@ public class AdminController {
     }
 
     @PostMapping("/rechteAendern")
-    public String rechteAendern(@RequestParam("nutzerid2") Integer nid, @RequestParam("buttonAdmin") Integer button) {
+    public String rechteAendern(@RequestParam("nutzerid2") Integer nid, @RequestParam("buttonAdmin") Integer button,
+                                Model model) {
+        Nutzer nutzer = nutzerRepository.findByNid(nid);
+        String returnstring = "";
         if (button.equals(1)) {
             nutzerRepository.updateAdmin(nid, "admin");
-            System.out.println("Nutzer mit nid " + nid + " wurden Adminrechte erteilt ");
+            returnstring = "nutzer_adminrechte_erteilt";
         }
         else if (button.equals(2)) {
             nutzerRepository.updateAdmin(nid, "nutzer");
-            System.out.println("Nutzer mit nid " + nid + " wurden Adminrechte entzogen ");
+            returnstring = "nutzer_adminrechte_entzogen";
 
         }
-
-        return "adminseite";
+        model.addAttribute("nutzer", nutzer);
+        return returnstring;
     }
 
     @GetMapping("/admin_alle_ausstehenden_reservierungen")
