@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -50,7 +52,7 @@ public class ParkplatzController {
         Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
         String returnstring = "";
         //Checks if anbieter already has a Parkplatz
-        if (anbieter.getParkplatz() == true) {
+        if (anbieter.getParkplatz()) {
             returnstring = "error_bereits_ein_parkplatz";
         } else {
             model.addAttribute("parkplatz", new Parkplatz());
@@ -200,55 +202,58 @@ public class ParkplatzController {
     }
 
     @PostMapping("/special_parkingslot")
-    public String reserveParkplatz( @ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung,
-                                    @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate
-                                   ,@RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime) throws ParseException {
+    public String reserveParkplatz(@ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung,
+                                   @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate
+                                   , @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime,
+                                   @Validated Reservierung reservierungValid, BindingResult result) throws ParseException {
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-
-       Time currentTime = Time.valueOf(LocalTime.now());
-       Date currentDate = new Date();
-        System.out.println(startDate);
-        System.out.println(startTime);
-
-      String returnString = "testweiterleitung";
+        String returnString = "testweiterleitung";
         Nutzer nutzer = findNutzer();
 
-        if (nutzer.getSaldo() < parkplatz.getParkgebuehr()) {
-//            TODO change errror_page to specific error_page for this content
-            returnString = "error_zu_wenig_guthaben";
+        if (result.hasErrors()) {
+            returnString = "special_parkingslot";
         } else {
+            Time currentTime = Time.valueOf(LocalTime.now());
+            Date currentDate = new Date();
+            System.out.println(startDate);
+            System.out.println(startTime);
 
-            reservierung.setBeendet(false);
-            reservierung.setResZuParken(false);
-            reservierung.setKid((konsumentRepository.findByNid(nutzer.getNidNutzer())).getKidKonsument());
-            reservierung.setPid(parkplatzRepository.findByPid(parkplatz.getPid()));
-            konsumentRepository.updateReserviert(true, nutzer.getNid());
 
-            //Convert time and date
-            startDate = startDate.substring(0, 10);
-            endDate = endDate.substring(0, 10);
-            startTime = startTime.substring(0, 5);
-            endTime = endTime.substring(0, 5);
+            if (nutzer.getSaldo() < parkplatz.getParkgebuehr()) {
+                returnString = "error_zu_wenig_guthaben";
+            } else {
 
-            Date endDateConv = convertDate(endDate);
-         //   Time endTimeConv = Time.valueOf(endTime);
-            reservierung.setEndeDatum(convertSql(endDateConv));
+                reservierung.setBeendet(false);
+                reservierung.setResZuParken(false);
+                reservierung.setKid((konsumentRepository.findByNid(nutzer.getNidNutzer())).getKidKonsument());
+                reservierung.setPid(parkplatzRepository.findByPid(parkplatz.getPid()));
+                konsumentRepository.updateReserviert(true, nutzer.getNid());
+
+                //Convert time and date
+                startDate = startDate.substring(0, 10);
+                endDate = endDate.substring(0, 10);
+                startTime = startTime.substring(0, 5);
+                endTime = endTime.substring(0, 5);
+
+                Date endDateConv = convertDate(endDate);
+                //   Time endTimeConv = Time.valueOf(endTime);
+                reservierung.setEndeDatum(convertSql(endDateConv));
 //            java.sql.Date endDateSql = new java.sql.Date(endDateConv.getTime());
 //            reservierung.setEndeDatum(endDateSql);
-            reservierung.setEndTime(convertTime(endTime));
+                reservierung.setEndTime(convertTime(endTime));
 
-            Date startDateConv = convertDate(startDate);
+                Date startDateConv = convertDate(startDate);
 //            Time startTimeConv = Time.valueOf(startTime);
-            reservierung.setStartDatum(convertSql(startDateConv));
+                reservierung.setStartDatum(convertSql(startDateConv));
 //            java.sql.Date startDateSql = new java.sql.Date(endDateConv.getTime());
 //            reservierung.setEndeDatum(startDateSql);
-            reservierung.setStartTime(convertTime(startTime));
+                reservierung.setStartTime(convertTime(startTime));
 
-            Date reminderDate = endDateConv;
+                Date reminderDate = endDateConv;
 //            Time reminderTime = endTimeConv;
-            parken.setErinnerungsdatum(convertSql(reminderDate));
- //           parken.setErinnerungsZeit(convertSqlReminder(reminderTime));
+                parken.setErinnerungsdatum(convertSql(reminderDate));
+                //           parken.setErinnerungsZeit(convertSqlReminder(reminderTime));
 
 //            if(compareTime(currentTime, startTimeConv)) {
 
@@ -261,6 +266,7 @@ public class ParkplatzController {
 //           TODO Übersichtsseite erstellen und den Namen hier ändern
                 returnString = "home";
 //            }else returnString = "error_page";    //TODO change errror_page to specific error_page for this content
+            }
         }
         return returnString;
 
@@ -322,12 +328,21 @@ public class ParkplatzController {
 
 
     @PostMapping("/parkplatz_entfernen")
-    public String deleteParkplatz() {
-        //TODO add the method to delete the Parkplatz from the Database and change the "parkplatz" attribute
-        // in table Konsument to false
-        // -> there cant be an active reservierung when deleting a Parkplatz
+    public String deleteParkplatz(Model model) {
         Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
         Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
+        Reservierung reservierung = reservierungenRepository.findByPid(parkplatz);
+        List<Konsument> konsumenten = konsumentRepository.findAll();
+        Konsument konsument = null;
+        for (Konsument konsumentFor : konsumenten){
+            if (!reservierung.isBeendet())
+                if (konsumentFor == reservierung.getKid()) {
+                    model.addAttribute("reservierung", 0);
+                }
+            else {
+                model.addAttribute("reservierung", null);
+                }
+        }
         anbieterRepository.updateParkplatz(false, anbieter.getAid());
         parkplatzRepository.delete(parkplatz);
         return "home";

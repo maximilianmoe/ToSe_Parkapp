@@ -38,15 +38,19 @@ public class AdminController {
     public String sperrenPost(@RequestParam("nutzerid") Integer nid, @RequestParam("buttonNutzer") Integer button, Model model) {
         Nutzer nutzer = nutzerRepository.findByNid(nid);
         String returnstring = "";
-        if (button.equals(1)) {
-            nutzer.setSperrung(false);
-            nutzerRepository.updateSperrung(nutzer.getNid(), false);
-            returnstring = "/nutzer_entsperrt";
-        }
-        else if(button.equals(2)) {
-            nutzer.setSperrung(true);
-            nutzerRepository.updateSperrung(nutzer.getNid(), true);
-            returnstring = "/nutzer_gesperrt";
+        if (nutzer == null) {
+            model.addAttribute("nid", nid);
+            returnstring = "error_nutzer_existiert_nicht";
+        } else {
+            if (button.equals(1)) {
+                nutzer.setSperrung(false);
+                nutzerRepository.updateSperrung(nutzer.getNid(), false);
+                returnstring = "/nutzer_entsperrt";
+            } else if (button.equals(2)) {
+                nutzer.setSperrung(true);
+                nutzerRepository.updateSperrung(nutzer.getNid(), true);
+                returnstring = "/nutzer_gesperrt";
+            }
         }
         model.addAttribute("nutzer", nutzer);
         return returnstring;
@@ -60,7 +64,6 @@ public class AdminController {
         if (nutzer.getRolle().equalsIgnoreCase("beides")) {
             System.out.println("Rolle beides");
             Anbieter anbieter = anbieterRepository.findByNid(nutzer);
-            //TODO throws an exception when deleting a user
             Konsument konsument = konsumentRepository.findByNid(nutzer);
             konsumentRepository.delete(konsument);
             anbieterRepository.delete(anbieter);

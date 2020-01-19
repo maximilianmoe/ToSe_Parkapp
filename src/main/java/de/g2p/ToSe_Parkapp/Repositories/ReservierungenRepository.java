@@ -20,4 +20,9 @@ public interface ReservierungenRepository extends JpaRepository<Reservierung, In
     @Modifying
     @Query(value = "update reservierung set beendet = :beendet  where rid = :rid", nativeQuery = true)
     void updateBeendet(@Param("beendet") boolean beendet, @Param("rid") Integer rid);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update reservierung set remark = :remark  where rid = :rid", nativeQuery = true)
+    void updateResZuParken(@Param("remark") boolean remark, @Param("rid") Integer rid);
 }

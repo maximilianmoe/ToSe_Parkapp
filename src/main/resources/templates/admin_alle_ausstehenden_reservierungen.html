@@ -55,7 +55,6 @@
             </tr>
             <tr th:unless="${reservierungen} == 0" th:each="reservierung : ${reservierungen}">
                 <td><span th:text="${reservierung.rid}">Reservierungs-ID</span></td>
-<!--                TODO konsumentenid change the type, it is only displayed as the entity-->
                 <td>
                     <div th:if="${reservierung.compareWithKonsument(konsumenten)} != null">
                         <span th:text="${reservierung.compareWithKonsument(konsumenten)}" >Konsumenten-ID</span>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleafe.org" lang="de-De">
 
 <head>
-    <title>Nutzer gesperrt</title>
+    <title>Adminrechte entzogen</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -24,7 +24,7 @@
 
         #successful{
             font-size: 30px;
-            margin-top: 100px;
+            margin-top: 120px;
             text-align: center;
         }
         #btn{
@@ -35,34 +35,23 @@
             text-align: center;
             margin-top: 20px;
         }
-        #text2 {
-            margin-top: 40px;
-        }
     </style>
 </head>
 
 <body>
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
-    <h2 id="ueberschrift">Sperrung</h2>
+    <h2 id="ueberschrift">Fehler!</h2>
     <form action="#">
         <div class="text-center" id="successful">
             <div class="form-group" >
-                <label>Die Bearbeitung war erfolgreich!</label>
-                <div> <label>Folgender Nutzer wurde gesperrt:</label> </div>
-                <div id="text2">
-                    <p>
-                        <span>Nutzer-ID: </span>
-                        <span th:text="${nutzer.nid}"></span>
-                    </p>
-                    <p>
-                        <span>Vorname:</span>
-                        <span th:text="${nutzer.vorname}"></span>
-                    </p>
-                    <p>
-                        <span>Nachname:</span>
-                        <span th:text="${nutzer.nachname}"></span>
-                    </p>
+                <div>
+                    <span>Der angeforderte Nutzer mit der Nutzer-ID</span>
+                    <span th:text="${nid}"></span>
+                    <span>existiert nicht.</span>
+                </div>
+                <div>
+                    <span>Bitte versuchen sie es nochmal!</span>
                 </div>
                 <div id="btn">
                     <button type="submit" class="btn btn-outline-secondary btn-lg">

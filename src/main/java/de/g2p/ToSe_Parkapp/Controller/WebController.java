@@ -54,13 +54,20 @@ public class WebController {
     public String homeAdmin(Model model) {
         Nutzer nutzer = findNutzer();
         String returnstring = "";
-        //Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNidIntegerParam(nutzer.getNid()));
-        //model.addAttribute("parkplatz", parkplatz);
-        //System.out.println(parkplatz.getPid()+"   "+parkplatz.getBeschreibung());
-        if(nutzer.getAdmin().equalsIgnoreCase("admin"))
-            returnstring = "home_admin";
-        else
-            returnstring = "home";
+        if (nutzer.getSperrung()) {
+            model.addAttribute("sperrung", 1);
+            returnstring = "login";
+        } else {
+            if (nutzer.getSaldo() < 0) {
+                returnstring = "error_zu_wenig_guthaben";
+            } else {
+                if (nutzer.getAdmin().equalsIgnoreCase("admin"))
+                    returnstring = "home_admin";
+                else
+                    returnstring = "home";
+            }
+            model.addAttribute("sperrung", 0);
+        }
         return returnstring;
     }
 
@@ -71,7 +78,8 @@ public class WebController {
 
     //GetMapping for the Login Page
     @GetMapping("/login")
-    public String loginGet() {
+    public String loginGet(Model model) {
+        model.addAttribute("nutzerList", nutzerRepository.findAll());
         return "login";
     }
 

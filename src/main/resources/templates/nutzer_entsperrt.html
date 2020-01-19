@@ -24,7 +24,7 @@
 
         #successful{
             font-size: 30px;
-            margin-top: 120px;
+            margin-top: 100px;
             text-align: center;
         }
         #btn{
@@ -34,6 +34,9 @@
         #ueberschrift {
             text-align: center;
             margin-top: 20px;
+        }
+        #text2 {
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -47,7 +50,7 @@
             <div class="form-group" >
                 <label>Die Bearbeitung war erfolgreich!</label>
                 <div> <label>Folgender Nutzer wurde entsperrt:</label> </div>
-                <div>
+                <div id="text2">
                     <p>
                         <span>Nutzer-ID: </span>
                         <span th:text="${nutzer.nid}"></span>
@@ -58,7 +61,7 @@
                     </p>
                     <p>
                         <span>Nachname:</span>
-                        <span th:text=${nutzer.nachname}"></span>
+                        <span th:text="${nutzer.nachname}"></span>
                     </p>
 
                 </div>

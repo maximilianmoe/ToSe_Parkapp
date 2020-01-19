@@ -63,9 +63,9 @@ public class MyUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         boolean returnvalue = false;
-        if( gesperrt == true)
+        if(gesperrt)
             returnvalue = false;
-        else if(gesperrt == false)
+        else
             returnvalue = true;
         return returnvalue;
     }

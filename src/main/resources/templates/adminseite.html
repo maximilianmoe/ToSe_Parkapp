@@ -79,7 +79,6 @@
         <div class="col">
             <div id="trans">
                 <h3>Adminrechte Verwalten</h3>
-                <!--                TODO popup erstellen, wenn einem nutzer adminrechte entzogen oder erteilt wurden-->
                 <form id="adminrechte" th:action="@{/rechteAendern}" method="post">
                     <input type="text" class="form-control" th:name="nutzerid2" placeholder="Nutzer-Id">
                     <div class="row">
@@ -146,7 +145,6 @@
                 <div id="res">
                     <h3> Ausstehende Reservierungen </h3>
                     <a href="admin_alle_ausstehenden_reservierungen">
-                        <!--                        TODO read all Reservierungen from the table and return them in a table like in meine_reservierungen-->
                         <button type="submit" class="btn btn-outline-secondary">Ausstehende Reservierungen</button>
                     </a>
                 </div>
