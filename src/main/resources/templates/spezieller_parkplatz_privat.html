@@ -82,6 +82,10 @@
         .card-footer {
             height: 50px;
         }
+        #red_text{
+            text-align: center;
+            color: lightslategray;
+        }
     </style>
 </head>
 
@@ -165,7 +169,7 @@
                 <div class="col">
                     <div class="form-group">
                         <h6>Anfangszeit</h6>
-                        <input type="time" id="time1" th:name="startZeit" class="form-control">
+                        <input type="time" id="time1" onfocusout="test()" th:name="startZeit" class="form-control">
                         <span id="popup3"></span>
                     </div>
                 </div>
@@ -179,6 +183,7 @@
                 <div class="container">
                     <h6 id="reminder">Sie erhalten automatisch 30 Minuten vor ihrem Reservierungsbeginn eine
                         Erinnerungsmail!</h6>
+                    <h6 id="red_text">Sie können einen Parkplatz maximal 1 Stunde im voraus reservieren!</h6>
                 </div>
             </div>
             <div id="btn_row">
@@ -285,6 +290,93 @@
             }
         });
     });
+
+
+    function test() {
+        var element = $('#time1').val();
+        var datecheck = $('#date1').val();
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+
+        if (element == "") {
+            alert("Please enter time");
+            return false;
+        } else {
+            var d = new Date();
+            var m = d.getMinutes();
+            var h = d.getHours();
+            if (h == 0) {
+                h = 24
+            }
+            var currentTime = h + "." + m;
+
+            /*
+                        var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth()+1).padStart(2, '0');
+                        var yyyy = today.getFullYear();
+                        today = yyyy + "-" + mm + "-" + dd;
+
+
+
+                        var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                        var yyyy = today.getFullYear();
+
+                        today = mm + '/' + dd + '/' + yyyy;
+            */
+            var time = element.split(":");
+            var hour = time[0];
+            if (hour == '00') {
+                hour = 24
+            }
+            var min = time[1];
+
+            var inputTime = hour + "." + min;
+
+
+            var totalTime = currentTime - inputTime;
+            console.log(totalTime);
+            /*
+                      if ((Math.abs(totalTime)) > 2) {
+                          document.getElementById("check1").innerHTML = "sufficient time";
+                          alert("Input: " + inputTime + " cur: " + currentTime);
+                      }
+                      else {
+                          document.getElementById("check1").innerHTML = "Less time";
+                          alert("Input: " + inputTime + " cur: " + currentTime)
+                      }
+
+                      if (currentTime > inputTime) {
+                          document.getElementById("check1").innerHTML = "sufficient time";
+                          alert("Input: " + inputTime + " cur: " + currentTime + "current größer total:" + totalTime);
+                      }
+                      else {
+                          document.getElementById("check1").innerHTML = "Less time";
+                          alert("Input: " + inputTime + " cur: " + currentTime + " inpt größer total: " + totalTime);
+                      }
+              */
+            if ((totalTime >= -1 && totalTime <= 0) && datecheck == today) {
+                //alert("total: " + totalTime + " passt?" + today + " <- today +dcheck: " + datecheck);
+                $('#submit_btn').prop('disabled', false);
+                $('#red_text').html("Sie können einen Parkplatz maximal 1 Stunde im voraus reservieren!");
+                $('#red_text').css('color', 'lightslategray');
+            } else {
+                //alert("total: " + totalTime + " passt nicht?" + +today + " today +dcheck: " + datecheck);
+                $('#submit_btn').prop('disabled', true);
+                $('#red_text').html("ACHTUNG: Sie können einen Parkplatz maximal 1 Stunde im voraus reservieren!");
+                $('#red_text').css('color', 'red');
+            }
+        }
+    }
+
+
 </script>
 </body>
 
