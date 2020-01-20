@@ -12,6 +12,7 @@
 	<artifactId>ToSe_Parkapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ToSe_Parkapp</name>
+	<packaging>war</packaging>
 	<description>Implementierung der Parkapp</description>
 
 	<properties>
