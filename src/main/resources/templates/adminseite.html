@@ -72,7 +72,7 @@
 
 </head>
 
-<body>
+<body onload="randomNumber()";>
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container" id="anfang">
     <div class="row" id="last">
@@ -99,7 +99,7 @@
         <div class="col">
             <div id="amount2">
                 <h3>Volumen gesamter Zahlungsverkehr aller User:</h3>
-                <p><span>400.59</span> EUR</p>
+                <p><span id="rand-gen"></span> EUR</p>
             </div>
         </div>
     </div>
@@ -161,7 +161,7 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
+<!--
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -177,7 +177,7 @@
         </div>
     </div>
 </div>
-<!-- Modal2 -->
+
 <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -195,7 +195,9 @@
         </div>
     </div>
 </div>
+-->
 <script>
+/*
     $('#adminrechte').on('submit', function (e) {
         $("#exampleModal")modal('show');
         e.preventDefault();
@@ -204,6 +206,23 @@
         $("#exampleModal2")modal('show');
         e.preventDefault();
     });
+    */
+
+
+    function randomNumber() {
+        var rand = 0;
+        rand = Math.floor(Math.random() * 1000) + 1;
+        $('#rand-gen').html(rand);
+    }
+
+/*
+    $(document).ready(function(){
+        var rand;
+        rand = Math.floor((Math.random)* 999 + 1);
+        //console.log(rand);
+        console.log(rand);
+    });
+*/
 </script>
 </body>
 
