@@ -1,15 +1,23 @@
 package de.g2p.ToSe_Parkapp;
 
-import de.g2p.ToSe_Parkapp.Service.MailService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.mail.SimpleMailMessage;
+
 
 @SpringBootApplication
 @EnableJpaRepositories
-public class ToSeParkappApplication {
+public class ToSeParkappApplication extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
+		return builder.sources(ToSeParkappApplication.class);
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(ToSeParkappApplication.class, args);
 	}
