@@ -42,16 +42,15 @@
             <tr>
                 <th scope="col">Reservierungs-ID</th>
                 <th scope="col">Konsumenten-ID</th>
-<!--                <th scope="col">Ort</th>-->
                 <th scope="col">Anfangsdatum</th>
-<!--                <th scope="col">Anfangs-Zeit</th>-->
+                <th scope="col">Anfangszeit</th>
                 <th scope="col">Enddatum</th>
-<!--                <th scope="col">End-Zeit</th>-->
+                <th scope="col">Endzeit</th>
             </tr>
             </thead>
             <tbody>
             <tr th:if="${reservierungen} == 0">
-                <td colspan="4"> <h5>Es existieren im Moment keine ausstehenden Reservierungen</h5></td>
+                <td colspan="6"> <h5>Es existieren im Moment keine ausstehenden Reservierungen</h5></td>
             </tr>
             <tr th:unless="${reservierungen} == 0" th:each="reservierung : ${reservierungen}">
                 <td><span th:text="${reservierung.rid}">Reservierungs-ID</span></td>
@@ -61,8 +60,10 @@
                     </div>
                 </td>
 
-                <td><span th:text="${reservierung.start}">Startenddatum</span></td>
-                <td><span th:text="${reservierung.ende}">Enddatum</span></td>
+                <td><span th:text="${reservierung.startDatum}">Anfangsdatum</span></td>
+                <td><span th:text="${reservierung.startTime}">Anfangszeit</span></td>
+                <td><span th:text="${reservierung.endeDatum}">Enddatum</span></td>
+                <td><span th:text="${reservierung.endTime}">Endzeit</span></td>
             </tr>
             </tbody>
         </table>

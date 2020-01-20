@@ -117,10 +117,10 @@
                 <th scope="col">Beparkt</th>
                 <th scope="col">Reservierungs-ID</th>
                 <th scope="col">Parkplatz-ID</th>
-                <th scope="col">Anfangs-Zeit</th>
                 <th scope="col">Anfangs-Datum</th>
-                <th scope="col">Ende-Zeit</th>
+                <th scope="col">Anfangs-Zeit</th>
                 <th scope="col">Ende-Datum</th>
+                <th scope="col">Ende-Zeit</th>
                 <th scope="col">Stornieren</th>
                 <th scope="col">Beparken</th>
                 <th scope="col">Parkplatz Freigeben</th>
@@ -138,10 +138,10 @@
                 </td>
                 <td><span th:text="${reservierung.rid}">Reservierungs-ID</span></td>
                 <td><span th:text="${parkplatz.pid}">Parkplatz-ID</span></td>
-                <td><span th:text="${reservierung.startTime}">Anfangszeit</span></td>
                 <td><span th:text="${reservierung.startDatum}">Anfangsdatum</span></td>
-                <td><span th:text="${reservierung.endTime}">Endzeit</span></td>
+                <td><span th:text="${reservierung.startTime}">Anfangszeit</span></td>
                 <td><span th:text="${reservierung.endeDatum}">Enddatum</span></td>
+                <td><span th:text="${reservierung.endTime}">Endzeit</span></td>
                 <td class="table_btn">
                     <button type="submit" class="btn btn-outline-secondary btn-sm"
                             id="submit_btn" th:name="button" th:value="stornieren">

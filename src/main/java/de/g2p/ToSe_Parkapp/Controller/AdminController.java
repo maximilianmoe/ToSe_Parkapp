@@ -3,6 +3,7 @@ package de.g2p.ToSe_Parkapp.Controller;
 import de.g2p.ToSe_Parkapp.Entities.Anbieter;
 import de.g2p.ToSe_Parkapp.Entities.Konsument;
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
+import de.g2p.ToSe_Parkapp.Entities.Reservierung;
 import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.KonsumentRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
@@ -13,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class AdminController {
@@ -101,10 +104,11 @@ public class AdminController {
 
     @GetMapping("/admin_alle_ausstehenden_reservierungen")
     public String adminResGet(Model model) {
-        if (reservierungenRepository.count() == 0) {
+        List<Reservierung> reservierungList = reservierungenRepository.findByBeendet(false);
+        if (reservierungList.isEmpty()) {
             model.addAttribute("reservierungen", 0);
         } else {
-            model.addAttribute("reservierungen", reservierungenRepository.findAll());
+            model.addAttribute("reservierungen", reservierungList);
             model.addAttribute("konsumenten", konsumentRepository.findAll());
         }
 
