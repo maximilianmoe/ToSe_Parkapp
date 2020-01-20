@@ -85,21 +85,25 @@
             max-width: 200px;
             text-align: center;
         }
-        #logo-img{
+        #logo-img2{
             object-fit: cover;
-            width: 100%;
-            height: 100%;
+            width: 20%;
+            height: 20%;
+        }
+        #restrict{
+            object-fit: cover;
+            max-width: 15%;
+            max-width: 215px;
         }
     </style>
 </head>
 
 <body>
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
-    <a class="navbar-brand" href="home" id="logo-li">
-        <!--
-        <img id="logo-img" th:src="@{images/good_2_park_logo_white_outlines.png" src="../static/images/good_2_park_logo_white_outlines.png">
-        -->
-        {Logo}
+    <a class="navbar-brand" href="home">
+        <div id="restrict">
+            <img id="logo-img2" width=210px height=25.76px th:src="@{images/good_2_park_logo_white_outlines.png}" src="../static/images/good_2_park_logo_white_outlines.png">
+        </div>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,6 +129,7 @@
             <a href="logout">Logout</a>
         </button>
     </div>
+
 </nav>
 
 <script>
