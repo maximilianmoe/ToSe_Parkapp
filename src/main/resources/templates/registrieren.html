@@ -62,11 +62,11 @@
         </div>
         <div class="row input">
             <div class="col">
-                <input type="password" th:name="passwort" maxlength="100" class="form-control" id="pw1"
+                <input type="password" th:name="passwort" maxlength="100" minlength="6" class="form-control" id="pw1"
                        placeholder="Passwort">
             </div>
             <div class="col">
-                <input type="password" class="form-control" id="pw2" placeholder="Passwort bestätigen">
+                <input type="password" class="form-control" maxlength="100" minlength="6" id="pw2" placeholder="Passwort bestätigen">
             </div>
         </div>
         <div class="row input">
