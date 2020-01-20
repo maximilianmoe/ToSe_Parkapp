@@ -9,11 +9,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface ParkplatzRepository extends JpaRepository<Parkplatz, Integer> {
 
     Parkplatz findByPid(Integer pid);
     Parkplatz findByAnbieterId(Anbieter aid);
+    List<Parkplatz> findByPlz(Integer plz);
 
     @Transactional
     @Modifying

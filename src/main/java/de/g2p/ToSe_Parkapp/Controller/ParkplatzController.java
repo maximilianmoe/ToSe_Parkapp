@@ -201,6 +201,27 @@ public class ParkplatzController {
         return returnstring;
     }
 
+    @PostMapping("/suche")
+    public String suchePost(Model model, @RequestParam("suche") Integer suche) {
+        List<Parkplatz> parkplatzList = parkplatzRepository.findByPlz(suche);
+
+        if (parkplatzList.isEmpty()) {
+            model.addAttribute("parkplaetze", 0);
+            System.out.println("parkplaetze = 0");
+        }
+        else {
+            System.out.println("parkplaetze = parkplatzList");
+            model.addAttribute("parkplaetze", parkplatzList);
+        }
+
+        return "parkplaetze_medialist_suche";
+    }
+
+    @GetMapping("/parkplaetze_medialist_suche")
+    public String parkMediaSucheGet() {
+        return "parkplaetze_medialist_suche";
+    }
+
     @PostMapping("/special_parkingslot")
     public String reserveParkplatz(@ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung,
                                    @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate

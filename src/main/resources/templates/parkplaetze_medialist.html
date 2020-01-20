@@ -193,19 +193,21 @@
 <body>
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
+    <form th:action="@{/suche}" method="post">
     <div class="row">
         <div class="container" id="suche">
             <div class="col">
                 <div class="input-group md-form form-sm form-2 pl-0">
                     <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search"
-                           aria-label="Search">
-                    <button type="button" class="btn btn-outline-info" id="such_btn">Suchen</button>
+                           aria-label="Search" th:name="suche">
+                    <button type="submit" class="btn btn-outline-info" id="such_btn">Suchen</button>
                     <div class="input-group-append">
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </form>
     <!-- TODO WICHTIG!!!!!!!!!!!!!!!!!!     Hier muss noch Google Maps eingebunden werden!
     -->
     <!--
@@ -227,7 +229,6 @@
             <div class="media-body" >
                 <div class="row">
                     <div class="col-8">
-<!--                        TODO hier darunter pl=r, str, hausnummer einfügen. Aus Standort, where ortid passt zu parkplatz -->
                         <h5 class="mt-0 mb-1">
                             <span th:text="${parkplatz.plz}"></span>
                             <span>  </span>
