@@ -20,7 +20,7 @@
     <style>
         #logo{
             text-align: center;
-            margin: 1%;
+            margin: 4%;
         }
         #thanks{
             text-align: center;
@@ -41,6 +41,11 @@
         #email{
             font-family: 'Aclonica';
         }
+        #logo-img{
+            object-fit: cover;
+            height: 75%;
+            width: 75%;
+        }
     </style>
 
 </head>
@@ -49,11 +54,13 @@
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container" id="anfang">
     <div id="logo">
-        <h3>{Logo}</h3>
+        <img id="logo-img" th:src="@{images/good_2_park_logo_black.png" src="../static/images/good_2_park_logo_black.png">
     </div>
+<!--
     <div id="thanks">
         <h3>Vielen Dank für die Nutzung von <span id="name">Good2Park</span></h3>
     </div>
+-->
     <!--
     <div id="mail">
         <h3>Sie erreichen uns unter folgender E-mail: <span id="email">good2park.service@gmail.com</span></h3>
