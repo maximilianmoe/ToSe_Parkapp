@@ -50,16 +50,14 @@
 </div>
 <p></p>
 <div class="login-form">
-    <form action="login" th:action="@{/login}" method="post">
-<!--        <div th:if="${nutzer.compareSperrung(username, nutzerList)} == true" class="alert alert-danger error">Dieser Account ist gesperrt. Bitte wenden sie sich an einen Admin</div>-->
-        <div th:unless="${sperrung} == 1">
-            <div th:if="${param.error}" class="alert alert-danger error">Benutzername oder Passwort ungültig</div>
-        </div>
+    <form th:action="@{/login}" method="post">
+        <div th:if="${sperrung} == 0" class="alert alert-danger error">Dieser Account ist gesperrt. Bitte wenden sie sich an einen Admin</div>
+        <div th:if="${param.error}" class="alert alert-danger error">Benutzername oder Passwort ungültig</div>
         <div th:if="${param.logout}" class="alert alert-success">Sie wurden erfolgreich abgemeldet</div>
         <!-- TODO einfügen von msg falls nutzer gesperrt ist -->
         <h2 class="text-center" id="login">Log in</h2>
         <div class="form-group">
-            <input id="username" name="username" type="text" class="form-control" placeholder="Benutzername" required="required">
+            <input id="username" th:name="username" name="username" type="text" class="form-control" placeholder="Benutzername" required="required">
         </div>
         <div class="form-group">
             <input id="password" name="password" type="password" class="form-control" placeholder="Passwort" required="required">

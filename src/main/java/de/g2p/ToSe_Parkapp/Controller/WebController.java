@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 public class WebController {
@@ -55,8 +56,8 @@ public class WebController {
         Nutzer nutzer = findNutzer();
         String returnstring = "";
         if (nutzer.getSperrung()) {
-            model.addAttribute("sperrung", 1);
-            returnstring = "login";
+            model.addAttribute("sperrung", 0);
+            returnstring = "forward:/login";
         } else {
             if (nutzer.getSaldo() < 0) {
                 returnstring = "error_zu_wenig_guthaben";
@@ -83,10 +84,30 @@ public class WebController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String loginPost(Model model) {
-        return "home";
-    }
+//    @PostMapping("/login")
+//    public String loginPost(@RequestParam("username") String username) {
+//        List<Nutzer> nutzerList = nutzerRepository.findAll();
+//        String returnstring = "";
+//        System.out.println("Postmapping Login");
+//        boolean gesperrt = false;
+//        for (Nutzer nutzerFor : nutzerList) {
+//            if (nutzerFor.getBenutzername().equals(username)) {
+//                System.out.println(nutzerFor.getSperrung()+ "     getSperrung");
+//                if (nutzerFor.getSperrung()) {
+//                    System.out.println(nutzerFor.getBenutzername() +"    getBenutzername");
+//                    gesperrt = true;
+//                }
+//                break;
+//            }
+//        }
+//        System.out.println(gesperrt + "    gesperrt");
+//        if (gesperrt)
+//            returnstring = "/login?gesperrt";
+//        else
+//            returnstring = "home";
+//
+//        return returnstring;
+//    }
 
     //GetMapping for the logout page and redirect to the login form
     @GetMapping("/logout")

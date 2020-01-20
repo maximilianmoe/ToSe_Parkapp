@@ -24,7 +24,7 @@ public class MyUserDetails implements UserDetails {
         this.nutzer = nutzer;
         this.benutzername = nutzer.getBenutzername();
         this.passwort = nutzer.getPasswort();
-        this.gesperrt = nutzer.getSperrung();
+        //this.gesperrt = nutzer.getSperrung();
         this.authorities = Arrays.stream(nutzer.getAdmin().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
@@ -62,12 +62,13 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        boolean returnvalue = false;
-        if(gesperrt)
-            returnvalue = false;
-        else
-            returnvalue = true;
-        return returnvalue;
+//        boolean returnvalue = false;
+//        if(gesperrt)
+//            returnvalue = false;
+//        else
+//            returnvalue = true;
+//        return returnvalue;
+        return true;
     }
 
     public Nutzer getUserDetails() {
