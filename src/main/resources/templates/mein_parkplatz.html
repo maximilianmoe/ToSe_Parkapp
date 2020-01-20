@@ -149,7 +149,7 @@
             </div>
             </div>
         </div>
-        <form>
+        <form th:action="@{/mein_parkplatz}" method="post">
             <select class="form-control" id="belegt" th:name="auswahl">
                 <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
                 <option th:value="frei">Der Parkplatz ist frei</option>
@@ -158,7 +158,7 @@
             </select>
             <div id="reg">
 <!--                TODO Button muss disabled sein, bis eine auswahl im dropdown getroffen wurde-->
-                <button th:name="button" th:value="1" type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
+                <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
                     Bestätigen</button>
             </div>
         </form>
@@ -169,7 +169,7 @@
                     <h5 id="h_5">Wollen sie ihren Parkplatz wieder entfernen?</h5>
                 </div>
                 <div id="reg">
-                    <button th:name="button" th:value="2" type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
+                    <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
                         Parkplatz dauerhaft entfernen</button>
     <!--                TODO add a PopUp and ask if the user really wants do delete the Parkplatz
                             and add the form above to the "yes" button -> erst nach den tests-->
@@ -185,7 +185,6 @@
             <small class="text-muted"></small>
 <!--            TODO change how the picture is displayed (like in spezieller_Parkplatz)-->
         </div>
-    </div>
     </form>
 </div>
 <script>

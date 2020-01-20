@@ -72,7 +72,6 @@ public class ParkplatzController {
         parkplatz.setBewertung(0);
         parkplatz.setBewertungsanzahl(0);
         parkplatz.setGesamtbewertung(0);
-        anbieterRepository.updatePid(parkplatz.getPid(), aid.getAid());
 
         //Sets Parkplatz to private if the box for "privater Parkplatz" is checked
         if (checked.contains("1"))
@@ -89,29 +88,12 @@ public class ParkplatzController {
             parkplatz.setFahrzeugtyp(fahrzeugtyp);
 
         //Saves all data in the database
-        parkplatzRepository.save(parkplatz);
+        parkplatzRepository.saveAndFlush(parkplatz);
         anbieterRepository.updateParkplatz(true, aid.getAid());
+        anbieterRepository.updatePid(parkplatz.getPid(), aid.getAid());
         return "mein_parkplatz";
     }
 
-//    @GetMapping("/parkbestaetigung_oeffentlich")
-//    public String parkbesOeffentlichGet(ModelMap model) {
-//        System.out.println("GetMapping parkbest");
-//        Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
-//        Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
-//        model.addAttribute("parkplatz", parkplatz);
-//        return "parkbestaetigung_oeffentlich";
-//    }
-
-//    @PostMapping("/parkbestaetigung_oeffentlich")
-//    public String parkbesOeffentlichPost(@RequestParam("button") String button) {
-//        if (button.contains("freigebenSpeichern")) {
-//
-//        } else if (button.contains("freigebenZurueck")) {
-//
-//        }
-//        return null;
-//    }
 
     @GetMapping("/spezieller_parkplatz_privat")
     public String spezParkplatzPrivatGet(Model model) {
@@ -207,10 +189,8 @@ public class ParkplatzController {
 
         if (parkplatzList.isEmpty()) {
             model.addAttribute("parkplaetze", 0);
-            System.out.println("parkplaetze = 0");
         }
         else {
-            System.out.println("parkplaetze = parkplatzList");
             model.addAttribute("parkplaetze", parkplatzList);
         }
 
@@ -321,6 +301,21 @@ public class ParkplatzController {
             Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
             model.addAttribute("parkplatz", parkplatz);
             returnstring = "mein_parkplatz";
+            Reservierung reservierung = null;
+            reservierung = reservierungenRepository.findByPid(parkplatz);
+            List<Konsument> konsumenten = konsumentRepository.findAll();
+            for (Konsument konsumentFor : konsumenten){
+                if (reservierung != null) {
+                    if (konsumentFor == reservierung.getKid()) {
+                        model.addAttribute("reservierung", 0);
+                        System.out.println("reservierung = 0");
+                    }
+                } else {
+                    model.addAttribute("reservierung", null);
+                    System.out.println("reservierung = null");
+
+                }
+            }
         }
         return returnstring;
     }
@@ -352,20 +347,18 @@ public class ParkplatzController {
     public String deleteParkplatz(Model model) {
         Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
         Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
-        Reservierung reservierung = reservierungenRepository.findByPid(parkplatz);
+        Reservierung reservierung = null;
+        reservierung = reservierungenRepository.findByPid(parkplatz);
         List<Konsument> konsumenten = konsumentRepository.findAll();
         Konsument konsument = null;
-        for (Konsument konsumentFor : konsumenten){
-            if (!reservierung.isBeendet())
-                if (konsumentFor == reservierung.getKid()) {
-                    model.addAttribute("reservierung", 0);
-                }
-            else {
-                model.addAttribute("reservierung", null);
-                }
-        }
+
+        Anbieter anbieterSave = new Anbieter();
+        anbieterSave.setNid(findNutzer());
+        anbieterSave.setParkplatz(false);
         anbieterRepository.updateParkplatz(false, anbieter.getAid());
         parkplatzRepository.delete(parkplatz);
+        anbieterRepository.save(anbieterSave);
+
         return "home";
     }
 
