@@ -106,8 +106,11 @@
     <div id="ueberschrift">
         <h3 id="h_3">Meine aktuellen Reservierungen</h3>
     </div>
+    <!--
     <div id="table_div">
-        <table class="table table-striped">
+    -->
+    <div id="table1">
+        <table class="table table-striped" id="testing">
             <thead>
 <!--            TODO get Thymeleaf to work on the table-->
             <tr>
@@ -129,9 +132,9 @@
             </tr>
             <tr th:unless="${reservierungen} == 0" th:each="reservierung : ${reservierungen}">
 <!--                TODO statt ja und nein evtl einen grünen haken/ein rotes kreuz-->
-                <td>
-                    <span th:if="${reservierung.resZuParken} == true">Ja</span>
-                    <span th:unless="${reservierung.resZuParken} == true">Nein</span>
+                <td id="check_table">
+                    <span class="check-value" th:if="${reservierung.resZuParken} == true">Ja</span>
+                    <span class="check-value" th:unless="${reservierung.resZuParken} == true">Nein</span>
                 </td>
                 <td><span th:text="${reservierung.rid}">Reservierungs-ID</span></td>
                 <td><span th:text="${parkplatz.pid}">Parkplatz-ID</span></td>
@@ -151,7 +154,7 @@
                         <input hidden th:name="rateRes" th:value="0">Beparken</button>
                 </td>
                 <td class="table_btn" id="freigeben_btn">
-                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                    <button disabled id="freigeben_btn2" type="button" class="btn btn-outline-secondary btn-sm"
                             data-toggle="modal"
                             data-target="#exampleModal" th:name="buttonFreigeben" th:value="freigebenRes">Freigeben</button>
                 </td>
@@ -245,6 +248,12 @@
 <script>
     $('.star-input').click(function () {
        $('#speichern').prop('disabled', false);
+    });
+
+    $('#table1 td span').filter(function(){
+        if($(this).text() == 'Ja') {
+            $('#freigeben_btn2').prop('disabled', false);
+        }
     });
 </script>
 </body>
