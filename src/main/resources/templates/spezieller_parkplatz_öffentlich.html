@@ -109,6 +109,18 @@
             text-align: center;
             margin: 30px;
         }
+
+        .img-div{
+            text-align: center;
+            height: 400px;
+        }
+
+
+        #main-img{
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -117,7 +129,10 @@
 <div class="container">
     <form th:action="@{/spezieller_parkplatz_öffentlich}" method="post" modelattribute="parkplatz">
     <div class="card mb-3">
-        <img th:src="@{images/parkplatz3.jpg}">
+        <div class="img-div">
+            <img id="main-img" th:src="@{images/parkplatz3.jpg}">
+        </div>
+
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
 
 <!--        <form action="#" th:action="@{/special_parkingslot/{id}" method="post">-->

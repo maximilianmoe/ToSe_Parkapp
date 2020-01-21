@@ -32,6 +32,19 @@
             text-align: center;
         }
 
+        .img-div{
+            text-align: center;
+            height: 400px;
+        }
+
+
+        #main-img{
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+
+
         .hintergrund_bild {
             width: 100%;
         }
@@ -86,6 +99,9 @@
             text-align: center;
             color: lightslategray;
         }
+        .card-img-top{
+            height: 65%;
+        }
     </style>
 </head>
 
@@ -100,10 +116,17 @@
 -->
 <div class="container">
     <div class="card mb-3">
-        <img th:src="@{images/parkplatz3.jpg}">
+
+            <div class="img-div">
+                <img class="card-img-top" id="main-img" th:src="@{images/parkplatz3.jpg}">
+            </div>
+
+        <!--
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
+        -->
 
         <form action="#" th:action="@{/special_parkingslot}"  method="post" onsubmit="openModal()" id="myForm">
+
             <div class="card-body">
                 <h5 class="card-title">
                     <p>
