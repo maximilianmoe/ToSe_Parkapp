@@ -93,6 +93,11 @@
             text-align: center;
         }
 
+        table{
+            table-layout: fixed;
+            width: 100%;
+        }
+
 
 
 
@@ -149,14 +154,19 @@
 
                 </td>
                 <td class="table_btn">
-                    <button type="submit" class="btn btn-outline-secondary btn-sm"
-                            id="beparken_btn" th:name="button" th:value="beparken">
-                        <input hidden th:name="rateRes" th:value="0">Beparken</button>
+                    <a data-tooltip data-placement="bottom" title="Klicken Sie hier, wenn Sie auf dem Parkplatz parken">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                id="beparken_btn" th:name="button" th:value="beparken">
+                            <input hidden th:name="rateRes" th:value="0">Beparken</button>
+                    </a>
                 </td>
                 <td class="table_btn" id="freigeben_btn">
-                    <button disabled id="freigeben_btn2" type="button" class="btn btn-outline-secondary btn-sm"
-                            data-toggle="modal"
-                            data-target="#exampleModal" th:name="buttonFreigeben" th:value="freigebenRes">Freigeben</button>
+                    <a data-tooltip data-placement="bottom" title="Klicken Sie hier, wenn Sie den Parkplatz
+                        wieder verlassen haben">
+                        <button disabled id="freigeben_btn2" type="button" class="btn btn-outline-secondary btn-sm"
+                                data-toggle="modal"
+                                data-target="#exampleModal" th:name="buttonFreigeben" th:value="freigebenRes">Freigeben</button>
+                    </a>
                 </td>
             </tr>
             </tbody>
@@ -246,6 +256,10 @@
 </div>
 
 <script>
+    $(document).ready(function () {
+        $('[data-tooltip]').tooltip();
+    });
+
     $('.star-input').click(function () {
        $('#speichern').prop('disabled', false);
     });

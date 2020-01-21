@@ -116,7 +116,10 @@
             <button type="submit" th:name="button" th:value="1" class="btn btn-outline-secondary btn-lg" id="aufl_btn">Aufladen</button>
         </div>
         <div id="auszahlen">
-            <button type="submit" th:name="button" th:value="2" class="btn btn-outline-secondary btn-lg" id="auszahlen-btn">Auszahlen</button>
+            <a data-tooltip data-placement="right" title="Sie können sich einen Betrag nur auszahlen lassen,
+            wenn Sie über genügend Guthaben verfügen">
+                <button type="submit" th:name="button" th:value="2" class="btn btn-outline-secondary btn-lg" id="auszahlen-btn">Auszahlen</button>
+            </a>
         </div>
 
         <p id="too_much"></p>
@@ -134,6 +137,9 @@
 </div>
 </div>
 <script>
+    $(document).ready(function () {
+        $('[data-tooltip]').tooltip();
+    });
     /*
     $("#geld_input").focusout(function () {
        if((this).val()==null || ("#geld_input").val()<0){
