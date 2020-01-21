@@ -101,7 +101,7 @@
         </div>
 
         <div class="row input">
-            <div class="col">
+            <div class="col-6">
                 <input type="text" th:value="*{konsument.kennzeichen}" th:name="kennzeichen"
                        class="form-control" placeholder="Kennzeichen" id="kennzeichen">
             </div>
@@ -110,7 +110,7 @@
                 <input type="text" class="form-control" id="color" placeholder="Fahrzeugtyp">
             </div>
         -->
-            <div class="col">
+            <div class="col-3">
                 <select th:name="fahrzeugtyp" th:value="kleinwagen" class="form-control" id="fahrzeug_art">
                     <!--                        <option selected disabled>Fahrzeugtyp auswählen</option>-->
                     <option selected th:value="kleinwagen">Kleinwagen</option>
@@ -118,6 +118,17 @@
                     <option th:value="van">Van</option>
                     <option th:value="kombi">Kombi</option>
                 </select>
+            </div>
+            <!-- TODO Noch mit thymeleaf verbinden -->
+            <div class="col-3">
+                <a data-tooltip title="Wie viele Minuten vor Beginn ihrer Reservierung wollen Sie eine
+                    Erinnerungsmail erhalten?">
+                <select class="form-control " id="erinnerung">
+                    <option selected>15 Minuten</option>
+                    <option>30 Minuten</option>
+                    <option>45 Minute</option>
+                </select>
+                </a>
             </div>
         </div>
         <div class="container">
@@ -148,7 +159,16 @@
     </form>
 
 </div>
+<div class="tooltip bs-tooltip" role="tooltip">
+    <div class="arrow"></div>
+    <div class="tooltip-inner">
+        Some text Test!
+    </div>
+</div>
 <script>
+    $(document).ready(function () {
+       $('[data-tooltip]').tooltip();
+    });
     $(document).ready(function () {
         $('#nutzungs_art').change(function () {
             if ($(this).find('option:selected').text() == 'Anbieter') {
