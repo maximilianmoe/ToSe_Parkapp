@@ -2,33 +2,20 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.*;
 import de.g2p.ToSe_Parkapp.Repositories.*;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
-
 import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 @Controller
 public class ParkplatzController {
@@ -208,11 +195,13 @@ public class ParkplatzController {
                                    @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate
                                    , @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime,
                                    @Validated Reservierung reservierungValid, BindingResult result) throws ParseException {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
 
         String returnString = "testweiterleitung";
         Nutzer nutzer = findNutzer();
+//        Todo wenn Patrick reminder feld bei registrierung erstellt hat hier entkommentieren
+//        int reminder = nutzer.getErinnerung();
+        int reminder = 30;
 
         if (result.hasErrors()) {
             returnString = "special_parkingslot";
@@ -242,37 +231,27 @@ public class ParkplatzController {
                 Date endDateConv = convertDate(endDate);
                 endDateConv = datePlusOne(endDateConv);
                 System.out.println(endDateConv+" Datum +1");
-                //   Time endTimeConv = Time.valueOf(endTime);
                 reservierung.setEndeDatum(convertSql(endDateConv));
-//            java.sql.Date endDateSql = new java.sql.Date(endDateConv.getTime());
-//            reservierung.setEndeDatum(endDateSql);
                 reservierung.setEndTime(convertTime(endTime));
 
                 Date startDateConv = convertDate(startDate);
                 startDateConv = datePlusOne(startDateConv);
                 System.out.println(startDateConv+" Datum +1");
-//            Time startTimeConv = Time.valueOf(startTime);
                 reservierung.setStartDatum(convertSql(startDateConv));
-//            java.sql.Date startDateSql = new java.sql.Date(endDateConv.getTime());
-//            reservierung.setEndeDatum(startDateSql);
                 reservierung.setStartTime(convertTime(startTime));
 
                 Date reminderDate = endDateConv;
-//            Time reminderTime = endTimeConv;
-                parken.setErinnerungsdatum(convertSql(reminderDate));
-                //           parken.setErinnerungsZeit(convertSqlReminder(reminderTime));
 
-//            if(compareTime(currentTime, startTimeConv)) {
+                reservierung.setErinnerungDatum(convertSql(reminderDate));
+                reservierung.setErinnerungZeit(convertReminderTime(startTime, reminder));
+
+
 
                 //Saves all data in the database
-                parkenRepository.save(parken);
-                System.out.println("2");
                 reservierungenRepository.save(reservierung);
-                System.out.println("3");
+                System.out.println("reseriertung gesaved");
 
-//           TODO Übersichtsseite erstellen und den Namen hier ändern
                 returnString = "home";
-//            }else returnString = "error_page";    //TODO change errror_page to specific error_page for this content
             }
         }
         return returnString;
@@ -296,6 +275,7 @@ public class ParkplatzController {
     }
 
     //returns the Parkplatz after it is created
+
     @GetMapping("/mein_parkplatz")
     public String meinParkplatzGet(Model model) {
         Nutzer nutzer = findNutzer();
@@ -325,7 +305,6 @@ public class ParkplatzController {
         }
         return returnstring;
     }
-
     @PostMapping("/mein_parkplatz")
     public String meinParkplatzPost(@RequestParam("button") Integer button, @RequestParam("auswahl") String auswahl) {
 
@@ -403,6 +382,26 @@ public class ParkplatzController {
             return null;
         }
     }
+
+    private Time convertReminderTime(String time, int reminder) {
+
+        try {
+            SimpleDateFormat sdfToTime = new SimpleDateFormat("HH:mm");
+            long time1 =sdfToTime.parse(time).getTime();
+            Time t = new Time(time1);
+            Calendar c = Calendar.getInstance();
+            c.setTime(t);
+            c.add(Calendar.MINUTE, -reminder);
+            long time2 = c.getTime().getTime();
+            Time newTime = new Time(time2);
+            System.out.println(newTime + " neue Zeit nach reminer abzug");
+            return newTime;
+        } catch (ParseException ex2) {
+            ex2.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * This method converts a date, which are given as a String to the format of Date
      *
@@ -423,30 +422,12 @@ public class ParkplatzController {
     public java.sql.Date convertSql(Date date) {
 
         Calendar cal = Calendar.getInstance();
-        // remove next line if you're always using the current time.
         cal.setTime(date);
         java.sql.Date sqlDate = new java.sql.Date(cal.getTime().getTime());
         return sqlDate;
     }
 
-    public java.sql.Time convertSqlReminder(Time time) {
 
-        Calendar cal = Calendar.getInstance();
-        // remove next line if you're always using the current time.
-        cal.setTime(time);
-        cal.add(Calendar.MINUTE, -30);
-        java.sql.Time sqlTime = new java.sql.Time(cal.getTime().getTime());
-        return sqlTime;
-    }
-
-    public boolean compareTime(Time currentTime, Time startTime){
-        boolean returnBool;
-        int startInt = Integer.parseInt(startTime.toString());
-        int currentInt = Integer.parseInt(currentTime.toString());
-        returnBool= (startInt - 100) <= currentInt;
-
-        return returnBool;
-    }
     public java.util.Date datePlusOne(java.util.Date date){
         Calendar c = Calendar.getInstance();
         c.setTime(date);

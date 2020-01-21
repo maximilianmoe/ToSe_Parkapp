@@ -31,14 +31,16 @@ public class Reservierung {
     private Parkplatz pid;
 
     private Date startDatum;
-//    private Timestamp startZeit;
 
     private Date endeDatum;
-//    private Timestamp endeZeit;
+
+    private Date erinnerungDatum;
 
     private Time startTime;
 
     private Time endTime;
+
+    private Time erinnerungZeit;
 
     //wurde das Parken durch eine Reservierung ausgelöst?
     @Column(name = "REMARK")
@@ -46,7 +48,7 @@ public class Reservierung {
 
     private boolean beendet;
 
-    public Reservierung(Konsument kid, Parkplatz pid, Date startDatum,Timestamp startZeit, Date endeDatum,Timestamp endeZeit, Time startTime, Time endTime, boolean resZuParken, boolean beendet) {
+    public Reservierung(Konsument kid, Parkplatz pid, Date startDatum,Date erinnerungDatum, Date endeDatum,Time erinnerungZeit, Time startTime, Time endTime, boolean resZuParken, boolean beendet) {
         this.kid = kid;
         this.pid = pid;
         this.startDatum = startDatum;
@@ -55,6 +57,8 @@ public class Reservierung {
         this.endTime = endTime;
         this.resZuParken = resZuParken;
         this.beendet = beendet;
+        this.erinnerungDatum=erinnerungDatum;
+        this.erinnerungZeit=erinnerungZeit;
     }
 
     public Integer getPidInteger() {

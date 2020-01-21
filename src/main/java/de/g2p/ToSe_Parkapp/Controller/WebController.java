@@ -15,7 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
+import java.util.Scanner;
 
 @Controller
 public class WebController {
@@ -84,31 +89,6 @@ public class WebController {
         return "login";
     }
 
-//    @PostMapping("/login")
-//    public String loginPost(@RequestParam("username") String username) {
-//        List<Nutzer> nutzerList = nutzerRepository.findAll();
-//        String returnstring = "";
-//        System.out.println("Postmapping Login");
-//        boolean gesperrt = false;
-//        for (Nutzer nutzerFor : nutzerList) {
-//            if (nutzerFor.getBenutzername().equals(username)) {
-//                System.out.println(nutzerFor.getSperrung()+ "     getSperrung");
-//                if (nutzerFor.getSperrung()) {
-//                    System.out.println(nutzerFor.getBenutzername() +"    getBenutzername");
-//                    gesperrt = true;
-//                }
-//                break;
-//            }
-//        }
-//        System.out.println(gesperrt + "    gesperrt");
-//        if (gesperrt)
-//            returnstring = "/login?gesperrt";
-//        else
-//            returnstring = "home";
-//
-//        return returnstring;
-//    }
-
     //GetMapping for the logout page and redirect to the login form
     @GetMapping("/logout")
     public String logoutGet() {
@@ -150,12 +130,26 @@ public class WebController {
     @PostMapping("/passwordreset")
     public String resetPasswordPost(@RequestParam("emailaddresse") String emailaddress) {
 
-        /*TODO try convert a String into a HTML hyperlink so that the User ust has to click on it in the mail instead of copy and pasting the url. Following is a example how to do this...
-        String url = "stackoverflow.com/questions/ask";
-        String someVariable = "testUrl";
+//        TODO try convert a String into a HTML hyperlink so that the User ust has to click on it in the mail instead of copy and pasting the url. Following is a example how to do this...
+        /*String url = "localhost:8080/newpassword";
+        String someVariable = "Passwort zurücksetzten";
         Html entryLink = new Html("<a target=\"_blank\" href=\"" + url + "\">" + someVariable + "</a>");*/
 
+      /*  String resetLink;
+        URLConnection connection;
+        try {
+            connection =  new URL("localhost:8080/newpassword").openConnection();
+            Scanner scanner = new Scanner(connection.getInputStream());
+            scanner.useDelimiter("\\Z");
+            resetLink = scanner.next();
+            scanner.close();
+        }catch ( Exception ex ) {
+            ex.printStackTrace();
+        }*/
+
+
         MailService mailService = new MailService();
+//      TODO hier statt localhost noch Server IP
         String resetLink = "localhost:8080/newpassword";
         mailService.sendSimpleMessage(emailaddress, "Passwort zurücksetzten", "Bitte öffnen Sie auf folgenden Link, durch kopieren und einfügen im Browser, um Ihr Passwort zurückzusetzten: \n" + resetLink);
 
