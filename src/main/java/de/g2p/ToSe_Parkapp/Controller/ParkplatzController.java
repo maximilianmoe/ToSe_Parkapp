@@ -28,6 +28,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Controller
 public class ParkplatzController {
@@ -209,6 +210,7 @@ public class ParkplatzController {
                                    @Validated Reservierung reservierungValid, BindingResult result) throws ParseException {
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
         String returnString = "testweiterleitung";
         Nutzer nutzer = findNutzer();
 
@@ -441,6 +443,7 @@ public class ParkplatzController {
 
         return returnBool;
     }
+
 }
 
 

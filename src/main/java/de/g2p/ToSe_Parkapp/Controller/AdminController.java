@@ -8,6 +8,7 @@ import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.KonsumentRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ReservierungenRepository;
+import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,8 @@ public class AdminController {
 
     @Autowired
     ReservierungenRepository reservierungenRepository;
+
+    MailService mailService;
 
     @GetMapping("/adminseite")
     public String adminseite() {
@@ -79,6 +82,7 @@ public class AdminController {
             Konsument konsument = konsumentRepository.findByNid(nutzer);
             konsumentRepository.delete(konsument);
         }
+        mailService.sendSimpleMessage(nutzer.getEmailAdresse(),"Account gelöscht.", "Ihr Account wurde von einem Adminsitrator gelöscht.");
         nutzerRepository.delete(nutzer);
 
         return "nutzer_geloescht";
