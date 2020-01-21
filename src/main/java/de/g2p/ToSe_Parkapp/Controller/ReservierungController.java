@@ -8,14 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -32,6 +26,7 @@ public class ReservierungController {
     KonsumentRepository konsumentRepository;
     @Autowired
     ParkplatzRepository parkplatzRepository;
+
 
 
     @GetMapping("/meine_reservierungen")
@@ -228,4 +223,7 @@ public class ReservierungController {
         Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
         return nutzer;
     }
+
+
+
 }

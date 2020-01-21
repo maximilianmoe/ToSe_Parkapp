@@ -144,13 +144,13 @@
                 <td><span th:text="${reservierung.endTime}">Endzeit</span></td>
                 <td class="table_btn">
                     <button type="submit" class="btn btn-outline-secondary btn-sm"
-                            id="submit_btn" th:name="button" th:value="stornieren">
+                            id="stornieren_btn" th:name="button" th:value="stornieren">
                         <input hidden th:name="rateRes" th:value="0">Stornieren</button>
 
                 </td>
                 <td class="table_btn">
                     <button type="submit" class="btn btn-outline-secondary btn-sm"
-                            id="submit_btn" th:name="button" th:value="beparken">
+                            id="beparken_btn" th:name="button" th:value="beparken">
                         <input hidden th:name="rateRes" th:value="0">Beparken</button>
                 </td>
                 <td class="table_btn" id="freigeben_btn">
@@ -253,6 +253,8 @@
     $('#table1 td span').filter(function(){
         if($(this).text() == 'Ja') {
             $('#freigeben_btn2').prop('disabled', false);
+            $('#stornieren_btn').prop('disabled', true);
+            $('#beparken_btn').prop('disabled', true);
         }
     });
 </script>

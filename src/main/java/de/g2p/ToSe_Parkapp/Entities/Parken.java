@@ -35,20 +35,16 @@ public class Parken {
     @Column(name = "oeffentlich")
     private boolean oeffentlich;
 
-    private Date erinnerungsdatum;
-//    private Timestamp erinnerungsZeit;
 
 
     private boolean freigabe;
 
     public Parken(Konsument kid, Parkplatz pid, Date startDatum, Date endeDatum,
-                  Date erinnerungsDatum, Timestamp erinnerungsZeit, boolean freigabe) {
+                   boolean freigabe) {
         this.kid = kid;
         this.pid = pid;
         this.start = startDatum;
         this.ende = endeDatum;
-        this.erinnerungsdatum = erinnerungsDatum;
-//        this.erinnerungsZeit = erinnerungsZeit;
         this.freigabe = freigabe;
     }
 

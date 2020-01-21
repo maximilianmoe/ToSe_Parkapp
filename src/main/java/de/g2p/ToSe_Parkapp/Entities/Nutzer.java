@@ -34,6 +34,7 @@ public class Nutzer {
     private String passwort;
 
     private Integer saldo;
+    private Integer erinnerung;
 
     private String admin;
 
@@ -41,8 +42,9 @@ public class Nutzer {
 
     private String rolle;
 
+
     public Nutzer(String vorname, String nachname, String emailAdresse, String passwort,
-                  String admin, boolean sperrung, Integer saldo, String rolle, String benutzername) {
+                  String admin, boolean sperrung, Integer saldo, String rolle, String benutzername, int erinnerung) {
         this.vorname = vorname;
         this.nachname = nachname;
         this.emailAdresse = emailAdresse;
@@ -52,6 +54,7 @@ public class Nutzer {
         this.saldo = saldo;
         this.rolle = rolle;
         this.benutzername = benutzername;
+        this.erinnerung=erinnerung;
     }
 
     public Nutzer(String vorname, String nachname, String emailAdresse, String passwort, Integer saldo,

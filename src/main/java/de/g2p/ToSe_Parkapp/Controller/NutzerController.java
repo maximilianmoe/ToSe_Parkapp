@@ -109,7 +109,7 @@ public class NutzerController {
                 konsumentRepository.save(konsument);
             }
             nutzerRepository.save(nutzer);
-            mailService.sendSimpleMessage(email, "Registrierung erfolgreich", "Sie haben sich erfoglreich bei Good2Park registriert.\nSie können die Anwendung ab sofort verwenden.");
+            mailService.sendSimpleMessage(email, "Willkommen bei Good2Park!", "Sie haben sich erfoglreich bei Good2Park registriert.\nWir freuen uns Sie bei uns willkommen heißen zu dürfen.\nHier ein kleines Willkommensgeschenk:\nEin Betrunkener wankt nachts über den Parkplatz und tastet alle Autodächer ab.\n'Was machen Sie denn da?' fragt ein Passant.\n'Ich suche meinen Wagen', lallt der Betrunkene.\n'Ja, aber die Dächer sind doch alle gleich ... ?'\nDer Zecher: 'Auf meinem ist ein Blaulicht!'");
         }
 
             return "login";
