@@ -20,4 +20,9 @@ public interface ParkenRepository extends JpaRepository<Parken, Integer> {
     @Query(value = "update parken set freigabe = :freigabe where parkid = :parkid", nativeQuery = true)
     void updateFreigabe(@Param("freigabe") boolean freigabe, @Param("parkid") Integer parkid);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update parken set pid = :pid where parkid = :parkid", nativeQuery = true)
+    void updatePid(@Param("pid") Integer pid, @Param("parkid") Integer parkid);
+
 }

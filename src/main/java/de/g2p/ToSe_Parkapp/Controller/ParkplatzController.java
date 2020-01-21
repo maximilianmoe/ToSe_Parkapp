@@ -68,15 +68,18 @@ public class ParkplatzController {
 
         Anbieter aid = anbieterRepository.findByNid(findNutzer());
         parkplatz.setAnbieterId(aid);
-        parkplatz.setStatus("frei");
         parkplatz.setBewertung(0);
         parkplatz.setBewertungsanzahl(0);
         parkplatz.setGesamtbewertung(0);
 
         //Sets Parkplatz to private if the box for "privater Parkplatz" is checked
-        if (checked.contains("1"))
+        if (checked.contains("1")) {
             parkplatz.setPrivat(true);
+            anbieterRepository.updateParkplatz(true, aid.getAid());
+            parkplatz.setStatus("fremdbelegt");
+        }
         else if (checked.contains("2")) {
+            parkplatz.setStatus("frei");
             parkplatz.setPrivat(false);
             parkplatz.setZeitbegrenzung(0);
             parkplatz.setParkgebuehr(0);
@@ -87,9 +90,9 @@ public class ParkplatzController {
         if (fahrzeugtyp.contains("on"))
             parkplatz.setFahrzeugtyp(fahrzeugtyp);
 
+
         //Saves all data in the database
         parkplatzRepository.saveAndFlush(parkplatz);
-        anbieterRepository.updateParkplatz(true, aid.getAid());
         anbieterRepository.updatePid(parkplatz.getPid(), aid.getAid());
         return "mein_parkplatz";
     }
@@ -114,7 +117,7 @@ public class ParkplatzController {
         String status = "frei";
         if (belegt.contains("fremdbelegt")) {
             status = "fremdbelegt";
-            returnstring = "parkplaetze_medialist";
+            returnstring = "home";
 
         }
         else if (belegt.contains("belegt")) {
@@ -259,7 +262,8 @@ public class ParkplatzController {
 //            if(compareTime(currentTime, startTimeConv)) {
 
                 //Saves all data in the database
-                parkenRepository.save(parken);
+//                TODO Erinnerung in Reservierung speichern
+                //parkenRepository.save(parken);
                 System.out.println("2");
                 reservierungenRepository.save(reservierung);
                 System.out.println("3");
@@ -302,18 +306,28 @@ public class ParkplatzController {
             model.addAttribute("parkplatz", parkplatz);
             returnstring = "mein_parkplatz";
             Reservierung reservierung = null;
+            List<Parken> parkenList = parkenRepository.findAll();
             reservierung = reservierungenRepository.findByPid(parkplatz);
             List<Konsument> konsumenten = konsumentRepository.findAll();
             for (Konsument konsumentFor : konsumenten){
                 if (reservierung != null) {
                     if (konsumentFor == reservierung.getKid()) {
                         model.addAttribute("reservierung", 0);
-                        System.out.println("reservierung = 0");
+                        System.out.println("reservierung = 0 bei Reservierung");
                     }
                 } else {
                     model.addAttribute("reservierung", null);
-                    System.out.println("reservierung = null");
-
+                    System.out.println("reservierung = null bei Reservierung");
+                }
+            }
+            for (Parken parkenFor : parkenList) {
+                if (parkenFor.getPid() == parkplatz) {
+                    model.addAttribute("reservierung", 0);
+                    System.out.println("reservierung = 0 bei Parken");
+                }
+                else {
+                    model.addAttribute("reservierung", null);
+                    System.out.println("reservierung = null bei Parken");
                 }
             }
         }
@@ -321,7 +335,7 @@ public class ParkplatzController {
     }
 
     @PostMapping("/mein_parkplatz")
-    public String meinParkplatzPost(@RequestParam("button") Integer button, @RequestParam("auswahl") String auswahl) {
+    public String meinParkplatzPost(@RequestParam("auswahl") String auswahl) {
 
         Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
         Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
@@ -337,6 +351,7 @@ public class ParkplatzController {
         else if (auswahl.contains("fremdbelegt")) {
             status = "fremdbelegt";
         }
+        System.out.println(status);
         parkplatzRepository.updateStatus(status, parkplatz.getPid());
 
         return "home";
