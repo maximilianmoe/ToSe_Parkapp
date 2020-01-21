@@ -11,7 +11,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 @SpringBootApplication
-@EnableJpaRepositories
 @EnableScheduling
 public class ToSeParkappApplication extends SpringBootServletInitializer {
 
