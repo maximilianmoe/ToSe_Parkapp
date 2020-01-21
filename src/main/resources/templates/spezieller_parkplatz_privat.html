@@ -194,9 +194,21 @@
                 </div>
             </div>
         </form>
+        <!--
         <div class="card-footer" id="farbe">
             <small class="text-muted"></small>
         </div>
+        -->
+        <div th:if="${parkplatz.status} == 'frei'" class="card-footer" id="green_square">
+            <small class="text-muted"></small>
+        </div>
+        <div th:if="${parkplatz.status} == 'belegt'" class="card-footer" id="red_square">
+            <small class="text-muted"></small>
+        </div>
+        <div th:if="${parkplatz.status} == 'fremdbelegt'" class="card-footer" id="orange_square">
+            <small class="text-muted"></small>
+        </div>
+
     </div>
 </div>
 
@@ -225,6 +237,7 @@
     */
 
     $(document).ready(function () {
+        /*
         $('#question').change(function () {
             if ($(this).find('option:selected').text() == 'Nein!') {
                 $('#mail').prop('disabled', true);
@@ -258,6 +271,7 @@
                 $(".card-footer").attr('id', 'red_square');
             }
         });
+        */
         var check1 = 0;
         var check2 = 0;
         var check3 = 0;
