@@ -217,10 +217,10 @@ public class ParkplatzController {
         if (result.hasErrors()) {
             returnString = "special_parkingslot";
         } else {
-            Time currentTime = Time.valueOf(LocalTime.now());
-            Date currentDate = new Date();
-            System.out.println(startDate);
-            System.out.println(startTime);
+            System.out.println(startDate+" anfangsstartdatum");
+            System.out.println(startTime+" anfangsstartzeit");
+            System.out.println(endDate+" anfangsenddatum");
+            System.out.println(endTime+" anfangsendzeit");
 
 
             if (nutzer.getSaldo() < parkplatz.getParkgebuehr()) {
@@ -240,6 +240,8 @@ public class ParkplatzController {
                 endTime = endTime.substring(0, 5);
 
                 Date endDateConv = convertDate(endDate);
+                endDateConv = datePlusOne(endDateConv);
+                System.out.println(endDateConv+" Datum +1");
                 //   Time endTimeConv = Time.valueOf(endTime);
                 reservierung.setEndeDatum(convertSql(endDateConv));
 //            java.sql.Date endDateSql = new java.sql.Date(endDateConv.getTime());
@@ -247,6 +249,8 @@ public class ParkplatzController {
                 reservierung.setEndTime(convertTime(endTime));
 
                 Date startDateConv = convertDate(startDate);
+                startDateConv = datePlusOne(startDateConv);
+                System.out.println(startDateConv+" Datum +1");
 //            Time startTimeConv = Time.valueOf(startTime);
                 reservierung.setStartDatum(convertSql(startDateConv));
 //            java.sql.Date startDateSql = new java.sql.Date(endDateConv.getTime());
@@ -442,6 +446,13 @@ public class ParkplatzController {
         returnBool= (startInt - 100) <= currentInt;
 
         return returnBool;
+    }
+    public java.util.Date datePlusOne(java.util.Date date){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, 1);
+        java.util.Date newDate = c.getTime();
+        return newDate;
     }
 
 }
