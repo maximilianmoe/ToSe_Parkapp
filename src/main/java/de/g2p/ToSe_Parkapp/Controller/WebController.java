@@ -158,7 +158,7 @@ public class WebController {
         MailService mailService = new MailService();
 //      TODO hier statt localhost noch Server IP
         String resetLink = "localhost:8080/newpassword";
-        mailService.sendSimpleMessage(emailaddress, "Passwort zurücksetzten", "Bitte öffnen Sie auf folgenden Link, durch kopieren und einfügen im Browser, um Ihr Passwort zurückzusetzten: \n" + resetLink);
+        mailService.sendSimpleMessage(emailaddress, "Passwort zurücksetzten", "Bitte öffnen Sie folgenden Link, durch kopieren und einfügen im Browser, um Ihr Passwort zurückzusetzten: \n" + resetLink);
 
         return "email_bestaetigt";
     }

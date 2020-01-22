@@ -107,7 +107,7 @@ public class ParkplatzController {
             anbieterRepository.updateParkplatz(true, aid.getAid());
             anbieterRepository.updatePid(parkplatz.getPid(), aid.getAid());
             parkplatz.setStatus("frei");
-            returnstring="mein_parkplatz_oeffentlich";
+            returnstring="mein_parkplatz";
             model.addAttribute("parkplatz", parkplatz);
         }
         else if (checked.contains("2")) {
@@ -117,7 +117,7 @@ public class ParkplatzController {
             parkplatz.setZeitbegrenzung(0);
             parkplatz.setParkgebuehr(0);
             parkplatz.setStrafgebuehr(0);
-            returnstring="mein_parkplatz";
+            returnstring="mein_parkplatz_oeffentlich";
         }
 
         //Saves all data in the database
