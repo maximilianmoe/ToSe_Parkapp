@@ -198,9 +198,6 @@ public class ParkplatzController {
                                    @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate
                                    , @RequestParam("startZeit") String startTime, @RequestParam("endeZeit") String endTime,
                                    @Validated Reservierung reservierungValid, BindingResult result) throws ParseException {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        String returnString = "testweiterleitung";
 
 
         String returnString;

@@ -49,13 +49,15 @@ public class NutzerController {
     public String addUser(@ModelAttribute Nutzer nutzer, @ModelAttribute Konsument konsument,
                           @ModelAttribute Anbieter anbieter, @RequestParam("nutzertyp") String nutzertyp,
                           @RequestParam("fahrzeugtyp") String fahrzeugtyp, @RequestParam("email") String email,
-                          @RequestParam("username") String benutzername, @RequestParam("passwort") String passwort, @RequestParam("erinnerungszeit") String reminder) {
+                          @RequestParam("username") String benutzername, @RequestParam("passwort") String passwort,
+                          @RequestParam("erinnerungszeit") String reminder, Model model) {
 
         boolean duplicate = nutzerRepository.findByBenutzername(benutzername).isPresent();
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         if (duplicate) {
             //TODO add this to the hmtl page
+            model.addAttribute("duplicate", 0);
             System.out.println("Duplicate Nutzer");
             return "registrieren";
         }
