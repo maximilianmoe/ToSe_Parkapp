@@ -4,6 +4,7 @@
 <head>
     <title>Öffentlicher Parkplatz</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -109,6 +110,18 @@
             text-align: center;
             margin: 30px;
         }
+
+        .img-div{
+            text-align: center;
+            height: 400px;
+        }
+
+
+        #main-img{
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -117,7 +130,10 @@
 <div class="container">
     <form th:action="@{/spezieller_parkplatz_öffentlich}" method="post" modelattribute="parkplatz">
     <div class="card mb-3">
-        <img th:src="@{images/parkplatz3.jpg}">
+        <div class="img-div">
+            <img id="main-img" th:src="@{images/parkplatz3.jpg}">
+        </div>
+
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
 
 <!--        <form action="#" th:action="@{/special_parkingslot/{id}" method="post">-->
@@ -186,7 +202,7 @@
             <div class="button">
 
                     <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn1"
-                            th:name="pid" th:value="${parkplatz.pid}" disabled>Bestätigen</button>
+                            th:name="pid" th:value="${parkplatz.pid}">Bestätigen</button>
 
             </div>
         </div>
@@ -197,8 +213,15 @@
             </h6>
         </div>
 <!--        </form>-->
-<!--        TODO farbe sollte immer anzeigen, ob ein parkplatz reserviert ist oder nicht-->
+<!--        TODO farbe sollte immer anzeigen, ob ein parkplatz reserviert ist oder nicht
         <div class="card-footer" id="farbe">
+            <small class="text-muted"></small>
+        </div>
+    -->
+        <div th:if="${parkplatz.status} == 'frei'" class="card-footer" id="orange_square">
+            <small class="text-muted"></small>
+        </div>
+        <div th:if="${parkplatz.status} == 'belegt'" class="card-footer" id="red_square">
             <small class="text-muted"></small>
         </div>
     </div>
@@ -224,7 +247,7 @@
         ---> YESSSS!!
         ---> Jetzt auch gelöst!
     */
-
+/*
     $(document).ready(function () {
         $('#belegt').change(function () {
             if ($(this).find('option:selected').text() == 'Ist der Parkplatz aktuell belegt?') {
@@ -236,7 +259,7 @@
             /*
             if ($(this).find('option:selected').text() ==
                 'Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden') {
-            */
+
             if ($(this).find('option:selected').text() == 'Der Parkplatz ist aktuell frei, aber könnte auch demnächst wieder belegt werden') {
                 $(".card-footer").attr('id', 'orange_square');
                 $('#btn1').prop('disabled', false);
@@ -252,6 +275,7 @@
         var check3 = 0;
         var count = 0;
     });
+*/
 </script>
 </body>
 

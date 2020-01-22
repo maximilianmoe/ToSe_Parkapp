@@ -4,6 +4,7 @@
 <head>
     <title>Privater Parkplatz</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -31,6 +32,19 @@
             background-color: red;
             text-align: center;
         }
+
+        .img-div{
+            text-align: center;
+            height: 400px;
+        }
+
+
+        #main-img{
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+
 
         .hintergrund_bild {
             width: 100%;
@@ -86,6 +100,9 @@
             text-align: center;
             color: lightslategray;
         }
+        .card-img-top{
+            height: 65%;
+        }
     </style>
 </head>
 
@@ -100,10 +117,17 @@
 -->
 <div class="container">
     <div class="card mb-3">
-        <img th:src="@{images/parkplatz3.jpg}">
+
+            <div class="img-div">
+                <img class="card-img-top" id="main-img" th:src="@{images/parkplatz3.jpg}">
+            </div>
+
+        <!--
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
+        -->
 
         <form action="#" th:action="@{/special_parkingslot}"  method="post" onsubmit="openModal()" id="myForm">
+
             <div class="card-body">
                 <h5 class="card-title">
                     <p>
@@ -181,8 +205,11 @@
                 </div>
 
                 <div class="container">
-                    <h6 id="reminder">Sie erhalten automatisch 30 Minuten vor ihrem Reservierungsbeginn eine
-                        Erinnerungsmail!</h6>
+                   <!-- <h6 id="reminder">
+                        <span>Sie erhalten automatisch </span>
+                        <span th:text="${nutzer.erinnerung}"></span>
+                        <span> Minuten vor ihrem Reservierungsbeginn eine Erinnerungsmail!</span>
+                    </h6>-->
                     <h6 id="red_text">Sie können einen Parkplatz maximal 1 Stunde im voraus reservieren!</h6>
                 </div>
             </div>
@@ -194,9 +221,21 @@
                 </div>
             </div>
         </form>
+        <!--
         <div class="card-footer" id="farbe">
             <small class="text-muted"></small>
         </div>
+        -->
+        <div th:if="${parkplatz.status} == 'frei'" class="card-footer" id="green_square">
+            <small class="text-muted"></small>
+        </div>
+        <div th:if="${parkplatz.status} == 'belegt'" class="card-footer" id="red_square">
+            <small class="text-muted"></small>
+        </div>
+        <div th:if="${parkplatz.status} == 'fremdbelegt'" class="card-footer" id="orange_square">
+            <small class="text-muted"></small>
+        </div>
+
     </div>
 </div>
 
@@ -225,6 +264,7 @@
     */
 
     $(document).ready(function () {
+        /*
         $('#question').change(function () {
             if ($(this).find('option:selected').text() == 'Nein!') {
                 $('#mail').prop('disabled', true);
@@ -258,6 +298,7 @@
                 $(".card-footer").attr('id', 'red_square');
             }
         });
+        */
         var check1 = 0;
         var check2 = 0;
         var check3 = 0;

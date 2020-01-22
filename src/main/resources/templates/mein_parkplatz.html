@@ -4,6 +4,7 @@
 <head>
     <title>Mein Parkplatz</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -87,6 +88,18 @@
         .card-footer{
             height: 50px;
         }
+
+        .img-div{
+            text-align: center;
+            height: 400px;
+        }
+
+
+        #main-img{
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -95,7 +108,12 @@
  <div class="container">
     <form th:action="@{/mein_parkplatz}" method="post">
     <div class="card mb-3">
+        <!--
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
+        -->
+        <div class="img-div">
+            <img id="main-img" th:src="@{images/parkplatz3.jpg}">
+        </div>
         <div class="card-body">
             <h5 class="card-title">
                 <p>
@@ -181,9 +199,20 @@
                 </div>
             </div>
         </form>
+        <!--
         <div class="card-footer" id="farbe">
             <small class="text-muted"></small>
-<!--            TODO change how the picture is displayed (like in spezieller_Parkplatz)-->
+           TODO change how the picture is displayed (like in spezieller_Parkplatz)
+        </div>
+-->
+        <div th:if="${parkplatz.status} == 'frei'" class="card-footer" id="green_square">
+            <small class="text-muted"></small>
+        </div>
+        <div th:if="${parkplatz.status} == 'belegt'" class="card-footer" id="red_square">
+            <small class="text-muted"></small>
+        </div>
+        <div th:if="${parkplatz.status} == 'fremdbelegt'" class="card-footer" id="orange_square">
+            <small class="text-muted"></small>
         </div>
     </form>
 </div>
@@ -207,7 +236,7 @@
         ---> YESSSS!!
         ---> Jetzt auch gelöst!
     */
-
+/*
     $(document).ready(function () {
         $('#belegt').change(function () {
             if ($(this).find('option:selected').text() == 'Der Parkplatz ist frei') {
@@ -224,6 +253,7 @@
             }
         });
     });
+*/
 </script>
 </body>
 

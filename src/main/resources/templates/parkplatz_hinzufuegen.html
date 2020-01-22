@@ -4,6 +4,7 @@
 <head>
     <title>Parkplatz hinzufügen</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -166,8 +167,10 @@
                 </div>
             </div>
             <div class="col">
-                <input type="number" th:name="zeitbegrenzung" class="form-control"
-                       placeholder="Parkhöchstdauer in Min (MAX 999)" min="0" max="999" id="parkhoechstdauer">
+                <a data-tooltip title="Maximal 10.000 Minuten möglich">
+                    <input type="number" th:name="zeitbegrenzung" class="form-control"
+                       placeholder="Parkhöchstdauer in Minuten" min="0" max="10000" id="parkhoechstdauer">
+                </a>
             </div>
         </div>
         <div class="row" id="row">
@@ -201,6 +204,9 @@
     </form>
 </div>
 <script type="text/javascript">
+    $(document).ready(function () {
+        $('[data-tooltip]').tooltip();
+    });
     /*
     Folgende Funktion sorgt dafür das, wenn ein Öffentlicher Parkplatz hinzugefügt wird,
     die Eingabefelder für {Parkgebühr; Strafgebühr; Parkhöchstdauer} deaktiviert/ausgegraut werden.

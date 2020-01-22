@@ -1,11 +1,14 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
+import de.g2p.ToSe_Parkapp.Entities.Reservierung;
 import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
+import de.g2p.ToSe_Parkapp.Repositories.ReservierungenRepository;
 import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,8 +22,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
-import java.util.Scanner;
+import java.sql.Time;
+import java.util.*;
 
 @Controller
 public class WebController {
@@ -31,6 +34,10 @@ public class WebController {
     AnbieterRepository anbieterRepository;
     @Autowired
     ParkplatzRepository parkplatzRepository;
+    @Autowired
+    ReservierungenRepository reservierungenRepository;
+
+    MailService mailService;
 
     //GetMapping for the homepage for IP-Adress (or localhost) only
     @GetMapping("/")
@@ -193,6 +200,28 @@ public class WebController {
             returnString = "error_page";
         }
         return returnString;
+    }
+
+    @Scheduled(fixedRate = 60000)
+    public void erinnerungSchedule(){
+        TimeZone timeZone;
+        timeZone = TimeZone.getTimeZone("GMT+1:00");
+        TimeZone.setDefault(timeZone);
+        Nutzer nutzer = findNutzer();
+        List<Reservierung> reservierungen = reservierungenRepository.findAll();
+        String email;
+
+        Calendar c = Calendar.getInstance();
+        c.setTimeZone(timeZone);
+        Time currentTime = new Time(c.getTime().getTime());
+
+        for (Reservierung reservierung:reservierungen) {
+            email = nutzer.getEmailAdresse();
+         if (reservierung.getErinnerungZeit() == currentTime) {
+             mailService.sendSimpleMessage(email, "Erinnerung", "Sie müssen Ihren reservierten Parkplatz in der von Ihnen eingestellten Zeit ab jetzt beparken.");
+         }
+        }
+
     }
 
 

@@ -49,7 +49,7 @@ public class NutzerController {
     public String addUser(@ModelAttribute Nutzer nutzer, @ModelAttribute Konsument konsument,
                           @ModelAttribute Anbieter anbieter, @RequestParam("nutzertyp") String nutzertyp,
                           @RequestParam("fahrzeugtyp") String fahrzeugtyp, @RequestParam("email") String email,
-                          @RequestParam("username") String benutzername, @RequestParam("passwort") String passwort) {
+                          @RequestParam("username") String benutzername, @RequestParam("passwort") String passwort, @RequestParam("erinnerungszeit") String reminder) {
 
         boolean duplicate = nutzerRepository.findByBenutzername(benutzername).isPresent();
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -67,6 +67,14 @@ public class NutzerController {
             nutzer.setBenutzername(benutzername);
             nutzer.setPasswort(bCryptPasswordEncoder.encode(passwort));
             System.out.println(nutzer.getPasswort());
+
+            if (reminder.contains("15")){
+                nutzer.setErinnerung(15);
+            }else if (reminder.contains("30")){
+                nutzer.setErinnerung(30);
+            }else if (reminder.contains("45")){
+                nutzer.setErinnerung(45);
+            }
 
             //Set all values for Anbieter
             if (nutzertyp.contains("anbieter")) {

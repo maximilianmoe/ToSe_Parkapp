@@ -4,6 +4,7 @@
 <head>
     <title>Registrieren</title>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -101,16 +102,18 @@
         </div>
 
         <div class="row input">
-            <div class="col">
+            <div class="col-6">
+                <a data-tooltip title="Bitte in folgendem Format: PA-XY-1234">
                 <input type="text" th:value="*{konsument.kennzeichen}" th:name="kennzeichen"
                        class="form-control" placeholder="Kennzeichen" id="kennzeichen">
+                </a>
             </div>
             <!--
             <div class="col">
                 <input type="text" class="form-control" id="color" placeholder="Fahrzeugtyp">
             </div>
         -->
-            <div class="col">
+            <div class="col-3">
                 <select th:name="fahrzeugtyp" th:value="kleinwagen" class="form-control" id="fahrzeug_art">
                     <!--                        <option selected disabled>Fahrzeugtyp auswählen</option>-->
                     <option selected th:value="kleinwagen">Kleinwagen</option>
@@ -118,6 +121,17 @@
                     <option th:value="van">Van</option>
                     <option th:value="kombi">Kombi</option>
                 </select>
+            </div>
+            <!-- TODO Noch mit thymeleaf verbinden -->
+            <div class="col-3">
+                <a data-tooltip title="Wie viele Minuten vor Beginn ihrer Reservierung wollen Sie eine
+                    Erinnerungsmail erhalten?">
+                <select th:name="erinnerungszeit" class="form-control " id="erinnerung">
+                    <option selected th:value="15">15 Minuten</option>
+                    <option th:value="30">30 Minuten </option>
+                    <option th:value="45">45 Minute</option>
+                </select>
+                </a>
             </div>
         </div>
         <div class="container">
@@ -148,7 +162,16 @@
     </form>
 
 </div>
+<div class="tooltip bs-tooltip" role="tooltip">
+    <div class="arrow"></div>
+    <div class="tooltip-inner">
+        Some text Test!
+    </div>
+</div>
 <script>
+    $(document).ready(function () {
+       $('[data-tooltip]').tooltip();
+    });
     $(document).ready(function () {
         $('#nutzungs_art').change(function () {
             if ($(this).find('option:selected').text() == 'Anbieter') {

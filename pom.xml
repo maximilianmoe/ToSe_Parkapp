@@ -16,7 +16,7 @@
 	<description>Implementierung der Parkapp</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>13</java.version>
 	</properties>
 
 	<dependencies>
@@ -88,6 +88,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>goodtopark</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

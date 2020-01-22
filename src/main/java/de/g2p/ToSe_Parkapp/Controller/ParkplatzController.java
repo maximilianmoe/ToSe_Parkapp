@@ -201,10 +201,11 @@ public class ParkplatzController {
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         String returnString = "testweiterleitung";
+
+
+        String returnString;
         Nutzer nutzer = findNutzer();
-//        Todo wenn Patrick reminder feld bei registrierung erstellt hat hier entkommentieren
-//        int reminder = nutzer.getErinnerung();
-        int reminder = 30;
+
 
         if (result.hasErrors()) {
             returnString = "special_parkingslot";
@@ -235,18 +236,18 @@ public class ParkplatzController {
                 endDateConv = datePlusOne(endDateConv);
                 System.out.println(endDateConv+" Datum +1");
                 reservierung.setEndeDatum(convertSql(endDateConv));
-                reservierung.setEndTime(convertTime(endTime));
+                reservierung.setEndTime(timePlusOne(convertTime(endTime)));
 
                 Date startDateConv = convertDate(startDate);
                 startDateConv = datePlusOne(startDateConv);
                 System.out.println(startDateConv+" Datum +1");
                 reservierung.setStartDatum(convertSql(startDateConv));
-                reservierung.setStartTime(convertTime(startTime));
+                reservierung.setStartTime(timePlusOne(convertTime(startTime)));
 
                 Date reminderDate = endDateConv;
 
                 reservierung.setErinnerungDatum(convertSql(reminderDate));
-                reservierung.setErinnerungZeit(convertReminderTime(startTime, reminder));
+                reservierung.setErinnerungZeit(convertReminderTime(startTime, nutzer.getErinnerung()));
 
 
 
@@ -405,6 +406,7 @@ public class ParkplatzController {
             Time t = new Time(time1);
             Calendar c = Calendar.getInstance();
             c.setTime(t);
+            c.add(Calendar.HOUR, 1);
             c.add(Calendar.MINUTE, -reminder);
             long time2 = c.getTime().getTime();
             Time newTime = new Time(time2);
@@ -448,6 +450,14 @@ public class ParkplatzController {
         c.add(Calendar.DATE, 1);
         java.util.Date newDate = c.getTime();
         return newDate;
+    }
+    public Time timePlusOne(Time time){
+        Calendar c = Calendar.getInstance();
+        c.setTime(time);
+        c.add(Calendar.HOUR, 1);
+        long time2 = c.getTime().getTime();
+        Time newTime = new Time(time2);
+        return newTime;
     }
 
 }
