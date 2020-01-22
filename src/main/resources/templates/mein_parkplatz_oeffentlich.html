@@ -169,38 +169,38 @@
             </div>
             </div>
         </div>
-        <form th:action="@{/mein_parkplatz}" method="post">
-            <select class="form-control" id="belegt" th:name="auswahl">
-                <option selected disabled>Ist der Parkplatz aktuell belegt?</option>
-                <option th:value="frei">Der Parkplatz ist frei</option>
-                <option th:value="fremdbelegt">Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden</option>
-                <option th:value="belegt">Ich belege den Parkplatz</option>
-            </select>
-            <div id="reg">
+<!--        <form th:action="@{/mein_parkplatz}" method="post">-->
+<!--            <select class="form-control" id="belegt" th:name="auswahl">-->
+<!--                <option selected disabled>Ist der Parkplatz aktuell belegt?</option>-->
+<!--                <option th:value="frei">Der Parkplatz ist frei</option>-->
+<!--                <option th:value="fremdbelegt">Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden</option>-->
+<!--                <option th:value="belegt">Ich belege den Parkplatz</option>-->
+<!--            </select>-->
+<!--            <div id="reg">-->
 <!--                TODO Button muss disabled sein, bis eine auswahl im dropdown getroffen wurde-->
-                <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
-                    Bestätigen</button>
-            </div>
-        </form>
+<!--                <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">-->
+<!--                    Bestätigen</button>-->
+<!--            </div>-->
+<!--        </form>-->
 
-        <form th:action="@{/parkplatz_entfernen}" method="post">
-            <div th:unless="${reservierung} == 0">
-                <div id="question" >
-                    <h5 id="h_5">Wollen sie ihren Parkplatz wieder entfernen?</h5>
-                </div>
-                <div id="reg">
-                    <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
-                        Parkplatz dauerhaft entfernen</button>
-    <!--                TODO add a PopUp and ask if the user really wants do delete the Parkplatz
-                            and add the form above to the "yes" button -> erst nach den tests-->
-                </div>
-            </div>
-            <div th:if="${reservierung} == 0">
-                <div>
-                    <h5 id="h_5">Sie können ihren Parkplatz nicht entfernen, da er noch reserviert ist.</h5>
-                </div>
-            </div>
-        </form>
+<!--        <form th:action="@{/parkplatz_entfernen}" method="post">-->
+<!--            <div th:unless="${reservierung} == 0">-->
+<!--                <div id="question" >-->
+<!--                    <h5 id="h_5">Wollen sie ihren Parkplatz wieder entfernen?</h5>-->
+<!--                </div>-->
+<!--                <div id="reg">-->
+<!--                    <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">-->
+<!--                        Parkplatz dauerhaft entfernen</button>-->
+<!--    &lt;!&ndash;                TODO add a PopUp and ask if the user really wants do delete the Parkplatz-->
+<!--                            and add the form above to the "yes" button -> erst nach den tests&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div th:if="${reservierung} == 0">-->
+<!--                <div>-->
+<!--                    <h5 id="h_5">Sie können ihren Parkplatz nicht entfernen, da er noch reserviert ist.</h5>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
         <!--
         <div class="card-footer" id="farbe">
             <small class="text-muted"></small>

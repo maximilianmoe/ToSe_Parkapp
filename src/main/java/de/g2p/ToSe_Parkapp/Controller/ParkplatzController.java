@@ -35,6 +35,42 @@ public class ParkplatzController {
 
     Parkplatz parkplatz;
 
+    @GetMapping("/mein_parkplatz_oeffentlich")
+    public String meinOeffentlichGet() {
+        return "mein_parkplatz_oeffentlich";
+    }
+
+    @GetMapping("/parkplatz_hinzufuegen_oeffentlich")
+    public String addOeffentlichGet(Model model) {
+        Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
+        model.addAttribute("parkplatz", new Parkplatz());
+        return "parkplatz_hinzufuegen_oeffentlich";
+    }
+
+    @PostMapping("/parkplatz_hinzufuegen_oeffentlich")
+    public String addOeffentlichPost(@ModelAttribute Parkplatz parkplatz, @RequestParam("fahrzeugtyp") String fahrzeugtyp,
+                                     Model model) {
+
+        parkplatz.setBewertung(0);
+        parkplatz.setBewertungsanzahl(0);
+        parkplatz.setGesamtbewertung(0);
+        parkplatz.setAnbieterId(null);
+        parkplatz.setStatus("fremdbelegt");
+        parkplatz.setPrivat(false);
+        parkplatz.setZeitbegrenzung(0);
+        parkplatz.setParkgebuehr(0);
+        parkplatz.setStrafgebuehr(0);
+
+        if (fahrzeugtyp.contains("on"))
+            parkplatz.setFahrzeugtyp(fahrzeugtyp);
+
+        parkplatzRepository.saveAndFlush(parkplatz);
+
+        model.addAttribute("parkplatz", parkplatz);
+
+        return "mein_parkplatz_oeffentlich";
+    }
+
     @GetMapping("/parkplatz_hinzufuegen")
     public String add(Model model) {
         Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
@@ -52,37 +88,41 @@ public class ParkplatzController {
     @PostMapping("/parkplatz_hinzufuegen")
     public String addParkplatz(@ModelAttribute Parkplatz parkplatz,
                                @RequestParam("parkplatzChecked") String checked,
-                               @RequestParam("fahrzeugtyp") String fahrzeugtyp) {
+                               @RequestParam("fahrzeugtyp") String fahrzeugtyp, Model model) {
 
+        String returnstring = "";
         Anbieter aid = anbieterRepository.findByNid(findNutzer());
-        parkplatz.setAnbieterId(aid);
         parkplatz.setBewertung(0);
         parkplatz.setBewertungsanzahl(0);
         parkplatz.setGesamtbewertung(0);
-
-        //Sets Parkplatz to private if the box for "privater Parkplatz" is checked
-        if (checked.contains("1")) {
-            parkplatz.setPrivat(true);
-            anbieterRepository.updateParkplatz(true, aid.getAid());
-            parkplatz.setStatus("fremdbelegt");
-        }
-        else if (checked.contains("2")) {
-            parkplatz.setStatus("frei");
-            parkplatz.setPrivat(false);
-            parkplatz.setZeitbegrenzung(0);
-            parkplatz.setParkgebuehr(0);
-            parkplatz.setStrafgebuehr(0);
-        }
 
         //Sets Fahrzeugtyp if box is checked
         if (fahrzeugtyp.contains("on"))
             parkplatz.setFahrzeugtyp(fahrzeugtyp);
 
+        //Sets Parkplatz to private if the box for "privater Parkplatz" is checked
+        if (checked.contains("1")) {
+            parkplatz.setAnbieterId(aid);
+            parkplatz.setPrivat(true);
+            anbieterRepository.updateParkplatz(true, aid.getAid());
+            anbieterRepository.updatePid(parkplatz.getPid(), aid.getAid());
+            parkplatz.setStatus("frei");
+            returnstring="mein_parkplatz_oeffentlich";
+            model.addAttribute("parkplatz", parkplatz);
+        }
+        else if (checked.contains("2")) {
+            parkplatz.setAnbieterId(null);
+            parkplatz.setStatus("fremdbelegt");
+            parkplatz.setPrivat(false);
+            parkplatz.setZeitbegrenzung(0);
+            parkplatz.setParkgebuehr(0);
+            parkplatz.setStrafgebuehr(0);
+            returnstring="mein_parkplatz";
+        }
 
         //Saves all data in the database
         parkplatzRepository.saveAndFlush(parkplatz);
-        anbieterRepository.updatePid(parkplatz.getPid(), aid.getAid());
-        return "mein_parkplatz";
+        return returnstring;
     }
 
 
