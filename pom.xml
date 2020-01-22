@@ -86,7 +86,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>goodtopark</finalName>
+		<finalName>good2park</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
