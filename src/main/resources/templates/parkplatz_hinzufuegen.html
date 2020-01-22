@@ -149,23 +149,23 @@
             <div class="col">
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input required type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="SUV">SUV
+                        <input type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="SUV">SUV
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input required type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp"
+                        <input type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp"
                                th:value="Kleinwagen">Kleinwagen
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input required type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="Van">Van
+                        <input type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="Van">Van
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input required type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="Kombi">Kombi
+                        <input type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="Kombi">Kombi
                     </label>
                 </div>
             </div>
@@ -255,7 +255,7 @@
         Dieser wird wieder aktiviert sobald genügend Zeichen entfernt wurden.
     */
     $(document).ready(function () {
-        $('#parkhoechstdauer').focusout(function () {
+        $('#beschreibung').focusout(function () {
            checked = $("input[type=checkbox]:checked").length;
                 if(!checked){
                     alert("Sie müssen mindestens einen Fahrzeugtyp auswählen");
