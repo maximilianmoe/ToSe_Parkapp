@@ -273,13 +273,15 @@ public class ParkplatzController {
                 endDateConv = datePlusOne(endDateConv);
                 System.out.println(endDateConv+" Datum +1");
                 reservierung.setEndeDatum(convertSql(endDateConv));
-                reservierung.setEndTime(timePlusOne(convertTime(endTime)));
+                //reservierung.setEndTime(timePlusOne(convertTime(endTime)));
+                reservierung.setEndTime(convertTime(endTime));
 
                 Date startDateConv = convertDate(startDate);
                 startDateConv = datePlusOne(startDateConv);
                 System.out.println(startDateConv+" Datum +1");
                 reservierung.setStartDatum(convertSql(startDateConv));
-                reservierung.setStartTime(timePlusOne(convertTime(startTime)));
+                //reservierung.setStartTime(timePlusOne(convertTime(startTime)));
+                reservierung.setStartTime(convertTime(startTime));
 
                 Date reminderDate = endDateConv;
 
@@ -488,6 +490,7 @@ public class ParkplatzController {
         java.util.Date newDate = c.getTime();
         return newDate;
     }
+    /*
     public Time timePlusOne(Time time){
         Calendar c = Calendar.getInstance();
         c.setTime(time);
@@ -496,6 +499,7 @@ public class ParkplatzController {
         Time newTime = new Time(time2);
         return newTime;
     }
+     */
 
 }
 
