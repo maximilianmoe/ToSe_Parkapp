@@ -61,6 +61,9 @@
             */
             color: red;
         }
+        #red_text2{
+            color: red;
+        }
     </style>
 </head>
 
@@ -71,7 +74,7 @@
     <form action="#" th:action="@{/parkplatz_hinzufuegen}" method="post">
         <div class="row" id="row1">
             <div class="col">
-                <input id="plz" onchange="plzregex();" type="text" th:value="*{parkplatz.plz}" th:name="plz" class="form-control" placeholder="PLZ">
+                <input required id="plz" onchange="plzregex();" type="text" th:value="*{parkplatz.plz}" th:name="plz" class="form-control" placeholder="PLZ">
             </div>
             <!--
         <div class="col">
@@ -79,11 +82,11 @@
         </div>
     -->
             <div class="col-4">
-                <input type="text" th:value="*{parkplatz.strasse}" th:name="strasse" class="form-control"
+                <input required type="text" th:value="*{parkplatz.strasse}" th:name="strasse" class="form-control"
                        placeholder="Straße" maxlength="30">
             </div>
             <div class="col-2">
-                <input type="number" th:value="*{parkplatz.hausnummer}" th:name="hausnummer" class="form-control"
+                <input required type="number" th:value="*{parkplatz.hausnummer}" th:name="hausnummer" class="form-control"
                        placeholder="Hausnummer" min="0" max="999">
             </div>
         </div>
@@ -121,7 +124,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">EUR</span>
                     </div>
-                    <input type="number" th:value="*{parkplatz.parkgebuehr}" name="parkgebuehr" class="form-control"
+                    <input required type="number" th:value="*{parkplatz.parkgebuehr}" name="parkgebuehr" class="form-control"
                            aria-label="Amount (to the nearest dollar)" placeholder="Parkgebühr" id="parkgebuehr" min="0" max="999999">
                     <div class="input-group-append">
                         <span class="input-group-text">.00</span>
@@ -133,7 +136,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">EUR</span>
                     </div>
-                    <input type="number" th:value="*{parkplatz.strafgebuehr}" name="strafgebuehr"
+                    <input required type="number" th:value="*{parkplatz.strafgebuehr}" name="strafgebuehr"
                            class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Strafgebühr"
                            id="strafgebuehr" min="0" max="999999">
                     <div class="input-group-append">
@@ -146,29 +149,29 @@
             <div class="col">
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="SUV">SUV
+                        <input required type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="SUV">SUV
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp"
+                        <input required type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp"
                                th:value="Kleinwagen">Kleinwagen
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="Van">Van
+                        <input required type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="Van">Van
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="Kombi">Kombi
+                        <input required type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="Kombi">Kombi
                     </label>
                 </div>
             </div>
             <div class="col">
                 <a data-tooltip title="Maximal 10.000 Minuten möglich">
-                    <input type="number" th:name="zeitbegrenzung" class="form-control"
+                    <input required type="number" th:name="zeitbegrenzung" class="form-control"
                        placeholder="Parkhöchstdauer in Minuten" min="0" max="10000" id="parkhoechstdauer">
                 </a>
             </div>
@@ -179,7 +182,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Beschreibung</span>
                     </div>
-                    <textarea class="form-control" th:value="*{parkplatz.beschreibung}" name="beschreibung"
+                    <textarea required class="form-control" th:value="*{parkplatz.beschreibung}" name="beschreibung"
                               id="beschreibung" aria-label="With textarea"
                               placeholder="Limitiert auf 255 Zeichen"></textarea>
                 </div>
@@ -198,6 +201,9 @@
                 <span id="red_text"></span>
             </div>
         </div>
+        <div class="row">
+            <span id="red_text"></span>
+        </div>
         <div id="reg">
             <button type="submit" class="btn btn-outline-secondary btn-lg" id="submit">Parkplatz hinzufügen</button>
         </div>
@@ -206,6 +212,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('[data-tooltip]').tooltip();
+        $('.check-test').click(function () {
+            $('#submit').prop('disabled', false);
+        });
     });
     /*
     Folgende Funktion sorgt dafür das, wenn ein Öffentlicher Parkplatz hinzugefügt wird,
@@ -246,6 +255,19 @@
         Dieser wird wieder aktiviert sobald genügend Zeichen entfernt wurden.
     */
     $(document).ready(function () {
+        $('#parkhoechstdauer').focusout(function () {
+           checked = $("input[type=checkbox]:checked").length;
+                if(!checked){
+                    alert("Sie müssen mindestens einen Fahrzeugtyp auswählen");
+                    $('#submit').prop('disabled', true);
+                    return false;
+                }
+                else{
+                    $('#submit').prop('disabled', false);
+                }
+        });
+
+
         var len = 0;
         var maxchar = 255;
 
