@@ -185,7 +185,7 @@
                 </div>
                 <div class="col">
                     <h6>Enddatum:</h6>
-                    <input type="date" id="date2" th:name="endeDatum" class="form-control">
+                    <input type="date" id="date2" th:name="endeDatum" class="form-control" >
                     <span id="popup2"></span>
                 </div>
             </div>
@@ -263,7 +263,14 @@
         ---> Jetzt auch gelöst!
     */
 
+    $('#date1').focusout(function () {
+        var selected_date = $('#date1').val();
+        $('#date2').val(selected_date);
+    });
+
     $(document).ready(function () {
+
+
         /*
         $('#question').change(function () {
             if ($(this).find('option:selected').text() == 'Nein!') {
