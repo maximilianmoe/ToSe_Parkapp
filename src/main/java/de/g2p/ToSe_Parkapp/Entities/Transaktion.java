@@ -23,6 +23,7 @@ public class Transaktion {
     private Konsument kid;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "aid")
     private Anbieter aid;
 
     private double betrag;
@@ -39,8 +40,10 @@ public class Transaktion {
     @JoinColumn(name = "pid")
     private Parkplatz pid;
 
+    private boolean abgeschlossen;
+
     public Transaktion(Konsument kid, Anbieter aid, double betrag, boolean gebuehr, Date datum, Parken parkid,
-                       Parkplatz pid) {
+                       Parkplatz pid, boolean abgeschlossen) {
         this.kid = kid;
         this.aid = aid;
         this.betrag = betrag;
@@ -48,5 +51,6 @@ public class Transaktion {
         this.datum = datum;
         this.parkid = parkid;
         this.pid = pid;
+        this.abgeschlossen = abgeschlossen;
     }
 }

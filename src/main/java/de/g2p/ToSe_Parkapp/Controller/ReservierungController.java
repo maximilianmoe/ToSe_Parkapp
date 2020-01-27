@@ -26,6 +26,8 @@ public class ReservierungController {
     KonsumentRepository konsumentRepository;
     @Autowired
     ParkplatzRepository parkplatzRepository;
+    @Autowired
+    TransaktionRepository transaktionRepository;
 
 
 
@@ -89,6 +91,52 @@ public class ReservierungController {
         return "meine_reservierungen";
     }
 
+    @PostMapping("/sterneParken")
+    public String sterneParkenPost(@RequestParam("rateRes") Integer starsRes, @RequestParam("button") String button) {
+        String returnstring = "";
+        Konsument konsument = konsumentRepository.findByNid(findNutzer());
+        List<Parken> parkenList = parkenRepository.findAll();
+        List<Parken> parkens = new ArrayList<>();
+        Parken parkenOeffentlich = null;
+        Parken parkenPrivat = null;
+
+        for (Parken parken1 : parkenList) {
+            if (!parken1.isFreigabe()) {
+                if (konsument.getKidKonsument() == parken1.getKid()) {
+                    System.out.println(parken1.getKid() + "    kid parken1");
+                    assert false;
+                    parkens.add(parken1);
+                }
+                System.out.println(parkens.toString());
+            }
+        }
+        if (button.contains("freigebenSpeichernParken") || button.contains("freigebenZurueckParken")) {
+            for (Parken parken1 : parkens) {
+                if (parken1.getOeffentlich()) {
+                    System.out.println("parken Öffentlich");
+                    parkenOeffentlich = parken1;
+                }
+            }
+            assert parkenOeffentlich != null;
+            Parkplatz parkplatzPark = parkplatzRepository.findByPid(parkenOeffentlich.getPidParkplatz());
+            System.out.println("freigebenSpeichern FreigebenZurueck IfSchleife Parken");
+            if (button.contains("freigebenSpeichernParken")) {
+                System.out.println(starsRes + "     starsRes Parken");
+                System.out.println("freigebenSpeichernParken If Schleife");
+                Integer gesamtbewertung = parkplatzPark.getGesamtbewertung()+starsRes;
+                Integer bewertungsanzahl = parkplatzPark.getBewertungsanzahl() + 1;
+                Integer bewertung = (gesamtbewertung)/bewertungsanzahl;
+                parkplatzRepository.updateBewertung(bewertung, bewertungsanzahl, gesamtbewertung, parkplatzPark.getPid());
+            }
+            returnstring = "home";
+            assert false;
+            parkenRepository.updateFreigabe(true, parkenOeffentlich.getParkid());
+            parkplatzRepository.updateStatus("frei", parkplatzPark.getPid());
+            konsumentRepository.updatebelegt(false, konsument.getKid());
+        }
+        return returnstring;
+    }
+
     @PostMapping("/meine_reservierungen")
     public String reservierungenPost(@RequestParam("rateRes") Integer starsRes,
                                      @RequestParam("button") String button) throws InterruptedException {
@@ -117,9 +165,59 @@ public class ReservierungController {
                     reservierung = reservierungFor;
         }
 
+        //Stornieren
+        if (button.contains("stornieren")) {
+            System.out.println("stornieren");
+            returnstring = "home";
+            konsumentRepository.updateReserviert(false, konsument.getKid());
+            reservierungenRepository.updateBeendet(true, reservierung.getRid());
+
+        }
+
+        //beparken
+        else if (button.contains("beparken")) {
+            System.out.println("beparken");
+
+            if (konsument.getBelegt()){
+                returnstring = "error_bereits_belegt";
+            } else {
+                Transaktion transaktion = new Transaktion();
+                Parkplatz parkplatz = reservierung.getPid();
+                returnstring = "home";
+                //TODO die aktuelle zeit muss bei setStart eingefügt werden
+                LocalDateTime ldt = LocalDateTime.now();
+                Parken parkenSave = new Parken();
+                //parkenSave.setStart(ldt);
+                parkenSave.setPid(reservierung.getPid());
+                parkenSave.setEnde(null);
+                parkenSave.setKid(konsument);
+                //transaktion.setAid(parkplatz.getAnbieterId());
+                transaktion.setAid(null);
+                transaktion.setBetrag(parkplatz.getParkgebuehr());
+                transaktion.setGebuehr(false);
+                transaktion.setKid(konsument);
+                transaktion.setPid(parkplatz);
+                //TODO muss noch gesetzt werden
+                transaktion.setParkid(null);
+                reservierungenRepository.updateResZuParken(true, reservierung.getRid());
+                konsumentRepository.updatebelegt(true, konsument.getKid());
+                parkenRepository.saveAndFlush(parkenSave);
+                parkplatzRepository.updateStatus("belegt", reservierung.getPidInteger());
+                transaktionRepository.save(transaktion);
+            }
+        }
+
         //Freigabe Res
-        if (button.contains("freigebenSpeichernRes") || button.contains("freigebenZurueckRes")) {
+        else if (button.contains("freigebenSpeichernRes") || button.contains("freigebenZurueckRes")) {
+            List<Transaktion> transaktionList = transaktionRepository.findAll();
+            Transaktion transaktion = null;
+            for (Transaktion transaktionFor : transaktionList) {
+                if (transaktionFor.getKid() == konsument)
+                    if (!transaktionFor.isAbgeschlossen())
+                        transaktion = transaktionFor;
+            }
             Parkplatz parkplatzRes = parkplatzRepository.findByPid(reservierung.getPidInteger());
+            Double betrag = 0.0;
             for (Parken parken1 : parkens)
                 if (!parken1.isFreigabe()) {
                     if (!parken1.getOeffentlich()) {
@@ -136,81 +234,32 @@ public class ReservierungController {
                 System.out.println(bewertung+"     bewertung");
                 parkplatzRepository.updateBewertung(bewertung, bewertungsanzahl, gesamtbewertung, parkplatzRes.getPid());
             }
+
+            if (!transaktion.isAbgeschlossen())
+                //TODO abprüfen ob die aktuelle Zeit größer ist als das enddatum der Reservierung
+                if (true) {
+                    double betragT = transaktion.getBetrag();
+                    double betragP = parkplatzRes.getStrafgebuehr();
+                    System.out.println(betragP+" Betrag Parkplatz strafgebühr");
+                    System.out.println(betragT+" Betrag Transaktion parkgebühr");
+                    betrag = betragP + betragT;
+                    System.out.println(betrag+" Gesamtbetrag");
+                    transaktionRepository.updateGebuehr(true, betrag, transaktion.getTid());
+                    System.out.println(transaktion.getTid()+"   TID transaktion");
+
+                }
+
             returnstring = "home";
             assert parkenPrivat != null;
+            transaktionRepository.updateAbgeschlossen(true, transaktion.getTid());
             konsumentRepository.updatebelegt(false, konsument.getKid());
             konsumentRepository.updateReserviert(false, konsument.getKid());
             parkenRepository.updateFreigabe(true, parkenPrivat.getParkid());
             reservierungenRepository.updateBeendet(true, reservierung.getRid());
             parkplatzRepository.updateStatus("frei", parkplatzRes.getPid());
         }
-        //Freigabe Parken
-        if (button.contains("freigebenSpeichernParken") || button.contains("freigebenZurueckParken")) {
-            for (Parken parken1 : parkens) {
-                if (parken1.getOeffentlich()) {
-                    System.out.println("parken Öffentlich");
-                    parkenOeffentlich = parken1;
-                }
-            }
-            assert parkenOeffentlich != null;
-            Parkplatz parkplatzPark = parkplatzRepository.findByPid(parkenOeffentlich.getPidParkplatz());
-            System.out.println("freigebenSpeichern FreigebenZurueck IfSchleife Parken");
-            if (button.contains("freigebenSpeichernParken")) {
-                System.out.println(starsRes + "     starsRes Parken");
-                System.out.println("freigebenSpeichernParken If Schleife");
-                Integer gesamtbewertung = parkplatzPark.getGesamtbewertung()+starsRes;
-                Integer bewertungsanzahl = parkplatzPark.getBewertungsanzahl() + 1;
-                Integer bewertung = (gesamtbewertung)/bewertungsanzahl;
-                parkplatzRepository.updateBewertung(bewertung, bewertungsanzahl, gesamtbewertung, parkplatzPark.getPid());
-            }
-            returnstring = "home";
-            assert parkenPrivat != null;
-            parkenRepository.updateFreigabe(true, parkenOeffentlich.getParkid());
-            parkplatzRepository.updateStatus("frei", parkplatzPark.getPid());
-        }
-
-        //Stornieren
-        else if (button.contains("stornieren")) {
-            System.out.println("stornieren");
-            returnstring = "home";
-            konsumentRepository.updateReserviert(false, konsument.getKid());
-            reservierungenRepository.updateBeendet(true, reservierung.getRid());
-
-        }
-
-        //beparken
-        else if (button.contains("beparken")) {
-            System.out.println("beparken");
-
-            if (konsument.getBelegt()){
-                returnstring = "error_bereits_belegt";
-            } else {
-                returnstring = "home";
-                //TODO die aktuelle zeit muss bei setStart eingefügt werden
-                LocalDateTime ldt = LocalDateTime.now();
-                Parken parkenSave = new Parken();
-                //parkenSave.setStart(ldt);
-                parkenSave.setPid(reservierung.getPid());
-                parkenSave.setEnde(null);
-                parkenSave.setKid(konsument);
-                reservierungenRepository.updateResZuParken(true, reservierung.getRid());
-                konsumentRepository.updatebelegt(true, konsument.getKid());
-                parkenRepository.saveAndFlush(parkenSave);
-                parkplatzRepository.updateStatus("belegt", reservierung.getPidInteger());
-            }
-        }
         return returnstring;
     }
-
-
-
-    /**
-     * This method converts a date and a time, which are given as a String to the format of date
-     *
-     * param date date which is given as a String
-     * param time time which is given as a String
-     * @return date which includes date and time
-     */
 
     public Nutzer findNutzer() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

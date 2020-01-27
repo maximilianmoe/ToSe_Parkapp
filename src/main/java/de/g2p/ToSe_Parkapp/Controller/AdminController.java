@@ -1,13 +1,7 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
-import de.g2p.ToSe_Parkapp.Entities.Anbieter;
-import de.g2p.ToSe_Parkapp.Entities.Konsument;
-import de.g2p.ToSe_Parkapp.Entities.Nutzer;
-import de.g2p.ToSe_Parkapp.Entities.Reservierung;
-import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
-import de.g2p.ToSe_Parkapp.Repositories.KonsumentRepository;
-import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
-import de.g2p.ToSe_Parkapp.Repositories.ReservierungenRepository;
+import de.g2p.ToSe_Parkapp.Entities.*;
+import de.g2p.ToSe_Parkapp.Repositories.*;
 import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,11 +26,15 @@ public class AdminController {
 
     @Autowired
     ReservierungenRepository reservierungenRepository;
+    @Autowired
+    TransaktionRepository transaktionRepository;
 
     MailService mailService;
 
     @GetMapping("/adminseite")
-    public String adminseite() {
+    public String adminseite(Model model) {
+        Integer gesamtvolumen = transaktionRepository.getGesamtvolumen();
+        model.addAttribute("gesamtvolumen", gesamtvolumen);
         return "adminseite";
     }
 
@@ -120,7 +118,9 @@ public class AdminController {
     }
 
     @GetMapping("/admin_vergangene_transaktionen")
-    public String adminTrans() {
+    public String adminTrans(Model model) {
+        List<Transaktion> transaktionList = transaktionRepository.findAll();
+        model.addAttribute("transaktionen", transaktionList);
         return "admin_vergangene_transaktionen";
     }
 }

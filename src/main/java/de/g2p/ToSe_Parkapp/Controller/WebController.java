@@ -202,27 +202,27 @@ public class WebController {
         return returnString;
     }
 
-    @Scheduled(fixedRate = 60000)
-    public void erinnerungSchedule(){
-        TimeZone timeZone;
-        timeZone = TimeZone.getTimeZone("GMT+1:00");
-        TimeZone.setDefault(timeZone);
-        Nutzer nutzer = findNutzer();
-        List<Reservierung> reservierungen = reservierungenRepository.findAll();
-        String email;
-
-        Calendar c = Calendar.getInstance();
-        c.setTimeZone(timeZone);
-        Time currentTime = new Time(c.getTime().getTime());
-
-        for (Reservierung reservierung:reservierungen) {
-            email = nutzer.getEmailAdresse();
-         if (reservierung.getErinnerungZeit() == currentTime) {
-             mailService.sendSimpleMessage(email, "Erinnerung", "Sie müssen Ihren reservierten Parkplatz in der von Ihnen eingestellten Zeit ab jetzt beparken.");
-         }
-        }
-
-    }
+//    @Scheduled(fixedRate = 60000)
+//    public void erinnerungSchedule(){
+//        TimeZone timeZone;
+//        timeZone = TimeZone.getTimeZone("GMT+1:00");
+//        TimeZone.setDefault(timeZone);
+//        Nutzer nutzer = findNutzer();
+//        List<Reservierung> reservierungen = reservierungenRepository.findAll();
+//        String email;
+//
+//        Calendar c = Calendar.getInstance();
+//        c.setTimeZone(timeZone);
+//        Time currentTime = new Time(c.getTime().getTime());
+//
+//        for (Reservierung reservierung:reservierungen) {
+//            email = nutzer.getEmailAdresse();
+//         if (reservierung.getErinnerungZeit() == currentTime) {
+//             mailService.sendSimpleMessage(email, "Erinnerung", "Sie müssen Ihren reservierten Parkplatz in der von Ihnen eingestellten Zeit ab jetzt beparken.");
+//         }
+//        }
+//
+//    }
 
 
 }

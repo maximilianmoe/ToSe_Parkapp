@@ -40,66 +40,46 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">Reservierungs-ID</th>
-                <th scope="col">Nuzer-ID</th>
+                <th scope="col">Transaktions-ID</th>
+                <th scope="col">Konsument-ID</th>
+<!--                <th scope="col">Anbieter-ID</th>-->
+                <th scope="col">betrag</th>
+                <th scope="col">Gebühr</th>
+                <th scope="col">Datum</th>
+                <th scope="col">Park-ID</th>
                 <th scope="col">Parkplatz-ID</th>
-                <th scope="col">Ort</th>
-                <th scope="col">Anfangs-Datum</th>
-                <th scope="col">Anfangs-Zeit</th>
-                <th scope="col">End-Datum</th>
-                <th scope="col">End-Datum</th>
+                <th scope="col">abgeschlossen</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>12</td>
-                <td>2</td>
-                <td>Passau</td>
-                <td>10.01.2020</td>
-                <td>10:00</td>
-                <td>10.01.2020</td>
-                <td>13:00</td>
+            <tr th:if="${transaktionen} == 0">
+                <td colspan="9"> <h5>Es existieren keine Transaktionen</h5></td>
             </tr>
-            <tr>
-                <td>5</td>
-                <td>23</td>
-                <td>3</td>
-                <td>München</td>
-                <td>15.01.2020</td>
-                <td>12:00</td>
-                <td>15.01.2020</td>
-                <td>17:00</td>
-            </tr>
-            <tr>
-                <td>20</td>
-                <td>33</td>
-                <td>27</td>
-                <td>Linz</td>
-                <td>20.01.2020</td>
-                <td>15:00</td>
-                <td>21.01.2020</td>
-                <td>18:00</td>
-            </tr>
-            <tr>
-                <td>24</td>
-                <td>32</td>
-                <td>32</td>
-                <td>Freising</td>
-                <td>25.01.2020</td>
-                <td>18:00</td>
-                <td>26.01.2020</td>
-                <td>18:00</td>
-            </tr>
-            <tr>
-                <td>34</td>
-                <td>44</td>
-                <td>42</td>
-                <td>Ulm</td>
-                <td>29.01.2020</td>
-                <td>14:00</td>
-                <td>29.01.2020</td>
-                <td>21:00</td>
+            <tr th:unless="${transaktionen} == 0" th:each="transaktion : ${transaktionen}">
+                <td><span th:text="${transaktion.rid}">Transaktions-ID</span></td>
+                <td><span th:text="${transaktion.kid}">Konsumenten-ID</span></td>
+<!--                <td><span th:text="${transaktion.aid}">Anbieter-ID</span></td>-->
+                <td><span th:text="${transaktion.betrag}">Betrag</span></td>
+                <td>
+                    <div th:if="${transaktion.gebuehr} == true">
+                        <span>Park- und Strafgebühr</span>
+                    </div>
+                    <div th:unless="${transaktion.gebuehr} == true">
+                        <span>Parkgebühr</span>
+                    </div>
+                </td>
+                <td><span th:text="${transaktion.datum}">Datum</span></td>
+                <td><span th:text="${transaktion.parkid}">Park-ID</span></td>
+                <td><span th:text="${transaktion.pid}">Parkplatz-ID</span></td>
+                <td>
+                    <div th:if="${transaktion.abgeschlossen} == true">
+                        <span>Ja</span>
+                    </div>
+                    <div th:unless="${transaktion.abgeschlossen} == true">
+                        <span>Nein</span>
+                    </div>
+                </td>
+
             </tr>
             </tbody>
         </table>
