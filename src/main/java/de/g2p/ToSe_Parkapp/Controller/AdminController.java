@@ -17,17 +17,16 @@ public class AdminController {
 
     @Autowired
     NutzerRepository nutzerRepository;
-
     @Autowired
     AnbieterRepository anbieterRepository;
-
     @Autowired
     KonsumentRepository konsumentRepository;
-
     @Autowired
     ReservierungenRepository reservierungenRepository;
     @Autowired
     TransaktionRepository transaktionRepository;
+    @Autowired
+    ParkplatzRepository parkplatzRepository;
 
     MailService mailService;
 
@@ -69,12 +68,17 @@ public class AdminController {
             System.out.println("Rolle beides");
             Anbieter anbieter = anbieterRepository.findByNid(nutzer);
             Konsument konsument = konsumentRepository.findByNid(nutzer);
+            Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
             konsumentRepository.delete(konsument);
             anbieterRepository.delete(anbieter);
+            parkplatzRepository.delete(parkplatz);
+
         } else if (nutzer.getRolle().equalsIgnoreCase("anbieter")) {
             System.out.println("rolle anbieter");
             Anbieter anbieter = anbieterRepository.findByNid(nutzer);
+            Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
             anbieterRepository.delete(anbieter);
+            parkplatzRepository.delete(parkplatz);
         } else if (nutzer.getRolle().equalsIgnoreCase("konsument")) {
             System.out.println("rolle konsument");
             Konsument konsument = konsumentRepository.findByNid(nutzer);

@@ -330,19 +330,12 @@
                         -->
                     </div>
                 </div>
-                <div class="modal-footer" th:unless="${parken} == 0">
+                <div class="modal-footer" >
                     <button type="submit" class="btn btn-secondary" th:name="button" th:value="freigebenZurueckParken" data-dismiss="modal">Zurück</button>
                     <!--
                     <button disabled id="speichern" type="submit" class="btn btn-primary" th:name="button" th:value="freigebenSpeichernRes">Speichern</button>
                     -->
                     <button disabled id="speichern2" type="submit" class="btn btn-outline-secondary" th:name="button" th:value="freigebenSpeichernParken">Speichern</button>
-                </div>
-                <div class="modal-footer" th:if="${parken} == 0">
-                    <button type="submit" class="btn btn-secondary" th:name="button" th:value="freigebenZurueckRes" data-dismiss="modal">Zurück</button>
-                    <!--
-                    <button disabled id="speichern" type="submit" class="btn btn-primary" th:name="button" th:value="freigebenSpeichernRes">Speichern</button>
-                    -->
-                    <button disabled id="speichern3" type="submit" class="btn btn-outline-secondary" th:name="button" th:value="freigebenSpeichernRes">Speichern</button>
                 </div>
             </div>
         </div>
