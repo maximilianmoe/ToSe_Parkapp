@@ -217,7 +217,7 @@ public class ReservierungController {
                         transaktion = transaktionFor;
             }
             Parkplatz parkplatzRes = parkplatzRepository.findByPid(reservierung.getPidInteger());
-            Double betrag = 0.0;
+            Integer betrag = 0;
             for (Parken parken1 : parkens)
                 if (!parken1.isFreigabe()) {
                     if (!parken1.getOeffentlich()) {
@@ -238,8 +238,8 @@ public class ReservierungController {
             if (!transaktion.isAbgeschlossen())
                 //TODO abprüfen ob die aktuelle Zeit größer ist als das enddatum der Reservierung
                 if (true) {
-                    double betragT = transaktion.getBetrag();
-                    double betragP = parkplatzRes.getStrafgebuehr();
+                    Integer betragT = transaktion.getBetrag();
+                    Integer betragP = parkplatzRes.getStrafgebuehr();
                     System.out.println(betragP+" Betrag Parkplatz strafgebühr");
                     System.out.println(betragT+" Betrag Transaktion parkgebühr");
                     betrag = betragP + betragT;
@@ -252,6 +252,12 @@ public class ReservierungController {
             returnstring = "home";
             assert parkenPrivat != null;
             transaktionRepository.updateAbgeschlossen(true, transaktion.getTid());
+            Nutzer nutzer = konsument.getNid();
+            Integer saldoAktuell = nutzer.getSaldo();
+            nutzerRepository.updateSaldo( (saldoAktuell-transaktion.getBetrag()),konsument.getNid().getNid() );
+            Nutzer nutzerAnbieter = nutzerRepository.findByNid(parkplatzRes.getAnbieterId().getNid().getNid());
+            Integer saldoAnbieter = nutzerAnbieter.getSaldo();
+            nutzerRepository.updateSaldo((saldoAnbieter+transaktion.getBetrag()),nutzerAnbieter.getNid());
             konsumentRepository.updatebelegt(false, konsument.getKid());
             konsumentRepository.updateReserviert(false, konsument.getKid());
             parkenRepository.updateFreigabe(true, parkenPrivat.getParkid());

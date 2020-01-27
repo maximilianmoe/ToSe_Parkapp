@@ -18,7 +18,7 @@ public interface TransaktionRepository extends JpaRepository<Transaktion, Intege
     @Transactional
     @Modifying
     @Query(value = "update transaktion set gebuehr = :gebuehr, betrag = :betrag  where tid = :tid", nativeQuery = true)
-    void updateGebuehr(@Param("gebuehr") boolean gebuehr,@Param("betrag") double betrag, @Param("tid") Integer tid);
+    void updateGebuehr(@Param("gebuehr") boolean gebuehr,@Param("betrag") Integer betrag, @Param("tid") Integer tid);
 
     @Transactional
     @Modifying

@@ -26,7 +26,7 @@ public class Transaktion {
     @JoinColumn(name = "aid")
     private Anbieter aid;
 
-    private double betrag;
+    private Integer betrag;
 
     private boolean gebuehr;
 
@@ -42,7 +42,7 @@ public class Transaktion {
 
     private boolean abgeschlossen;
 
-    public Transaktion(Konsument kid, Anbieter aid, double betrag, boolean gebuehr, Date datum, Parken parkid,
+    public Transaktion(Konsument kid, Anbieter aid, Integer betrag, boolean gebuehr, Date datum, Parken parkid,
                        Parkplatz pid, boolean abgeschlossen) {
         this.kid = kid;
         this.aid = aid;
