@@ -92,7 +92,7 @@ public class ReservierungController {
     }
 
     @PostMapping("/sterneParken")
-    public String sterneParkenPost(@RequestParam("rateRes") Integer starsRes, @RequestParam("button") String button) {
+    public String sterneParkenPost(@RequestParam("sterne") Integer starsRes, @RequestParam("button") String button) {
         String returnstring = "";
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
         List<Parken> parkenList = parkenRepository.findAll();

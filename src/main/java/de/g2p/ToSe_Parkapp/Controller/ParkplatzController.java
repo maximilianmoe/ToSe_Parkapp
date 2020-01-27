@@ -330,9 +330,14 @@ public class ParkplatzController {
             Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieterRepository.findByNid(nutzer.getNidNutzer()));
             model.addAttribute("parkplatz", parkplatz);
             returnstring = "mein_parkplatz";
-            Reservierung reservierung = null;
             List<Parken> parkenList = parkenRepository.findAll();
-            reservierung = reservierungenRepository.findByPid(parkplatz);
+            Reservierung reservierung = null;
+            List<Reservierung> reservierungList = reservierungenRepository.findAll();
+            for (Reservierung reservierungFor : reservierungList) {
+                if (reservierungFor.getPid().getPid() == parkplatz.getPid())
+                    if (!reservierungFor.isBeendet())
+                        reservierung = reservierungFor;
+            }
             List<Konsument> konsumenten = konsumentRepository.findAll();
             for (Konsument konsumentFor : konsumenten){
                 if (reservierung != null) {
