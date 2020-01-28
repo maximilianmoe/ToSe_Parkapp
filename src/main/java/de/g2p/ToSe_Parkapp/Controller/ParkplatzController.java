@@ -2,6 +2,7 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.*;
 import de.g2p.ToSe_Parkapp.Repositories.*;
+import de.g2p.ToSe_Parkapp.Service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -422,6 +425,25 @@ public class ParkplatzController {
         Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
         return nutzer;
     }
+
+    //picture upload controller
+    @PostMapping("/uploadImage")
+    public String uploadImage(@RequestParam("imageFile") MultipartFile imageFile ){
+        String returnValue ="";
+        try {
+            ImageService.saveImage(imageFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnValue = "error";
+        }
+
+
+        return returnValue;
+    }
+
+
+
+
 
     /**
      * This method converts a time, which are given as a String to the format of Time

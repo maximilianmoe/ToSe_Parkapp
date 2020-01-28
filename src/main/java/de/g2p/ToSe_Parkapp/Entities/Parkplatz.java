@@ -18,6 +18,7 @@ public class Parkplatz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="pid")
     private Integer pid;
 
     @Column(name = "FTYP")
