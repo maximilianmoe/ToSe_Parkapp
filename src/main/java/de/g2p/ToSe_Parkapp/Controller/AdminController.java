@@ -27,6 +27,8 @@ public class AdminController {
     TransaktionRepository transaktionRepository;
     @Autowired
     ParkplatzRepository parkplatzRepository;
+    @Autowired
+    HistorieRepository historieRepository;
 
     MailService mailService;
 
@@ -126,5 +128,23 @@ public class AdminController {
         List<Transaktion> transaktionList = transaktionRepository.findAll();
         model.addAttribute("transaktionen", transaktionList);
         return "admin_vergangene_transaktionen";
+    }
+
+    @GetMapping("/logtabelle")
+    public String logtabelleGet(Model model) {
+        List<Historie> histories = historieRepository.findAll();
+//        List<Historie> historieList = null;
+//        for (Historie historieFor : histories) {
+//            System.out.println(historieFor.getHistorienId()+" historienid historienfor");
+//            System.out.println(historieFor.getHistorienId() > (histories.size() - 200));
+//            if (historieFor.getHistorienId() > (histories.size()-200)) {
+//                System.out.println("historienid zwischen hid max und hidmax - 200");
+//                historieList.add(historieFor);
+//            }
+//        }
+        model.addAttribute("historien", histories);
+        model.addAttribute("nutzerlist", nutzerRepository.findAll());
+        model.addAttribute("parkplaetze", parkplatzRepository.findAll());
+        return "logtabelle";
     }
 }

@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.awt.print.Pageable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,5 +34,33 @@ public class Historie {
         this.nid = nid;
         this.pid = pid;
         this.aktion = aktion;
+    }
+
+    public String compareBenutzername(List<Nutzer> nutzers) {
+        for (Nutzer nutzerFor : nutzers) {
+            if (nutzerFor == this.nid) {
+                if (nutzerFor.getBenutzername().equals(this.nid.getBenutzername()))
+                    return nutzerFor.getBenutzername();
+            }
+        }
+        return null;
+    }
+
+    public Integer compareNid(List<Nutzer> nutzers) {
+        for (Nutzer nutzerFor : nutzers) {
+            if (nutzerFor == this.nid) {
+                return nutzerFor.getNid();
+            }
+        }
+        return null;
+    }
+
+    public Integer comparePid(List<Parkplatz> parkplaetze) {
+        for (Parkplatz parkplatzFor : parkplaetze) {
+            if (parkplatzFor == this.pid) {
+                return parkplatzFor.getPid();
+            }
+        }
+        return null;
     }
 }

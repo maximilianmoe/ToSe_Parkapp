@@ -86,17 +86,23 @@ public class Nutzer {
         return null;
     }
 
-    public boolean compareGesperrt(String benutzername, List<Nutzer> nutzers) {
-        Nutzer nutzer = null;
+    public String compareBenutzername(Nutzer nid, List<Nutzer> nutzers) {
         for (Nutzer nutzerFor : nutzers) {
-            if (nutzerFor.getBenutzername() == benutzername)
-                nutzer = nutzerFor;
-            if (nutzer.getSperrung())
-                return true;
+            if (nutzerFor.getBenutzername().equals(nid.getBenutzername())) {
+                return nutzerFor.getBenutzername();
+            }
         }
-        return false;
+        return null;
     }
 
+    public Integer compareNid(Nutzer nid, List<Nutzer> nutzers) {
+        for (Nutzer nutzerFor : nutzers) {
+            if (nutzerFor.getNid() == nid.getNid()) {
+                   return nutzerFor.getNid();
+            }
+        }
+        return null;
+    }
 
 
 }
