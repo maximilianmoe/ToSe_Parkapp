@@ -74,7 +74,9 @@
     <form action="#" th:action="@{/parkplatz_hinzufuegen}" method="post">
         <div class="row" id="row1">
             <div class="col">
-                <input required id="plz" onchange="plzregex();" type="text" th:value="*{parkplatz.plz}" th:name="plz" class="form-control" placeholder="PLZ">
+                <a data-tooltip title="Nur deutsche Postleitzahlen sind gültig">
+                    <input required id="plz" onchange="plzregex();" type="text" th:value="*{parkplatz.plz}" th:name="plz" class="form-control" placeholder="PLZ">
+                </a>
             </div>
             <!--
         <div class="col">
@@ -296,7 +298,7 @@
             }
             else{
                 $('#submit').prop('disabled', true);
-                $('#red_text').html("Bitte geben Sie eine gültige PLZ ein.");
+                $('#red_text').html("Bitte geben Sie eine gültige deutsche PLZ ein.");
             }
         });
 
