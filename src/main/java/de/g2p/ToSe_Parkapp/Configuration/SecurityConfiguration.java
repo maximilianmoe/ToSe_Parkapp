@@ -49,10 +49,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //sets the configuration on the auth object
         auth.userDetailsService(userDetailsService);
+
+
+
+
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        String[] staticRessources = {
+                "/css/**",
+                "/images/**",
+                "/fonts/**",
+                "/scripts/**",
+        };
+
         http.authorizeRequests()
                 //add all other html sites and check the "hasRole" function again!
                     .antMatchers("/resources/**").permitAll()
