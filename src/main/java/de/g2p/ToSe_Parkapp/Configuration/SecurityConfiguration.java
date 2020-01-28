@@ -58,16 +58,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        String[] staticResources = {
-                "/css/**",
-                "/images/**",
-                "/fonts/**",
-                "/scripts/**",
-        };
 
         http.authorizeRequests()
                 //add all other html sites and check the "hasRole" function again!
-                    .antMatchers("/resources/images").permitAll()
+                    .antMatchers("/resources/**").permitAll()
                     .antMatchers("/registrieren").permitAll()
                     .antMatchers("/passwort_zurueckgesetzt").permitAll()
                     .antMatchers("/passwordreset").permitAll()
