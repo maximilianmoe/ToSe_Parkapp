@@ -35,41 +35,145 @@
             text-align:center
         }
         #welcome{
+            color: white;
             text-align: center;
             font-family: Georgia, 'Times New Roman', Times, serif;
+            text-shadow: 0 0 5px black;
         }
         #login{
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
 
+
+        html,body {
+            height:100%;
+            width:100%;
+            position:relative;
+        }
+        #background-carousel{
+            position:fixed;
+            width:100%;
+            height:100%;
+            z-index:-1;
+        }
+        .carousel,
+        .carousel-inner {
+            width:100%;
+            height:100%;
+            z-index:0;
+            overflow:hidden;
+        }
+        .item {
+            width:100%;
+            height:100%;
+            background-position:center center;
+            background-size:cover;
+            z-index:0;
+        }
+
+        #content-wrapper {
+            position:absolute;
+            z-index:1 !important;
+            min-width:100%;
+            min-height:100%;
+        }
+        .well {
+            opacity:0.85
+        }
+
+        #erstellen{
+            margin-top: 2%;
+        }
+
     </style>
 </head>
 <body>
+
+<img class="card-img-top" id="main-img" th:src="@{images/parkplatz3.jpg}">
+
+<div id="background-carousel">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="item active" style=background-image:url("images/carousel1.jpg")></div>
+            <div class="item" style="background-image:url(carousel2.jpg)"></div>
+            <div class="item" style="background-image:url(carousel3.jpg)"></div>
+        </div>
+    </div>
+</div>
+
+
+<div id="content-wrapper">
+    <!-- PAGE CONTENT -->
+    <div class="container">
+        <div>
+            <h1 id="welcome">Willkommen bei Good2Park</h1>
+        </div>
+        <p></p>
+        <div class="login-form">
+            <form th:action="@{/login}" method="post">
+                <div th:if="${sperrung} == 0" class="alert alert-danger error">Dieser Account ist gesperrt. Bitte wenden sie sich an einen Admin</div>
+                <div th:if="${param.error}" class="alert alert-danger error">Benutzername oder Passwort ungültig</div>
+                <div th:if="${param.logout}" class="alert alert-success">Sie wurden erfolgreich abgemeldet</div>
+                <h2 class="text-center" id="login">Log in</h2>
+                <div class="form-group">
+                    <input id="username" th:name="username" name="username" type="text" class="form-control" placeholder="Benutzername" required="required">
+                </div>
+                <div class="form-group">
+                    <input id="password" name="password" type="password" class="form-control" placeholder="Passwort" required="required">
+                </div>
+                <div class="form-group">
+                    <a href="home"><button type="submit" class="btn btn-primary btn-block">Log In</button></a>
+                </div>
+                <div class="clearfix" id="pwvergessen">
+                    <a href="passwordreset" class="text-center">Passwort vergessen?</a>
+                </div>
+                <p class="text-center" id="erstellen"><a href="registrieren">Account erstellen</a></p>
+            </form>
+            <!--
+            <p class="text-center"><a href="registrieren">Account erstellen</a></p>
+            -->
+        </div>
+        <!--
+        <div class="page-header"><h3>Fullscreen Background Carousel</h3></div>
+        <div class="well"><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br><a href="http://sevenx.de/demo/bootstrap-carousel/" target="_blank" class="label label-danger">Bootstrap 3 - Carousel Collection</a></p>
+        </div>
+    -->
+        <!-- End Well -->
+    </div><!-- End Container -->
+    <!-- PAGE CONTENT -->
+</div>
+
+<!--
 <div>
-    <h2 id="welcome">Willkommen bei Good2Park</h2>
+  <h2 id="welcome">Willkommen bei Good2Park</h2>
 </div>
 <p></p>
 <div class="login-form">
-    <form th:action="@{/login}" method="post">
-        <div th:if="${sperrung} == 0" class="alert alert-danger error">Dieser Account ist gesperrt. Bitte wenden sie sich an einen Admin</div>
-        <div th:if="${param.error}" class="alert alert-danger error">Benutzername oder Passwort ungültig</div>
-        <div th:if="${param.logout}" class="alert alert-success">Sie wurden erfolgreich abgemeldet</div>
-        <!-- TODO einfügen von msg falls nutzer gesperrt ist -->
-        <h2 class="text-center" id="login">Log in</h2>
-        <div class="form-group">
-            <input id="username" th:name="username" name="username" type="text" class="form-control" placeholder="Benutzername" required="required">
-        </div>
-        <div class="form-group">
-            <input id="password" name="password" type="password" class="form-control" placeholder="Passwort" required="required">
-        </div>
-        <div class="form-group">
-            <a href="home"><button type="submit" class="btn btn-primary btn-block">Log In</button></a>
-        </div>
-        <div class="clearfix" id="pwvergessen">
-            <a href="passwordreset" class="text-center">Passwort vergessen?</a>
-        </div>
-    </form>
-    <p class="text-center"><a href="registrieren">Account erstellen</a></p>
+  <form th:action="@{/login}" method="post">
+      <div th:if="${sperrung} == 0" class="alert alert-danger error">Dieser Account ist gesperrt. Bitte wenden sie sich an einen Admin</div>
+      <div th:if="${param.error}" class="alert alert-danger error">Benutzername oder Passwort ungültig</div>
+      <div th:if="${param.logout}" class="alert alert-success">Sie wurden erfolgreich abgemeldet</div>
+      <h2 class="text-center" id="login">Log in</h2>
+      <div class="form-group">
+          <input id="username" th:name="username" name="username" type="text" class="form-control" placeholder="Benutzername" required="required">
+      </div>
+      <div class="form-group">
+          <input id="password" name="password" type="password" class="form-control" placeholder="Passwort" required="required">
+      </div>
+      <div class="form-group">
+          <a href="home"><button type="submit" class="btn btn-primary btn-block">Log In</button></a>
+      </div>
+      <div class="clearfix" id="pwvergessen">
+          <a href="passwordreset" class="text-center">Passwort vergessen?</a>
+      </div>
+  </form>
+  <p class="text-center"><a href="registrieren">Account erstellen</a></p>
 </div>
+-->
+<script>
+    $('#myCarousel').carousel({
+        pause: 'none'
+    })
+</script>
 </body>
 </html>
