@@ -67,7 +67,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 //add all other html sites and check the "hasRole" function again!
-                    .antMatchers("/resources/**").permitAll()
+                    .antMatchers("/resources/images").permitAll()
                     .antMatchers("/registrieren").permitAll()
                     .antMatchers("/passwort_zurueckgesetzt").permitAll()
                     .antMatchers("/passwordreset").permitAll()
@@ -81,7 +81,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll().logoutSuccessUrl("/login?logout")
                 .and()
                     .csrf().disable();
-        http.authorizeRequests().antMatchers("/images/**").permitAll();
 
     }
 }
