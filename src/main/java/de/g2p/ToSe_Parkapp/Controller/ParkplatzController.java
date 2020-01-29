@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -506,6 +507,51 @@ public class ParkplatzController {
     }
      */
 
+
+/*
+    @RequestMapping(value="/ParkplatzPlzAutocomplete")
+    @ResponseBody
+    public List<Integer> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")Integer term){
+        List<Integer> suggestions = new ArrayList<Integer>();
+        List<Parkplatz> alleParkplaetze = parkplatzRepository.findByPlz(term);
+        for(Parkplatz parkplatz1 : alleParkplaetze){
+            suggestions.add(parkplatz1.getPlz());
+        }
+        return suggestions;
+    }
+*/
+
+/*
+    @RequestMapping(value="/ParkplatzPlzAutocomplete")
+    @ResponseBody
+    public List<Integer> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")Integer term){
+        List<Integer> suggestions = new ArrayList<Integer>();
+        List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+        for(Parkplatz parkplatz1 : parkplaetze){
+            suggestions.add(parkplatz1.getPlz());
+        }
+        return suggestions;
+    }
+ */
+
+
+    @RequestMapping(value="/ParkplatzPlzAutocomplete")
+    //@ResponseBody
+    public List<Integer> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")Integer term) {
+        List<Integer> suggestions = new ArrayList<Integer>();
+        try {
+            List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+            for (Parkplatz parkplatz1 : parkplaetze) {
+                suggestions.add(parkplatz1.getPlz());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Exception autocomplete");
+        }
+        return suggestions;
+    }
+
 }
+
 
 
