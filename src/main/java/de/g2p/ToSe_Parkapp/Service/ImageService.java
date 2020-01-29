@@ -17,7 +17,7 @@ public class ImageService {
     private BildRepository bildRepository;
 
 
-    public static void saveImage(MultipartFile imageFile, Bild bild) throws Exception {
+    public static void saveImage(MultipartFile imageFile) throws Exception {
 
         String folder = "/photos/";
         byte[] bytes = imageFile.getBytes();
@@ -26,7 +26,7 @@ public class ImageService {
 
     }
 
-    public void save(Bild bild){
+    /*public void save(Bild bild){
         bildRepository.save(bild);
-    }
+    }*/
 }

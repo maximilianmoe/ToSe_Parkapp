@@ -13,7 +13,7 @@ public class Bild {
 
     @Id
     @GeneratedValue
-    private int photoId;
+    private int photoid;
     private String path;
     private String fileName;
 

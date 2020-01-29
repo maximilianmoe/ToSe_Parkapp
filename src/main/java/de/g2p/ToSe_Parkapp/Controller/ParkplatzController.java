@@ -91,7 +91,8 @@ public class ParkplatzController {
     @PostMapping("/parkplatz_hinzufuegen")
     public String addParkplatz(@ModelAttribute Parkplatz parkplatz,
                                @RequestParam("parkplatzChecked") String checked,
-                               @RequestParam("fahrzeugtyp") String fahrzeugtyp, Model model) {
+                               @RequestParam("fahrzeugtyp") String fahrzeugtyp, Model model,
+                               @RequestParam("imageFile") MultipartFile imageFile) {
 
         String returnstring = "";
         Anbieter aid = anbieterRepository.findByNid(findNutzer());
@@ -122,6 +123,14 @@ public class ParkplatzController {
             parkplatz.setStrafgebuehr(0);
             returnstring="mein_parkplatz_oeffentlich";
         }
+
+        try {
+            ImageService.saveImage(imageFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnstring = "error";
+        }
+
 
         //Saves all data in the database
         parkplatzRepository.saveAndFlush(parkplatz);
@@ -426,7 +435,7 @@ public class ParkplatzController {
         return nutzer;
     }
 
-    //picture upload controller
+/*    //picture upload controller
     @PostMapping("/uploadImage")
     public String uploadImage(@RequestParam("imageFile") MultipartFile imageFile ){
         String returnValue ="";
@@ -439,7 +448,7 @@ public class ParkplatzController {
 
 
         return returnValue;
-    }
+    }*/
 
 
 
