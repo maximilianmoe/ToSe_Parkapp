@@ -190,8 +190,6 @@
                 <div id="reg">
                     <button type="submit" class="btn btn-outline-secondary btn-lg" id="btn">
                         Parkplatz dauerhaft entfernen</button>
-    <!--                TODO add a PopUp and ask if the user really wants do delete the Parkplatz
-                            and add the form above to the "yes" button -> erst nach den tests-->
                 </div>
             </div>
             <div th:if="${reservierung} == 0">
@@ -203,7 +201,6 @@
         <!--
         <div class="card-footer" id="farbe">
             <small class="text-muted"></small>
-           TODO change how the picture is displayed (like in spezieller_Parkplatz)
         </div>
 -->
         <div th:if="${parkplatz.status} == 'frei'" class="card-footer" id="green_square">

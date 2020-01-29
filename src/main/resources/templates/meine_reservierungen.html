@@ -153,7 +153,6 @@
     <div id="table1">
         <table class="table table-striped" id="testing">
             <thead>
-<!--            TODO get Thymeleaf to work on the table-->
             <tr>
                 <th scope="col">Beparkt</th>
                 <th scope="col">Reservierungs-ID</th>
@@ -172,7 +171,6 @@
                 <td colspan="10">Sie haben noch keinen Parkplatz reserviert</td>
             </tr>
             <tr th:unless="${reservierungen} == 0" th:each="reservierung : ${reservierungen}">
-<!--                TODO statt ja und nein evtl einen grünen haken/ein rotes kreuz-->
                 <td id="check_table">
                     <span class="check-value" th:if="${reservierung.resZuParken} == true">Ja</span>
                     <span class="check-value" th:unless="${reservierung.resZuParken} == true">Nein</span>

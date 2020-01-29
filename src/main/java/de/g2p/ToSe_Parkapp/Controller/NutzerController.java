@@ -56,7 +56,6 @@ public class NutzerController {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         if (duplicate) {
-            //TODO add this to the hmtl page
             model.addAttribute("duplicate", 0);
             System.out.println("Duplicate Nutzer");
             return "registrieren";
