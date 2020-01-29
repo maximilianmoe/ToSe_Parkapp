@@ -2,7 +2,6 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.*;
 import de.g2p.ToSe_Parkapp.Repositories.*;
-import de.g2p.ToSe_Parkapp.Service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +12,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,6 +42,10 @@ public class ParkplatzController {
     BildRepository bildRepository;
 
     Parkplatz parkplatz;
+
+    private String finalImageName;
+
+
 
     @GetMapping("/mein_parkplatz_oeffentlich")
     public String meinOeffentlichGet() {
@@ -127,21 +133,26 @@ public class ParkplatzController {
             returnstring="mein_parkplatz_oeffentlich";
         }
 
+        //Saves all data in the database
+        parkplatzRepository.saveAndFlush(parkplatz);
+        finalImageName = parkplatz.getPid().toString();
         try {
-            ImageService.saveImage(imageFile);
+            saveImage(imageFile);
         } catch (Exception e) {
             e.printStackTrace();
             returnstring = "error";
         }
-        Bild bild = new Bild();
-        bild.setFileName(imageFile.getOriginalFilename());
-        bild.setPath("/photos");
 
+        Bild bild = new Bild();
+        //bild.setFileName(imageFile.getOriginalFilename());
+        bild.setPath("/photos");
+        //sets the filename in the database = pid
+        bild.setFileName(parkplatz.getPid().toString());
+        //Saves Picture Metadata in the database
         bildRepository.save(bild);
 
 
-        //Saves all data in the database
-        parkplatzRepository.saveAndFlush(parkplatz);
+
         return returnstring;
     }
 
@@ -534,6 +545,8 @@ public class ParkplatzController {
         java.util.Date newDate = c.getTime();
         return newDate;
     }
+
+
     /*
     public Time timePlusOne(Time time){
         Calendar c = Calendar.getInstance();
@@ -544,6 +557,14 @@ public class ParkplatzController {
         return newTime;
     }
      */
+
+    public void saveImage(MultipartFile imageFile) throws Exception {
+
+        String folder = "/photos/";
+        byte[] bytes = imageFile.getBytes();
+        Path path = Paths.get(folder + finalImageName + ".jpg");
+        Files.write(path, bytes);
+    }
 
 }
 
