@@ -8,13 +8,18 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name="bilder")
+@Table(name="Bilder")
 public class Bild {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @Column(name="photoid")
     private int photoid;
+
+    @Column(name = "path")
     private String path;
+
+    @Column(name= "file_name")
     private String fileName;
 
     @ManyToOne

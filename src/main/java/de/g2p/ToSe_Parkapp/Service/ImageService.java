@@ -16,20 +16,17 @@ public class ImageService {
     @Autowired
     private BildRepository bildRepository;
 
-    Bild bild;
 
 
-    public void saveImage(MultipartFile imageFile) throws Exception {
+    public static void saveImage(MultipartFile imageFile) throws Exception {
 
         String folder = "/photos/";
         byte[] bytes = imageFile.getBytes();
         Path path = Paths.get(folder + imageFile.getOriginalFilename());
         Files.write(path, bytes);
 
-        Bild bild = new Bild();
-        bild.setFileName(imageFile.getOriginalFilename());
-        bild.setPath("/photos");
 
-        bildRepository.save(bild);
+
+
     }
 }

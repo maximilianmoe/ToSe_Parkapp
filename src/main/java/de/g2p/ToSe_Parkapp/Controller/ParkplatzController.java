@@ -36,6 +36,9 @@ public class ParkplatzController {
     @Autowired
     ReservierungenRepository reservierungenRepository;
 
+    @Autowired
+    BildRepository bildRepository;
+
     Parkplatz parkplatz;
 
     @GetMapping("/mein_parkplatz_oeffentlich")
@@ -130,6 +133,11 @@ public class ParkplatzController {
             e.printStackTrace();
             returnstring = "error";
         }
+        Bild bild = new Bild();
+        bild.setFileName(imageFile.getOriginalFilename());
+        bild.setPath("/photos");
+
+        bildRepository.save(bild);
 
 
         //Saves all data in the database
