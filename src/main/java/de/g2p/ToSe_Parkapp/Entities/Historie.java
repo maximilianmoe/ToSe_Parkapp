@@ -3,6 +3,8 @@ package de.g2p.ToSe_Parkapp.Entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.awt.print.Pageable;
@@ -21,10 +23,12 @@ public class Historie {
     private Integer historienId;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "nid")
     private Nutzer nid;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "pid")
     private Parkplatz pid;
 

@@ -125,8 +125,8 @@ public class ParkplatzController {
         }
 
         //Saves all data in the database
+        historieRepository.save(new Historie(findNutzer(), parkplatz, "create", "Parkplatz privat"));
         parkplatzRepository.saveAndFlush(parkplatz);
-        historieRepository.save(new Historie(parkplatz.getAnbieterId().getNid(), parkplatz, "create", "Parkplatz privat"));
         return returnstring;
     }
 
@@ -411,6 +411,11 @@ public class ParkplatzController {
         Anbieter anbieterSave = new Anbieter();
         anbieterSave.setNid(findNutzer());
         anbieterSave.setParkplatz(false);
+        List<Historie> historieList = historieRepository.findByPid(parkplatz);
+        for (Historie historieFor: historieList) {
+            historieRepository.updatePid(historieFor.getHistorienId(), null);
+        }
+
         anbieterRepository.updateParkplatz(false, anbieter.getAid());
         historieRepository.save(new Historie(anbieter.getNid(), null, "update", "Parkplatzstatus Anbieter"));
         parkplatzRepository.delete(parkplatz);
