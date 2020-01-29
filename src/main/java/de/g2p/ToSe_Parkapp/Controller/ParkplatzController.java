@@ -32,6 +32,8 @@ public class ParkplatzController {
     ParkenRepository parkenRepository;
     @Autowired
     ReservierungenRepository reservierungenRepository;
+    @Autowired
+    HistorieRepository historieRepository;
 
     Parkplatz parkplatz;
 
@@ -65,6 +67,7 @@ public class ParkplatzController {
             parkplatz.setFahrzeugtyp(fahrzeugtyp);
 
         parkplatzRepository.saveAndFlush(parkplatz);
+        historieRepository.save(new Historie(findNutzer(), parkplatz, "create", "Parkplatz öffentlich"));
 
         model.addAttribute("parkplatz", parkplatz);
 
@@ -106,6 +109,7 @@ public class ParkplatzController {
             parkplatz.setPrivat(true);
             anbieterRepository.updateParkplatz(true, aid.getAid());
             anbieterRepository.updatePid(parkplatz.getPid(), aid.getAid());
+            historieRepository.save(new Historie(aid.getNid(), parkplatz, "update", "Anbieter Privatparkplatz"));
             parkplatz.setStatus("frei");
             returnstring="mein_parkplatz";
             model.addAttribute("parkplatz", parkplatz);
@@ -122,13 +126,13 @@ public class ParkplatzController {
 
         //Saves all data in the database
         parkplatzRepository.saveAndFlush(parkplatz);
+        historieRepository.save(new Historie(parkplatz.getAnbieterId().getNid(), parkplatz, "create", "Parkplatz privat"));
         return returnstring;
     }
 
 
     @GetMapping("/spezieller_parkplatz_privat")
     public String spezParkplatzPrivatGet(Model model) {
-        System.out.println("getMapping spezieller privater Parkplatz");
         return "spezieller_parkplatz_privat";
     }
 
@@ -136,7 +140,6 @@ public class ParkplatzController {
     public String spezParkplatzOeffentlichPost(@RequestParam("pid") Integer pid, @RequestParam("belegung") String belegt,
                                                @ModelAttribute Parken parken) {
 
-        System.out.println(pid +"  PostMapping speziellerÖffentlich");
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
         parken.setKid(konsument);
         parken.setPid(parkplatzRepository.findByPid(pid));
@@ -150,13 +153,16 @@ public class ParkplatzController {
         }
         else if (belegt.contains("belegt")) {
             konsumentRepository.updatebelegt(true, konsument.getKid());
+            historieRepository.save(new Historie(konsument.getNid(), parken.getPid(), "update", "belegt Konsument"));
             status ="belegt";
             returnstring = "home";
 
         }
         System.out.println(status);
         parkenRepository.save(parken);
+        historieRepository.save(new Historie(parken.getKid().getNid(), parken.getPid(), "create", "Parken"));
         parkplatzRepository.updateStatus(status, pid);
+        historieRepository.save(new Historie(null, parkplatzRepository.findByPid(pid), "update", "Status"));
 
         return returnstring;
     }
@@ -172,12 +178,16 @@ public class ParkplatzController {
     public String parkMediaGet(Model model) {
         String returnstring = "";
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
-        if (!konsument.getReserviert()) {
-            List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
-            model.addAttribute("parkplaetze", parkplaetze);
-            returnstring = "parkplaetze_medialist";
+        if (konsument == null) {
+            returnstring = "error_nur_anbieter";
         } else {
-            returnstring = "error_bereits_geparkt";
+            if (!konsument.getReserviert()) {
+                List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+                model.addAttribute("parkplaetze", parkplaetze);
+                returnstring = "parkplaetze_medialist";
+            } else {
+                returnstring = "error_bereits_geparkt";
+            }
         }
         return returnstring;
     }
@@ -262,6 +272,7 @@ public class ParkplatzController {
                 reservierung.setKid((konsumentRepository.findByNid(nutzer.getNidNutzer())).getKidKonsument());
                 reservierung.setPid(parkplatzRepository.findByPid(parkplatz.getPid()));
                 konsumentRepository.updateReserviert(true, nutzer.getNid());
+                historieRepository.save(new Historie(nutzer, parken.getPid(), "update", "Reserviert"));
 
                 //Convert time and date
                 startDate = startDate.substring(0, 10);
@@ -292,7 +303,7 @@ public class ParkplatzController {
 
                 //Saves all data in the database
                 reservierungenRepository.save(reservierung);
-                System.out.println("reseriertung gesaved");
+                historieRepository.save(new Historie(reservierung.getKid().getNid(), reservierung.getPid(), "create", "Reservierung"));
 
                 returnString = "home";
             }
@@ -382,6 +393,7 @@ public class ParkplatzController {
         }
         System.out.println(status);
         parkplatzRepository.updateStatus(status, parkplatz.getPid());
+        historieRepository.save(new Historie(null, parkplatz, "update", "Status Parkplatz"));
 
         return "home";
     }
@@ -400,7 +412,9 @@ public class ParkplatzController {
         anbieterSave.setNid(findNutzer());
         anbieterSave.setParkplatz(false);
         anbieterRepository.updateParkplatz(false, anbieter.getAid());
+        historieRepository.save(new Historie(anbieter.getNid(), null, "update", "Parkplatzstatus Anbieter"));
         parkplatzRepository.delete(parkplatz);
+        historieRepository.save(new Historie(anbieter.getNid(), null, "delete", "Parkplatz"));
         anbieterRepository.save(anbieterSave);
 
         return "home";

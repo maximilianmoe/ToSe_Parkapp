@@ -30,10 +30,13 @@ public class Historie {
 
     private String aktion;
 
-    public Historie(Nutzer nid, Parkplatz pid, String aktion) {
+    private String info;
+
+    public Historie(Nutzer nid, Parkplatz pid, String aktion, String info) {
         this.nid = nid;
         this.pid = pid;
         this.aktion = aktion;
+        this.info = info;
     }
 
     public String compareBenutzername(List<Nutzer> nutzers) {

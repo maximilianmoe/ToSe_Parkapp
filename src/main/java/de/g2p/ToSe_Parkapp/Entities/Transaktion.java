@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -52,5 +53,23 @@ public class Transaktion {
         this.parkid = parkid;
         this.pid = pid;
         this.abgeschlossen = abgeschlossen;
+    }
+
+    public Integer compareKid(List<Konsument> konsumenten) {
+        for (Konsument konsumentFor : konsumenten) {
+            if (konsumentFor == this.kid) {
+                return konsumentFor.getKid();
+            }
+        }
+        return null;
+    }
+
+    public Integer comparePid(List<Parkplatz> parkplaetze) {
+        for (Parkplatz parkplatzFor : parkplaetze) {
+            if (parkplatzFor == this.pid) {
+                return parkplatzFor.getPid();
+            }
+        }
+        return null;
     }
 }

@@ -1,9 +1,11 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.Anbieter;
+import de.g2p.ToSe_Parkapp.Entities.Historie;
 import de.g2p.ToSe_Parkapp.Entities.Konsument;
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
+import de.g2p.ToSe_Parkapp.Repositories.HistorieRepository;
 import de.g2p.ToSe_Parkapp.Repositories.KonsumentRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import de.g2p.ToSe_Parkapp.Service.MailService;
@@ -29,6 +31,8 @@ public class NutzerController {
 
     @Autowired
     KonsumentRepository konsumentRepository;
+    @Autowired
+    HistorieRepository historieRepository;
 
     MailService mailService = new MailService();
 
@@ -92,12 +96,15 @@ public class NutzerController {
                     konsument.setFahrzeugtyp("Kleinwagen");
 
                 anbieterRepository.save(anbieter);
+                historieRepository.save(new Historie(anbieter.getNid(), null, "create", "Anbieter"));
+
             }
             //Set all values for Konsument
             else if (nutzertyp.contains("konsument")) {
                 konsument.setNid(nutzer.getNidNutzer());
                 konsumentRepository.save(konsument);
                 nutzer.setRolle("konsument");
+                historieRepository.save(new Historie(konsument.getNid(), null, "create", "Konsument"));
             }
             //Set all values for both
             else if (nutzertyp.contains("beides")) {
@@ -116,12 +123,14 @@ public class NutzerController {
 
                 anbieterRepository.save(anbieter);
                 konsumentRepository.save(konsument);
+                historieRepository.save(new Historie(anbieter.getNid(), null, "create", "Beides"));
             }
             nutzerRepository.save(nutzer);
+            historieRepository.save(new Historie(nutzer, null, "create", "Nutzer"));
             mailService.sendSimpleMessage(email, "Willkommen bei Good2Park!", "Sie haben sich erfoglreich bei Good2Park registriert.\nWir freuen uns Sie bei uns willkommen heißen zu dürfen.\nHier ein kleines Willkommensgeschenk:\nEin Betrunkener wankt nachts über den Parkplatz und tastet alle Autodächer ab.\n'Was machen Sie denn da?' fragt ein Passant.\n'Ich suche meinen Wagen', lallt der Betrunkene.\n'Ja, aber die Dächer sind doch alle gleich ... ?'\nDer Zecher: 'Auf meinem ist ein Blaulicht!'");
         }
 
-            return "login";
+        return "login";
     }
 
     @GetMapping("/mein_profil")
@@ -182,7 +191,8 @@ public class NutzerController {
             saldo = saldo - betrag;
 
         nutzerRepository.updateSaldo(saldo, nutzer2.getNid());
-        //redirect to guthabenweiterleitung because the new saldo is not displayed properly
+        historieRepository.save(new Historie(nutzer2, null, "update", "Saldo"));
+
         return "guthabenweiterleitung";
     }
 
