@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleafe.org" xmlns="http://www.w3.org/1999/html" lang="de-De">
+<html xmlns:th="http://www.thymeleafe.org" lang="de-De">
 
 <head>
-    <title>Mein Profil</title>
+    <title>Meine Reservierungen</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- NÖTIG um Interaktivität zu aktivieren-->
@@ -18,45 +18,33 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
-        #head {
-            font-family: Georgia, 'Times New Roman', Times, serif;
+        input.hidden {
+            position: absolute;
+            left: -9999px;
+        }
+
+        #profile-image1 {
+            cursor: pointer;
+
+            width: 100px;
+            height: 100px;
+            border: 2px solid #03b1ce;
+        }
+
+        .tital {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .bot-border {
+            border-bottom: 1px #f8f8f8 solid;
+            margin: 5px 0 5px 0
+        }
+        body{
             text-align: center;
-            margin-top: 50px;
-            margin-bottom: 50px;
         }
-
-        .input {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-
-
-        #checkbox {
-            margin: 10px;
-        }
-
-        #reg {
+        div{
             text-align: center;
-        }
-
-        #ueberschrift {
-            text-align: center;
-            margin-top: 4%;
-            margin-bottom: 2%;
-        }
-
-        #my_profile {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-        }
-
-        .h_6 {
-            text-align: center;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-        }
-
-        .row {
-            margin: 1%;
         }
     </style>
 </head>
@@ -64,63 +52,89 @@
 <body>
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
-    <div id="ueberschrift">
-        <h2 id="my_profile">Mein Profil</h2>
-    </div>
     <div class="row">
-        <div class="col test">
-            <h4 class="h_6">Vorname: </h4>
-        </div>
-        <div class="col">
-            <h4 class="h_6" th:text="${nutzer.vorname}">
-            </h4>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h4 class="h_6">Nachname: </h4>
-        </div>
-        <div class="col">
-            <h4 class="h_6" th:text="${nutzer.nachname}">
-            </h4>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h4 class="h_6">Email Adresse: </h4>
-        </div>
-        <div class="col">
-            <h4 class="h_6" th:text="${nutzer.emailAdresse}">
-            </h4>
-        </div>
-    </div>
-    <!--
-        ACHTUNG:
-        Ab hier wurden neue Reihen eingefügt!
-        Müssen noch mit thymeleaf verbunden werden bzw überprüft werden ob ich das richtig gemacht habe
-    -->
-    <div class="row">
-        <div class="col">
-            <h4 class="h_6">Saldo: </h4>
-        </div>
-        <div class="col">
-            <h4>
-<!--                TODO der saldo muss noch nach rechts verschoben werden-->
-                <span class="h_6" th:text="${nutzer.saldo}"></span>
-                <span> €</span>
-            </h4>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h4 class="h_6">Parkplatz erstellt: </h4>
-        </div>
-        <div class="col">
-            <h4 class="h_6" th:text="${anbieter.parkplatz}">
-            </h4>
+        <div class="col-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+
+                    <div class="box box-info">
+
+                        <div class="box-body">
+                            <div class="col-sm-12">
+
+                                <br>
+
+                                <!-- /input-group -->
+                            </div>
+                            <div class="col-sm-12">
+                                <h4 style="color:#7395AE;">Mein Profil </h4></span>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr style="margin:5px 0 5px 0;">
+
+
+                            <div class="col-sm-10 col-xs-6 tital ">Vorname:</div>
+                            <div class="col-sm-12 col-xs-6 ">
+                                <h6 class="h_6" th:text="${nutzer.vorname}">
+                                </h6>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+
+                            <div class="col-sm-10 col-xs-6 tital ">Nachname:</div>
+                            <div class="col-sm-12">
+                                <h6 class="h_6" th:text="${nutzer.nachname}">
+                                </h6>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+
+                            <div class="col-sm-10 col-xs-6 tital ">Saldo:</div>
+                            <div class="col-sm-12">
+                                <span class="h_6" th:text="${nutzer.saldo}"></span>
+                                <span> €</span>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+
+                            <div class="col-sm-10 col-xs-6 tital ">Email Adresse:</div>
+                            <div class="col-sm-12">
+                                <h6 class="h_6" th:text="${nutzer.emailAdresse}">
+                                </h6>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+
+                            <div class="col-sm-10 col-xs-6 tital ">Parkplatz erstellt:</div>
+                            <div class="col-sm-12">
+                                <h6 class="h_6" th:text="${anbieter.parkplatz}">
+                                </h6>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+
+                    </div>
+
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
 <script>
 
 </script>
