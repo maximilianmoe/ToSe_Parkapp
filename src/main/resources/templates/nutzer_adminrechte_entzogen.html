@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleafe.org" lang="de-De">
 
 <head>
-    <title>Adminrechte entzogen</title>
+    <title>Error</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,65 +19,61 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
-        body {
-            background-color: white;
-        }
-
-        #successful{
+        #successful {
             font-size: 30px;
-            margin-top: 100px;
+            margin-top: 120px;
             text-align: center;
         }
-        #btn{
+
+        #btn {
             margin-top: 30px;
             font-size: 10px;
         }
+
         #ueberschrift {
             text-align: center;
             margin-top: 20px;
         }
-        #text2 {
-            margin-top: 40px;
+
+        .jumbotron{
+            height: 100vh;
         }
     </style>
 </head>
 
 <body>
 <nav th:replace="layouts :: navbar"></nav>
-<div class="container">
-    <h2 id="ueberschrift">Vergabe von Adminrechten</h2>
-    <form action="#">
-        <div class="text-center" id="successful">
-            <div class="form-group" >
-                <label>Die Bearbeitung war erfolgreich!</label>
-                <div> <label>Folgendem Nutzer wurden Adminrechte entzogen:</label> </div>
-                <div id="text2">
-                    <p>
-                        <span>Nutzer-ID: </span>
-                        <span th:text="${nutzer.nid}"></span>
-                    </p>
-                    <p>
-                        <span>Vorname:</span>
-                        <span th:text="${nutzer.vorname}"></span>
-                    </p>
-                    <p>
-                        <span>Nachname:</span>
-                        <span th:text="${nutzer.nachname}"></span>
-                    </p>
-                </div>
-                <div id="btn">
-                    <!--
-                    <button type="submit" class="btn btn-outline-secondary btn-lg">
-                        <a href="adminseite">Zurück zur Adminseite</a>
-                    </button>
-                    -->
-                    <a href="adminseite" class="btn btn-outline-secondary btn-lg" role="button">
-                        Zurück zur Adminseite
-                    </a>
-                </div>
-            </div>
-        </div>
-    </form>
+<div class="jumbotron text-center">
+    <h1 class="display-3">Vergabe von Adminrechten</h1>
+    <p class="lead">
+        <span>Die Bearbeitung war erfolgreich!</span>
+    </p>
+    <p class="lead">
+        Folgendem Nutzer wurden Adminrechte entzogen:
+    </p>
+    <hr>
+    <p>
+        <span>Nutzer-ID: </span>
+        <span th:text="${nutzer.nid}"></span>
+    </p>
+    <p>
+        <span>Vorname:</span>
+        <span th:text="${nutzer.vorname}"></span>
+    </p>
+    <p>
+        <span>Nachname:</span>
+        <span th:text="${nutzer.nachname}"></span>
+    </p>
+    <div id="btn">
+        <!--
+        <button type="submit" class="btn btn-outline-secondary btn-lg">
+            <a href="adminseite">Zurück zur Adminseite</a>
+        </button>
+        -->
+        <a href="adminseite" class="btn btn-outline-secondary btn-lg" role="button">
+            Zurück zur Adminseite
+        </a>
+    </div>
 </div>
 
 </body>

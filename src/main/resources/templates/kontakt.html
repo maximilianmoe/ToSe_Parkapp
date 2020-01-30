@@ -19,9 +19,10 @@
     </script>
     <link href="https://fonts.googleapis.com/css?family=Aclonica" rel="stylesheet">
     <style>
+
         #logo{
             text-align: center;
-            margin: 4%;
+            margin-bottom: 1%;
         }
         #thanks{
             text-align: center;
@@ -31,13 +32,11 @@
             font-family: 'Aclonica';
             font-size: 35px;
         }
-        #team{
-            text-align: center;
-            margin-top: 1%;
+        .team{
+            line-height: 1;
         }
         #mail{
             text-align: center;
-            margin: 1%;
         }
         #email{
             font-family: 'Aclonica';
@@ -47,13 +46,20 @@
             height: 75%;
             width: 75%;
         }
+
+        .jumbotron{
+            height: 100vh;
+        }
     </style>
 
 </head>
 
 <body>
 <nav th:replace="layouts :: navbar"></nav>
+<!--
 <div class="container" id="anfang">
+-->
+<div class="jumbotron text-center">
     <div id="logo">
 
         <img id="logo-img" th:src="@{images/good_2_park_logo_black.png}" src="../static/images/good_2_park_logo_black.png">
@@ -69,9 +75,25 @@
         <h3>Sie erreichen uns unter folgender E-mail: <span id="email">good2park.service@gmail.com</span></h3>
     </div>
     -->
+    <!--
     <div id="mail">
         <h3>Sie erreichen uns unter folgender E-mail: <a href="mailto:good2park.service@gmail.com">good2park.service@gmail.com</a></h3>
     </div>
+    -->
+    <p class="lead">
+        Sie erreichen uns unter folgender E-mail: <a href="mailto:good2park.service@gmail.com">good2park.service@gmail.com</a>
+    </p>
+    <hr>
+    <p class="lead team">Unser Team:</p>
+    <p class="team">Sebastian Absmeier</p>
+    <p class="team">Melanie Brandl</p>
+    <p class="team">Christina Friedl</p>
+    <p class="team">Jasmin Hartl</p>
+    <p class="team">Maximilian Möginger</p>
+    <p class="team">Maximilian Lehner</p>
+    <p class="team">Matthias Scherzer</p>
+    <p class="team">Patrick Ziegleder</p>
+    <!--
     <div id="team">
         <h3>Unser Team:</h3>
         <h6>Sebastian Absmeier</h6>
@@ -83,8 +105,11 @@
         <h6>Matthias Scherzer</h6>
         <h6>Patrick Ziegleder</h6>
     </div>
+    -->
 </div>
-
+<!--
+</div>
+-->
 </body>
 
 </html>

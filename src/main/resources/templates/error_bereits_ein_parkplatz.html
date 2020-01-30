@@ -19,68 +19,65 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
-        body {
-            background-color: white;
-        }
-
-        #successful{
+        #successful {
             font-size: 30px;
             margin-top: 120px;
             text-align: center;
         }
-        #btn{
+
+        #btn {
             margin-top: 30px;
             font-size: 10px;
         }
+
         #ueberschrift {
             text-align: center;
             margin-top: 20px;
+        }
+
+        .jumbotron{
+            height: 100vh;
         }
     </style>
 </head>
 
 <body>
 <nav th:replace="layouts :: navbar"></nav>
-<div class="container">
-    <h2 id="ueberschrift">Es ist ein Fehler aufgetreten!</h2>
-    <form action="#">
-        <div class="text-center" id="successful">
-            <div class="form-group" >
-                <div> <label>
-                    <span>Sie haben bereits einen privaten Parkplatz angelegt. </span>
-                    <span>Wenn sie einen neuen Anlegen möchten, </span>
-                    <span>löschen sie bitte den bereits bestehenden!</span>
-                </label> </div>
-                <div>
-                    <span>Sie können allerdings einen öffentlichen Parkplatz hinzufügen</span>
-                </div>
-                <div id="btn">
-                    <!--
-                    <a href="parkplatz_hinzufuegen_oeffentlich">
-                        <button type="submit" class="btn btn-outline-secondary btn-lg">
-                            Öffentlichen Parkplatz hinzufügen
-                        </button>
-                    </a>
-                    -->
-                    <a href="parkplatz_hinzufuegen_oeffentlich" class="btn btn-outline-secondary btn-lg" role="button">
-                        Öffentlichen Parkplatz hinzufügen
-                    </a>
-                </div>
-                <div id="btn">
-                    <!--
-                    <a href="home">
-                        <button type="submit" class="btn btn-outline-secondary btn-lg">
-                            Zurück zur Startseite
-                        </button>
-                    </a>
-                    -->
-                    <a href="home" class="btn btn-outline-secondary btn-lg" role="button">
-                        Zurück zur Startseite
-                    </a>
-                </div>
-            </div>
-        </div>
-    </form>
+<div class="jumbotron text-center">
+    <h1 class="display-3">Es ist ein Fehler aufgetreten!</h1>
+    <p class="lead">
+        <span>Sie haben bereits einen privaten Parkplatz angelegt. </span>
+        <span>Wenn sie einen neuen Anlegen möchten, </span>
+        <span>löschen sie bitte den bereits bestehenden!</span>
+    </p>
+    <hr>
+    <p>
+        Sie können allerdings einen öffentlichen Parkplatz hinzufügen
+    </p>
+    <div id="btn">
+        <!--
+        <a href="parkplatz_hinzufuegen_oeffentlich">
+            <button type="submit" class="btn btn-outline-secondary btn-lg">
+                Öffentlichen Parkplatz hinzufügen
+            </button>
+        </a>
+        -->
+        <a href="parkplatz_hinzufuegen_oeffentlich" class="btn btn-outline-secondary btn-lg" role="button">
+            Öffentlichen Parkplatz hinzufügen
+        </a>
+    </div>
+    <div id="btn">
+        <!--
+        <a href="home">
+            <button type="submit" class="btn btn-outline-secondary btn-lg">
+                Zurück zur Startseite
+            </button>
+        </a>
+        -->
+        <a href="home" class="btn btn-outline-secondary btn-lg" role="button">
+            Zurück zur Startseite
+        </a>
+    </div>
 </div>
 
 </body>
