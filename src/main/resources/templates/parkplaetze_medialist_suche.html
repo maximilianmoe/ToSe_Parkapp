@@ -197,7 +197,7 @@
         #buttonZurueckSuche {
             text-align: center;
         }
-        #btn{
+        .a-btn{
             margin-top: 1%;
             margin-bottom: 1%;
         }
@@ -237,17 +237,27 @@
             <div id="sucheFehler">
                 <h5>Es existiert kein Parkplatz mit dieser Postleitzahl</h5>
                 <h5>Bitte versuchen sie es erneut</h5>
+                <!--
                 <button id="btn" class="btn btn-outline-secondary btn-lg" type="submit" >
                     <a href="parkplaetze_medialist"> Zurück zur Suche</a>
                 </button>
+                -->
+                <a href="parkplaetze_medialist" class="btn btn-outline-secondary btn-lg a-btn" role="button">
+                    Zurück zur Suche
+                </a>
             </div>
         </div>
         <div th:unless="${parkplaetze} == 0">
 <!--            TODO Dem Button einen größeren Rand geben-->
             <div id="buttonZurueckSuche">
+                <!--
                 <button class="btn btn-outline-secondary btn-lg" type="submit">
                     <a href="parkplaetze_medialist"> Zurück zur Suche</a>
                 </button>
+                -->
+                <a href="parkplaetze_medialist" class="btn btn-outline-secondary btn-lg a-btn" role="button">
+                    Zurück zur Suche
+                </a>
             </div>
         <ul class="list-unstyled" >
             <li class="media" th:each="parkplatz : *{parkplaetze}">
