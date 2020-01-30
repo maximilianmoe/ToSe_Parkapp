@@ -1,7 +1,7 @@
 
 #Datenbank Bilder:
 
-create table Bilder (photoid int(6) auto_increment, path varchar(100), file_name varchar(100), primary key (photoid));
+create table Bilder (photoid int(6) auto_increment, path varchar(255), file_name varchar(100), primary key (photoid));
 
 alter table Bilder add foreign key (pid) references Parkplatz (pid);
 

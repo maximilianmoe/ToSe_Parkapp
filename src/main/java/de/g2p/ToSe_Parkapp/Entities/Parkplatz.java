@@ -40,7 +40,6 @@ public class Parkplatz {
     private Integer gesamtbewertung;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "aid")
     private Anbieter anbieterId;
 

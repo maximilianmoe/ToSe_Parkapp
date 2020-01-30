@@ -131,7 +131,7 @@
     <form th:action="@{/spezieller_parkplatz_öffentlich}" method="post" modelattribute="parkplatz">
     <div class="card mb-3">
         <div class="img-div">
-            <img id="main-img" th:src="@{images/parkplatz3.jpg}">
+            <img id="main-img" th:src="@{${'/photos/' + parkplatz.pid + '.jpg'}}">
         </div>
 
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>

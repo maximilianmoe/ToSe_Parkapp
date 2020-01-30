@@ -39,7 +39,6 @@ public class ParkplatzController {
     ReservierungenRepository reservierungenRepository;
     @Autowired
     HistorieRepository historieRepository;
-
     @Autowired
     BildRepository bildRepository;
 
@@ -137,25 +136,27 @@ public class ParkplatzController {
             returnstring="mein_parkplatz_oeffentlich";
         }
 
+
+
         //Saves all data in the database
         historieRepository.save(new Historie(findNutzer(), parkplatz, "create", "Parkplatz privat"));
         parkplatzRepository.saveAndFlush(parkplatz);
         finalImageName = parkplatz.getPid().toString();
+
+        Bild bild = new Bild();
         try {
-            saveImage(imageFile);
+            saveImage(bild, imageFile);
         } catch (Exception e) {
             e.printStackTrace();
             returnstring = "error";
         }
 
-        Bild bild = new Bild();
-        //bild.setFileName(imageFile.getOriginalFilename());
-        bild.setPath("/photos");
+
+
         //sets the filename in the database = pid
         bild.setFileName(parkplatz.getPid().toString());
         //Saves Picture Metadata in the database
         bildRepository.save(bild);
-
 
 
         return returnstring;
@@ -169,7 +170,7 @@ public class ParkplatzController {
 
     @PostMapping("/spezieller_parkplatz_öffentlich")
     public String spezParkplatzOeffentlichPost(@RequestParam("pid") Integer pid, @RequestParam("belegung") String belegt,
-                                               @ModelAttribute Parken parken) {
+                                               @ModelAttribute Parken parken, @RequestParam("imageFile") MultipartFile imageFile) {
 
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
         parken.setKid(konsument);
@@ -189,7 +190,22 @@ public class ParkplatzController {
             returnstring = "home";
 
         }
-        System.out.println(status);
+
+        finalImageName = parkplatz.getPid().toString();
+
+        Bild bild = new Bild();
+        try {
+            saveImage(bild, imageFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnstring = "error";
+        }
+        //Path wird in der methode saveImage gesetzt!
+        //sets the filename in the database = pid
+        bild.setFileName(parkplatz.getPid().toString());
+        //Saves Picture Metadata in the database
+        bildRepository.save(bild);
+
         parkenRepository.save(parken);
         historieRepository.save(new Historie(parken.getKid().getNid(), parken.getPid(), "create", "Parken"));
         parkplatzRepository.updateStatus(status, pid);
@@ -439,19 +455,16 @@ public class ParkplatzController {
         List<Konsument> konsumenten = konsumentRepository.findAll();
         Konsument konsument = null;
 
-        Anbieter anbieterSave = new Anbieter();
-        anbieterSave.setNid(findNutzer());
-        anbieterSave.setParkplatz(false);
         List<Historie> historieList = historieRepository.findByPid(parkplatz);
         for (Historie historieFor: historieList) {
-            historieRepository.updatePid(historieFor.getHistorienId(), null);
+            historieRepository.updatePid(null, historieFor.getHistorienId());
         }
 
         anbieterRepository.updateParkplatz(false, anbieter.getAid());
         historieRepository.save(new Historie(anbieter.getNid(), null, "update", "Parkplatzstatus Anbieter"));
-        parkplatzRepository.delete(parkplatz);
+        parkplatzRepository.updateAid(null, parkplatz.getPid());
+        parkplatzRepository.deleteParkplatz(parkplatz.getPid());
         historieRepository.save(new Historie(anbieter.getNid(), null, "delete", "Parkplatz"));
-        anbieterRepository.save(anbieterSave);
 
         return "home";
     }
@@ -472,25 +485,6 @@ public class ParkplatzController {
         Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
         return nutzer;
     }
-
-/*    //picture upload controller
-    @PostMapping("/uploadImage")
-    public String uploadImage(@RequestParam("imageFile") MultipartFile imageFile ){
-        String returnValue ="";
-        try {
-            ImageService.saveImage(imageFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-            returnValue = "error";
-        }
-
-
-        return returnValue;
-    }*/
-
-
-
-
 
     /**
      * This method converts a time, which are given as a String to the format of Time
@@ -577,11 +571,16 @@ public class ParkplatzController {
     }
      */
 
-    public void saveImage(MultipartFile imageFile) throws Exception {
+    public void saveImage(Bild bild, MultipartFile imageFile) throws Exception {
 
-        String folder = "/photos/";
+        //findet das aktuelle directory
+        Path currentPath = Paths.get(".");
+
+        //findet den kompletten Pfad vom Root directory bis zum aktuellen directory
+        Path absolutePath = currentPath.toAbsolutePath();
+        bild.setPath(absolutePath + "/src/main/resources/static/photos/");
         byte[] bytes = imageFile.getBytes();
-        Path path = Paths.get(folder + finalImageName + ".jpg");
+        Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
         Files.write(path, bytes);
     }
 

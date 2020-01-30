@@ -112,7 +112,8 @@
         <div class="hintergrund_bild" style="background-image: url('../static/images/parkplatz5.jpg');"></div>
         -->
         <div class="img-div">
-            <img id="main-img" th:src="@{images/parkplatz3.jpg}">
+            <img id="main-img" th:src="@{${'/photos/' + parkplatz.pid + '.jpg'}}"/>
+            <label th:text="${'Parkplatz PID:' + parkplatz.pid}"></label>
         </div>
         <div class="card-body">
             <h5 class="card-title">

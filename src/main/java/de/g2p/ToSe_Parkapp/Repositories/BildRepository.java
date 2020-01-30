@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BildRepository extends JpaRepository<Bild, Integer> {
 
-
 }
 
 
