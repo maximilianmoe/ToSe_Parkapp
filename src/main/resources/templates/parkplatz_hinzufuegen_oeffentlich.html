@@ -80,10 +80,10 @@
     -->
             <div class="col-4">
                 <input type="text" th:value="*{parkplatz.strasse}" th:name="strasse" class="form-control"
-                       placeholder="Straße" maxlength="30">
+                       placeholder="Straße" maxlength="30" onkeypress="return /[a-z]/i.test(event.key)">
             </div>
             <div class="col-2">
-                <input type="number" th:value="*{parkplatz.hausnummer}" th:name="hausnummer" class="form-control"
+                <input type="text" th:value="*{parkplatz.hausnummer}" th:name="hausnummer" class="form-control"
                        placeholder="Hausnummer" min="0" max="999">
             </div>
         </div>

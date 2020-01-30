@@ -85,10 +85,10 @@
     -->
             <div class="col-4">
                 <input required type="text" th:value="*{parkplatz.strasse}" th:name="strasse" class="form-control"
-                       placeholder="Straße" maxlength="30">
+                       placeholder="Straße" maxlength="30" onkeypress="return /[a-z]/i.test(event.key)">
             </div>
             <div class="col-2">
-                <input required type="number" th:value="*{parkplatz.hausnummer}" th:name="hausnummer" class="form-control"
+                <input required type="text" th:value="*{parkplatz.hausnummer}" th:name="hausnummer" class="form-control"
                        placeholder="Hausnummer" min="0" max="999">
             </div>
         </div>
@@ -151,23 +151,26 @@
             <div class="col">
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="SUV">SUV
+                        <input id="check_suv" type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp"
+                               th:value="SUV">SUV
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp"
+                        <input id="check_klein" type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp"
                                th:value="Kleinwagen">Kleinwagen
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="Van">Van
+                        <input id="check_van" type="checkbox" class="form-check-input check-test"
+                               th:name="fahrzeugtyp" th:value="Van">Van
                     </label>
                 </div>
                 <div class="form-check-inline">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="Kombi">Kombi
+                        <input id="check_kombi" type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp"
+                               th:value="Kombi">Kombi
                     </label>
                 </div>
             </div>
@@ -225,6 +228,22 @@
     wieder aud privater Parkplatz gewechselt wird.
 */
     $(document).ready(function () {
+
+        $('#check_van').click(function () {
+           $('#check_klein').prop('checked', true);
+           $('#check_suv').prop('checked', true);
+           $('#check_kombi').prop('checked', true);
+        });
+
+        $('#check_suv').click(function () {
+            $('#check_klein').prop('checked', true);
+            $('#check_kombi').prop('checked', true);
+        });
+
+        $('#check_kombi').click(function () {
+            $('#check_klein').prop('checked', true);
+        });
+
         $('.select_parkplatz').change(function () {
             if ($(this).find('option:selected').text() == 'Öffentlicher Parkplatz') {
                 $('#strafgebuehr').prop('disabled', true);

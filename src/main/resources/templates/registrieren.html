@@ -55,29 +55,31 @@
 
         <div class="row input">
             <div class="col">
-                <input type="text" th:value="*{nutzer.emailAdresse}" th:name="email" maxlength="30" class="form-control" id="mail1" placeholder="E-Mail">
+                <input required style="text-transform: lowercase" type="text" th:value="*{nutzer.emailAdresse}" th:name="email" maxlength="30" class="form-control" id="mail1" placeholder="E-Mail">
             </div>
             <div class="col">
-                <input type="text" class="form-control" id="mail2" placeholder="E-Mail bestätigen">
+                <input required style="text-transform: lowercase" type="text" class="form-control" id="mail2" placeholder="E-Mail bestätigen">
             </div>
         </div>
         <div class="row input">
             <div class="col">
-                <input type="password" th:name="passwort" maxlength="100" minlength="6" class="form-control" id="pw1"
+                <input required type="password" th:name="passwort" maxlength="100" minlength="6" class="form-control" id="pw1"
                        placeholder="Passwort">
             </div>
             <div class="col">
-                <input type="password" class="form-control" maxlength="100" minlength="6" id="pw2" placeholder="Passwort bestätigen">
+                <input required type="password" class="form-control" maxlength="100" minlength="6" id="pw2" placeholder="Passwort bestätigen">
             </div>
         </div>
         <div class="row input">
             <div class="col">
-                <select th:name="nutzertyp" class="form-control" id="nutzungs_art">
-                    <option selected disabled>Wie wollen Sie G2P nutzen?</option>
-                    <option th:value="konsument">Konsument</option>
-                    <option th:value="anbieter">Anbieter</option>
-                    <option th:value="beides">Beides</option>
-                </select>
+                <a data-tooltip title="Wenn Sie Anbieter auswählen, können Sie kein Kennzeichen angeben?">
+                    <select required th:name="nutzertyp" class="form-control" id="nutzungs_art">
+                        <option selected disabled>Wie wollen Sie G2P nutzen?</option>
+                        <option th:value="konsument">Konsument</option>
+                        <option th:value="anbieter">Anbieter</option>
+                        <option th:value="beides">Beides</option>
+                    </select>
+                </a>
             </div>
             <div class="col">
                 <!--            <div class="col" th:if="${nutzer.compareBenutzername(nutzerlist)} == false">-->
@@ -87,16 +89,18 @@
                 </div>
             -->
 
-                <input type="text" id="username" th:name="username" maxlength="20" class="form-control" placeholder="Username">
+                <input required type="text" id="username" th:name="username" maxlength="20" class="form-control" placeholder="Username">
             </div>
         </div>
         <div class="row input">
             <div class="col">
-                <input type="text" th:value="*{nutzer.vorname}" th:name="vorname" class="form-control"
+                <input required type="text" style="text-transform: capitalize"
+                       onkeypress="return /[a-z]/i.test(event.key)" th:value="*{nutzer.vorname}" th:name="vorname" class="form-control"
                        placeholder="Vorname" maxlength="30">
             </div>
             <div class="col">
-                <input type="text" th:value="*{nutzer.nachname}" th:name="nachname" class="form-control"
+                <input required type="text" style="text-transform: capitalize" onkeypress="return /[a-z]/i.test(event.key)"
+                       th:value="*{nutzer.nachname}" th:name="nachname" class="form-control"
                        placeholder="Nachname" maxlength="30">
             </div>
         </div>
@@ -104,7 +108,7 @@
         <div class="row input">
             <div class="col-6">
                 <a data-tooltip title="Bitte in folgendem Format: PA-XY-1234">
-                <input type="text" th:value="*{konsument.kennzeichen}" th:name="kennzeichen"
+                <input required type="text" th:value="*{konsument.kennzeichen}" th:name="kennzeichen"
                        class="form-control" placeholder="Kennzeichen" id="kennzeichen">
                 </a>
             </div>
@@ -239,7 +243,7 @@
         var mail1 = $('#mail1').val();
         var mail2 = $('#mail2').val();
         if (mail1 != mail2) {
-            $('#red_text2').html("Die zwei eingegebenen Email Adressen stimmer nicht überein!");
+            $('#red_text2').html("Die zwei eingegebenen Email Adressen stimmen nicht überein!");
             //alert('Die zwei eingegebenen Email Adressen stimmer nicht überein!');
             $('#btn').prop('disabled', true);
         } else {
@@ -287,7 +291,7 @@
         und der submit button wird ausgegraut, solange das Kennzeichen nicht in der richtigen Form eingegeben wurde.
      */
     $('#kennzeichen').focusout(function(){
-        var expression = /\b[A-Z]{1,3}[-][A-Z]{1,2}[-][0-9]{1,4}\b/g;
+        var expression = /\b[A-Z ÄÜÖ]{1,3}[-][A-Z ÄÜÖ]{1,2}[-][0-9]{1,4}\b/g;
         var regex = new RegExp(expression);
         var kennz = $('#kennzeichen').val();
         if(kennz.match(regex)){
