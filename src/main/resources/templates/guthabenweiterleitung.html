@@ -81,17 +81,29 @@
             margin-top: 30px;
             font-size: 10px;
         }
+
+        .jumbotron{
+            height: 100vh;
+        }
     </style>
 </head>
 
 <body>
 <nav th:replace="layouts :: navbar"></nav>
-<div class="container">
-    <h2 id="ueberschrift">Guthabenverwaltung</h2>
     <form action="#" th:action="@{/guthabenverwaltung}" method="post">
+        <!--
         <div class="text-center" id="successful">
             <div class="form-group" >
-                <label>Die Transaktion war erfolgreich!</label>
+    -->
+                <div class="jumbotron text-center">
+                    <h1 class="display-3">Guthabenverwaltung</h1>
+                    <p class="lead">
+                        <span>Die Transaktion war erfolgreich!</span>
+                    </p>
+                    <hr>
+                    <p>
+
+                    </p>
                     <div id="btn">
                         <!--
                         <button type="button" class="btn btn-outline-secondary btn-lg">
@@ -103,10 +115,27 @@
                             Zurück zur Guthabenverwaltung
                         </a>
                     </div>
+                </div>
+<!--
+                <label>Die Transaktion war erfolgreich!</label>
+                    <div id="btn">
+
+                        <button type="button" class="btn btn-outline-secondary btn-lg">
+                             Achtung: Habe type="submit" zu type="Button"
+                            <a href="guthabenverwaltung">Zurück zur Guthabenverwaltung</a>
+                        </button>
+
+                        <a href="guthabenverwaltung" class="btn btn-outline-secondary btn-lg" role="button">
+                            Zurück zur Guthabenverwaltung
+                        </a>
+                    </div>
+            -->
+        <!--
             </div>
         </div>
+        -->
     </form>
-</div>
+
 <script>
     /*
     $(document).ready(function(){

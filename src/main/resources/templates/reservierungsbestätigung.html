@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleafe.org" lang="de-De">
 
 <head>
-    <title>Reservierungsbestätigung</title>
+    <title>Error</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,61 +19,60 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
-        body {
-            background-color: white;
-        }
-
-        #successful{
+        #successful {
             font-size: 30px;
             margin-top: 120px;
             text-align: center;
         }
-        #btn{
+
+        #btn {
             margin-top: 30px;
             font-size: 10px;
         }
+
         #ueberschrift {
             text-align: center;
             margin-top: 20px;
+        }
+
+        .jumbotron{
+            height: 100vh;
         }
     </style>
 </head>
 
 <body>
 <nav th:replace="layouts :: navbar"></nav>
-<div class="container">
-    <h2 id="ueberschrift">Es ist ein Fehler aufgetreten!</h2>
-    <form action="#">
-        <div class="text-center" id="successful">
-            <div class="form-group" >
-                <div> <label>
-                    <span>Sie haben zu wenig Guthaben auf ihrem Konto. </span>
-                    <span>Bitte Klicken sie auf den Link, </span>
-                    <span>um ihr Guthaben ausreichend aufzuladen </span>
-                </label> </div>
-                <div id="btn">
-                    <!--
-                    <button type="submit" class="btn btn-outline-secondary btn-lg">
-                        <a href="guthabenverwaltung">Guthaben aufladen</a>
-                    </button>
-                    -->
-                    <a href="guthabenverwaltung" class="btn btn-outline-secondary btn-lg" role="button">
-                        Guthaben aufladen
-                    </a>
-                </div>
-                <div id="btn">
-                    <!--
-                    <button type="submit" class="btn btn-outline-secondary btn-lg">
-                        <a href="home">Zurück zur Startseite</a>
-                    </button>
-                    -->
-                    <a href="home" class="btn btn-outline-secondary btn-lg" role="button">
-                        Zurück zur Startseite
-                    </a>
-                </div>
-            </div>
-        </div>
-    </form>
+<div class="jumbotron text-center">
+    <h1 class="display-3">Es ist ein Fehler aufgetreten!</h1>
+    <p class="lead">
+        Sie haben zu wenig Guthaben auf ihrem Konto.
+    </p>
+    <hr>
+    <p>
+        <span>Bitte Klicken sie auf den Button, </span>
+        <span>um ihr Guthaben ausreichend aufzuladen </span>
+    </p>
+    <div id="btn">
+        <!--
+        <button type="submit" class="btn btn-outline-secondary btn-lg">
+            <a href="guthabenverwaltung">Guthaben aufladen</a>
+        </button>
+        -->
+        <a href="guthabenverwaltung" class="btn btn-outline-secondary btn-lg" role="button">
+            Guthaben aufladen
+        </a>
+    </div>
+    <div id="btn">
+        <!--
+        <button type="submit" class="btn btn-outline-secondary btn-lg">
+            <a href="home">Zurück zur Startseite</a>
+        </button>
+        -->
+        <a href="home" class="btn btn-outline-secondary btn-lg" role="button">
+            Zurück zur Startseite
+        </a>
+    </div>
 </div>
 
 </body>
