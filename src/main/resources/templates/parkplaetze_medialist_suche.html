@@ -19,6 +19,12 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
+        @media only screen and (max-width: 700px){
+            p{
+                font-size: small;
+            }
+        }
+
         #row1 {
             margin-top: 20px;
             margin-bottom: 20px;
@@ -198,8 +204,8 @@
             text-align: center;
         }
         .a-btn{
-            margin-top: 1%;
-            margin-bottom: 1%;
+            margin-top: 1.5%;
+            margin-bottom: 1.5%;
         }
     </style>
 </head>
@@ -427,6 +433,17 @@
             marker.setAnimation(google.maps.Animation.BOUNCE);
         }
     }
+
+    $(document).ready(function () {
+        if(window.matchMedia('(max-width: 700px)').matches){
+            $(':button').attr('class', 'btn btn-outline-secondary btn-sm');
+        }
+        /*
+        else{
+            $(':button').attr('class', 'btn btn-outline-secondary btn-lg');
+        }
+        */
+    });
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjjzixYKFLOyGeDW_1PPP9nmLeAQA3wk0&callback=initMap">
