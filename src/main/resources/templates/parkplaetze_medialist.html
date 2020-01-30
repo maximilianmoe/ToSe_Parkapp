@@ -19,6 +19,12 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
+        @media only screen and (max-width: 700px){
+            p{
+                font-size: small;
+            }
+        }
+
         #row1 {
             margin-top: 20px;
             margin-bottom: 20px;
@@ -211,8 +217,6 @@
         </div>
     </div>
     </form>
-    <!-- TODO WICHTIG!!!!!!!!!!!!!!!!!!     Hier muss noch Google Maps eingebunden werden!
-    -->
     <!--
     <div class="container">
         <div id="maps">
@@ -227,6 +231,7 @@
     -->
     <div class="container">
     <ul class="list-unstyled">
+        <div style="overflow-x: auto;">
         <li class="media" th:each="parkplatz : *{parkplaetze}">
             <img th:src="@{images/parkplatz3.jpg}" src="../static/images/parkplatz3.jpg"
                     class="mr-3 new_img" alt="Bild von Parkplatz">
@@ -326,7 +331,6 @@
                            </div>
                            <div id="btn_link_div">
                                <form th:action="@{/parkplaetze_medialist}" method="post">
-                                   <!--                            TODO set the position of the button on the bottom right-->
                                    <button id="btn_link" th:name="button" th:value="${parkplatz.pid}" class="btn btn-outline-secondary btn-lg" type="submit" >Zum Parkplatz</button>
                                </form>
                            </div>
@@ -337,17 +341,17 @@
                     <div class="col-1">
 
                         <div class="flex" th:if="${parkplatz.status == 'frei'}">
-                            <div id="ampel_green">
+                            <div id="ampel_green" class="ampel">
                                 &nbsp;
                             </div>
                         </div>
                         <div class="flex" th:if="${parkplatz.status == 'belegt'}">
-                            <div id="ampel_red">
+                            <div id="ampel_red" class="ampel">
                                 &nbsp;
                             </div>
                         </div>
                         <div class="flex" th:if="${parkplatz.status == 'fremdbelegt'}">
-                            <div id="ampel_orange">
+                            <div id="ampel_orange" class="ampel">
                                 &nbsp;
                             </div>
                         </div>
@@ -355,69 +359,7 @@
                 </div>
             </div>
         </li>
-        <!--<li class="media my-4">
-            <img th:src="@{images/parkplatz7.jpg}" src="../static/images/parkplatz7.jpg" class="mr-3 new_img" alt="...">
-            <div class="media-body">
-
-                <div class="row">
-                    <div class="col-8">
-                        <h5 class="mt-0 mb-1">PLZ + STR + Hausnummer</h5>
-                        <div class="data">
-                            <p>Fahrzeugtypen:</p>
-                            <p>Parkgebühr:</p>
-                            <p>Strafgebühr:</p>
-                            <p>Parkhöchstdauer:</p>
-                            <p>Parkplatz Art: Privat</p>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div id="stars">
-                            <p class="fa fa-star checked"></p>
-                            <p class="fa fa-star checked"></p>
-                            <p class="fa fa-star checked"></p>
-                            <p class="fa fa-star checked"></p>
-                            <p class="fa fa-star checked"></p>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div id="ampel_orange">
-                            &nbsp;
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="media">
-            <img th:src="@{images/parkplatz5.jpg}" src="../static/images/parkplatz5.jpg" class="mr-3 new_img" alt="...">
-            <div class="media-body">
-                <div class="row">
-                    <div class="col-8">
-                        <h5 class="mt-0 mb-1">PLZ + STR + Hausnummer</h5>
-                        <div class="data">
-                            <p>Fahrzeugtypen:</p>
-                            <p>Parkgebühr:</p>
-                            <p>Strafgebühr:</p>
-                            <p>Parkhöchstdauer:</p>
-                            <p>Parkplatz Art: Privat</p>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div id="stars">
-                            <p class="fa fa-star checked"></p>
-                            <p class="fa fa-star checked"></p>
-                            <p class="fa fa-star checked"></p>
-                            <p class="fa fa-star"></p>
-                            <p class="fa fa-star"></p>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div id="ampel_red">
-                            &nbsp;
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>-->
+        </div>
     </ul>
     </div>
 
@@ -457,6 +399,37 @@
             marker.setAnimation(google.maps.Animation.BOUNCE);
         }
     }
+    /*
+    $(document).ready(function () {
+        if(window.matchMedia('(max-width: 700px)').matches){
+            $('#btn_link').attr('class', 'btn btn-outline-secondary btn-sm');
+        }
+        else{
+            $('#btn_link').attr('class', 'btn btn-outline-secondary btn-lg');
+        }
+    });
+    */
+    $(document).ready(function () {
+        if(window.matchMedia('(max-width: 700px)').matches){
+            $(':button').attr('class', 'btn btn-outline-secondary btn-sm');
+        }
+        /*
+        else{
+            $(':button').attr('class', 'btn btn-outline-secondary btn-lg');
+        }
+        */
+    });
+    /*
+    function checkPosition() {
+        if(window.matchMedia('(max-width: 700px)').matches){
+            $('#btn_link').attr('class', 'btn btn-outline-secondary btn-sm');
+        }
+        else{
+            $('#btn_link').attr('class', 'btn btn-outline-secondary btn-lg');
+        }
+    }
+    */
+
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjjzixYKFLOyGeDW_1PPP9nmLeAQA3wk0&callback=initMap">

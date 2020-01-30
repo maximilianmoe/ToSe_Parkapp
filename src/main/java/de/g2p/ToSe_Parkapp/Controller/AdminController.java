@@ -4,6 +4,8 @@ import de.g2p.ToSe_Parkapp.Entities.*;
 import de.g2p.ToSe_Parkapp.Repositories.*;
 import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,8 @@ public class AdminController {
     TransaktionRepository transaktionRepository;
     @Autowired
     ParkplatzRepository parkplatzRepository;
+    @Autowired
+    HistorieRepository historieRepository;
 
     MailService mailService;
 
@@ -48,10 +52,12 @@ public class AdminController {
             if (button.equals(1)) {
                 nutzer.setSperrung(false);
                 nutzerRepository.updateSperrung(nutzer.getNid(), false);
+                historieRepository.save(new Historie(nutzer, null, "update", "Sperrung"));
                 returnstring = "/nutzer_entsperrt";
             } else if (button.equals(2)) {
                 nutzer.setSperrung(true);
                 nutzerRepository.updateSperrung(nutzer.getNid(), true);
+                historieRepository.save(new Historie(nutzer, null, "update ", "Sperrung"));
                 returnstring = "/nutzer_gesperrt";
             }
         }
@@ -69,9 +75,14 @@ public class AdminController {
             Anbieter anbieter = anbieterRepository.findByNid(nutzer);
             Konsument konsument = konsumentRepository.findByNid(nutzer);
             Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
+            List<Historie> historieList = historieRepository.findByNid(anbieter.getNid());
+            for (Historie historieFor : historieList) {
+                historieRepository.updateNid(historieFor.getHistorienId(), null);
+            }
             konsumentRepository.delete(konsument);
             anbieterRepository.delete(anbieter);
             parkplatzRepository.delete(parkplatz);
+            historieRepository.save(new Historie(findNutzer(), null, "delete", "Konsument, Anbieter und Parkplatz"));
 
         } else if (nutzer.getRolle().equalsIgnoreCase("anbieter")) {
             System.out.println("rolle anbieter");
@@ -79,13 +90,17 @@ public class AdminController {
             Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
             anbieterRepository.delete(anbieter);
             parkplatzRepository.delete(parkplatz);
+            historieRepository.save(new Historie(findNutzer(), null, "delete","Anbieter und Parkplatz"));
         } else if (nutzer.getRolle().equalsIgnoreCase("konsument")) {
             System.out.println("rolle konsument");
             Konsument konsument = konsumentRepository.findByNid(nutzer);
             konsumentRepository.delete(konsument);
+            historieRepository.save(new Historie(findNutzer(), null, "delete", "Konsument"));
         }
         mailService.sendSimpleMessage(nutzer.getEmailAdresse(),"Account gelöscht.", "Ihr Account wurde von einem Adminsitrator gelöscht.");
         nutzerRepository.delete(nutzer);
+        historieRepository.save(new Historie(findNutzer(), null, "delete", "Nutzer"));
+
 
         return "nutzer_geloescht";
     }
@@ -97,10 +112,13 @@ public class AdminController {
         String returnstring = "";
         if (button.equals(1)) {
             nutzerRepository.updateAdmin(nid, "admin");
+            historieRepository.save(new Historie(nutzer, null, "update", "Adminstatus"));
+
             returnstring = "nutzer_adminrechte_erteilt";
         }
         else if (button.equals(2)) {
             nutzerRepository.updateAdmin(nid, "nutzer");
+            historieRepository.save(new Historie(nutzer, null, "update", "Adminstatus"));
             returnstring = "nutzer_adminrechte_entzogen";
 
         }
@@ -123,8 +141,42 @@ public class AdminController {
 
     @GetMapping("/admin_vergangene_transaktionen")
     public String adminTrans(Model model) {
+        List<Konsument> konsumenten = konsumentRepository.findAll();
+        List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
         List<Transaktion> transaktionList = transaktionRepository.findAll();
+        model.addAttribute("parkplaetze", parkplaetze);
+        model.addAttribute("konsumenten", konsumenten);
         model.addAttribute("transaktionen", transaktionList);
         return "admin_vergangene_transaktionen";
+    }
+
+    @GetMapping("/logtabelle")
+    public String logtabelleGet(Model model) {
+        List<Historie> histories = historieRepository.findAll();
+//        List<Historie> historieList = null;
+//        for (Historie historieFor : histories) {
+//            System.out.println(historieFor.getHistorienId()+" historienid historienfor");
+//            System.out.println(historieFor.getHistorienId() > (histories.size() - 200));
+//            if (historieFor.getHistorienId() > (histories.size()-200)) {
+//                System.out.println("historienid zwischen hid max und hidmax - 200");
+//                historieList.add(historieFor);
+//            }
+//        }
+        model.addAttribute("historien", histories);
+        model.addAttribute("nutzerlist", nutzerRepository.findAll());
+        model.addAttribute("parkplaetze", parkplatzRepository.findAll());
+        return "logtabelle";
+    }
+
+    public Nutzer findNutzer() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String benutzername = "";
+        if(principal instanceof UserDetails)
+            benutzername = ((UserDetails) principal).getUsername();
+        else
+            benutzername = principal.toString();
+
+        Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
+        return nutzer;
     }
 }

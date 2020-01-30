@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleafe.org" lang="de-De">
+
+<head>
+    <title>Vergangene Transaktionen</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- NÖTIG um Interaktivität zu aktivieren-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <style>
+        #h_3 {
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin-top: 5%;
+            margin-bottom: 3%;
+        }
+
+        #ueberschrift {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+<div class="container">
+    <div id="ueberschrift">
+        <h3 id="h_3">Logtabelle</h3>
+<!--        TODO nur anzeigen, wenn man eine möglichkeit gefunden hat, die einträge auf 200 zu beschränken-->
+<!--        <label>Hier werden die letzten 200 Logeinträge angezeigt</label>-->
+        <div id="table_div">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nutzer-ID</th>
+                    <th scope="col">Aktion</th>
+                    <th scope="col">Zusatzinfo</th>
+                    <th scope="col">Parkplatz-ID</th>
+                    <th scope="col">Benutzername</th>
+<!--                    TODO soll zeit hinzugefügt werden?-->
+<!--                    <th scope="col">Zeit</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="historie : ${historien}" >
+                    <td th:text="${historie.historienId}">Historien-ID</td>
+<!--                    <td th:text="${historie.nid}"></td>-->
+<!--                    <td th:text="${historie.pid}"></td>-->
+                    <td>
+                        <div th:if="${historie.nid} == null">
+                            <span>Kein Nutzer beteiligt</span>
+                        </div>
+                        <div th:unless="${historie.nid} == null">
+                            <span th:text="${historie.compareNid(nutzerlist)}">Nutzer-ID</span>
+                        </div>
+                    </td>
+                    <td th:text="${historie.aktion}">Aktion</td>
+                    <td th:text="${historie.info}">Zusatzinfo</td>
+                    <td>
+                        <div th:if="${historie.pid} == null">
+                            <span>Kein Parkplatz beteiligt</span>
+                        </div>
+                        <div th:unless="${historie.pid} == null">
+                            <span th:text="${historie.comparePid(parkplaetze)}">Parkplatz-ID</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div th:if="${historie.nid} == null">
+                            <span>Kein Nutzer beteiligt</span>
+                        </div>
+                        <div th:unless="${historie.nid} == null">
+                            <span th:text="${historie.compareBenutzername(nutzerlist)}">Benutzername</span>
+                        </div>
+                    </td>
+
+<!--                    <td th:text="${historie.Zeit}"></td>-->
+                </tr>
+                </tbody>
+            </table>
+    </div>
+    </div>
+</div>
+</body>
+</html>

@@ -28,7 +28,8 @@ public class ReservierungController {
     ParkplatzRepository parkplatzRepository;
     @Autowired
     TransaktionRepository transaktionRepository;
-
+    @Autowired
+    HistorieRepository historieRepository;
 
 
     @GetMapping("/meine_reservierungen")
@@ -103,36 +104,34 @@ public class ReservierungController {
         for (Parken parken1 : parkenList) {
             if (!parken1.isFreigabe()) {
                 if (konsument.getKidKonsument() == parken1.getKid()) {
-                    System.out.println(parken1.getKid() + "    kid parken1");
                     assert false;
                     parkens.add(parken1);
                 }
-                System.out.println(parkens.toString());
             }
         }
         if (button.contains("freigebenSpeichernParken") || button.contains("freigebenZurueckParken")) {
             for (Parken parken1 : parkens) {
                 if (parken1.getOeffentlich()) {
-                    System.out.println("parken Öffentlich");
                     parkenOeffentlich = parken1;
                 }
             }
-            assert parkenOeffentlich != null;
+            assert false;
             Parkplatz parkplatzPark = parkplatzRepository.findByPid(parkenOeffentlich.getPidParkplatz());
-            System.out.println("freigebenSpeichern FreigebenZurueck IfSchleife Parken");
             if (button.contains("freigebenSpeichernParken")) {
-                System.out.println(starsRes + "     starsRes Parken");
-                System.out.println("freigebenSpeichernParken If Schleife");
                 Integer gesamtbewertung = parkplatzPark.getGesamtbewertung()+starsRes;
                 Integer bewertungsanzahl = parkplatzPark.getBewertungsanzahl() + 1;
                 Integer bewertung = (gesamtbewertung)/bewertungsanzahl;
                 parkplatzRepository.updateBewertung(bewertung, bewertungsanzahl, gesamtbewertung, parkplatzPark.getPid());
+                historieRepository.save(new Historie(konsument.getNid(), parkplatzPark, "update", "Bewertung"));
             }
             returnstring = "home";
             assert false;
             parkenRepository.updateFreigabe(true, parkenOeffentlich.getParkid());
-            parkplatzRepository.updateStatus("frei", parkplatzPark.getPid());
+            historieRepository.save(new Historie(konsument.getNid(), parkplatzPark, "update", "Freigabe Parken"));
+            parkplatzRepository.updateStatus("fremdbelegt", parkplatzPark.getPid());
+            historieRepository.save(new Historie(konsument.getNid(), parkplatzPark, "update", "Status Parkplatz"));
             konsumentRepository.updatebelegt(false, konsument.getKid());
+            historieRepository.save(new Historie(konsument.getNid(), parkplatzPark, "update","belegt Konsument"));
         }
         return returnstring;
     }
@@ -170,7 +169,9 @@ public class ReservierungController {
             System.out.println("stornieren");
             returnstring = "home";
             konsumentRepository.updateReserviert(false, konsument.getKid());
+            historieRepository.save(new Historie(konsument.getNid(), parkenPrivat.getPid(), "update", "reserviert Konsument"));
             reservierungenRepository.updateBeendet(true, reservierung.getRid());
+            historieRepository.save(new Historie(konsument.getNid(), reservierung.getPid(), "update", "beendet Reservierung"));
 
         }
 
@@ -200,10 +201,14 @@ public class ReservierungController {
                 //TODO muss noch gesetzt werden
                 transaktion.setParkid(null);
                 reservierungenRepository.updateResZuParken(true, reservierung.getRid());
+                historieRepository.save(new Historie(konsument.getNid(), parkplatz, "update", "ResZuParken Reservierung"));
                 konsumentRepository.updatebelegt(true, konsument.getKid());
+                historieRepository.save(new Historie(konsument.getNid(), parkplatz, "update", "belegt Konsument"));
                 parkenRepository.saveAndFlush(parkenSave);
                 parkplatzRepository.updateStatus("belegt", reservierung.getPidInteger());
+                historieRepository.save(new Historie(konsument.getNid(), parkplatz, "update", "Status Parkplatz"));
                 transaktionRepository.save(transaktion);
+                historieRepository.save(new Historie(konsument.getNid(), parkplatz, "create", "Transaktion"));
             }
         }
 
@@ -233,6 +238,7 @@ public class ReservierungController {
                 Integer bewertung = (gesamtbewertung)/bewertungsanzahl;
                 System.out.println(bewertung+"     bewertung");
                 parkplatzRepository.updateBewertung(bewertung, bewertungsanzahl, gesamtbewertung, parkplatzRes.getPid());
+                historieRepository.save(new Historie(konsument.getNid(), parkplatzRes, "update","Bewertung"));
             }
 
             if (!transaktion.isAbgeschlossen())
@@ -245,24 +251,32 @@ public class ReservierungController {
                     betrag = betragP + betragT;
                     System.out.println(betrag+" Gesamtbetrag");
                     transaktionRepository.updateGebuehr(true, betrag, transaktion.getTid());
-                    System.out.println(transaktion.getTid()+"   TID transaktion");
+                    historieRepository.save(new Historie(konsument.getNid(), null, "update", "Gebühr Transaktion"));
 
                 }
 
             returnstring = "home";
             assert parkenPrivat != null;
             transaktionRepository.updateAbgeschlossen(true, transaktion.getTid());
+            historieRepository.save(new Historie(konsument.getNid(), null, "update", "abgeschlossen Transaktion"));
             Nutzer nutzer = konsument.getNid();
             Integer saldoAktuell = nutzer.getSaldo();
             nutzerRepository.updateSaldo( (saldoAktuell-transaktion.getBetrag()),konsument.getNid().getNid() );
+            historieRepository.save(new Historie(konsument.getNid(), null, "update", "Saldo"));
             Nutzer nutzerAnbieter = nutzerRepository.findByNid(parkplatzRes.getAnbieterId().getNid().getNid());
             Integer saldoAnbieter = nutzerAnbieter.getSaldo();
             nutzerRepository.updateSaldo((saldoAnbieter+transaktion.getBetrag()),nutzerAnbieter.getNid());
+            historieRepository.save(new Historie(nutzerAnbieter, null, "update", "Saldo"));
             konsumentRepository.updatebelegt(false, konsument.getKid());
+            historieRepository.save(new Historie(konsument.getNid(), null, "update", "belegt Konsument"));
             konsumentRepository.updateReserviert(false, konsument.getKid());
+            historieRepository.save(new Historie(konsument.getNid(), null, "update", "reserviert Konsument"));
             parkenRepository.updateFreigabe(true, parkenPrivat.getParkid());
+            historieRepository.save(new Historie(konsument.getNid(), parkplatzRes, "update", "Freigabe Reservierung"));
             reservierungenRepository.updateBeendet(true, reservierung.getRid());
+            historieRepository.save(new Historie(konsument.getNid(), parkplatzRes, "update", "beendet Reservierung"));
             parkplatzRepository.updateStatus("frei", parkplatzRes.getPid());
+            historieRepository.save(new Historie(konsument.getNid(), parkplatzRes, "update", "Status Parkplatz"));
         }
         return returnstring;
     }

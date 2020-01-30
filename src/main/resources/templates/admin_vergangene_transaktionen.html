@@ -46,7 +46,6 @@
                 <th scope="col">betrag</th>
                 <th scope="col">Gebühr</th>
                 <th scope="col">Datum</th>
-                <th scope="col">Park-ID</th>
                 <th scope="col">Parkplatz-ID</th>
                 <th scope="col">abgeschlossen</th>
             </tr>
@@ -56,8 +55,8 @@
                 <td colspan="9"> <h5>Es existieren keine Transaktionen</h5></td>
             </tr>
             <tr th:unless="${transaktionen} == 0" th:each="transaktion : ${transaktionen}">
-                <td><span th:text="${transaktion.rid}">Transaktions-ID</span></td>
-                <td><span th:text="${transaktion.kid}">Konsumenten-ID</span></td>
+                <td><span th:text="${transaktion.tid}">Transaktions-ID</span></td>
+                <td><span th:text="${transaktion.compareKid(konsumenten)}">Konsumenten-ID</span></td>
 <!--                <td><span th:text="${transaktion.aid}">Anbieter-ID</span></td>-->
                 <td><span th:text="${transaktion.betrag}">Betrag</span></td>
                 <td>
@@ -69,8 +68,7 @@
                     </div>
                 </td>
                 <td><span th:text="${transaktion.datum}">Datum</span></td>
-                <td><span th:text="${transaktion.parkid}">Park-ID</span></td>
-                <td><span th:text="${transaktion.pid}">Parkplatz-ID</span></td>
+                <td><span th:text="${transaktion.comparePid(parkplaetze)}">Parkplatz-ID</span></td>
                 <td>
                     <div th:if="${transaktion.abgeschlossen} == true">
                         <span>Ja</span>

@@ -1,10 +1,13 @@
 package de.g2p.ToSe_Parkapp.Controller;
 
+import de.g2p.ToSe_Parkapp.Entities.Historie;
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
 import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ReservierungenRepository;
+import de.g2p.ToSe_Parkapp.Entities.Reservierung;
+import de.g2p.ToSe_Parkapp.Repositories.*;
 import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,6 +31,8 @@ public class WebController {
     ParkplatzRepository parkplatzRepository;
     @Autowired
     ReservierungenRepository reservierungenRepository;
+    @Autowired
+    HistorieRepository historieRepository;
 
     MailService mailService;
 
@@ -186,6 +191,7 @@ public class WebController {
         String returnString = "";
         if (check) {
             nutzerRepository.updatePasswort(emailaddress, password);
+            historieRepository.save(new Historie(nutzer, null, "update", "Passwort"));
             returnString = "passwort_zurueckgesetzt";
         } else {
 //            TODO change errror_page to specific error_page for this content

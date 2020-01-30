@@ -4,6 +4,7 @@
 <head>
     <title>Meine Reservierungen</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -18,6 +19,59 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
+        @media only screen and (max-width: 900px){
+            table, thead, tbody, th, td, tr{
+                display: block;
+            }
+
+            thead tr{
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            tr{border: 1px solid #ccc;}
+
+            td{
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+            }
+
+            #freigeben_btn:before{
+                text-align: center;
+            }
+
+            td:before{
+                position: absolute;
+                top: 6px;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+            }
+
+            .td2:nth-of-type(1):before{content: "Beparkt";}
+            .td2:nth-of-type(2):before{content: "Reservierungs-ID";}
+            .td2:nth-of-type(3):before{content: "Parkplatz-ID";}
+            .td2:nth-of-type(4):before{content: "Anfangs-Datum";}
+            .td2:nth-of-type(5):before{content: "Anfangs-Zeit";}
+            .td2:nth-of-type(6):before{content: "Ende-Datum";}
+            .td2:nth-of-type(7):before{content: "Ende-Zeit";}
+            .td2:nth-of-type(8):before{content: "Stornieren";}
+            .td2:nth-of-type(9):before{content: "Beparken";}
+            .td2:nth-of-type(10):before{content: "Parkplatz Freigeben"}
+
+
+            .td3:nth-of-type(1):before{content: "Park-ID";}
+            .td3:nth-of-type(2):before{content: "Parkplatz-ID";}
+            .td3:nth-of-type(3):before{content: "Parkplatz Freigeben";}
+
+
+
+        }
+
         #h_3 {
             text-align: center;
             font-family: Georgia, 'Times New Roman', Times, serif;
@@ -81,11 +135,11 @@
         .rate>label:hover~input:checked~label {
             color: #c59b08;
         }
-
+/*
         #freigeben_btn{
             text-align: center;
         }
-
+*/
         th{
             text-align: center;
         }
@@ -94,9 +148,18 @@
             text-align: center;
         }
 
+        .td2{
+            text-align: right;
+        }
+
+        .td3{
+            text-align: right;
+        }
+
         table{
             table-layout: fixed;
             width: 100%;
+            border-collapse: collapse;
         }
 
         /* 2. Star Rating */
@@ -153,7 +216,6 @@
     <div id="table1">
         <table class="table table-striped" id="testing">
             <thead>
-<!--            TODO get Thymeleaf to work on the table-->
             <tr>
                 <th scope="col">Beparkt</th>
                 <th scope="col">Reservierungs-ID</th>
@@ -172,31 +234,30 @@
                 <td colspan="10">Sie haben noch keinen Parkplatz reserviert</td>
             </tr>
             <tr th:unless="${reservierungen} == 0" th:each="reservierung : ${reservierungen}">
-<!--                TODO statt ja und nein evtl einen grünen haken/ein rotes kreuz-->
-                <td id="check_table">
+                <td class="td2" id="check_table">
                     <span class="check-value" th:if="${reservierung.resZuParken} == true">Ja</span>
                     <span class="check-value" th:unless="${reservierung.resZuParken} == true">Nein</span>
                 </td>
-                <td><span th:text="${reservierung.rid}">Reservierungs-ID</span></td>
-                <td><span th:text="${parkplatz.pid}">Parkplatz-ID</span></td>
-                <td><span th:text="${reservierung.startDatum}">Anfangsdatum</span></td>
-                <td><span th:text="${reservierung.startTime}">Anfangszeit</span></td>
-                <td><span th:text="${reservierung.endeDatum}">Enddatum</span></td>
-                <td><span th:text="${reservierung.endTime}">Endzeit</span></td>
-                <td class="table_btn">
+                <td class="td2"><span th:text="${reservierung.rid}">Reservierungs-ID</span></td>
+                <td class="td2"><span th:text="${parkplatz.pid}">Parkplatz-ID</span></td>
+                <td class="td2"><span th:text="${reservierung.startDatum}">Anfangsdatum</span></td>
+                <td class="td2"><span th:text="${reservierung.startTime}">Anfangszeit</span></td>
+                <td class="td2"><span th:text="${reservierung.endeDatum}">Enddatum</span></td>
+                <td class="td2"><span th:text="${reservierung.endTime}">Endzeit</span></td>
+                <td class="table_btn td2">
                     <button type="submit" class="btn btn-outline-secondary btn-sm"
                             id="stornieren_btn" th:name="button" th:value="stornieren">
                         <input hidden th:name="rateRes" th:value="0">Stornieren</button>
 
                 </td>
-                <td class="table_btn">
+                <td class="table_btn td2">
                     <a data-tooltip data-placement="bottom" title="Klicken Sie hier, wenn Sie auf dem Parkplatz parken">
                         <button type="submit" class="btn btn-outline-secondary btn-sm"
                                 id="beparken_btn" th:name="button" th:value="beparken">
                             <input hidden>Beparken</button>
                     </a>
                 </td>
-                <td class="table_btn" id="freigeben_btn">
+                <td class="table_btn td2">
                     <a data-tooltip data-placement="bottom" title="Klicken Sie hier, wenn Sie den Parkplatz
                         wieder verlassen haben">
                         <button disabled id="freigeben_btn2" type="button" class="btn btn-outline-secondary btn-sm"
@@ -268,13 +329,13 @@
                             <td colspan="3">Sie haben noch keine öffentlichen Parkplätze beparkt</td>
                         </tr>
                         <tr th:unless="${parken} == 0">
-                            <td><span th:text="${parken.parkid}">Parkid</span></td>
-                            <td><span th:text="${parkplatzParken.pid}">Parkid</span></td>
+                            <td class="td3"><span th:text="${parken.parkid}">Parkid</span></td>
+                            <td class="td3"><span th:text="${parkplatzParken.pid}">Parkid</span></td>
                             <!--
                             <td><span th:text="${parken.start}">Start</span></td>
                             <td><span th:text="${parken.ende}">Ende</span></td>
                             -->
-                            <td class="table_btn" id="freigeben_btn">
+                            <td class="table_btn td2" id="freigeben_btn">
                                 <button type="button" class="btn btn-outline-secondary btn-sm"
                                      data-toggle="modal"
                                      data-target="#exampleModal2" th:name="buttonFreigeben" th:value="freigebenParken">Freigeben</button>

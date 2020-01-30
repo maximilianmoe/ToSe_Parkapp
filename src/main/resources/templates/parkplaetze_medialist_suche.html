@@ -19,6 +19,12 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
+        @media only screen and (max-width: 700px){
+            p{
+                font-size: small;
+            }
+        }
+
         #row1 {
             margin-top: 20px;
             margin-bottom: 20px;
@@ -197,9 +203,9 @@
         #buttonZurueckSuche {
             text-align: center;
         }
-        #btn{
-            margin-top: 1%;
-            margin-bottom: 1%;
+        .a-btn{
+            margin-top: 1.5%;
+            margin-bottom: 1.5%;
         }
     </style>
 </head>
@@ -220,8 +226,6 @@
 <!--            </div>-->
 <!--        </div>-->
 <!--    </div>-->
-    <!-- TODO WICHTIG!!!!!!!!!!!!!!!!!!     Hier muss noch Google Maps eingebunden werden!
-    -->
     <!--
     <div class="container">
         <div id="maps">
@@ -239,16 +243,27 @@
             <div id="sucheFehler">
                 <h5>Es existiert kein Parkplatz mit dieser Postleitzahl</h5>
                 <h5>Bitte versuchen sie es erneut</h5>
+                <!--
                 <button id="btn" class="btn btn-outline-secondary btn-lg" type="submit" >
                     <a href="parkplaetze_medialist"> Zurück zur Suche</a>
                 </button>
+                -->
+                <a href="parkplaetze_medialist" class="btn btn-outline-secondary btn-lg a-btn" role="button">
+                    Zurück zur Suche
+                </a>
             </div>
         </div>
         <div th:unless="${parkplaetze} == 0">
+<!--            TODO Dem Button einen größeren Rand geben-->
             <div id="buttonZurueckSuche">
+                <!--
                 <button class="btn btn-outline-secondary btn-lg" type="submit">
                     <a href="parkplaetze_medialist"> Zurück zur Suche</a>
                 </button>
+                -->
+                <a href="parkplaetze_medialist" class="btn btn-outline-secondary btn-lg a-btn" role="button">
+                    Zurück zur Suche
+                </a>
             </div>
         <ul class="list-unstyled" >
             <li class="media" th:each="parkplatz : *{parkplaetze}">
@@ -418,6 +433,17 @@
             marker.setAnimation(google.maps.Animation.BOUNCE);
         }
     }
+
+    $(document).ready(function () {
+        if(window.matchMedia('(max-width: 700px)').matches){
+            $(':button').attr('class', 'btn btn-outline-secondary btn-sm');
+        }
+        /*
+        else{
+            $(':button').attr('class', 'btn btn-outline-secondary btn-lg');
+        }
+        */
+    });
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjjzixYKFLOyGeDW_1PPP9nmLeAQA3wk0&callback=initMap">
