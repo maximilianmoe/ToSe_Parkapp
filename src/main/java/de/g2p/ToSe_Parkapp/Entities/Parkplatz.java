@@ -18,6 +18,7 @@ public class Parkplatz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="pid")
     private Integer pid;
 
     @Column(name = "FTYP")
@@ -39,7 +40,6 @@ public class Parkplatz {
     private Integer gesamtbewertung;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "aid")
     private Anbieter anbieterId;
 

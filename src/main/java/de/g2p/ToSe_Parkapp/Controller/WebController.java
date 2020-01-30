@@ -2,11 +2,14 @@ package de.g2p.ToSe_Parkapp.Controller;
 
 import de.g2p.ToSe_Parkapp.Entities.Historie;
 import de.g2p.ToSe_Parkapp.Entities.Nutzer;
+import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
+import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
+import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
+import de.g2p.ToSe_Parkapp.Repositories.ReservierungenRepository;
 import de.g2p.ToSe_Parkapp.Entities.Reservierung;
 import de.g2p.ToSe_Parkapp.Repositories.*;
 import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,12 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.sql.Time;
-import java.util.*;
 
 @Controller
 public class WebController {
@@ -54,7 +51,7 @@ public class WebController {
     //GetMapping for the error page
     @GetMapping("/errorpage")
     public String error() {
-        return "error_page";
+        return "error-page";
     }
 
     @GetMapping("/error_bereits_ein_parkplatz")

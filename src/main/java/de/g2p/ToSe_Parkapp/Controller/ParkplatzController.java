@@ -10,6 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,8 +39,14 @@ public class ParkplatzController {
     ReservierungenRepository reservierungenRepository;
     @Autowired
     HistorieRepository historieRepository;
+    @Autowired
+    BildRepository bildRepository;
 
     Parkplatz parkplatz;
+
+    private String finalImageName;
+
+
 
     @GetMapping("/mein_parkplatz_oeffentlich")
     public String meinOeffentlichGet() {
@@ -91,7 +102,8 @@ public class ParkplatzController {
     @PostMapping("/parkplatz_hinzufuegen")
     public String addParkplatz(@ModelAttribute Parkplatz parkplatz,
                                @RequestParam("parkplatzChecked") String checked,
-                               @RequestParam("fahrzeugtyp") String fahrzeugtyp, Model model) {
+                               @RequestParam("fahrzeugtyp") String fahrzeugtyp, Model model,
+                               @RequestParam("imageFile") MultipartFile imageFile) {
 
         String returnstring = "";
         Anbieter aid = anbieterRepository.findByNid(findNutzer());
@@ -124,9 +136,29 @@ public class ParkplatzController {
             returnstring="mein_parkplatz_oeffentlich";
         }
 
+
+
         //Saves all data in the database
         historieRepository.save(new Historie(findNutzer(), parkplatz, "create", "Parkplatz privat"));
         parkplatzRepository.saveAndFlush(parkplatz);
+        finalImageName = parkplatz.getPid().toString();
+
+        Bild bild = new Bild();
+        try {
+            saveImage(bild, imageFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnstring = "error";
+        }
+
+
+
+        //sets the filename in the database = pid
+        bild.setFileName(parkplatz.getPid().toString());
+        //Saves Picture Metadata in the database
+        bildRepository.save(bild);
+
+
         return returnstring;
     }
 
@@ -138,7 +170,7 @@ public class ParkplatzController {
 
     @PostMapping("/spezieller_parkplatz_öffentlich")
     public String spezParkplatzOeffentlichPost(@RequestParam("pid") Integer pid, @RequestParam("belegung") String belegt,
-                                               @ModelAttribute Parken parken) {
+                                               @ModelAttribute Parken parken, @RequestParam("imageFile") MultipartFile imageFile) {
 
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
         parken.setKid(konsument);
@@ -158,7 +190,22 @@ public class ParkplatzController {
             returnstring = "home";
 
         }
-        System.out.println(status);
+
+        finalImageName = parkplatz.getPid().toString();
+
+        Bild bild = new Bild();
+        try {
+            saveImage(bild, imageFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnstring = "error";
+        }
+        //Path wird in der methode saveImage gesetzt!
+        //sets the filename in the database = pid
+        bild.setFileName(parkplatz.getPid().toString());
+        //Saves Picture Metadata in the database
+        bildRepository.save(bild);
+
         parkenRepository.save(parken);
         historieRepository.save(new Historie(parken.getKid().getNid(), parken.getPid(), "create", "Parken"));
         parkplatzRepository.updateStatus(status, pid);
@@ -408,19 +455,16 @@ public class ParkplatzController {
         List<Konsument> konsumenten = konsumentRepository.findAll();
         Konsument konsument = null;
 
-        Anbieter anbieterSave = new Anbieter();
-        anbieterSave.setNid(findNutzer());
-        anbieterSave.setParkplatz(false);
         List<Historie> historieList = historieRepository.findByPid(parkplatz);
         for (Historie historieFor: historieList) {
-            historieRepository.updatePid(historieFor.getHistorienId(), null);
+            historieRepository.updatePid(null, historieFor.getHistorienId());
         }
 
         anbieterRepository.updateParkplatz(false, anbieter.getAid());
         historieRepository.save(new Historie(anbieter.getNid(), null, "update", "Parkplatzstatus Anbieter"));
-        parkplatzRepository.delete(parkplatz);
+        parkplatzRepository.updateAid(null, parkplatz.getPid());
+        parkplatzRepository.deleteParkplatz(parkplatz.getPid());
         historieRepository.save(new Historie(anbieter.getNid(), null, "delete", "Parkplatz"));
-        anbieterRepository.save(anbieterSave);
 
         return "home";
     }
@@ -514,6 +558,8 @@ public class ParkplatzController {
         java.util.Date newDate = c.getTime();
         return newDate;
     }
+
+
     /*
     public Time timePlusOne(Time time){
         Calendar c = Calendar.getInstance();
@@ -524,6 +570,19 @@ public class ParkplatzController {
         return newTime;
     }
      */
+
+    public void saveImage(Bild bild, MultipartFile imageFile) throws Exception {
+
+        //findet das aktuelle directory
+        Path currentPath = Paths.get(".");
+
+        //findet den kompletten Pfad vom Root directory bis zum aktuellen directory
+        Path absolutePath = currentPath.toAbsolutePath();
+        bild.setPath(absolutePath + "/src/main/resources/static/photos/");
+        byte[] bytes = imageFile.getBytes();
+        Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
+        Files.write(path, bytes);
+    }
 
 }
 

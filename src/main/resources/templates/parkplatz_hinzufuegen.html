@@ -71,7 +71,7 @@
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
     <h2 id="ueberschrift">Parkplatz Hinzufügen</h2>
-    <form action="#" th:action="@{/parkplatz_hinzufuegen}" method="post">
+    <form action="#" th:action="@{/parkplatz_hinzufuegen}"  method="post" enctype="multipart/form-data">
         <div class="row" id="row1">
             <div class="col">
                 <a data-tooltip title="Nur deutsche Postleitzahlen sind gültig">
@@ -93,7 +93,9 @@
             </div>
         </div>
         <div class="row" id="row2">
-            <!--
+
+
+
             <div class="col">
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -101,12 +103,12 @@
                     </div>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="inputGroupFile01"
-                               aria-describedby="inputGroupFileAddon01">
+                               aria-describedby="inputGroupFileAddon01" name=imageFile>
                         <label class="custom-file-label" for="inputGroupFile01">Bild auswählen</label>
                     </div>
                 </div>
             </div>
-            -->
+
             <div class="col">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -210,9 +212,17 @@
             <span id="red_text"></span>
         </div>
         <div id="reg">
-            <button type="submit" class="btn btn-outline-secondary btn-lg" id="submit">Parkplatz hinzufügen</button>
+            <button type="submit" class="btn btn-outline-secondary btn-lg" id="submit" value="Upload">Parkplatz hinzufügen</button>
         </div>
     </form>
+
+
+   <!-- //test input for picture upload
+    <form method="post" enctype="multipart/form-data" action="uploadImage">
+        <input type="file" name="imageFile">
+        <input type="submit" value="Upload"/>
+
+    </form>-->
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
