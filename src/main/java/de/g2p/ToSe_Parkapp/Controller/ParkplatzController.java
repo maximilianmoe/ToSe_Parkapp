@@ -603,7 +603,7 @@ public class ParkplatzController {
         return suggestions;
     }
 */
-
+/*
     //Dieser Autocomplete würde funktionieren aber nur mit der Straße
     @RequestMapping(value="/ParkplatzPlzAutocomplete")
     @ResponseBody
@@ -614,6 +614,24 @@ public class ParkplatzController {
             List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
             for (Parkplatz parkplatz1 : parkplaetze) {
                 suggestions.add(parkplatz1.getStrasse());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Exception autocomplete");
+        }
+        return suggestions;
+    }
+*/
+
+    @RequestMapping(value="/ParkplatzPlzAutocomplete")
+    @ResponseBody
+    public List<String> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")Integer term) {
+        List<String> suggestions = new ArrayList<String>();
+        try {
+            //List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+            List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+            for (Parkplatz parkplatz1 : parkplaetze) {
+                suggestions.add(parkplatz1.getPlz().toString());
             }
         } catch (Exception e) {
             e.printStackTrace();
