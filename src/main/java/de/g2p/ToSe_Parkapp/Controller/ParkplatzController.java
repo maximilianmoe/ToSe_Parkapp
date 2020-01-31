@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -584,6 +585,60 @@ public class ParkplatzController {
         Files.write(path, bytes);
     }
 
+/*
+    @RequestMapping(value="/ParkplatzPlzAutocomplete")
+    @ResponseBody
+    public List<Integer> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")Integer term) {
+        List<Integer> suggestions = new ArrayList<Integer>();
+        try {
+            //List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+            List<Parkplatz> parkplaetze = parkplatzRepository.findByPlz(term);
+            for (Parkplatz parkplatz1 : parkplaetze) {
+                suggestions.add(parkplatz1.getPlz());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Exception autocomplete");
+        }
+        return suggestions;
+    }
+*/
+
+    //Dieser Autocomplete würde funktionieren aber nur mit der Straße
+    @RequestMapping(value="/ParkplatzPlzAutocomplete")
+    @ResponseBody
+    public List<String> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")Integer term) {
+        List<String> suggestions = new ArrayList<String>();
+        try {
+            //List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+            List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+            for (Parkplatz parkplatz1 : parkplaetze) {
+                suggestions.add(parkplatz1.getStrasse());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Exception autocomplete");
+        }
+        return suggestions;
+    }
+
+/*
+    @RequestMapping(value="/ParkplatzPlzAutocomplete")
+    @ResponseBody
+    public List<String> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")String term) {
+        List<String> suggestions = new ArrayList<String>();
+        try {
+            List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+            for (Parkplatz parkplatz1 : parkplaetze) {
+                suggestions.add(parkplatz1.getStrasse());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Exception autocomplete");
+        }
+        return suggestions;
+    }
+    */
 }
 
 

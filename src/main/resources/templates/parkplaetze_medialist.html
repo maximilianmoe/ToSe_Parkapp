@@ -18,7 +18,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+
+    <!-- Autocomplete Stuff -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
+        .ui-autocomplete-loading{
+            background: white url("images/ui-anim-basic_16x16.gif") right center no-repeat;
+            height: 50px;
+        }
+
         @media only screen and (max-width: 700px){
             p{
                 font-size: small;
@@ -207,9 +217,8 @@
         <div class="container" id="suche">
             <div class="col">
                 <div class="input-group md-form form-sm form-2 pl-0">
-                    <input class="form-control my-0 py-1 red-border" type="number" pattern="0 + \.[0-9]*[1-9][0-9]*$"
-                           min="10000" max="99999" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                           placeholder="Suche nach PLZ" aria-label="Search" th:name="suche">
+                    <input class="form-control my-0 py-1 red-border"
+                           placeholder="Suche nach PLZ" aria-label="Search" th:name="suche" id="such-input">
                     <button type="submit" class="btn btn-outline-info" id="such_btn">Suchen</button>
                     <div class="input-group-append">
                     </div>
@@ -429,6 +438,14 @@
         }
     }
     */
+
+    $(function () {
+        $('#such-input').autocomplete({
+            source: "ParkplatzPlzAutocomplete",
+            //source: ["Red Bud", "Green Bud", "Blue Bud"],
+            minLength:2
+        });
+    });
 
 </script>
 <script async defer
