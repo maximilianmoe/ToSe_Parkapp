@@ -649,7 +649,11 @@ public class ParkplatzController {
         List<String> suggestions = new ArrayList<String>();
         List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
         for (Parkplatz parkplatz1 : parkplaetze) {
-            suggestions.add(parkplatz1.getPlz().toString());
+            //suggestions.add(parkplatz1.getPlz().toString());
+            String test = parkplatz1.getPlz().toString();
+            if(test.contains(term)){
+                suggestions.add(parkplatz1.getPlz().toString());
+            }
         }
         return suggestions;
         /*

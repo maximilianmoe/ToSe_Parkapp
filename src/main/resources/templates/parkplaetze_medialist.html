@@ -23,7 +23,6 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <style>
         .ui-autocomplete-loading{
             background: white url("images/ui-anim-basic_16x16.gif") right center no-repeat;
@@ -440,6 +439,7 @@
     }
     */
 
+    //BACKUP
     $(function () {
         $('#such-input').autocomplete({
             source: "/ParkplatzPlzAutocomplete",
@@ -449,6 +449,42 @@
         });
     });
 
+/*
+    $(function () {
+        $('#such-input').autocomplete({
+            //source: "/ParkplatzPlzAutocomplete",
+            source: function (request, response) {
+                $.ajax({
+                    url: "http://localhost:8080/ParkplatzPlzAutocomplete",
+                    dataType: "json",
+                    data : {
+                        q: request.term
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        response(data);
+                    }
+                });
+            },
+            minLength:2
+        });
+    });
+*/
+/*
+    $('#such-input').autocomplete({
+        source: "/ParkplatzPlzAutocomplete",
+        focus: function (event, ui) {
+            $(event.target).val(ui.item.label);
+            return false;
+        },
+        select: function (event, ui) {
+            $(event.target).val(ui.item.label);
+            window.location = ui.item.value;
+            return false;3
+        }
+    });
+
+ */
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjjzixYKFLOyGeDW_1PPP9nmLeAQA3wk0&callback=initMap">
