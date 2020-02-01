@@ -603,11 +603,12 @@ public class ParkplatzController {
         return suggestions;
     }
 */
+
 /*
-    //Dieser Autocomplete würde funktionieren aber nur mit der Straße
+    //Dieser Autocomplete würde funktionieren aber nur mit der Straße aber zeigt auch immer alle Optionen an
     @RequestMapping(value="/ParkplatzPlzAutocomplete")
     @ResponseBody
-    public List<String> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")Integer term) {
+    public List<String> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")String term) {
         List<String> suggestions = new ArrayList<String>();
         try {
             //List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
@@ -622,10 +623,11 @@ public class ParkplatzController {
         return suggestions;
     }
 */
-
+/*
+    //FUNKTIONIERT ABER ZEIGT IMMER ALLE PLZ an 01.02.20 (BACKUP)
     @RequestMapping(value="/ParkplatzPlzAutocomplete")
     @ResponseBody
-    public List<String> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")Integer term) {
+    public List<String> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")String term) {
         List<String> suggestions = new ArrayList<String>();
         try {
             //List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
@@ -637,7 +639,32 @@ public class ParkplatzController {
             e.printStackTrace();
             System.out.println("Exception autocomplete");
         }
+         return suggestions;
+    }
+*/
+
+    @RequestMapping(value="/ParkplatzPlzAutocomplete")
+    @ResponseBody
+    public List<String> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")String term) {
+        List<String> suggestions = new ArrayList<String>();
+        List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+        for (Parkplatz parkplatz1 : parkplaetze) {
+            suggestions.add(parkplatz1.getPlz().toString());
+        }
         return suggestions;
+        /*
+        try {
+            //List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+            List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+            for (Parkplatz parkplatz1 : parkplaetze) {
+                suggestions.add(parkplatz1.getPlz().toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Exception autocomplete");
+        }
+        return suggestions;
+         */
     }
 
 /*
