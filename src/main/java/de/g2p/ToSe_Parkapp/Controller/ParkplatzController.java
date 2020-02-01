@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -582,6 +583,30 @@ public class ParkplatzController {
         byte[] bytes = imageFile.getBytes();
         Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
         Files.write(path, bytes);
+    }
+
+    /*
+        Autocomplete:
+        @param term übergibt den Input-Wert der Suchleiste von parkplaetze_medialist.html
+        Eine Liste aller Parkplätze wird erstellt und zu jedem Parkplatz wird die PLZ vorübergehend mit der
+        toString Methode in der variable plz abgespeichert.
+        Danach wird die PLZ des Parkplatzes mit dem Input-Wert term verglichen.
+        Wenn der Input-Wert in der PLZ vorkommt wird die PLZ zur Liste suggestions hinzugefügt.
+        Am Ende wird die Liste an suggestions returned.
+     */
+    @RequestMapping(value="/ParkplatzPlzAutocomplete")
+    @ResponseBody
+    public List<String> ParkplatzPlzAutocomplete(@RequestParam (value="term", required = false, defaultValue="")String term) {
+        List<String> suggestions = new ArrayList<String>();
+        List<Parkplatz> parkplaetze = parkplatzRepository.findAll();
+        for (Parkplatz parkplatz1 : parkplaetze) {
+            //suggestions.add(parkplatz1.getPlz().toString());
+            String plz = parkplatz1.getPlz().toString();
+            if(plz.contains(term)){
+                suggestions.add(parkplatz1.getPlz().toString());
+            }
+        }
+        return suggestions;
     }
 
 }
