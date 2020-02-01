@@ -102,9 +102,11 @@
                         <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                     </div>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile01"
-                               aria-describedby="inputGroupFileAddon01" name=imageFile>
-                        <label class="custom-file-label" for="inputGroupFile01">Bild auswählen</label>
+                        <a data-tooltip title="Das Bild darf maximal 1MB Groß sein und muss vom Typ .jpg sein">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                   aria-describedby="inputGroupFileAddon01" name=imageFile>
+                        </a>
+                            <label class="custom-file-label" for="inputGroupFile01">Bild auswählen</label>
                     </div>
                 </div>
             </div>
@@ -231,6 +233,30 @@
             $('#submit').prop('disabled', false);
         });
     });
+
+    $('#inputGroupFile01').bind('change', function () {
+        //alert(this.files[0].size);
+        var file = this.files[0];
+        var fileType = file['type'];
+        var validType = ['image/jpeg'];
+        if(this.files[0].size > 1000000  && $.inArray(fileType, validType) < 0){
+            alert("Sie können nur Bilder bis zu 1MB Größe hinzufügen und nur der Typ jpeg ist zulässig");
+            $('#submit').prop('disabled', true);
+        }
+        if (this.files[0].size > 1000000){
+            alert("Sie können nur Bilder bis zu 1MB Größe hinzufügen.");
+            $('#submit').prop('disabled', true);
+        }
+        if($.inArray(fileType, validType) < 0){
+            alert("Sie können nur Bilder vom Typ jpeg hinzufügen.");
+            $('#submit').prop('disabled', true);
+        }
+        else{
+            //alert("Größe passt");
+            $('#submit').prop('disabled', false);
+        }
+    });
+
     /*
     Folgende Funktion sorgt dafür das, wenn ein Öffentlicher Parkplatz hinzugefügt wird,
     die Eingabefelder für {Parkgebühr; Strafgebühr; Parkhöchstdauer} deaktiviert/ausgegraut werden.
