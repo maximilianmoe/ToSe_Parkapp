@@ -267,8 +267,12 @@
             </div>
         <ul class="list-unstyled" >
             <li class="media" th:each="parkplatz : *{parkplaetze}">
+                <!--
                 <img th:src="@{${'/photos/' + parkplatz.pid + '.jpg'}}"
                         class="mr-3 new_img" alt="Bild von Parkplatz"/>
+                -->
+                <img th:src="@{'/photos/'+${parkplatz.pid}+'.jpg'}"
+                     class="mr-3 new_img" alt="Bild von Parkplatz"/>
                 <div class="media-body" >
                     <div class="row">
                         <div class="col-8">
