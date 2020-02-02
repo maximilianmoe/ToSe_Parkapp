@@ -61,6 +61,10 @@
             */
             color: red;
         }
+
+        #img_warning{
+            color: red;
+        }
     </style>
 </head>
 
@@ -94,47 +98,37 @@
                         <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                     </div>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile01"
+                        <a data-tooltip title="Das Bild darf maximal 1MB Groß sein und muss vom Typ .jpg sein">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01"
                                aria-describedby="inputGroupFileAddon01" name=imageFile>
-                        <label class="custom-file-label" for="inputGroupFile01">Bild auswählen</label>
+                        </a>
+                            <label class="custom-file-label" for="inputGroupFile01">Bild auswählen</label>
                     </div>
                 </div>
             </div>
-            <div class="col">
-            </div>
-        </div>
-        <div class="row" id="row3">
-        </div>
-        <div class="row" id="row4">
-            <div class="col">
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="SUV">SUV
-                    </label>
+                <div class="col">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input id="check_suv" type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="SUV">SUV
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input id="check_klein" type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp"
+                                   th:value="Kleinwagen">Kleinwagen
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input id="check_van" type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="Van">Van
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input id="check_kombi" type="checkbox" class="form-check-input check-test" th:name="fahrzeugtyp" th:value="Kombi">Kombi
+                        </label>
+                    </div>
                 </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp"
-                               th:value="Kleinwagen">Kleinwagen
-                    </label>
-                </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="Van">Van
-                    </label>
-                </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" th:name="fahrzeugtyp" th:value="Kombi">Kombi
-                    </label>
-                </div>
-            </div>
-<!--            <div class="col">-->
-<!--                <a data-tooltip title="Maximal 10.000 Minuten möglich">-->
-<!--                    <input type="number" th:name="zeitbegrenzung" class="form-control"-->
-<!--                       placeholder="Parkhöchstdauer in Minuten" min="0" max="10000" id="parkhoechstdauer">-->
-<!--                </a>-->
-<!--            </div>-->
         </div>
         <div class="row" id="row">
             <div class="col">
@@ -161,22 +155,82 @@
                 <span id="red_text"></span>
             </div>
         </div>
+        <div class="row">
+            <span id="img_warning"></span>
+        </div>
         <div id="reg">
-            <button type="submit" class="btn btn-outline-secondary btn-lg" id="submit">Parkplatz hinzufügen</button>
+            <button disabled type="submit" class="btn btn-outline-secondary btn-lg" id="submit">Parkplatz hinzufügen</button>
         </div>
     </form>
 </div>
 <script type="text/javascript">
+
+    var c1 = 0;
+    var c2 = 0;
+    var c3 = 0;
+    var c4 = 0;
+    var c5 = 0;
+    var c6 = 0;
     $(document).ready(function () {
         $('[data-tooltip]').tooltip();
-    });
-    /*
-    Folgende Funktion sorgt dafür das, wenn ein Öffentlicher Parkplatz hinzugefügt wird,
-    die Eingabefelder für {Parkgebühr; Strafgebühr; Parkhöchstdauer} deaktiviert/ausgegraut werden.
-    Der zweite Teil der Funktion sorgt dafür, dass die Felder wieder aktiviert werden, wenn doch
-    wieder aud privater Parkplatz gewechselt wird.
-*/
-    $(document).ready(function () {
+        $('.check-test').click(function () {
+            //$('#submit').prop('disabled', false);
+        });
+
+        $('#inputGroupFile01').bind('change', function () {
+            //alert(this.files[0].size);
+            var file = this.files[0];
+            var fileType = file['type'];
+            var validType = ['image/jpeg'];
+            if(this.files[0].size > 1000000  && $.inArray(fileType, validType) < 0){
+                //alert("Sie können nur Bilder bis zu 1MB Größe hinzufügen und nur der Typ jpeg ist zulässig");
+                //$('#submit').prop('disabled', true);
+                c1 = 0;
+                $('#img_warning').html(
+                    "Bilder müssen vom Typ .jpg sein und dürfen nicht größer als 1MB sein"
+                );
+            }
+            if (this.files[0].size > 1000000){
+                //alert("Sie können nur Bilder bis zu 1MB Größe hinzufügen.");
+                //$('#submit').prop('disabled', true);
+                c1 = 0;
+                $('#img_warning').html(
+                    "Bilder müssen vom Typ .jpg sein und dürfen nicht größer als 1MB sein"
+                );
+            }
+            if($.inArray(fileType, validType) < 0){
+                //alert("Sie können nur Bilder vom Typ jpeg hinzufügen.");
+                //$('#submit').prop('disabled', true);
+                c1 = 0;
+                $('#img_warning').html(
+                    "Bilder müssen vom Typ .jpg sein und dürfen nicht größer als 1MB sein"
+                );
+            }
+            if($.inArray(fileType, validType) >= 0 && this.files[0].size < 1000000){
+                //alert("Größe passt");
+                //$('#submit').prop('disabled', false);
+                //alert("Bild passt");
+                c1 = 1;
+                $('#img_warning').html("");
+            }
+        });
+        //AB hier: 1
+
+        $('#check_van').click(function () {
+            $('#check_klein').prop('checked', true);
+            $('#check_suv').prop('checked', true);
+            $('#check_kombi').prop('checked', true);
+        });
+
+        $('#check_suv').click(function () {
+            $('#check_klein').prop('checked', true);
+            $('#check_kombi').prop('checked', true);
+        });
+
+        $('#check_kombi').click(function () {
+            $('#check_klein').prop('checked', true);
+        });
+
         $('.select_parkplatz').change(function () {
             if ($(this).find('option:selected').text() == 'Öffentlicher Parkplatz') {
                 $('#strafgebuehr').prop('disabled', true);
@@ -191,24 +245,37 @@
                 $('#parkhoechstdauer').prop('disabled', false);
             }
         });
-    });
 
-    /*
-        @param len soll mitzählen, wie viele Zeichen bereits eingegeben wurden
-        @param maxchar ist der Limit, wie viele Zeichen eingegeben werden dürfen
+        //AB hier: 2
+        $('.check-test').bind('change', function () {
+            checked = $("input[type=checkbox]:checked").length;
+            if(!checked){
+                alert("Sie müssen mindestens einen Fahrzeugtyp auswählen");
+                $('#submit').prop('disabled', true);
+                c2 = 0;
+                return false;
+            }
+            else{
+                //$('#submit').prop('disabled', false);
+                c2 = 1;
+            }
+        });
+        /*
+         $('#beschreibung').focusout(function () {
+             checked = $("input[type=checkbox]:checked").length;
+             if(!checked){
+                 alert("Sie müssen mindestens einen Fahrzeugtyp auswählen");
+                 //$('#submit').prop('disabled', true);
+                 return false;
+                 c2 = 0;
+             }
+             else{
+                 //$('#submit').prop('disabled', false);
+                 c2 = 1;
+             }
+         });
+ */
 
-        Die Funktion zählt mit wie viele Zeichen bereits eingegeben wurden und zeigt an wie viele
-        noch eingegeben werden dürfen.
-        Die Zahl, wie viele noch eingegeben werden dürfen wird angezeigt und bei jedem Tasten-Anschlag
-        aktualisiert.
-        Wenn maxchar Überschritten wird wird eine Warnanzeige angezeigt, die den Nutzer darauf aufmerksam
-        machen soll. Diese Anzeige verschwindet wieder, sobald gebügend Zeichen entfernt wurden.
-
-        Um zu verhindern, dass der Nutzer sich registriert, obwohl er zu viele Zeichen eingetragen
-        hat, wird sobald zu viele Zeichen eingegeben wurden der Submit-Button deaktiviert.
-        Dieser wird wieder aktiviert sobald genügend Zeichen entfernt wurden.
-    */
-    $(document).ready(function () {
         var len = 0;
         var maxchar = 255;
 
@@ -232,30 +299,16 @@
             var regex = new RegExp(expression);
             var plz = $("#plz").val();
             if(plz.match(regex)){
-                $('#submit').prop('disabled', false);
+                //$('#submit').prop('disabled', false);
+                c3 = 1;
                 $('#red_text').html("");
             }
             else{
-                $('#submit').prop('disabled', true);
-                $('#red_text').html("Bitte geben Sie eine gültige PLZ ein.");
+                //$('#submit').prop('disabled', true);
+                $('#red_text').html("Bitte geben Sie eine gültige deutsche PLZ ein.");
+                c3 = 0;
             }
         });
-
-        /*
-        $('#plz').focusout(function () {
-            var expression = /\b[0-9]{5}\b;
-            var regex = new RegExp(expression);
-            var plz = $("#plz").val();
-            if(plz.match(regex)){
-                $('#submit').prop('disabled', false);
-                $('#red_text').html("");
-            }
-            else{
-                $('#submit').prop('disabled', true);
-                $('#red_text').html("Bitte geben Sie eine gültige PLZ ein.");
-            }
-        });
-        */
 
         $('#beschreibung').keyup(function () {
             len = this.value.length
@@ -263,43 +316,40 @@
                 $('#too_much').html(
                     "Sie haben zu viele Zeichen verwendet. Bitte beschränken Sie sich auf 255 Zeichen."
                 );
+                c4 = 0;
             }
         });
         $('#beschreibung').keyup(function () {
             len = this.value.length
             if (len < maxchar || len == maxchar) {
                 $('#too_much').html("");
+                c4 = 1;
             }
         });
         $('#beschreibung').keyup(function () {
             if (len > maxchar) {
-                $("#submit").prop('disabled', true);
+                //$("#submit").prop('disabled', true);
+                c4 = 0;
             }
         });
         $('#beschreibung').keyup(function () {
             if (len <= maxchar) {
-                $("#submit").prop('disabled', false);
+                //$("#submit").prop('disabled', false);
+                c4 = 1;
             }
         });
-    });
-    /*
-    function plzregex() {
-        $('#plz').focusout(function () {
-            var expression = /\b[0-9]{5}\b;
-            var regex = new RegExp(expression);
-            var plz = $("#plz").val();
-            if(plz.match(regex)){
-                $('#submit').prop('disabled', false);
-                $('#red_text').html("");
-            }
-            else{
-                $('#submit').prop('disabled', true);
-                $('#red_text').html("Bitte geben Sie eine gültige PLZ ein.");
-            }
-        });
-    }
 
-     */
+
+    });
+
+    window.setInterval(function(){
+        if((c1+c2+c3+c4) == 4){
+            $("#submit").prop('disabled', false);
+        }
+        else{
+            $("#submit").prop('disabled', true);
+        }
+    }, 300);
 
 </script>
 </body>
