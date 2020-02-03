@@ -63,7 +63,7 @@ public class ParkplatzController {
 
     @PostMapping("/parkplatz_hinzufuegen_oeffentlich")
     public String addOeffentlichPost(@ModelAttribute Parkplatz parkplatz, @RequestParam("fahrzeugtyp") String fahrzeugtyp,
-                                     Model model) {
+                                     Model model, @RequestParam("imageFile") MultipartFile imageFile) {
 
         parkplatz.setBewertung(0);
         parkplatz.setBewertungsanzahl(0);
@@ -80,6 +80,22 @@ public class ParkplatzController {
 
         parkplatzRepository.saveAndFlush(parkplatz);
         historieRepository.save(new Historie(findNutzer(), parkplatz, "create", "Parkplatz öffentlich"));
+
+
+        finalImageName = parkplatz.getPid().toString();
+
+        Bild bild = new Bild();
+        try {
+            saveImage(bild, imageFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+             return "error";
+        }
+        //Path wird in der methode saveImage gesetzt!
+        //sets the filename in the database = pid
+        bild.setFileName(parkplatz.getPid().toString());
+        //Saves Picture Metadata in the database
+        bildRepository.save(bild);
 
         model.addAttribute("parkplatz", parkplatz);
 
@@ -171,7 +187,7 @@ public class ParkplatzController {
 
     @PostMapping("/spezieller_parkplatz_öffentlich")
     public String spezParkplatzOeffentlichPost(@RequestParam("pid") Integer pid, @RequestParam("belegung") String belegt,
-                                               @ModelAttribute Parken parken, @RequestParam("imageFile") MultipartFile imageFile) {
+                                               @ModelAttribute Parken parken) {
 
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
         parken.setKid(konsument);
@@ -187,25 +203,9 @@ public class ParkplatzController {
         else if (belegt.contains("belegt")) {
             konsumentRepository.updatebelegt(true, konsument.getKid());
             historieRepository.save(new Historie(konsument.getNid(), parken.getPid(), "update", "belegt Konsument"));
-            status ="belegt";
+            status = "belegt";
             returnstring = "home";
-
         }
-
-        finalImageName = parkplatz.getPid().toString();
-
-        Bild bild = new Bild();
-        try {
-            saveImage(bild, imageFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-            returnstring = "error";
-        }
-        //Path wird in der methode saveImage gesetzt!
-        //sets the filename in the database = pid
-        bild.setFileName(parkplatz.getPid().toString());
-        //Saves Picture Metadata in the database
-        bildRepository.save(bild);
 
         parkenRepository.save(parken);
         historieRepository.save(new Historie(parken.getKid().getNid(), parken.getPid(), "create", "Parken"));
@@ -580,16 +580,16 @@ public class ParkplatzController {
 
     public void saveImage(Bild bild, MultipartFile imageFile) throws Exception {
 
-       /* //IntelliJ Implementation
-        //findet das aktuelle directory
-        Path currentPath = Paths.get("");
-        //findet den kompletten Pfad vom Root directory bis zum aktuellen directory
-        Path absolutePath = currentPath.toAbsolutePath();
-        //System.out.println(absolutePath.toString());
-        bild.setPath(absolutePath + "/src/main/resources/static/photos/");
-        byte[] bytes = imageFile.getBytes();
-        Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
-        Files.write(path, bytes);*/
+//        //IntelliJ Implementation
+//        //findet das aktuelle directory
+//        Path currentPath = Paths.get("");
+//        //findet den kompletten Pfad vom Root directory bis zum aktuellen directory
+//        Path absolutePath = currentPath.toAbsolutePath();
+//        //System.out.println(absolutePath.toString());
+//        bild.setPath(absolutePath + "/src/main/resources/static/photos/");
+//        byte[] bytes = imageFile.getBytes();
+//        Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
+//        Files.write(path, bytes);
 
         //use for deployment on tomcat
         String folder = "/usr/local/apache-tomcat9/webapps/good2park/WEB-INF/classes/static/photos/";

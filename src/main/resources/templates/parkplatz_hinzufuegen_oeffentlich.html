@@ -76,7 +76,7 @@
 <nav th:replace="layouts :: navbar"></nav>
 <div class="container">
     <h2 id="ueberschrift">Öffentlichen Parkplatz Hinzufügen</h2>
-    <form action="#" th:action="@{/parkplatz_hinzufuegen_oeffentlich}" method="post">
+    <form action="#" th:action="@{/parkplatz_hinzufuegen_oeffentlich}" method="post" enctype="multipart/form-data">
         <div class="row" id="row1">
             <div class="col">
                 <input id="plz" onchange="plzregex();" type="text" th:value="*{parkplatz.plz}" th:name="plz" class="form-control" placeholder="PLZ">
