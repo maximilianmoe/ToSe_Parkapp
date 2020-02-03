@@ -79,7 +79,8 @@
     <form action="#" th:action="@{/parkplatz_hinzufuegen_oeffentlich}" method="post" enctype="multipart/form-data">
         <div class="row" id="row1">
             <div class="col">
-                <input id="plz" onchange="plzregex();" type="text" th:value="*{parkplatz.plz}" th:name="plz" class="form-control" placeholder="PLZ">
+                <input id="plz" onchange="plzregex();" type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+                       th:value="*{parkplatz.plz}" th:name="plz" class="form-control" placeholder="PLZ">
             </div>
             <!--
         <div class="col">
@@ -92,7 +93,7 @@
             </div>
             <div class="col-2">
                 <input type="text" th:value="*{parkplatz.hausnummer}" th:name="hausnummer" class="form-control"
-                       placeholder="Hausnummer" min="0" max="999">
+                       placeholder="Hausnummer" min="0" max="999" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
             </div>
         </div>
         <div class="row" id="row2">
