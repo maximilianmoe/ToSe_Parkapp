@@ -121,6 +121,10 @@
             object-fit: cover;
         }
 
+        .item-li {
+            height: 15vw;
+        }
+
         /*
         #ampel{
             background-color: red;
@@ -243,7 +247,7 @@
     <div class="container">
     <ul class="list-unstyled">
         <div style="overflow-x: auto;">
-        <li class="media" th:each="parkplatz : *{parkplaetze}">
+        <li class="media item-li" th:each="parkplatz : *{parkplaetze}">
             <!--src="../static/images/parkplatz3.jpg"-->
 <!--
             <img th:src="@{${'/photos/' + parkplatz.pid + '.jpg'}}" class="mr-3 new_img" alt="Bild von Parkplatz">
