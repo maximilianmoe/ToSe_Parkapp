@@ -67,6 +67,10 @@
         #img_warning{
             color: red;
         }
+
+        .btn.disabled{
+            pointer-events: auto;
+        }
     </style>
 </head>
 
@@ -107,7 +111,7 @@
                     </div>
                     <div class="custom-file">
                         <a data-tooltip title="Das Bild darf maximal 1MB Groß sein und muss vom Typ .jpg sein">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01"
+                            <input required type="file" class="custom-file-input" id="inputGroupFile01"
                                    aria-describedby="inputGroupFileAddon01" name=imageFile>
                         </a>
                         <label class="custom-file-label" for="inputGroupFile01">Bild auswählen</label>
@@ -221,7 +225,9 @@
             <span id="img_warning"></span>
         </div>
         <div id="reg">
-            <button disabled type="submit" class="btn btn-outline-secondary btn-lg" id="submit" value="Upload">Parkplatz hinzufügen</button>
+            <a data-tooltip title="Bitte füllen Sie alle Felder aus und wählen ein Bild aus um fortfahren zu können">
+                <button disabled type="submit" class="btn btn-outline-secondary btn-lg" id="submit" value="Upload">Parkplatz hinzufügen</button>
+            </a>
         </div>
     </form>
 
@@ -419,6 +425,7 @@
             $("#submit").prop('disabled', true);
         }
     }, 300);
+
 
     /*
     Folgende Funktion sorgt dafür das, wenn ein Öffentlicher Parkplatz hinzugefügt wird,

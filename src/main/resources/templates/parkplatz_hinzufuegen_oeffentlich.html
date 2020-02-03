@@ -65,6 +65,10 @@
         #img_warning{
             color: red;
         }
+
+        .btn.disabled{
+            pointer-events: auto;
+        }
     </style>
 </head>
 
@@ -159,7 +163,9 @@
             <span id="img_warning"></span>
         </div>
         <div id="reg">
-            <button disabled type="submit" class="btn btn-outline-secondary btn-lg" id="submit">Parkplatz hinzufügen</button>
+            <a data-tooltip title="Bitte füllen Sie alle Felder aus und wählen ein Bild aus um fortfahren zu können">
+                <button disabled type="submit" class="btn btn-outline-secondary btn-lg" id="submit">Parkplatz hinzufügen</button>
+            </a>
         </div>
     </form>
 </div>
