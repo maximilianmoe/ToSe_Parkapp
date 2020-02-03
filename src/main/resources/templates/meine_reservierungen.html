@@ -320,7 +320,9 @@
             </div>
         </table>
         <div class="row">
-            <span id="red_text1"></span>
+            <div class="container">
+                <span id="red_text1"></span>
+            </div>
         </div>
     </div>
     </form>
@@ -475,9 +477,17 @@
 
         //alert("Anfangszeit: " + time + " Endzeit: " + time2 + " Aktuelle Zeit: " + cur_time);
         if((time <= cur_time && cur_time <= time2) && day == today){
-            $('#beparken_btn').prop('disabled', false);
+            //$('#beparken_btn').prop('disabled', false);
             $('#red_text1').html("");
-            //alert("Ja");
+            //AB hier verändert:
+            $('#table1 td span').filter(function(){
+                if($(this).text() == 'Ja') {
+                    $('#beparken_btn').prop('disabled', true);
+                }
+                if($(this).text() == 'Nein') {
+                    $('#beparken_btn').prop('disabled', false);
+                }
+            });
         }
         else{
             //$('#beparken_btn').prop('disabled', true);
