@@ -3,7 +3,7 @@
 
 <head>
     <title>Meine Reservierungen</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -19,6 +19,11 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <style>
+
+        #red_text1{
+            color: red;
+        }
+
         @media only screen and (max-width: 900px){
             table, thead, tbody, th, td, tr{
                 display: block;
@@ -240,10 +245,19 @@
                 </td>
                 <td class="td2"><span th:text="${reservierung.rid}">Reservierungs-ID</span></td>
                 <td class="td2"><span th:text="${parkplatz.pid}">Parkplatz-ID</span></td>
+                <!--
                 <td class="td2"><span th:text="${reservierung.startDatum}">Anfangsdatum</span></td>
+                -->
+                <td class="td2" th:text="${reservierung.startDatum}">Anfangsdatum</td>
+                <!--
                 <td class="td2"><span th:text="${reservierung.startTime}">Anfangszeit</span></td>
+                -->
+                <td class="td2" th:text="${reservierung.startTime}">Anfangszeit</td>
                 <td class="td2"><span th:text="${reservierung.endeDatum}">Enddatum</span></td>
+                <!--
                 <td class="td2"><span th:text="${reservierung.endTime}">Endzeit</span></td>
+                -->
+                <td class="td2" th:text="${reservierung.endTime}">Endzeit</td>
                 <td class="table_btn td2">
                     <button type="submit" class="btn btn-outline-secondary btn-sm"
                             id="stornieren_btn" th:name="button" th:value="stornieren">
@@ -252,7 +266,7 @@
                 </td>
                 <td class="table_btn td2">
                     <a data-tooltip data-placement="bottom" title="Klicken Sie hier, wenn Sie auf dem Parkplatz parken">
-                        <button type="submit" class="btn btn-outline-secondary btn-sm"
+                        <button disabled type="submit" class="btn btn-outline-secondary btn-sm"
                                 id="beparken_btn" th:name="button" th:value="beparken">
                             <input hidden>Beparken</button>
                     </a>
@@ -305,6 +319,9 @@
                 </div>
             </div>
         </table>
+        <div class="row">
+            <span id="red_text1"></span>
+        </div>
     </div>
     </form>
     <form th:action="@{/sterneParken}" method="post">
@@ -428,6 +445,49 @@
             $('#beparken_btn').prop('disabled', true);
         }
     });
+
+    /*
+        Folgende Funktion checkt alle 2000 millisekunden, ob der Zeitraum für die aktuelle Reservierung begonnen
+        hat. Wenn dies der Fall ist wird der Beparken Button aktiviert.
+     */
+
+    window.setInterval(function(){
+        var time = new Date();
+        var time2 = new Date();
+        var day = new Date();
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+
+        time = $('#testing').find("tr:eq(1)").find("td:eq(4)").html();
+        time2 = $('#testing').find("tr:eq(1)").find("td:eq(6)").html();
+        day = $('#testing').find("tr:eq(1)").find("td:eq(3)").html();
+        /*
+        var time = $('#testing').find("tr:eq(1)").find("td:eq(4)").html();
+        var time2 = $('#testing').find("tr:eq(1)").find("td:eq(6)").html();
+        */
+        var dt = new Date();
+        var cur_time = dt.getHours() + ":"  + dt.getMinutes() + ":" + dt.getSeconds();
+
+        //alert("Anfangszeit: " + time + " Endzeit: " + time2 + " Aktuelle Zeit: " + cur_time);
+        if((time <= cur_time && cur_time <= time2) && day == today){
+            $('#beparken_btn').prop('disabled', false);
+            $('#red_text1').html("");
+            //alert("Ja");
+        }
+        else{
+            //$('#beparken_btn').prop('disabled', true);
+            //alert("NEIN: Anfangszeit: " + time + " Endzeit: " + time2 + " Aktuelle Zeit: " + cur_time);
+            //alert("Angangsdate: " + day + " today: " + today);
+            $('#beparken_btn').prop('disabled', true);
+            $('#red_text1').html("Der Beparken-Button wird erst aktiviert, wenn der Zeitpunkt ihrer Reservierung " +
+                "gekommen ist.");
+        }
+    }, 2000);
 </script>
 </body>
 
