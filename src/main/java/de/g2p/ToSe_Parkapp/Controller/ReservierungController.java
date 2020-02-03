@@ -169,7 +169,8 @@ public class ReservierungController {
             System.out.println("stornieren");
             returnstring = "home";
             konsumentRepository.updateReserviert(false, konsument.getKid());
-            historieRepository.save(new Historie(konsument.getNid(), parkenPrivat.getPid(), "update", "reserviert Konsument"));
+            assert reservierung != null;
+            historieRepository.save(new Historie(konsument.getNid(), reservierung.getPid(), "update", "reserviert Konsument"));
             reservierungenRepository.updateBeendet(true, reservierung.getRid());
             historieRepository.save(new Historie(konsument.getNid(), reservierung.getPid(), "update", "beendet Reservierung"));
 
