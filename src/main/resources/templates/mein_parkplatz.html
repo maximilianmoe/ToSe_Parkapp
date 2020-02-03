@@ -116,7 +116,6 @@
             <img id="main-img" th:src="@{${'/photos/' + parkplatz.pid + '.jpg'}}" />
             -->
             <img id="main-img" th:src="@{'/photos/'+${parkplatz.pid}+'.jpg'}" />
-            <label th:text="${'Parkplatz PID:' + parkplatz.pid}"></label>
         </div>
         <div class="card-body">
             <h5 class="card-title">

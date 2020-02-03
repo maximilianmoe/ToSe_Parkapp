@@ -411,12 +411,13 @@ public class ParkplatzController {
             }
             for (Parken parkenFor : parkenList) {
                 if (parkenFor.getPid() == parkplatz) {
-                    model.addAttribute("reservierung", 0);
-                    System.out.println("reservierung = 0 bei Parken");
-                }
-                else {
-                    model.addAttribute("reservierung", null);
-                    System.out.println("reservierung = null bei Parken");
+                    if (!parkenFor.isFreigabe()) {
+                        model.addAttribute("reservierung", 0);
+                        System.out.println("reservierung = 0 bei Parken");
+                    } else {
+                        model.addAttribute("reservierung", null);
+                        System.out.println("reservierung = null bei Parken");
+                    }
                 }
             }
         }
@@ -452,7 +453,12 @@ public class ParkplatzController {
         Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
         Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
         Reservierung reservierung = null;
-        reservierung = reservierungenRepository.findByPid(parkplatz);
+        List<Reservierung> reservierungList = reservierungenRepository.findByPidList(parkplatz.getPid());
+        for (Reservierung reservierungFor : reservierungList) {
+            if (!reservierungFor.isBeendet()) {
+                reservierung = reservierungFor;
+            }
+        }
         List<Konsument> konsumenten = konsumentRepository.findAll();
         Konsument konsument = null;
 

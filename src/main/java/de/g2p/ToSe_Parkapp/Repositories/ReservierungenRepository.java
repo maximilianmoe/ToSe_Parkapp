@@ -19,6 +19,9 @@ public interface ReservierungenRepository extends JpaRepository<Reservierung, In
     Reservierung findByPid(Parkplatz pid);
     List<Reservierung> findByBeendet(boolean beendet);
 
+    @Query(value = "select * from reservierung where pid = :pid ", nativeQuery = true)
+    List<Reservierung> findByPidList(@Param("pid") Integer pid);
+
     @Transactional
     @Modifying
     @Query(value = "update reservierung set beendet = :beendet  where rid = :rid", nativeQuery = true)
