@@ -576,10 +576,11 @@ public class ParkplatzController {
 
         //IntelliJ Implementation
         //findet das aktuelle directory
-        Path currentPath = Paths.get(".");
+        Path currentPath = Paths.get("");
         //findet den kompletten Pfad vom Root directory bis zum aktuellen directory
         Path absolutePath = currentPath.toAbsolutePath();
-        bild.setPath(absolutePath + "/WEB-INF/classes/static/photos");
+        //System.out.println(absolutePath.toString());
+        bild.setPath(absolutePath + "/src/main/resources/static/photos/");
         byte[] bytes = imageFile.getBytes();
         Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
         Files.write(path, bytes);
