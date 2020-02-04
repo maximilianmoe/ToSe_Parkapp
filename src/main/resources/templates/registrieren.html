@@ -327,6 +327,20 @@
                 //$('#btn').prop('disabled', true);
             }
         });
+
+        $('#mail2').bind('cut copy paste', function (e) {
+            e.preventDefault();
+        });
+        $('#mail2').on('contextmenu', function (e) {
+            return false;
+        });
+
+        $('#pw2').bind('cut copy paste', function (e) {
+            e.preventDefault();
+        });
+        $('#pw2').on('contextmenu', function (e) {
+            return false;
+        });
     });
 
     /*
