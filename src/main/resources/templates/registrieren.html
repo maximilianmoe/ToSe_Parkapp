@@ -191,18 +191,26 @@
                 $('#fahrzeug_art').prop('disabled', true);
                 */
                 $('#kennzeichen').prop('disabled', true);
+                $('#erinnerung').prop('disabled', true);
+                $('#fahrzeug_art').prop('disabled', true);
+                c3 = 1;
+                $('#kennzeichen').val("");
             }
         });
         $('#nutzungs_art').change(function () {
             if ($(this).find('option:selected').text() == 'Konsument') {
                 $('#fahrzeug_art').prop('disabled', false);
                 $('#kennzeichen').prop('disabled', false);
+                $('#erinnerung').prop('disabled', false);
+                c3 = 0;
             }
         });
         $('#nutzungs_art').change(function () {
             if ($(this).find('option:selected').text() == 'Beides') {
                 $('#fahrzeug_art').prop('disabled', false);
                 $('#kennzeichen').prop('disabled', false);
+                $('#erinnerung').prop('disabled', false);
+                c3 = 0;
             }
         });
         /*
@@ -282,11 +290,18 @@
             var expression = /\b[A-Z ÄÜÖ]{1,3}[-][A-Z ÄÜÖ]{1,2}[-][0-9]{1,4}\b/g;
             var regex = new RegExp(expression);
             var kennz = $('#kennzeichen').val();
-            if(kennz.match(regex)){
+            if(kennz.match(regex) && $('#nutzungs_art').find('option:selected').text() == 'Konsument' || $('#nutzungs_art').find('option:selected').text() == 'Beides'){
                 //$('#btn').prop('disabled', false);
                 c3 = 1;
                 $('#red_text4').html("");
             }
+            /*
+            else if(!kennz.match(regex) && ($('#nutzungs_art').find('option:selected').text() == 'Anbieter')){
+                c3 = 1;
+                $('#red_text4').html("");
+                alert("Hallo was?");
+            }
+             */
             else{
                 $('#red_text4').html("Kennzeichen muss in dem Format PA-XY-123 (Nur Großbuchstaben) angegeben werden!");
                 c3 = 0;
@@ -310,6 +325,16 @@
             }
         });
     });
+
+    /*
+    window.setInterval(function(){
+        if((!kennz.match(regex)) && ($('#nutzungs_art').find('option:selected').text() == 'Anbieter')){
+            c3 = 1;
+            $('#red_text4').html("");
+            alert("Hallo was?");
+        }
+    }, 3000);
+     */
 
     window.setInterval(function(){
         if((c1+c2+c3+c4) == 4){
