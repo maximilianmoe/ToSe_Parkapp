@@ -6,7 +6,6 @@ import de.g2p.ToSe_Parkapp.Repositories.AnbieterRepository;
 import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ReservierungenRepository;
-import de.g2p.ToSe_Parkapp.Entities.Reservierung;
 import de.g2p.ToSe_Parkapp.Repositories.*;
 import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,7 +126,7 @@ public class WebController {
     @GetMapping("/passwordreset")
     public String resetPasswordGet(Model model) {
         model.addAttribute("nutzer", new Nutzer());
-        return "passwort_zuruecksetzten";
+        return "passwort_zuruecksetzen";
     }
 
     //PostMapping for getting an E-Mail to set a new password.
