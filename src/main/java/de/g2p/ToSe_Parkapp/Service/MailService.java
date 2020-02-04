@@ -43,7 +43,7 @@ public class MailService implements EmailService {
      * @param text    The text or body of the email which is send to the user.
      */
     @Override
-    public void sendSimpleMessage(String to, String subject, String text) {
+    public void sendSimpleMessage(String to,String subject, String text) {
         getJavaMailSender();
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("good2park.service@gmail.com");
@@ -52,7 +52,7 @@ public class MailService implements EmailService {
         message.setText(text);
 
         try {
-            mailSender.send(message); //This line produces the exception
+            mailSender.send(message);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Can't send message");

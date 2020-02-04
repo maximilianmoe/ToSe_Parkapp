@@ -7,8 +7,10 @@ import de.g2p.ToSe_Parkapp.Repositories.NutzerRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ParkplatzRepository;
 import de.g2p.ToSe_Parkapp.Repositories.ReservierungenRepository;
 import de.g2p.ToSe_Parkapp.Repositories.*;
+import de.g2p.ToSe_Parkapp.Service.DBService;
 import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,8 +18,15 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.DateUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 
 @Controller
 public class WebController {
@@ -32,8 +41,14 @@ public class WebController {
     ReservierungenRepository reservierungenRepository;
     @Autowired
     HistorieRepository historieRepository;
+    @Autowired
+    KonsumentRepository konsumentRepository;
 
-    MailService mailService;
+    MailService mailService = new MailService();
+    DBService dbService = new DBService();
+
+    public WebController() throws SQLException {
+    }
 
     //GetMapping for the homepage for IP-Adress (or localhost) only
     @GetMapping("/")
@@ -198,27 +213,32 @@ public class WebController {
         return returnString;
     }
 
-//    @Scheduled(fixedRate = 60000)
-//    public void erinnerungSchedule(){
-//        TimeZone timeZone;
-//        timeZone = TimeZone.getTimeZone("GMT+1:00");
-//        TimeZone.setDefault(timeZone);
-//        Nutzer nutzer = findNutzer();
-//        List<Reservierung> reservierungen = reservierungenRepository.findAll();
-//        String email;
-//
-//        Calendar c = Calendar.getInstance();
-//        c.setTimeZone(timeZone);
-//        Time currentTime = new Time(c.getTime().getTime());
-//
-//        for (Reservierung reservierung:reservierungen) {
-//            email = nutzer.getEmailAdresse();
-//         if (reservierung.getErinnerungZeit() == currentTime) {
-//             mailService.sendSimpleMessage(email, "Erinnerung", "Sie müssen Ihren reservierten Parkplatz in der von Ihnen eingestellten Zeit ab jetzt beparken.");
-//         }
-//        }
-//
-//    }
+    @Scheduled(fixedRate = 1000)
+    public void erinnerungSchedule() throws SQLException {
+        TimeZone timeZone = TimeZone.getTimeZone("GMT+1:00");
+        Calendar c = Calendar.getInstance();
+        c.setTimeZone(timeZone);
+        Time currentTime = new Time(c.getTime().getTime());
+
+        Statement stmt = null;
+        String query = "select nachname, erinnerung, emailadresse from Konsument K join Reservierung R on K.kid = R.kid join Nutzer N on K.nid = N.nid where erinnerung_zeit = '"+currentTime.toString()+"'";
+
+        try {
+            stmt = dbService.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                int reminderTime = rs.getInt("erinnerung");
+                String lastName = rs.getString("nachname");
+                String email = rs.getString("emailadresse");
+                mailService.sendSimpleMessage(email, "Erinnerung", "Hallo Herr "+lastName+"\nSie müssen Ihren reservierten Parkplatz in "+ reminderTime+" Minuten beparken.");
+                System.out.println("EMail gesendet!"+ rs.getString("emailadresse"));
+            }
+        } catch (SQLException e ) {
+            System.err.println(e);
+        } finally {
+            if (stmt != null) { stmt.close(); }
+        }
+    }
 
 
 }

@@ -8,8 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -131,7 +135,7 @@ public class ReservierungController {
 
     @PostMapping("/meine_reservierungen")
     public String reservierungenPost(@RequestParam("rateRes") Integer starsRes,
-                                     @RequestParam("button") String button) throws InterruptedException {
+                                     @RequestParam("button") String button) throws InterruptedException, ParseException {
         String returnstring="meine_reservierungen";
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
         List<Parken> parkenList = parkenRepository.findAll();
@@ -177,9 +181,11 @@ public class ReservierungController {
                 Parkplatz parkplatz = reservierung.getPid();
                 returnstring = "home";
                 //TODO die aktuelle zeit muss bei setStart eingefügt werden
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime ldt = LocalDateTime.now();
+//                Date date = dateFormat.parse(ldt.toString());
                 Parken parkenSave = new Parken();
-                //parkenSave.setStart(ldt);
+//                parkenSave.setStart(date);
                 parkenSave.setPid(reservierung.getPid());
                 parkenSave.setEnde(null);
                 parkenSave.setKid(konsument);

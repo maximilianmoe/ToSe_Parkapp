@@ -9,12 +9,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Time;
+
 @Repository
 public interface KonsumentRepository extends JpaRepository<Konsument, Integer> {
 
     Konsument findByKid(Integer kid);
     Konsument findByNid(Nutzer nid);
-
     @Transactional
     @Modifying
     @Query(value = "update konsument set pbel = :pbel where kid = :kid", nativeQuery = true)
@@ -24,6 +25,9 @@ public interface KonsumentRepository extends JpaRepository<Konsument, Integer> {
     @Modifying
     @Query(value = "update konsument set pres = :pres where kid = :kid", nativeQuery = true)
     void updateReserviert(@Param("pres") boolean pres, @Param("kid") Integer kid);
+
+
+//    Integer findByErrinerungszeit(Time reminder);
 
 
 }

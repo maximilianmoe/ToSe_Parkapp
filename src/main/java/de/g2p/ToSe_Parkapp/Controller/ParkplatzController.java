@@ -567,35 +567,24 @@ public class ParkplatzController {
     }
 
 
-    /*
-    public Time timePlusOne(Time time){
-        Calendar c = Calendar.getInstance();
-        c.setTime(time);
-        c.add(Calendar.HOUR, 1);
-        long time2 = c.getTime().getTime();
-        Time newTime = new Time(time2);
-        return newTime;
-    }
-     */
-
     public void saveImage(Bild bild, MultipartFile imageFile) throws Exception {
 
-//        //IntelliJ Implementation
-//        //findet das aktuelle directory
-//        Path currentPath = Paths.get("");
-//        //findet den kompletten Pfad vom Root directory bis zum aktuellen directory
-//        Path absolutePath = currentPath.toAbsolutePath();
-//        //System.out.println(absolutePath.toString());
-//        bild.setPath(absolutePath + "/src/main/resources/static/photos/");
-//        byte[] bytes = imageFile.getBytes();
-//        Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
-//        Files.write(path, bytes);
+        //IntelliJ Implementation
+        //findet das aktuelle directory
+        Path currentPath = Paths.get("");
+        //findet den kompletten Pfad vom Root directory bis zum aktuellen directory
+        Path absolutePath = currentPath.toAbsolutePath();
+        //System.out.println(absolutePath.toString());
+        bild.setPath(absolutePath + "/src/main/resources/static/images/photos/");
+        byte[] bytes = imageFile.getBytes();
+        Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
+        Files.write(path, bytes);
 
         //use for deployment on tomcat
-        String folder = "/usr/local/apache-tomcat9/webapps/good2park/WEB-INF/classes/static/photos/";
-        byte[] bytes = imageFile.getBytes();
-        Path path = Paths.get(folder + finalImageName + ".jpg");
-        Files.write(path, bytes);
+//        String folder = "/usr/local/apache-tomcat9/webapps/good2park/WEB-INF/classes/static/photos/";
+//        byte[] bytes = imageFile.getBytes();
+//        Path path = Paths.get(folder + finalImageName + ".jpg");
+//        Files.write(path, bytes);
     }
 
     /*
