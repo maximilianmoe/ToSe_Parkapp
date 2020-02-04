@@ -72,27 +72,32 @@ public class NutzerController {
             nutzer.setPasswort(bCryptPasswordEncoder.encode(passwort));
             System.out.println(nutzer.getPasswort());
 
-            if (reminder.contains("15")){
-                nutzer.setErinnerung(15);
-            }else if (reminder.contains("30")){
-                nutzer.setErinnerung(30);
-            }else if (reminder.contains("45")){
-                nutzer.setErinnerung(45);
+            if (!reminder.isEmpty()) {
+                if (reminder.contains("15")) {
+                    nutzer.setErinnerung(15);
+                } else if (reminder.contains("30")) {
+                    nutzer.setErinnerung(30);
+                } else if (reminder.contains("45")) {
+                    nutzer.setErinnerung(45);
+                }
             }
+
 
             //Set all values for Anbieter
             if (nutzertyp.contains("anbieter")) {
                 anbieter.setNid(nutzer.getNidNutzer());
                 nutzer.setRolle("anbieter");
                 //Set fahrzeugtyp for anbieter
-                if (fahrzeugtyp.contains("van"))
-                    konsument.setFahrzeugtyp("Van");
-                else if (fahrzeugtyp.contains("kombi"))
-                    konsument.setFahrzeugtyp("Kombi");
-                else if (fahrzeugtyp.contains("suv"))
-                    konsument.setFahrzeugtyp("SUV");
-                else if (fahrzeugtyp.contains("kleinwagen"))
-                    konsument.setFahrzeugtyp("Kleinwagen");
+                if (!fahrzeugtyp.isEmpty()) {
+                    if (fahrzeugtyp.contains("van"))
+                        konsument.setFahrzeugtyp("Van");
+                    else if (fahrzeugtyp.contains("kombi"))
+                        konsument.setFahrzeugtyp("Kombi");
+                    else if (fahrzeugtyp.contains("suv"))
+                        konsument.setFahrzeugtyp("SUV");
+                    else if (fahrzeugtyp.contains("kleinwagen"))
+                        konsument.setFahrzeugtyp("Kleinwagen");
+                }
 
                 anbieterRepository.save(anbieter);
                 historieRepository.save(new Historie(anbieter.getNid(), null, "create", "Anbieter"));

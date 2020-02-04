@@ -37,7 +37,6 @@ public class ReservierungController {
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
         List<Parken> parkenList = parkenRepository.findAll();
         if (!konsument.getReserviert()) {
-            System.out.println("konsument.getReserviert()");
             model.addAttribute("reservierungen", 0);
         }
         else {
@@ -65,26 +64,20 @@ public class ReservierungController {
         if(konsument.getBelegt()) {
             for (Parken parken1: parkenList1) {
                 if ((konsument.getKidKonsument() == parken1.getKid()) && !parken1.isFreigabe()) {
-                    System.out.println("parken = parken1");
                     parken = parken1;
                 }
                 if (parken != null) {
-                    System.out.println("parken != null");
                     model.addAttribute("parken", 0);
                     if (parken.getOeffentlich()) {
-                        System.out.println("parken.getOeffentlich()");
                         parkplatz = parkplatzRepository.findByPid(parken.getPidParkplatz());
-                        System.out.println(parken + "  belegt");
                         model.addAttribute("parkplatzParken", parkplatz);
                         model.addAttribute("parken", parken);
                     }
                 } else {
-                    System.out.println("model parken = 0");
                     model.addAttribute("parken", 0);
                 }
             }
         } else {
-            System.out.println("nicht belegt");
             model.addAttribute("parken", 0);
 
         }
@@ -149,11 +142,9 @@ public class ReservierungController {
         for (Parken parken1 : parkenList) {
             if (!parken1.isFreigabe()) {
                 if (konsument.getKidKonsument() == parken1.getKid()) {
-                    System.out.println(parken1.getKid() + "    kid parken1");
                     assert false;
                     parkens.add(parken1);
                 }
-                System.out.println(parkens.toString());
             }
         }
         List<Reservierung> reservierungen = reservierungenRepository.findAll();
@@ -166,7 +157,6 @@ public class ReservierungController {
 
         //Stornieren
         if (button.contains("stornieren")) {
-            System.out.println("stornieren");
             returnstring = "home";
             konsumentRepository.updateReserviert(false, konsument.getKid());
             assert reservierung != null;
@@ -231,30 +221,24 @@ public class ReservierungController {
                     }
                 }
             if (button.contains("freigebenSpeichernRes")) {
-                System.out.println("freigebenSpeichernRes If Schleife");
                 Integer gesamtbewertung = parkplatzRes.getGesamtbewertung()+starsRes;
-                System.out.println(gesamtbewertung + "     gesamtbewertung");
-                System.out.println(starsRes + "     starsRes Reservierung");
                 Integer bewertungsanzahl = parkplatzRes.getBewertungsanzahl() + 1;
                 Integer bewertung = (gesamtbewertung)/bewertungsanzahl;
-                System.out.println(bewertung+"     bewertung");
                 parkplatzRepository.updateBewertung(bewertung, bewertungsanzahl, gesamtbewertung, parkplatzRes.getPid());
                 historieRepository.save(new Historie(konsument.getNid(), parkplatzRes, "update","Bewertung"));
             }
 
-            if (!transaktion.isAbgeschlossen())
+            if (!transaktion.isAbgeschlossen()) {
                 //TODO abprüfen ob die aktuelle Zeit größer ist als das enddatum der Reservierung
                 if (true) {
                     Integer betragT = transaktion.getBetrag();
                     Integer betragP = parkplatzRes.getStrafgebuehr();
-                    System.out.println(betragP+" Betrag Parkplatz strafgebühr");
-                    System.out.println(betragT+" Betrag Transaktion parkgebühr");
                     betrag = betragP + betragT;
-                    System.out.println(betrag+" Gesamtbetrag");
                     transaktionRepository.updateGebuehr(true, betrag, transaktion.getTid());
                     historieRepository.save(new Historie(konsument.getNid(), null, "update", "Gebühr Transaktion"));
 
                 }
+            }
 
             returnstring = "home";
             assert parkenPrivat != null;
