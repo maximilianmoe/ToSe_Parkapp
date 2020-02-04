@@ -142,6 +142,9 @@
                 <div th:if="${duplicate} == 0" id="warning">
                     <span class="red_text" id="red_text1">Dieser Benutzername ist bereits vergeben</span>
                 </div>
+                <div th:if="${duplicate} == 1" id="warning">
+                    <span class="red_text" id="red_text1">Es exitiert bereits ein Nutzer mit dieser E-Mailadresse</span>
+                </div>
                 <div id="warning" class="col">
                     <span class="red_text" id="red_text1"></span><br>
                     <span class="red_text" id="red_text3"></span>
