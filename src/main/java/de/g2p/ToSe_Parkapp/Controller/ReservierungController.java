@@ -241,7 +241,7 @@ public class ReservierungController {
             }
 
             returnstring = "home";
-            assert parkenPrivat != null;
+            assert false;
             transaktionRepository.updateAbgeschlossen(true, transaktion.getTid());
             historieRepository.save(new Historie(konsument.getNid(), null, "update", "abgeschlossen Transaktion"));
             Nutzer nutzer = konsument.getNid();
@@ -274,8 +274,7 @@ public class ReservierungController {
         else
             benutzername = principal.toString();
 
-        Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
-        return nutzer;
+        return nutzerRepository.findByBenutzernameNO(benutzername);
     }
 
 
