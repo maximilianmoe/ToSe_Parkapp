@@ -48,13 +48,12 @@ public class NutzerController {
         return "registrieren";
     }
 
-
     @PostMapping("/registrieren")
     public String addUser(@ModelAttribute Nutzer nutzer, @ModelAttribute Konsument konsument,
                           @ModelAttribute Anbieter anbieter, @RequestParam("nutzertyp") String nutzertyp,
-                          @RequestParam("fahrzeugtyp") String fahrzeugtyp, @RequestParam("email") String email,
+                          @RequestParam(value = "fahrzeugtyp", required = false) String fahrzeugtyp, @RequestParam("email") String email,
                           @RequestParam("username") String benutzername, @RequestParam("passwort") String passwort,
-                          @RequestParam("erinnerungszeit") String reminder, Model model) {
+                          @RequestParam(value = "erinnerungszeit", required = false) String reminder, Model model) {
 
         boolean duplicate = nutzerRepository.findByBenutzername(benutzername).isPresent();
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
