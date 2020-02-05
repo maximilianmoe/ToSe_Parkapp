@@ -320,10 +320,10 @@ public class ParkplatzController {
         if (result.hasErrors()) {
             returnString = "special_parkingslot";
         } else {
-            System.out.println(startDate+" anfangsstartdatum");
-            System.out.println(startTime+" anfangsstartzeit");
-            System.out.println(endDate+" anfangsenddatum");
-            System.out.println(endTime+" anfangsendzeit");
+            System.out.println(startDate+" startdatum");
+            System.out.println(startTime+" startzeit");
+            System.out.println(endDate+" enddatum");
+            System.out.println(endTime+" endzeit");
 
 
             if (nutzer.getSaldo() < parkplatz.getParkgebuehr()) {
@@ -349,6 +349,8 @@ public class ParkplatzController {
                 reservierung.setEndeDatum(convertSql(endDateConv));
                 //reservierung.setEndTime(timePlusOne(convertTime(endTime)));
                 reservierung.setEndTime(convertTime(endTime));
+                System.out.println("unkonvertiert "+endTime);
+                System.out.println("konvertiert "+convertTime(endTime));
 
                 Date startDateConv = convertDate(startDate);
                 startDateConv = datePlusOne(startDateConv);

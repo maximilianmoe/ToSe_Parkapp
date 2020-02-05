@@ -240,7 +240,11 @@ public class ReservierungController {
             }
 
             if (!transaktion.isAbgeschlossen()) {
-                if (reservierung.getEndeDatum().before(currentDate)) {
+                System.out.println("end datum "+reservierung.getEndeDatum());
+                System.out.println("aktuelles datum "+currentDate);
+                System.out.println("end Zeit "+reservierung.getEndTime());
+                System.out.println("aktuelle Zeit "+currentTime);
+//                if (reservierung.getEndeDatum().before(currentDate)) {
                     if (reservierung.getEndTime().before(new Time(currentDate.getTime()))) {
                         Integer betragT = transaktion.getBetrag();
                         Integer betragP = parkplatzRes.getStrafgebuehr();
@@ -248,7 +252,7 @@ public class ReservierungController {
                         transaktionRepository.updateGebuehr(true, betrag, transaktion.getTid());
                         historieRepository.save(new Historie(konsument.getNid(), null, "update", "Gebühr Transaktion"));
 
-                    }
+//                    }
                 }
             }
 
