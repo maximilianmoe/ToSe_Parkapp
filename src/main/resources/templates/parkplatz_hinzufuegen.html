@@ -93,7 +93,7 @@
     -->
             <div class="col-4">
                 <input required type="text" th:value="*{parkplatz.strasse}" th:name="strasse" class="form-control"
-                       placeholder="Straße" maxlength="30" onkeypress="return /[a-z+ß]/i.test(event.key)">
+                       placeholder="Straße" maxlength="30" onkeypress="return /[a-z+ß+-]/i.test(event.key)">
             </div>
             <div class="col-2">
                 <input required type="text" th:value="*{parkplatz.hausnummer}" th:name="hausnummer" class="form-control"
@@ -139,7 +139,9 @@
                         <span class="input-group-text">EUR</span>
                     </div>
                     <input required type="number" th:value="*{parkplatz.parkgebuehr}" name="parkgebuehr" class="form-control"
-                           aria-label="Amount (to the nearest dollar)" placeholder="Parkgebühr" id="parkgebuehr" min="0" max="999999">
+                           aria-label="Amount (to the nearest dollar)" pattern="0 + \.[0-9]*[1-9][0-9]*$"
+                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                           placeholder="Parkgebühr" id="parkgebuehr" min="0" max="999999">
                     <div class="input-group-append">
                         <span class="input-group-text">.00</span>
                     </div>
@@ -152,6 +154,8 @@
                     </div>
                     <input required type="number" th:value="*{parkplatz.strafgebuehr}" name="strafgebuehr"
                            class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Strafgebühr"
+                           pattern="0 + \.[0-9]*[1-9][0-9]*$"
+                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                            id="strafgebuehr" min="0" max="999999">
                     <div class="input-group-append">
                         <span class="input-group-text">.00</span>

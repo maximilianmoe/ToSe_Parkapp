@@ -180,12 +180,12 @@
             <div class="row">
                 <div class="col">
                     <h6>Anfangsdatum:</h6>
-                    <input type="date" id="date1" th:name="startDatum" class="form-control"
+                    <input required type="date" id="date1" th:name="startDatum" class="form-control"
                            placeholder="Bsp.: 01.01.2020">
                 </div>
                 <div class="col">
                     <h6>Enddatum:</h6>
-                    <input type="date" id="date2" th:name="endeDatum" class="form-control" >
+                    <input required type="date" id="date2" th:name="endeDatum" class="form-control" >
                     <span id="popup2"></span>
                 </div>
             </div>
@@ -193,14 +193,14 @@
                 <div class="col">
                     <div class="form-group">
                         <h6>Anfangszeit</h6>
-                        <input type="time" id="time1" onfocusout="test()" th:name="startZeit" class="form-control">
+                        <input required type="time" id="time1" onfocusout="test()" th:name="startZeit" class="form-control">
                         <span id="popup3"></span>
                     </div>
                 </div>
 
                 <div class="col">
                     <h6>Endzeit</h6>
-                    <input type="time" id="time2" th:name="endeZeit" class="form-control" placeholder="Bsp.: 12:00">
+                    <input required type="time" id="time2" th:name="endeZeit" class="form-control" placeholder="Bsp.: 12:00">
                     <span id="popup4"></span>
                 </div>
 

@@ -95,11 +95,11 @@
         <div class="row input">
             <div class="col">
                 <input required type="text" style="text-transform: capitalize"
-                       onkeypress="return /[a-z]/i.test(event.key)" th:value="*{nutzer.vorname}" th:name="vorname" class="form-control"
+                       onkeypress="return /[a-z+-]/i.test(event.key)" th:value="*{nutzer.vorname}" th:name="vorname" class="form-control"
                        placeholder="Vorname" maxlength="30">
             </div>
             <div class="col">
-                <input required type="text" style="text-transform: capitalize" onkeypress="return /[a-z]/i.test(event.key)"
+                <input required type="text" style="text-transform: capitalize" onkeypress="return /[a-z+-]/i.test(event.key)"
                        th:value="*{nutzer.nachname}" th:name="nachname" class="form-control"
                        placeholder="Nachname" maxlength="30">
             </div>
