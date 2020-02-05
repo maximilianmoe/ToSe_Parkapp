@@ -475,6 +475,8 @@
         var dt = new Date();
         var cur_time = dt.getHours() + ":"  + dt.getMinutes() + ":" + dt.getSeconds();
 
+        var empty = $('#testing').find("tr:eq(1)").find("td:eq(0)").html();
+
         //alert("Anfangszeit: " + time + " Endzeit: " + time2 + " Aktuelle Zeit: " + cur_time);
         if((time <= cur_time && cur_time <= time2) && day == today){
             //$('#beparken_btn').prop('disabled', false);
@@ -488,6 +490,30 @@
                     $('#beparken_btn').prop('disabled', false);
                 }
             });
+        }
+        else if((time2 < cur_time && day == today) && $('#stornieren_btn').is(":disabled")){
+            $('#red_text1').html("Sie haben ihre Reservierungsdauer überschritten. Bitte geben Sie den" +
+                " Parkplatz frei.");
+            //AB hier verändert:
+            /*
+            $('#table1 td span').filter(function(){
+                if($(this).text() == 'Ja') {
+                    $('#beparken_btn').prop('disabled', true);
+                }
+                if($(this).text() == 'Nein') {
+                    $('#beparken_btn').prop('disabled', false);
+                }
+            });
+             */
+        }
+        else if(time2 < cur_time && day == today){
+            $('#red_text1').html("Sie haben ihre Reservierungsdauer nicht wahrgenommen." +
+                " Stornieren Sie diese um fortfahren zu können.");
+            $('#beparken_btn').prop('disabled', true);
+            //alert(time2 + " cur: " + cur_time);
+        }
+        else if(empty == "Sie haben noch keinen Parkplatz reserviert"){
+            $('#red_text1').html("");
         }
         else{
             //$('#beparken_btn').prop('disabled', true);
