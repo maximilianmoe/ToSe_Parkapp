@@ -25,12 +25,12 @@ public interface ParkenRepository extends JpaRepository<Parken, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update parken set endeZeit = :endeZeit where parkid = :parkid", nativeQuery = true)
+    @Query(value = "update parken set ende_zeit = :endeZeit where parkid = :parkid", nativeQuery = true)
     void updateEndTime(@Param("endeZeit") Time time, @Param("parkid") Integer parkid);
 
     @Transactional
     @Modifying
-    @Query(value = "update parken set endeDatum = :endeDatum where parkid = :parkid", nativeQuery = true)
+    @Query(value = "update parken set ende_datum = :endeDatum where parkid = :parkid", nativeQuery = true)
     void updateEndDate(@Param("endeDatum") Date datum , @Param("parkid") Integer parkid);
 
 

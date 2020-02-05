@@ -28,11 +28,16 @@ public class Parken {
     @JoinColumn(name = "pid")
     private Parkplatz pid;
 
-
+    @Column(name = "start_datum")
     private Date startDate;
+
+    @Column(name = "start_zeit")
     private Time startTime;
 
+    @Column(name = "ende_datum")
     private Date endeDate;
+
+    @Column(name = "ende_zeit")
     private Time endeTime;
 
     @Column(name = "oeffentlich")
