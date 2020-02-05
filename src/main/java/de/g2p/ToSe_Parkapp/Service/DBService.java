@@ -17,7 +17,7 @@ public class DBService {
         Properties connectionProps = new Properties();
         connectionProps.put("user", "root");
         connectionProps.put("password", "root");
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Parkapp", connectionProps);
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Parkapp?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", connectionProps);
         System.out.println("Connected to database");
 
     }
