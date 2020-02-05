@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -158,9 +159,6 @@ public class WebController {
     @PostMapping("/passwordreset")
     public String resetPasswordPost(@RequestParam("emailaddresse") String emailaddress) {
 
-
-
-
         MailService mailService = new MailService();
         String resetLink = "http://132.231.36.203:8080/newpassword";
         mailService.sendSimpleMessage(emailaddress, "Passwort zurücksetzen", "Bitte öffnen Sie folgenden Link, durch kopieren und einfügen im Browser, um Ihr Passwort zurückzusetzen: \n" + resetLink);
@@ -176,40 +174,36 @@ public class WebController {
         else
             benutzername = principal.toString();
 
-        Nutzer nutzer = nutzerRepository.findByBenutzernameNO(benutzername);
-        return nutzer;
+        return nutzerRepository.findByBenutzernameNO(benutzername);
     }
 
 
     /**
      * GetMapping for setting the new password.
      *
-     * @param model the model
      * @return passwort_zurueckgesetzt.html
      */
     @GetMapping("/newpassword")
-    public String newPasswordGet(Model model) {
-
-        model.addAttribute("nutzer", new Nutzer());
-
+    public String newPasswordGet() {
         return "neues_passwort";
     }
 
     /**
      * PostMapping for setting the new password.
      *
-     * @param nutzer       as Nutzer
      * @param emailaddress as String
      * @param password     as String
      * @return the string
      */
     @PostMapping("/newpassword")
-    public String newPasswordPost(@ModelAttribute Nutzer nutzer, @RequestParam("emailaddresse") String emailaddress, @RequestParam("newPassword") String password) {
+    public String newPasswordPost(@RequestParam("emailaddresse") String emailaddress, @RequestParam("newPassword") String password) {
 
         boolean check = nutzerRepository.findByEmailAdresse(emailaddress).isPresent();
         String returnString = "";
         if (check) {
-            nutzerRepository.updatePasswort(emailaddress, password);
+            Nutzer nutzer = nutzerRepository.findByEmail(emailaddress);
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            nutzerRepository.updatePasswort(emailaddress, bCryptPasswordEncoder.encode(password));
             historieRepository.save(new Historie(nutzer, null, "update", "Passwort"));
             returnString = "passwort_zurueckgesetzt";
         } else {
