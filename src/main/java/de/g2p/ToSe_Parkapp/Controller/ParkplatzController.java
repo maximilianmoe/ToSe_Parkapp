@@ -542,7 +542,7 @@ public class ParkplatzController {
             Time t = new Time(time1);
             Calendar c = Calendar.getInstance();
             c.setTime(t);
-            c.add(Calendar.HOUR, 1);
+//            c.add(Calendar.HOUR, 1);
             c.add(Calendar.MINUTE, -reminder);
             long time2 = c.getTime().getTime();
             Time newTime = new Time(time2);
