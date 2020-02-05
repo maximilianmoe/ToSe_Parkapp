@@ -247,8 +247,11 @@ public class ReservierungController {
 //                if (reservierung.getEndeDatum().before(currentDate)) {
                     if (reservierung.getEndTime().before(new Time(currentDate.getTime()))) {
                         Integer betragT = transaktion.getBetrag();
+                        System.out.println(betragT + "    Betrag Trans");
                         Integer betragP = parkplatzRes.getStrafgebuehr();
+                        System.out.println(betragP + "   Betrag Strafe");
                         betrag = betragP + betragT;
+                        System.out.println(betrag + "   Betrag gesamt");
                         transaktionRepository.updateGebuehr(true, betrag, transaktion.getTid());
                         historieRepository.save(new Historie(konsument.getNid(), null, "update", "Gebühr Transaktion"));
 
