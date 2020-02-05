@@ -31,10 +31,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return bCryptPasswordEncoder;
     }
 
-//    @Bean
-//    public PasswordEncoder getPasswordEncoder() {
-//        return NoOpPasswordEncoder.getInstance();
-//    }
 
     @Bean
     public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
@@ -49,9 +45,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //sets the configuration on the auth object
         auth.userDetailsService(userDetailsService);
-
-
-
 
     }
 

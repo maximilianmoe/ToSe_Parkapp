@@ -215,7 +215,7 @@
             </div>
             <div id="btn_row">
                 <div id="btn">
-                    <button type="submit" class="btn btn-outline-secondary btn-lg" id="submit_btn">
+                    <button disabled type="submit" class="btn btn-outline-secondary btn-lg" id="submit_btn">
                         Parkplatz Reservieren
                     </button>
                 </div>
@@ -412,13 +412,15 @@
                           alert("Input: " + inputTime + " cur: " + currentTime + " inpt größer total: " + totalTime);
                       }
               */
-            if ((totalTime >= -1 && totalTime <= 0) && datecheck == today) {
-                //alert("total: " + totalTime + " passt?" + today + " <- today +dcheck: " + datecheck);
+            if ((totalTime >= -1.00001 && totalTime <= 0) && datecheck == today) {
+                //alert("total: " + totalTime + " passt?" + today + " <- today +dcheck: " + datecheck
+                //    + " current time:" + currentTime + " input time: " + inputTime);
                 $('#submit_btn').prop('disabled', false);
                 $('#red_text').html("Sie können einen Parkplatz maximal 1 Stunde im voraus reservieren!");
                 $('#red_text').css('color', 'lightslategray');
             } else {
-                //alert("total: " + totalTime + " passt nicht?" + +today + " today +dcheck: " + datecheck);
+                //alert("total: " + totalTime + " passt nicht?" + today + " today +dcheck: " + datecheck
+                //    + " current time:" + currentTime + " input time: " + inputTime);
                 $('#submit_btn').prop('disabled', true);
                 $('#red_text').html("ACHTUNG: Sie können einen Parkplatz maximal 1 Stunde im voraus reservieren!");
                 $('#red_text').css('color', 'red');

@@ -65,7 +65,6 @@
 <div class="container">
     <div id="ueberschrift">
         <h3 id="h_3">Logtabelle</h3>
-<!--        TODO nur anzeigen, wenn man eine möglichkeit gefunden hat, die einträge auf 200 zu beschränken-->
 <!--        <label>Hier werden die letzten 200 Logeinträge angezeigt</label>-->
         <label>Klicken Sie auf die jeweilige Spaltenüberschrift um die Tabelle nach dieser zu sortieren</label>
         <div id="table_div">
@@ -79,16 +78,12 @@
                     <th scope="col">Zusatzinfo</th>
                     <th scope="col">Parkplatz-ID</th>
                     <th scope="col">Benutzername</th>
-<!--                    TODO soll zeit hinzugefügt werden?-->
-<!--                    <th scope="col">Zeit</th>-->
                 </tr>
                 </thead>
                 </a>
                 <tbody>
                 <tr th:each="historie : ${historien}" >
                     <td th:text="${historie.historienId}">Historien-ID</td>
-<!--                    <td th:text="${historie.nid}"></td>-->
-<!--                    <td th:text="${historie.pid}"></td>-->
                     <td>
                         <div th:if="${historie.nid} == null">
                             <span>Kein Nutzer beteiligt</span>

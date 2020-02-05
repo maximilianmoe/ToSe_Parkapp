@@ -50,7 +50,7 @@
     <form action="#" th:action="@{/newpassword}" method="post">
         <h2 class="text-center" id="resettext">Geben Sie ihre E-Mail Adresse und Ihr neues Passwort ein.</h2>
         <div class="form-group">
-            <input type="email" class="form-control" th:name="emailaddresse" th:value=*{nutzer.emailAdresse} placeholder="E-Mail" required="required">
+            <input type="email" class="form-control" th:name="emailaddresse" placeholder="E-Mail" required="required">
         </div>
         <div class="form-group">
             <input type="password" minlength="6" maxlength="100" class="form-control" id="pw1" th:name="newPassword" placeholder="Passwort" required="required">
@@ -61,7 +61,7 @@
         <div class="form-group">
             <a href="passwort_zurueckgesetzt.html"><button type="submit" class="btn btn-primary btn-block">Senden</button></a>
         </div>
-
+    </form>
 </div>
 <script>
     $('#pw2').focusout(function () {
