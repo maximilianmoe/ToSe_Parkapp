@@ -152,7 +152,7 @@ public class WebController {
 
 
         MailService mailService = new MailService();
-        String resetLink = "http://132.231.36.203:8080/passwort_zuruecksetzen";
+        String resetLink = "http://132.231.36.203:8080/newpassword";
         mailService.sendSimpleMessage(emailaddress, "Passwort zurücksetzen", "Bitte öffnen Sie folgenden Link, durch kopieren und einfügen im Browser, um Ihr Passwort zurückzusetzen: \n" + resetLink);
 
         return "email_bestaetigt";
