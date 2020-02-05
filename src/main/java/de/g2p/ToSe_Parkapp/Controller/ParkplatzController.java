@@ -575,7 +575,7 @@ public class ParkplatzController {
         //findet den kompletten Pfad vom Root directory bis zum aktuellen directory
         Path absolutePath = currentPath.toAbsolutePath();
         //System.out.println(absolutePath.toString());
-        bild.setPath(absolutePath + "/src/main/resources/static/images/photos/");
+        bild.setPath(absolutePath + "/src/main/resources/static/photos/");
         byte[] bytes = imageFile.getBytes();
         Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
         Files.write(path, bytes);
