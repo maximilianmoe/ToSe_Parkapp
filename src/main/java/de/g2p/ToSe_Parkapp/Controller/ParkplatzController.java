@@ -545,7 +545,7 @@ public class ParkplatzController {
             Calendar c = Calendar.getInstance();
             c.setTime(t);
 //            c.add(Calendar.HOUR, 1);
-            c.add(Calendar.MINUTE, -reminder);
+            c.add(Calendar.MINUTE, -reminder-1);
             long time2 = c.getTime().getTime();
             Time newTime = new Time(time2);
             System.out.println(newTime + " neue Zeit nach reminer abzug");

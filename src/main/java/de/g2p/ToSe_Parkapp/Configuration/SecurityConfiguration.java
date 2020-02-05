@@ -1,6 +1,3 @@
-//Alles Auskommentiert, da sonst bei jedem Zugriff auf den Server ein User authentifiziert werden müsste.
-//Einfügen erst zu einem späteren Zeitpunkt
-
 
 package de.g2p.ToSe_Parkapp.Configuration;
 
