@@ -114,10 +114,10 @@
                             <div class="bot-border"></div>
 
                             <div class="col-sm-10 col-xs-6 tital ">Parkplatz erstellt:</div>
-                            <div class="col-sm-12">
-                                <h6 class="h_6" th:text="${anbieter.parkplatz}">
-                                </h6>
-                            </div>
+                                <div class="col-sm-12">
+                                    <h6 class="h_6" th:if="${anbieter.parkplatz} == true">Ja</h6>
+                                    <h6 class="h_6" th:unless="${anbieter.parkplatz} == true">Nein</h6>
+                                </div>
 
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>

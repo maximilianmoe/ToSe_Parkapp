@@ -334,7 +334,8 @@ public class ParkplatzController {
                 reservierung.setResZuParken(false);
                 reservierung.setKid((konsumentRepository.findByNid(nutzer.getNidNutzer())).getKidKonsument());
                 reservierung.setPid(parkplatzRepository.findByPid(parkplatz.getPid()));
-                konsumentRepository.updateReserviert(true, nutzer.getNid());
+                Konsument konsument = konsumentRepository.findByNid(nutzer);
+                konsumentRepository.updateReserviert(true,konsument.getKid());
                 historieRepository.save(new Historie(nutzer, parken.getPid(), "update", "Reserviert"));
 
                 //Convert time and date
@@ -367,6 +368,7 @@ public class ParkplatzController {
 
 
                 //Saves all data in the database
+                System.out.println(reservierung.toString());
                 reservierungenRepository.save(reservierung);
                 historieRepository.save(new Historie(reservierung.getKid().getNid(), reservierung.getPid(), "create", "Reservierung"));
 
