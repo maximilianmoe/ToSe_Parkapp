@@ -588,35 +588,35 @@ public class ParkplatzController {
         return sqlDate;
     }
 
-    /**
-     * This method adds to the Date one Day
-     *
-     * @param date time which is given as Date
-     * @return newDate of the typ Date
-     */
-    public java.util.Date datePlusOne(java.util.Date date){
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        c.add(Calendar.DATE, 1);
-        java.util.Date newDate = c.getTime();
-        return newDate;
-    }
+  /**
+   * This method adds to the Date one Day
+   *
+   * @param date time which is given as Date
+   * @return newDate of the typ Date
+   */
+  public java.util.Date datePlusOne(java.util.Date date){
+      Calendar c = Calendar.getInstance();
+      c.setTime(date);
+      c.add(Calendar.DATE, 0);
+      java.util.Date newDate = c.getTime();
+      return newDate;
+  }
 
 
     public void saveImage(Bild bild, MultipartFile imageFile) throws Exception {
 
-        //IntelliJ Implementation
-        //findet das aktuelle directory
-        Path currentPath = Paths.get("");
-        //findet den kompletten Pfad vom Root directory bis zum aktuellen directory
-        Path absolutePath = currentPath.toAbsolutePath();
-        //System.out.println(absolutePath.toString());
-        bild.setPath(absolutePath + "/src/main/resources/static/photos/");
-        byte[] bytes = imageFile.getBytes();
-        Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
-        Files.write(path, bytes);
+      //IntelliJ Implementation
+      //findet das aktuelle directory
+      Path currentPath = Paths.get("");
+      //findet den kompletten Pfad vom Root directory bis zum aktuellen directory
+      Path absolutePath = currentPath.toAbsolutePath();
+      //System.out.println(absolutePath.toString());
+      bild.setPath(absolutePath + "/src/main/resources/static/photos/");
+      byte[] bytes = imageFile.getBytes();
+      Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
+      Files.write(path, bytes);
 
-        //use for deployment on tomcat
+//        //use for deployment on tomcat
 //        String folder = "/usr/local/apache-tomcat9/webapps/good2park/WEB-INF/classes/static/photos/";
 //        byte[] bytes = imageFile.getBytes();
 //        Path path = Paths.get(folder + finalImageName + ".jpg");
