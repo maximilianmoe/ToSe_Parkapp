@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Time;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -296,6 +294,13 @@ public class ReservierungController {
 
         return nutzerRepository.findByBenutzernameNO(benutzername);
     }
+
+    /**
+     * This method converts a java.util.Date to a java.sql.Date
+     *
+     * @param date time which is given as Date
+     * @return sqlDate of the typ java.sql.Date
+     */
     public java.sql.Date convertSql(Date date) {
 
         Calendar cal = Calendar.getInstance();
@@ -303,17 +308,4 @@ public class ReservierungController {
         java.sql.Date sqlDate = new java.sql.Date(cal.getTime().getTime());
         return sqlDate;
     }
-/*    private Date convertDate(String date) {
-        try {
-            SimpleDateFormat stfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            Date date2 = stfDate.parse(date);
-            return date2;
-        } catch (ParseException ex2) {
-            ex2.printStackTrace();
-            return null;
-        }
-    }*/
-
-
-
 }

@@ -291,6 +291,21 @@ public class ParkplatzController {
         return "parkplaetze_medialist_suche";
     }
 
+
+    /**
+     * Reserve a Parkkingslot.
+     *
+     * @param parken            as typ of Parken
+     * @param reservierung      as typ of Reservierung
+     * @param startDate         as typ of date
+     * @param endDate           as typ of date
+     * @param startTime         as typ of time
+     * @param endTime           as typ of time
+     * @param reservierungValid as typ of Reservierung
+     * @param result            as typ of BindingResult
+     * @return home.html
+     * @throws ParseException the parse exception
+     */
     @PostMapping("/special_parkingslot")
     public String reserveParkplatz(@ModelAttribute Parken parken, @ModelAttribute Reservierung reservierung,
                                    @RequestParam("startDatum") String startDate, @RequestParam("endeDatum") String endDate
@@ -497,7 +512,7 @@ public class ParkplatzController {
      * This method converts a time, which are given as a String to the format of Time
      *
      * @param time which is given as a String
-     * @return time which includes time
+     * @return time as typ of Time
      */
     private Time convertTime(String time) {
 
@@ -512,6 +527,13 @@ public class ParkplatzController {
         }
     }
 
+    /**
+     * This method converts the given time so that you have the time when the reminder should remind you
+     *
+     * @param time time which is given as String
+     * @param reminder time which is given as int
+     * @return newTime of the typ java.sql.Date
+     */
     private Time convertReminderTime(String time, int reminder) {
 
         try {
@@ -536,7 +558,7 @@ public class ParkplatzController {
      * This method converts a date, which are given as a String to the format of Date
      *
      * @param date time which is given as a String
-     * @return date which includes date
+     * @return date of the typ Date
      */
     private Date convertDate(String date) {
         try {
@@ -548,7 +570,12 @@ public class ParkplatzController {
             return null;
         }
     }
-
+    /**
+     * This method converts a java.util.Date to a java.sql.Date
+     *
+     * @param date time which is given as Date
+     * @return sqlDate of the typ java.sql.Date
+     */
     public java.sql.Date convertSql(Date date) {
 
         Calendar cal = Calendar.getInstance();
@@ -557,7 +584,12 @@ public class ParkplatzController {
         return sqlDate;
     }
 
-
+    /**
+     * This method adds to the Date one Day
+     *
+     * @param date time which is given as Date
+     * @return newDate of the typ Date
+     */
     public java.util.Date datePlusOne(java.util.Date date){
         Calendar c = Calendar.getInstance();
         c.setTime(date);

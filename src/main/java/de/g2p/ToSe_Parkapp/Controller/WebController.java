@@ -137,14 +137,24 @@ public class WebController {
     @GetMapping("/kontakt")
     public String kontakt(){return "kontakt";}
 
-    //GetMapping for getting an E-Mail to set a new password.
+    /**
+     * GetMapping for getting an E-Mail to set a new password.
+     *
+     * @param model as Model
+     * @return passwort_zuruecksetzen.html
+     */
     @GetMapping("/passwordreset")
     public String resetPasswordGet(Model model) {
         model.addAttribute("nutzer", new Nutzer());
         return "passwort_zuruecksetzen";
     }
 
-    //PostMapping for getting an E-Mail to set a new password.
+    /**
+     * PostMapping for getting an E-Mail to set a new password.
+     *
+     * @param emailaddress as String
+     * @return email_bestaetigt.html
+     */
     @PostMapping("/passwordreset")
     public String resetPasswordPost(@RequestParam("emailaddresse") String emailaddress) {
 
@@ -171,8 +181,12 @@ public class WebController {
     }
 
 
-
-    //GetMapping for setting the new password.
+    /**
+     * GetMapping for setting the new password.
+     *
+     * @param model the model
+     * @return passwort_zurueckgesetzt.html
+     */
     @GetMapping("/newpassword")
     public String newPasswordGet(Model model) {
 
@@ -181,7 +195,14 @@ public class WebController {
         return "neues_passwort";
     }
 
-    //PostMapping for setting the new password.
+    /**
+     * PostMapping for setting the new password.
+     *
+     * @param nutzer       as Nutzer
+     * @param emailaddress as String
+     * @param password     as String
+     * @return the string
+     */
     @PostMapping("/newpassword")
     public String newPasswordPost(@ModelAttribute Nutzer nutzer, @RequestParam("emailaddresse") String emailaddress, @RequestParam("newPassword") String password) {
 
@@ -197,6 +218,12 @@ public class WebController {
         return returnString;
     }
 
+
+    /**
+     * Reminder scheduler, set to 1 second.
+     *
+     * @throws SQLException sql exception
+     */
     @Scheduled(fixedRate = 1000)
     public void erinnerungSchedule() throws SQLException {
         TimeZone timeZone = TimeZone.getTimeZone("GMT+1:00");

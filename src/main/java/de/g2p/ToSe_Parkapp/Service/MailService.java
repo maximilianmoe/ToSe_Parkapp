@@ -38,6 +38,8 @@ public class MailService implements EmailService {
     }
 
     /**
+     * this method creates a simplemessage with which the emails are sent.
+     *
      * @param to      The email address of the user the email is send to.
      * @param subject The subject of the email.
      * @param text    The text or body of the email which is send to the user.
