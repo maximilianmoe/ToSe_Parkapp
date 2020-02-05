@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 
 @Getter
@@ -28,9 +29,11 @@ public class Parken {
     private Parkplatz pid;
 
 
-    private Date start;
+    private Date startDate;
+    private Time startTime;
 
-    private Date ende;
+    private Date endeDate;
+    private Time endeTime;
 
     @Column(name = "oeffentlich")
     private boolean oeffentlich;
@@ -39,12 +42,14 @@ public class Parken {
 
     private boolean freigabe;
 
-    public Parken(Konsument kid, Parkplatz pid, Date startDatum, Date endeDatum,
+    public Parken(Konsument kid, Parkplatz pid, Date startDatum, Date endeDatum, Time startZeit, Time endeZeit,
                    boolean freigabe) {
         this.kid = kid;
         this.pid = pid;
-        this.start = startDatum;
-        this.ende = endeDatum;
+        this.startDate = startDatum;
+        this.startTime = startZeit;
+        this.endeDate = endeDatum;
+        this.endeTime= endeZeit;
         this.freigabe = freigabe;
     }
 

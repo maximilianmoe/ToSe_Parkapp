@@ -148,22 +148,7 @@ public class WebController {
     @PostMapping("/passwordreset")
     public String resetPasswordPost(@RequestParam("emailaddresse") String emailaddress) {
 
-//        TODO try convert a String into a HTML hyperlink so that the User ust has to click on it in the mail instead of copy and pasting the url. Following is a example how to do this...
-        /*String url = "localhost:8080/newpassword";
-        String someVariable = "Passwort zurücksetzten";
-        Html entryLink = new Html("<a target=\"_blank\" href=\"" + url + "\">" + someVariable + "</a>");*/
 
-      /*  String resetLink;
-        URLConnection connection;
-        try {
-            connection =  new URL("localhost:8080/newpassword").openConnection();
-            Scanner scanner = new Scanner(connection.getInputStream());
-            scanner.useDelimiter("\\Z");
-            resetLink = scanner.next();
-            scanner.close();
-        }catch ( Exception ex ) {
-            ex.printStackTrace();
-        }*/
 
 
         MailService mailService = new MailService();
@@ -207,7 +192,6 @@ public class WebController {
             historieRepository.save(new Historie(nutzer, null, "update", "Passwort"));
             returnString = "passwort_zurueckgesetzt";
         } else {
-//            TODO change errror_page to specific error_page for this content
             returnString = "error_page";
         }
         return returnString;

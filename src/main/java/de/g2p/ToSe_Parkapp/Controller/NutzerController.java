@@ -18,7 +18,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Controller
 public class NutzerController {
@@ -160,6 +165,7 @@ public class NutzerController {
             returnstring = "mein_profil_konsument";
             model.addAttribute("konsument", konsumentRepository.findByNid(nutzer.getNidNutzer()));
         }
+
         return returnstring;
     }
 

@@ -9,12 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ReservierungController {
@@ -143,6 +142,15 @@ public class ReservierungController {
         Parken parkenOeffentlich = null;
         Parken parkenPrivat = null;
 
+        TimeZone timeZone = TimeZone.getTimeZone("GMT+1:00");
+        Calendar c = Calendar.getInstance();
+        c.setTimeZone(timeZone);
+        Date currentDate = c.getTime();
+        Time currentTime = new Time(c.getTime().getTime());
+        System.out.println(currentDate);
+        System.out.println(currentTime);
+
+
         for (Parken parken1 : parkenList) {
             if (!parken1.isFreigabe()) {
                 if (konsument.getKidKonsument() == parken1.getKid()) {
@@ -180,14 +188,13 @@ public class ReservierungController {
                 Transaktion transaktion = new Transaktion();
                 Parkplatz parkplatz = reservierung.getPid();
                 returnstring = "home";
-                //TODO die aktuelle zeit muss bei setStart eingefügt werden
-//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                LocalDateTime ldt = LocalDateTime.now();
-//                Date date = dateFormat.parse(ldt.toString());
+
                 Parken parkenSave = new Parken();
-//                parkenSave.setStart(date);
+                parkenSave.setStartDate(convertSql(currentDate));
+                parkenSave.setStartTime(currentTime);
                 parkenSave.setPid(reservierung.getPid());
-                parkenSave.setEnde(null);
+                parkenSave.setEndeDate(null);
+                parkenSave.setEndeTime(null);
                 parkenSave.setKid(konsument);
                 //transaktion.setAid(parkplatz.getAnbieterId());
                 transaktion.setAid(null);
@@ -235,19 +242,26 @@ public class ReservierungController {
             }
 
             if (!transaktion.isAbgeschlossen()) {
-                //TODO abprüfen ob die aktuelle Zeit größer ist als das enddatum der Reservierung
-                if (true) {
-                    Integer betragT = transaktion.getBetrag();
-                    Integer betragP = parkplatzRes.getStrafgebuehr();
-                    betrag = betragP + betragT;
-                    transaktionRepository.updateGebuehr(true, betrag, transaktion.getTid());
-                    historieRepository.save(new Historie(konsument.getNid(), null, "update", "Gebühr Transaktion"));
+                if (reservierung.getEndeDatum().before(currentDate)) {
+                    if (reservierung.getEndTime().before(new Time(currentDate.getTime()))) {
+                        Integer betragT = transaktion.getBetrag();
+                        Integer betragP = parkplatzRes.getStrafgebuehr();
+                        betrag = betragP + betragT;
+                        transaktionRepository.updateGebuehr(true, betrag, transaktion.getTid());
+                        historieRepository.save(new Historie(konsument.getNid(), null, "update", "Gebühr Transaktion"));
 
+                    }
                 }
             }
 
             returnstring = "home";
+
+            parkenRepository.updateEndDate(convertSql(currentDate), parkenPrivat.getParkid());
+            parkenRepository.updateEndTime(currentTime, parkenPrivat.getParkid());
+
             assert false;
+
+
             transaktionRepository.updateAbgeschlossen(true, transaktion.getTid());
             historieRepository.save(new Historie(konsument.getNid(), null, "update", "abgeschlossen Transaktion"));
             Nutzer nutzer = konsument.getNid();
@@ -282,6 +296,23 @@ public class ReservierungController {
 
         return nutzerRepository.findByBenutzernameNO(benutzername);
     }
+    public java.sql.Date convertSql(Date date) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        java.sql.Date sqlDate = new java.sql.Date(cal.getTime().getTime());
+        return sqlDate;
+    }
+/*    private Date convertDate(String date) {
+        try {
+            SimpleDateFormat stfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date date2 = stfDate.parse(date);
+            return date2;
+        } catch (ParseException ex2) {
+            ex2.printStackTrace();
+            return null;
+        }
+    }*/
 
 
 
