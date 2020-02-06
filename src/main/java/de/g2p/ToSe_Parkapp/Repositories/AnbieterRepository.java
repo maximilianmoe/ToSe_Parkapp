@@ -32,4 +32,9 @@ public interface AnbieterRepository extends JpaRepository<Anbieter, Integer> {
     @Query(value = "update anbieter set pid = :pid where aid = :aid", nativeQuery = true)
     void updatePid(@Param("pid") Integer pid, @Param("aid") Integer aid) ;
 
+    @Transactional
+    @Modifying
+    @Query(value = "update anbieter set nid = :nid where aid = :aid", nativeQuery = true)
+    void updateNid(@Param("nid") Integer nid, @Param("aid") Integer aid) ;
+
 }

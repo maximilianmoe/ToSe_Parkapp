@@ -32,5 +32,4 @@ public interface HistorieRepository extends PagingAndSortingRepository<Historie,
     @Query(value = "update historie set nid = :nid where hid = :hid", nativeQuery = true)
     void updateNid(@Param("nid") Integer nid, @Param("hid") Integer hid);
 
-
 }

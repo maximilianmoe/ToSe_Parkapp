@@ -18,6 +18,9 @@ public interface ParkplatzRepository extends JpaRepository<Parkplatz, Integer> {
     Parkplatz findByAnbieterId(Anbieter aid);
     List<Parkplatz> findByPlz(Integer plz);
 
+    @Query(value = "select * from parkplatz where aid = :aid", nativeQuery = true)
+    List<Parkplatz> findByAid(@Param("aid") Integer aid);
+
     @Transactional
     @Modifying
     @Query(value = "update parkplatz set pstat = :pstat where pid = :pid", nativeQuery = true)

@@ -96,56 +96,66 @@ public class AdminController {
     @PostMapping("/loeschen")
     public String loeschenPost(@RequestParam("nid") Integer nid) {
         Nutzer nutzer = nutzerRepository.findByNid(nid);
-        System.out.println(nutzer.getEmailAdresse());
-        mailService.sendSimpleMessage(nutzer.getEmailAdresse(),"Account gelöscht.", "Ihr Account wurde von einem Adminsitrator gelöscht.");
-        System.out.println(nutzer.getBenutzername()+"     "+nutzer.getBenutzername());
 
-        if (nutzer.getRolle().equalsIgnoreCase("beides")) {
-            System.out.println("Rolle beides");
-            Anbieter anbieter = anbieterRepository.findByNid(nutzer);
-            Konsument konsument = konsumentRepository.findByNid(nutzer);
-            Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
-            List<Historie> historieList = historieRepository.findByNid(anbieter.getNid());
-            for (Historie historieFor : historieList) {
-                historieRepository.updateNid(null, historieFor.getHistorienId());
+        if (nutzer == null) {
+            return "error_kein_nutzer";
+        } else {
+            if (anbieterRepository.findByNid(nutzer).getNid() != null) {
+                if (anbieterRepository.findByNid(nutzer).getParkplatz())
+                    return "error_anbieter_noch_parkplatz_vorhanden";
             }
-            konsumentRepository.delete(konsument);
-            anbieterRepository.delete(anbieter);
-            if  (anbieter.getParkplatz()) {
-                parkplatzRepository.delete(parkplatz);
-            }
-            historieRepository.save(new Historie(findNutzer(), null, "delete", "Konsument, Anbieter und Parkplatz"));
 
-        } else if (nutzer.getRolle().equalsIgnoreCase("anbieter")) {
-            System.out.println("rolle anbieter");
-            Anbieter anbieter = anbieterRepository.findByNid(nutzer);
-            Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
-            List<Historie> historieList = historieRepository.findByNid(anbieter.getNid());
-            for (Historie historieFor : historieList) {
-                historieRepository.updateNid(null, historieFor.getHistorienId());
+            mailService.sendSimpleMessage(nutzer.getEmailAdresse(), "Account gelöscht.", "Ihr Account wurde von einem Adminsitrator gelöscht.");
+            if (nutzer.getRolle().equalsIgnoreCase("beides")) {
+                System.out.println("Rolle beides");
+                Anbieter anbieter = anbieterRepository.findByNid(nutzer);
+                Konsument konsument = konsumentRepository.findByNid(nutzer);
+                Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
+                List<Historie> historieList = historieRepository.findByNid(anbieter.getNid());
+                for (Historie historieFor : historieList) {
+                    historieRepository.updateNid(null, historieFor.getHistorienId());
+                    parkplatzRepository.updateAid(null, (parkplatzRepository.findByAnbieterId(anbieter)).getPid());
+                }
+                if (anbieter.getParkplatz()) {
+                    parkplatzRepository.delete(parkplatz);
+                }
+                konsumentRepository.delete(konsument);
+                anbieterRepository.delete(anbieter);
+                historieRepository.save(new Historie(findNutzer(), null, "delete", "Konsument, Anbieter und Parkplatz"));
+
+            } else if (nutzer.getRolle().equalsIgnoreCase("anbieter")) {
+                System.out.println("rolle anbieter");
+                Anbieter anbieter = anbieterRepository.findByNid(nutzer);
+                Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
+                List<Historie> historieList = historieRepository.findByNid(anbieter.getNid());
+                System.out.println(historieList.size());
+                for (Historie historieFor : historieList) {
+                    historieRepository.updateNid(null, historieFor.getHistorienId());
+                    System.out.println("historieFor");
+                    if (anbieter.getParkplatz())
+                        System.out.println("anbieter.getParkplatz");
+                    historieRepository.updatePid(null, historieFor.getHistorienId());
+                }
+                anbieterRepository.updateNid(null, anbieter.getAid());
+                anbieterRepository.delete(anbieter);
+                historieRepository.save(new Historie(findNutzer(), null, "delete", "Anbieter und Parkplatz"));
+            } else if (nutzer.getRolle().equalsIgnoreCase("konsument")) {
+                System.out.println("rolle konsument");
+                Konsument konsument = konsumentRepository.findByNid(nutzer);
+                List<Historie> historieList = historieRepository.findByNid(konsument.getNid());
+                for (Historie historieFor : historieList) {
+                    historieRepository.updateNid(null, historieFor.getHistorienId());
+                }
+                List<Parken> parkenList = parkenRepository.findByKid(konsument);
+                for (Parken parkenFor : parkenList) {
+                    parkenRepository.updateKid(null, parkenFor.getParkid());
+                }
+                konsumentRepository.delete(konsument);
+                historieRepository.save(new Historie(findNutzer(), null, "delete", "Konsument"));
             }
-            anbieterRepository.delete(anbieter);
-            if  (anbieter.getParkplatz()) {
-                parkplatzRepository.delete(parkplatz);
-            }
-            historieRepository.save(new Historie(findNutzer(), null, "delete","Anbieter und Parkplatz"));
-        } else if (nutzer.getRolle().equalsIgnoreCase("konsument")) {
-            System.out.println("rolle konsument");
-            Konsument konsument = konsumentRepository.findByNid(nutzer);
-            List<Historie> historieList = historieRepository.findByNid(konsument.getNid());
-            for (Historie historieFor : historieList) {
-                historieRepository.updateNid(null, historieFor.getHistorienId());
-            }
-            List<Parken> parkenList = parkenRepository.findByKid(konsument);
-            for (Parken parkenFor: parkenList) {
-                parkenRepository.updateKid(null, parkenFor.getParkid());
-            }
-            konsumentRepository.delete(konsument);
-            historieRepository.save(new Historie(findNutzer(), null, "delete", "Konsument"));
+            nutzerRepository.deleteNutzer(nutzer.getNid());
+            historieRepository.save(new Historie(findNutzer(), null, "delete", "Nutzer"));
         }
-        nutzerRepository.deleteNutzer(nutzer.getNid());
-        historieRepository.save(new Historie(findNutzer(), null, "delete", "Nutzer"));
-
         return "nutzer_geloescht";
     }
 
@@ -223,15 +233,6 @@ public class AdminController {
     @GetMapping("/logtabelle")
     public String logtabelleGet(Model model) {
         List<Historie> histories = historieRepository.findAll();
-//        List<Historie> historieList = null;
-//        for (Historie historieFor : histories) {
-//            System.out.println(historieFor.getHistorienId()+" historienid historienfor");
-//            System.out.println(historieFor.getHistorienId() > (histories.size() - 200));
-//            if (historieFor.getHistorienId() > (histories.size()-200)) {
-//                System.out.println("historienid zwischen hid max und hidmax - 200");
-//                historieList.add(historieFor);
-//            }
-//        }
         model.addAttribute("historien", histories);
         model.addAttribute("nutzerlist", nutzerRepository.findAll());
         model.addAttribute("parkplaetze", parkplatzRepository.findAll());
