@@ -93,7 +93,7 @@
     -->
             <div class="col-4">
                 <input required type="text" th:value="*{parkplatz.strasse}" th:name="strasse" class="form-control"
-                       placeholder="Straße" maxlength="30" onkeypress="return /[a-z+ß+-]/i.test(event.key)">
+                       placeholder="Straße" maxlength="30" onkeypress="return /[a-z+ß+-+ä+ö+ü]/i.test(event.key)">
             </div>
             <div class="col-2">
                 <input required type="text" th:value="*{parkplatz.hausnummer}" th:name="hausnummer" class="form-control"

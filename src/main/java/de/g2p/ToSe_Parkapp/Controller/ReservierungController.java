@@ -41,55 +41,63 @@ public class ReservierungController {
      */
     @GetMapping("/meine_reservierungen")
     public String reservierungenGet(Model model) {
+        String returnstring = "";
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
         List<Parken> parkenList = parkenRepository.findAll();
-        if (!konsument.getReserviert()) {
-            model.addAttribute("reservierungen", 0);
+        if(konsument == null){
+            returnstring = "error_anbieter";
         }
-        else {
-           List<Reservierung> reservierungen = reservierungenRepository.findAll();
-           Reservierung reservierungKonsument = null;
-           for (Reservierung reservierungFor : reservierungen) {
-               if (!reservierungFor.isBeendet())
-                   if (reservierungFor.getKid() == konsument)
-                       reservierungKonsument = reservierungFor;
-           }
-
-            if (reservierungKonsument == null) {
+        else{
+            if (!konsument.getReserviert()) {
                 model.addAttribute("reservierungen", 0);
-            } else {
-                Parkplatz parkplatz = parkplatzRepository.findByPid(reservierungKonsument.getPidInteger());
-                model.addAttribute("reservierungen", reservierungKonsument);
-                model.addAttribute("parkplatz", parkplatz);
             }
-        }
-
-        //alle öffentlichen beparkten Parkplätze anzeigen
-        List<Parken> parkenList1 = parkenRepository.findAll();
-        Parken parken = null;
-        Parkplatz parkplatz = null;
-        if(konsument.getBelegt()) {
-            for (Parken parken1: parkenList1) {
-                if ((konsument.getKidKonsument() == parken1.getKid()) && !parken1.isFreigabe()) {
-                    parken = parken1;
+            else {
+                List<Reservierung> reservierungen = reservierungenRepository.findAll();
+                Reservierung reservierungKonsument = null;
+                for (Reservierung reservierungFor : reservierungen) {
+                    if (!reservierungFor.isBeendet())
+                        if (reservierungFor.getKid() == konsument)
+                            reservierungKonsument = reservierungFor;
                 }
-                if (parken != null) {
-                    model.addAttribute("parken", 0);
-                    if (parken.getOeffentlich()) {
-                        parkplatz = parkplatzRepository.findByPid(parken.getPidParkplatz());
-                        model.addAttribute("parkplatzParken", parkplatz);
-                        model.addAttribute("parken", parken);
-                    }
+
+                if (reservierungKonsument == null) {
+                    model.addAttribute("reservierungen", 0);
                 } else {
-                    model.addAttribute("parken", 0);
+                    Parkplatz parkplatz = parkplatzRepository.findByPid(reservierungKonsument.getPidInteger());
+                    model.addAttribute("reservierungen", reservierungKonsument);
+                    model.addAttribute("parkplatz", parkplatz);
                 }
             }
-        } else {
-            model.addAttribute("parken", 0);
 
+            //alle öffentlichen beparkten Parkplätze anzeigen
+            List<Parken> parkenList1 = parkenRepository.findAll();
+            Parken parken = null;
+            Parkplatz parkplatz = null;
+            if(konsument.getBelegt()) {
+                for (Parken parken1: parkenList1) {
+                    if ((konsument.getKidKonsument() == parken1.getKid()) && !parken1.isFreigabe()) {
+                        parken = parken1;
+                    }
+                    if (parken != null) {
+                        model.addAttribute("parken", 0);
+                        if (parken.getOeffentlich()) {
+                            parkplatz = parkplatzRepository.findByPid(parken.getPidParkplatz());
+                            model.addAttribute("parkplatzParken", parkplatz);
+                            model.addAttribute("parken", parken);
+                        }
+                    } else {
+                        model.addAttribute("parken", 0);
+                    }
+                }
+            } else {
+                model.addAttribute("parken", 0);
+
+            }
+            model.addAttribute("rateRes", 0);
+            returnstring = "meine_reservierungen";
         }
-        model.addAttribute("rateRes", 0);
-        return "meine_reservierungen";
+
+        return returnstring;
     }
 
     /**
