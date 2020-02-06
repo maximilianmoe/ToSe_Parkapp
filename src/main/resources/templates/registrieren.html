@@ -356,9 +356,21 @@
     window.setInterval(function(){
         if((c1+c2+c3+c4) == 4){
             $("#btn").prop('disabled', false);
+            //alert("check");
+        }
+        else if(((c1 == 1)&&(c2 == 1)) && (c4 ==1)){
+            var expression = /\b[A-Z ÄÜÖ]{1,3}[-][A-Z ÄÜÖ]{1,2}[-][0-9]{1,4}\b/g;
+            var regex = new RegExp(expression);
+            var kennz = $('#kennzeichen').val();
+            if(kennz.match(regex) && $('#nutzungs_art').find('option:selected').text() == 'Konsument' || $('#nutzungs_art').find('option:selected').text() == 'Beides'){
+                //$('#btn').prop('disabled', false);
+                c3 = 1;
+                //$('#red_text4').html("");
+            }
         }
         else{
             $("#btn").prop('disabled', true);
+            //alert("C1: " + c1 + " C2: " + c2 + " c3: " + c3 + " c4 " + c4);
         }
     }, 300);
 
