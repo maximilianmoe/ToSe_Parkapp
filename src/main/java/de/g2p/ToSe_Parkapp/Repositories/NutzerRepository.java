@@ -46,4 +46,8 @@ public interface NutzerRepository extends JpaRepository<Nutzer, Integer> {
     @Query(value = "update nutzer set passwort = :passwort where emailadresse = :emailadresse", nativeQuery = true)
     void updatePasswort(@Param("emailadresse") String emailadress, @Param("passwort") String password);
 
+    @Transactional
+    @Modifying
+    @Query(value = "delete from nutzer where nid = :nid", nativeQuery = true)
+    void deleteNutzer(@Param("nid") Integer nid);
 }

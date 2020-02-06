@@ -82,7 +82,6 @@ public class AdminController {
     @PostMapping("/loeschen")
     public String loeschenPost(@RequestParam("nid") Integer nid) {
         Nutzer nutzer = nutzerRepository.findByNid(nid);
-//        TODO wirft eine NullPointerException
         System.out.println(nutzer.getEmailAdresse());
         mailService.sendSimpleMessage(nutzer.getEmailAdresse(),"Account gelöscht.", "Ihr Account wurde von einem Adminsitrator gelöscht.");
         System.out.println(nutzer.getBenutzername()+"     "+nutzer.getBenutzername());
@@ -130,9 +129,8 @@ public class AdminController {
             konsumentRepository.delete(konsument);
             historieRepository.save(new Historie(findNutzer(), null, "delete", "Konsument"));
         }
-        nutzerRepository.delete(nutzer);
+        nutzerRepository.deleteNutzer(nutzer.getNid());
         historieRepository.save(new Historie(findNutzer(), null, "delete", "Nutzer"));
-
 
         return "nutzer_geloescht";
     }
