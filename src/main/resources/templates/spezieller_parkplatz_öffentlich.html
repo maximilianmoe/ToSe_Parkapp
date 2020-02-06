@@ -213,10 +213,17 @@
             </h6>
         </div>
 <!--        </form>-->
+        <!--
         <div class="card-footer" id="farbe">
             <small class="text-muted"></small>
         </div>
+        -->
+        <!--
         <div th:if="${parkplatz.status} == 'frei'" class="card-footer" id="orange_square">
+            <small class="text-muted"></small>
+        </div>
+        -->
+        <div th:if="${parkplatz.status} == 'fremdbelegt'" class="card-footer" id="orange_square">
             <small class="text-muted"></small>
         </div>
         <div th:if="${parkplatz.status} == 'belegt'" class="card-footer" id="red_square">
