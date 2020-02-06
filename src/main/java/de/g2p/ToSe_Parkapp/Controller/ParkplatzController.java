@@ -48,12 +48,22 @@ public class ParkplatzController {
     private String finalImageName;
 
 
-
+    /**
+     * gets public parking spaces
+     *
+     * @return mein_parkplatz_oeffentlich
+     */
     @GetMapping("/mein_parkplatz_oeffentlich")
     public String meinOeffentlichGet() {
         return "mein_parkplatz_oeffentlich";
     }
 
+    /**
+     * Get Mapping for public parking spaces
+     *
+     * @param model the model
+     * @return parkplatz_hinzufuegen_oeffentlich
+     */
     @GetMapping("/parkplatz_hinzufuegen_oeffentlich")
     public String addOeffentlichGet(Model model) {
         Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
@@ -61,6 +71,15 @@ public class ParkplatzController {
         return "parkplatz_hinzufuegen_oeffentlich";
     }
 
+    /**
+     * Get Mapping to add public parking spaces
+     *
+     * @param parkplatz   the parkplatz
+     * @param fahrzeugtyp the fahrzeugtyp
+     * @param model       the model
+     * @param imageFile   the image file
+     * @return mein_parkplatz_oeffentlich
+     */
     @PostMapping("/parkplatz_hinzufuegen_oeffentlich")
     public String addOeffentlichPost(@ModelAttribute Parkplatz parkplatz, @RequestParam("fahrzeugtyp") String fahrzeugtyp,
                                      Model model, @RequestParam("imageFile") MultipartFile imageFile) {
@@ -102,6 +121,12 @@ public class ParkplatzController {
         return "mein_parkplatz_oeffentlich";
     }
 
+    /**
+     * Get Mapping to add a parking space
+     *
+     * @param model the model
+     * @return parkplatz_hinzufuegen
+     */
     @GetMapping("/parkplatz_hinzufuegen")
     public String add(Model model) {
         Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
@@ -116,6 +141,16 @@ public class ParkplatzController {
         return returnstring;
     }
 
+    /**
+     * Post Mapping to add a parking space
+     *
+     * @param parkplatz   the parkplatz
+     * @param checked     the checked
+     * @param fahrzeugtyp the fahrzeugtyp
+     * @param model       the model
+     * @param imageFile   the image file
+     * @return returnstring
+     */
     @PostMapping("/parkplatz_hinzufuegen")
     public String addParkplatz(@ModelAttribute Parkplatz parkplatz,
                                @RequestParam("parkplatzChecked") String checked,
@@ -180,11 +215,25 @@ public class ParkplatzController {
     }
 
 
+    /**
+     * Gets the special private parking slots
+     *
+     * @param model the model
+     * @return spezieller_parkplatz_privat
+     */
     @GetMapping("/spezieller_parkplatz_privat")
     public String spezParkplatzPrivatGet(Model model) {
         return "spezieller_parkplatz_privat";
     }
 
+    /**
+     * Post Mapping for the specific public parking space
+     *
+     * @param pid    the pid
+     * @param belegt the belegt
+     * @param parken the parken
+     * @return returnstring
+     */
     @PostMapping("/spezieller_parkplatz_öffentlich")
     public String spezParkplatzOeffentlichPost(@RequestParam("pid") Integer pid, @RequestParam("belegung") String belegt,
                                                @ModelAttribute Parken parken) {
@@ -215,6 +264,12 @@ public class ParkplatzController {
         return returnstring;
     }
 
+    /**
+     * Get Mapping for special public parking slot
+     *
+     * @param model the model
+     * @return spezieller_parkplatz_öffentlich
+     */
     @GetMapping("/spezieller_parkplatz_öffentlich")
     public String spezParkplatzOeffentlichGet(Model model) {
         model.addAttribute("parkplaetze", parkplatzRepository.findAll());
@@ -222,6 +277,12 @@ public class ParkplatzController {
         return "spezieller_parkplatz_öffentlich";
     }
 
+    /**
+     * Get Mapping for all parking spaces
+     *
+     * @param model the model
+     * @return returnstring
+     */
     @GetMapping("/parkplaetze_medialist")
     public String parkMediaGet(Model model) {
         String returnstring = "";
@@ -240,7 +301,14 @@ public class ParkplatzController {
         return returnstring;
     }
 
-    //handles the redirect to the special_parkingslot page
+    /**
+     * Post Mapping for all parking spaces
+     *
+     * @param model  the model
+     * @param button the button
+     * @return returnstring
+     */
+//handles the redirect to the special_parkingslot page
     @PostMapping("/parkplaetze_medialist")
     public String parkMediaPost(Model model, @RequestParam("button") Integer button) {
         String returnstring="";
@@ -272,6 +340,13 @@ public class ParkplatzController {
         return returnstring;
     }
 
+    /**
+     * Post Mapping for the search of parking spaces
+     *
+     * @param model the model
+     * @param suche the suche
+     * @return parkplaetze_medialist_suche
+     */
     @PostMapping("/suche")
     public String suchePost(Model model, @RequestParam("suche") Integer suche) {
         List<Parkplatz> parkplatzList = parkplatzRepository.findByPlz(suche);
@@ -286,6 +361,11 @@ public class ParkplatzController {
         return "parkplaetze_medialist_suche";
     }
 
+    /**
+     * Get Mapping for all searched parking spaces
+     *
+     * @return parkplaetze_medialist_suche
+     */
     @GetMapping("/parkplaetze_medialist_suche")
     public String parkMediaSucheGet() {
         return "parkplaetze_medialist_suche";
@@ -380,6 +460,11 @@ public class ParkplatzController {
     }
 
 
+    /**
+     * Get Mapping for transfer site depending on role
+     *
+     * @return returnstring
+     */
     @GetMapping("/parkplatz_allgemein")
     public String parkplatzAllg() {
         String returnstring = "";
@@ -395,8 +480,13 @@ public class ParkplatzController {
         return returnstring;
     }
 
-    //returns the Parkplatz after it is created
 
+    /**
+     * Get Mapping for the users Parking space
+     *
+     * @param model the model
+     * @return returnstring
+     */
     @GetMapping("/mein_parkplatz")
     public String meinParkplatzGet(Model model) {
         Nutzer nutzer = findNutzer();
@@ -442,6 +532,13 @@ public class ParkplatzController {
         }
         return returnstring;
     }
+
+    /**
+     * Post Mapping for the action of the user specific parking slot
+     *
+     * @param auswahl the auswahl
+     * @return home
+     */
     @PostMapping("/mein_parkplatz")
     public String meinParkplatzPost(@RequestParam("auswahl") String auswahl) {
 
@@ -467,6 +564,12 @@ public class ParkplatzController {
     }
 
 
+    /**
+     * Post Mapping to delete a parking space as a user
+     *
+     * @param model the model
+     * @return the home
+     */
     @PostMapping("/parkplatz_entfernen")
     public String deleteParkplatz(Model model) {
         Anbieter anbieter = anbieterRepository.findByNid(findNutzer());
@@ -495,6 +598,11 @@ public class ParkplatzController {
         return "home";
     }
 
+    /**
+     * Get Mapping for the error, if a parking space was not yet created
+     *
+     * @return nutzer
+     */
     @GetMapping("/error_noch_kein_parkplatz")
     public String errorKeinParkplatz() {
         return "error_noch_kein_parkplatz";
@@ -603,27 +711,34 @@ public class ParkplatzController {
   }
 
 
+    /**
+     * Saves an image to the file system - Differently for Deployment on Apache Tomcat
+     *
+     * @param bild      the bild
+     * @param imageFile the image file
+     * @throws Exception the exception
+     */
     public void saveImage(Bild bild, MultipartFile imageFile) throws Exception {
 
-      //IntelliJ Implementation
-      //findet das aktuelle directory
-      Path currentPath = Paths.get("");
-      //findet den kompletten Pfad vom Root directory bis zum aktuellen directory
-      Path absolutePath = currentPath.toAbsolutePath();
-      //System.out.println(absolutePath.toString());
-      bild.setPath(absolutePath + "/src/main/resources/static/photos/");
-      byte[] bytes = imageFile.getBytes();
-      Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
-      Files.write(path, bytes);
+ //     //IntelliJ Implementation
+ //     //findet das aktuelle directory
+ //     Path currentPath = Paths.get("");
+ //     //findet den kompletten Pfad vom Root directory bis zum aktuellen directory
+ //     Path absolutePath = currentPath.toAbsolutePath();
+ //     //System.out.println(absolutePath.toString());
+ //     bild.setPath(absolutePath + "/src/main/resources/static/photos/");
+ //     byte[] bytes = imageFile.getBytes();
+ //     Path path = Paths.get(bild.getPath() + finalImageName + ".jpg");
+ //     Files.write(path, bytes);
 
-//        //use for deployment on tomcat
-//        String folder = "/usr/local/apache-tomcat9/webapps/good2park/WEB-INF/classes/static/photos/";
-//        byte[] bytes = imageFile.getBytes();
-//        Path path = Paths.get(folder + finalImageName + ".jpg");
-//        Files.write(path, bytes);
+       //use for deployment on tomcat
+       String folder = "/usr/local/apache-tomcat9/webapps/good2park/WEB-INF/classes/static/photos/";
+       byte[] bytes = imageFile.getBytes();
+       Path path = Paths.get(folder + finalImageName + ".jpg");
+       Files.write(path, bytes);
     }
 
-    /*
+    /**
         Autocomplete:
         @param term übergibt den Input-Wert der Suchleiste von parkplaetze_medialist.html
         Eine Liste aller Parkplätze wird erstellt und zu jedem Parkplatz wird die PLZ vorübergehend mit der

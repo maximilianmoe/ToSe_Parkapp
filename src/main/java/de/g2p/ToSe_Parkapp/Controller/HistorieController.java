@@ -16,15 +16,4 @@ public class HistorieController {
 
     @Autowired
     HistorieService historieService;
-
-//    @GetMapping("/logtabelle")
-//    public String getAllHistorien (@RequestParam(defaultValue = "0") Integer pageNo,
-//                                   @RequestParam(defaultValue = "3") Integer pageSize,
-//                                   @RequestParam(defaultValue = "historienId") String sortBy, Model model) {
-//        List<Historie> historieList = historieService.getAllHistorien(pageNo, pageSize, sortBy);
-//        model.addAttribute("historienlist", historieList);
-//        return "logtabelle";
-//
-//    }
-
 }

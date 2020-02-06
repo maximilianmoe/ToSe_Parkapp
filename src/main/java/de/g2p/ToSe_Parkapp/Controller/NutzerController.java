@@ -42,7 +42,12 @@ public class NutzerController {
     MailService mailService = new MailService();
 
 
-
+    /**
+     * Get Mapping for the Registration
+     *
+     * @param model the model
+     * @return registrieren
+     */
     @GetMapping("/registrieren")
     public String registration(Model model) {
         List<Nutzer> nutzer = nutzerRepository.findAll();
@@ -53,6 +58,21 @@ public class NutzerController {
         return "registrieren";
     }
 
+    /**
+     * Post Mapping for the Registration
+     *
+     * @param nutzer       the nutzer
+     * @param konsument    the konsument
+     * @param anbieter     the anbieter
+     * @param nutzertyp    the nutzertyp
+     * @param fahrzeugtyp  the fahrzeugtyp
+     * @param email        the email
+     * @param benutzername the benutzername
+     * @param passwort     the passwort
+     * @param reminder     the reminder
+     * @param model        the model
+     * @return login
+     */
     @PostMapping("/registrieren")
     public String addUser(@ModelAttribute Nutzer nutzer, @ModelAttribute Konsument konsument,
                           @ModelAttribute Anbieter anbieter, @RequestParam("nutzertyp") String nutzertyp,
@@ -147,6 +167,12 @@ public class NutzerController {
         return "login";
     }
 
+    /**
+     * Get Mapping to relay to the specific profile page
+     *
+     * @param model the model
+     * @return returnstring
+     */
     @GetMapping("/mein_profil")
     public String profilGet(Model model) {
         Nutzer nutzer = findNutzer();
@@ -170,6 +196,12 @@ public class NutzerController {
     }
 
 
+    /**
+     * Get Mapping for the credit page, when overdrawn
+     *
+     * @param model the model
+     * @return the returnstring
+     */
     @GetMapping("/guthaben")
     public String validate(Model model) {
         String returnstring = "";
@@ -185,6 +217,12 @@ public class NutzerController {
         return returnstring;
     }
 
+    /**
+     * Get Mapping to get credit
+     *
+     * @param model the model
+     * @return guthabenverwaltung
+     */
     @GetMapping("/guthabenverwaltung")
     public String guthabenGet(Model model) {
         Nutzer nutzer = findNutzer();
@@ -192,6 +230,14 @@ public class NutzerController {
         return "guthabenverwaltung";
     }
 
+    /**
+     * Post Mapping to deposit or withdraw credit
+     *
+     * @param nutzer the nutzer
+     * @param button the button
+     * @param betrag the betrag
+     * @return guthabenweiterleitung
+     */
     @PostMapping("/guthabenverwaltung")
     public String guthabenPost(Nutzer nutzer, @RequestParam("button") String button,
                                @RequestParam("betrag") Integer betrag) {
@@ -212,6 +258,11 @@ public class NutzerController {
     }
 
 
+    /**
+     * Finds a user
+     *
+     * @return the nutzer
+     */
     public Nutzer findNutzer() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String benutzername = "";

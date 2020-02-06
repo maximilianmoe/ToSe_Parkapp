@@ -41,6 +41,12 @@ public class AdminController {
     MailService mailService = new MailService();
 
 
+    /**
+     * Gets the Adminseite for role Admin
+     *
+     * @param model the model
+     * @return adminseite
+     */
     @GetMapping("/adminseite")
     public String adminseite(Model model) {
         Integer gesamtvolumen = transaktionRepository.getGesamtvolumen();
@@ -48,6 +54,14 @@ public class AdminController {
         return "adminseite";
     }
 
+    /**
+     * Blocks a user
+     *
+     * @param nid    the nid
+     * @param button the button
+     * @param model  the model
+     * @return returnstring
+     */
     @PostMapping("/sperren")
     public String sperrenPost(@RequestParam("nutzerid") Integer nid, @RequestParam("buttonNutzer") Integer button, Model model) {
         Nutzer nutzer = nutzerRepository.findByNid(nid);
@@ -77,7 +91,7 @@ public class AdminController {
      * Delete a Nutzer from the Admin page.
      *
      * @param nid nid
-     * @return the string
+     * @return nutzer_geloescht
      */
     @PostMapping("/loeschen")
     public String loeschenPost(@RequestParam("nid") Integer nid) {
@@ -135,6 +149,14 @@ public class AdminController {
         return "nutzer_geloescht";
     }
 
+    /**
+     * Change User rights on Admin Page
+     *
+     * @param nid    the nid
+     * @param button the button
+     * @param model  the model
+     * @return returnstring
+     */
     @PostMapping("/rechteAendern")
     public String rechteAendern(@RequestParam("nutzerid2") Integer nid, @RequestParam("buttonAdmin") Integer button,
                                 Model model) {
@@ -156,6 +178,12 @@ public class AdminController {
         return returnstring;
     }
 
+    /**
+     * Shows the Admin all reservations
+     *
+     * @param model the model
+     * @return admin_alle_ausstehenden_reservierungen
+     */
     @GetMapping("/admin_alle_ausstehenden_reservierungen")
     public String adminResGet(Model model) {
         List<Reservierung> reservierungList = reservierungenRepository.findByBeendet(false);
@@ -169,6 +197,12 @@ public class AdminController {
         return "admin_alle_ausstehenden_reservierungen";
     }
 
+    /**
+     * Gets the Admin all the transactions
+     *
+     * @param model the model
+     * @return admin_vergangene_transaktionen
+     */
     @GetMapping("/admin_vergangene_transaktionen")
     public String adminTrans(Model model) {
         List<Konsument> konsumenten = konsumentRepository.findAll();
@@ -180,6 +214,12 @@ public class AdminController {
         return "admin_vergangene_transaktionen";
     }
 
+    /**
+     * Gets the Admin the Log table
+     *
+     * @param model the model
+     * @return logtabelle
+     */
     @GetMapping("/logtabelle")
     public String logtabelleGet(Model model) {
         List<Historie> histories = historieRepository.findAll();
@@ -198,6 +238,11 @@ public class AdminController {
         return "logtabelle";
     }
 
+    /**
+     * Finds a user
+     *
+     * @return the nutzer
+     */
     public Nutzer findNutzer() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String benutzername = "";

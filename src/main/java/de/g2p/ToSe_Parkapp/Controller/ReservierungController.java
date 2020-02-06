@@ -33,6 +33,12 @@ public class ReservierungController {
     HistorieRepository historieRepository;
 
 
+    /**
+     * Gets the reservations of a user
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/meine_reservierungen")
     public String reservierungenGet(Model model) {
         Konsument konsument = konsumentRepository.findByNid(findNutzer());
@@ -86,6 +92,13 @@ public class ReservierungController {
         return "meine_reservierungen";
     }
 
+    /**
+     * Gets and sets the stars after parking
+     *
+     * @param starsRes the stars res
+     * @param button   the button
+     * @return the string
+     */
     @PostMapping("/sterneParken")
     public String sterneParkenPost(@RequestParam("star") Integer starsRes, @RequestParam("button") String button) {
         String returnstring = "";
@@ -130,6 +143,15 @@ public class ReservierungController {
         return returnstring;
     }
 
+    /**
+     * Post mapping for reservations
+     *
+     * @param starsRes the stars res
+     * @param button   the button
+     * @return the string
+     * @throws InterruptedException the interrupted exception
+     * @throws ParseException       the parse exception
+     */
     @PostMapping("/meine_reservierungen")
     public String reservierungenPost(@RequestParam("rateRes") Integer starsRes,
                                      @RequestParam("button") String button) throws InterruptedException, ParseException {
@@ -244,7 +266,6 @@ public class ReservierungController {
                 System.out.println("aktuelles datum "+currentDate);
                 System.out.println("end Zeit "+reservierung.getEndTime());
                 System.out.println("aktuelle Zeit "+currentTime);
-//                if (reservierung.getEndeDatum().before(currentDate)) {
                     if (reservierung.getEndTime().before(new Time(currentDate.getTime()))) {
                         Integer betragT = transaktion.getBetrag();
                         System.out.println(betragT + "    Betrag Trans");
@@ -255,7 +276,6 @@ public class ReservierungController {
                         transaktionRepository.updateGebuehr(true, betrag, transaktion.getTid());
                         historieRepository.save(new Historie(konsument.getNid(), null, "update", "Gebühr Transaktion"));
 
-//                    }
                 }
             }
 
@@ -291,6 +311,11 @@ public class ReservierungController {
         return returnstring;
     }
 
+    /**
+     * finds a user
+     *
+     * @return the nutzer
+     */
     public Nutzer findNutzer() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String benutzername = "";
