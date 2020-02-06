@@ -38,7 +38,7 @@ public class AdminController {
     @Autowired
     ParkenRepository parkenRepository;
 
-    MailService mailService;
+    MailService mailService = new MailService();
 
 
     @GetMapping("/adminseite")
