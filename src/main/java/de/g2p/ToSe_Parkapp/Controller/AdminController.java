@@ -4,6 +4,7 @@ import de.g2p.ToSe_Parkapp.Entities.*;
 import de.g2p.ToSe_Parkapp.Repositories.*;
 import de.g2p.ToSe_Parkapp.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+/**
+ * The type Admin controller.
+ */
 @Controller
 public class AdminController {
 
@@ -31,8 +35,11 @@ public class AdminController {
     ParkplatzRepository parkplatzRepository;
     @Autowired
     HistorieRepository historieRepository;
+    @Autowired
+    ParkenRepository parkenRepository;
 
     MailService mailService;
+
 
     @GetMapping("/adminseite")
     public String adminseite(Model model) {
@@ -65,9 +72,19 @@ public class AdminController {
         return returnstring;
     }
 
+
+    /**
+     * Delete a Nutzer from the Admin page.
+     *
+     * @param nid nid
+     * @return the string
+     */
     @PostMapping("/loeschen")
     public String loeschenPost(@RequestParam("nid") Integer nid) {
         Nutzer nutzer = nutzerRepository.findByNid(nid);
+//        TODO wirft eine NullPointerException
+        System.out.println(nutzer.getEmailAdresse());
+        mailService.sendSimpleMessage(nutzer.getEmailAdresse(),"Account gelöscht.", "Ihr Account wurde von einem Adminsitrator gelöscht.");
         System.out.println(nutzer.getBenutzername()+"     "+nutzer.getBenutzername());
 
         if (nutzer.getRolle().equalsIgnoreCase("beides")) {
@@ -81,23 +98,38 @@ public class AdminController {
             }
             konsumentRepository.delete(konsument);
             anbieterRepository.delete(anbieter);
-            parkplatzRepository.delete(parkplatz);
+            if  (anbieter.getParkplatz()) {
+                parkplatzRepository.delete(parkplatz);
+            }
             historieRepository.save(new Historie(findNutzer(), null, "delete", "Konsument, Anbieter und Parkplatz"));
 
         } else if (nutzer.getRolle().equalsIgnoreCase("anbieter")) {
             System.out.println("rolle anbieter");
             Anbieter anbieter = anbieterRepository.findByNid(nutzer);
             Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
+            List<Historie> historieList = historieRepository.findByNid(anbieter.getNid());
+            for (Historie historieFor : historieList) {
+                historieRepository.updateNid(null, historieFor.getHistorienId());
+            }
             anbieterRepository.delete(anbieter);
-            parkplatzRepository.delete(parkplatz);
+            if  (anbieter.getParkplatz()) {
+                parkplatzRepository.delete(parkplatz);
+            }
             historieRepository.save(new Historie(findNutzer(), null, "delete","Anbieter und Parkplatz"));
         } else if (nutzer.getRolle().equalsIgnoreCase("konsument")) {
             System.out.println("rolle konsument");
             Konsument konsument = konsumentRepository.findByNid(nutzer);
+            List<Historie> historieList = historieRepository.findByNid(konsument.getNid());
+            for (Historie historieFor : historieList) {
+                historieRepository.updateNid(null, historieFor.getHistorienId());
+            }
+            List<Parken> parkenList = parkenRepository.findByKid(konsument);
+            for (Parken parkenFor: parkenList) {
+                parkenRepository.updateKid(null, parkenFor.getParkid());
+            }
             konsumentRepository.delete(konsument);
             historieRepository.save(new Historie(findNutzer(), null, "delete", "Konsument"));
         }
-        mailService.sendSimpleMessage(nutzer.getEmailAdresse(),"Account gelöscht.", "Ihr Account wurde von einem Adminsitrator gelöscht.");
         nutzerRepository.delete(nutzer);
         historieRepository.save(new Historie(findNutzer(), null, "delete", "Nutzer"));
 

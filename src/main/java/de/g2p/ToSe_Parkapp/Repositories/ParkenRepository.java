@@ -12,11 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 @Repository
 public interface ParkenRepository extends JpaRepository<Parken, Integer> {
 
-    Parken findByKid(Konsument kid);
+    List<Parken> findByKid(Konsument kid);
 
     @Transactional
     @Modifying
@@ -38,5 +39,10 @@ public interface ParkenRepository extends JpaRepository<Parken, Integer> {
     @Modifying
     @Query(value = "update parken set pid = :pid where parkid = :parkid", nativeQuery = true)
     void updatePid(@Param("pid") Integer pid, @Param("parkid") Integer parkid);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update parken set kid = :kid where parkid = :parkid", nativeQuery = true)
+    void updateKid(@Param("kid") Integer kid, @Param("parkid") Integer parkid);
 
 }

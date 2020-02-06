@@ -271,11 +271,11 @@ public class ReservierungController {
             historieRepository.save(new Historie(konsument.getNid(), null, "update", "abgeschlossen Transaktion"));
             Nutzer nutzer = konsument.getNid();
             Integer saldoAktuell = nutzer.getSaldo();
-            nutzerRepository.updateSaldo( (saldoAktuell-transaktion.getBetrag()),konsument.getNid().getNid() );
+            nutzerRepository.updateSaldo( (saldoAktuell-betrag),konsument.getNid().getNid() );
             historieRepository.save(new Historie(konsument.getNid(), null, "update", "Saldo"));
             Nutzer nutzerAnbieter = nutzerRepository.findByNid(parkplatzRes.getAnbieterId().getNid().getNid());
             Integer saldoAnbieter = nutzerAnbieter.getSaldo();
-            nutzerRepository.updateSaldo((saldoAnbieter+transaktion.getBetrag()),nutzerAnbieter.getNid());
+            nutzerRepository.updateSaldo((saldoAnbieter+betrag),nutzerAnbieter.getNid());
             historieRepository.save(new Historie(nutzerAnbieter, null, "update", "Saldo"));
             konsumentRepository.updatebelegt(false, konsument.getKid());
             historieRepository.save(new Historie(konsument.getNid(), null, "update", "belegt Konsument"));

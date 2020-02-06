@@ -293,7 +293,7 @@ public class ParkplatzController {
 
 
     /**
-     * Reserve a Parkkingslot.
+     * Reserve a Parkingslot.
      *
      * @param parken            as typ of Parken
      * @param reservierung      as typ of Reservierung
