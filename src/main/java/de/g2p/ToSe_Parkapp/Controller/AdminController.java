@@ -114,7 +114,8 @@ public class AdminController {
                 List<Historie> historieList = historieRepository.findByNid(anbieter.getNid());
                 for (Historie historieFor : historieList) {
                     historieRepository.updateNid(null, historieFor.getHistorienId());
-                    parkplatzRepository.updateAid(null, (parkplatzRepository.findByAnbieterId(anbieter)).getPid());
+                    if (anbieter.getParkplatz())
+                        parkplatzRepository.updateAid(null, (parkplatzRepository.findByAnbieterId(anbieter)).getPid());
                 }
                 if (anbieter.getParkplatz()) {
                     parkplatzRepository.delete(parkplatz);
