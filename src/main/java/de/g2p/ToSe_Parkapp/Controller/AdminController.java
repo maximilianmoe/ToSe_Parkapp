@@ -70,12 +70,15 @@ public class AdminController {
             model.addAttribute("nid", nid);
             returnstring = "error_nutzer_existiert_nicht";
         } else {
+
             if (button.equals(1)) {
+                mailService.sendSimpleMessage(nutzer.getEmailAdresse(), "Account entsperrt.", "Ihr Account wurde von einem Adminsitrator erfolgreich entsperrt.");
                 nutzer.setSperrung(false);
                 nutzerRepository.updateSperrung(nutzer.getNid(), false);
                 historieRepository.save(new Historie(nutzer, null, "update", "Sperrung"));
                 returnstring = "/nutzer_entsperrt";
             } else if (button.equals(2)) {
+                mailService.sendSimpleMessage(nutzer.getEmailAdresse(), "Account gesperrt.", "Ihr Account wurde von einem Adminsitrator gesperrt. Ciao.");
                 nutzer.setSperrung(true);
                 nutzerRepository.updateSperrung(nutzer.getNid(), true);
                 historieRepository.save(new Historie(nutzer, null, "update ", "Sperrung"));
