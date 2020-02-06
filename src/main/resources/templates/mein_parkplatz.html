@@ -218,43 +218,11 @@
     </form>
 </div>
 <script>
-    /*
-    Folgende Funktion sorgt dafür, dass wenn Nein! (man will keine Erinnerungsmail erhalten)
-    ausgewählt wird das Input-Fenster zur Angabe der Zeit, wann man die Mail erhalten
-    möchte ausgegraut/disabled wird.
-    Der Zweite Teil sorgt dafür, dass dies auch wieder enabled wird, sobald Ja! ausgewählt wird.
-    Der dritte Teil sorgt dafür, dass sich die Farbe des Footers abhängig von der Auswahl des
-    Statuses automatisch ändert.
-*/
 
     /*
-        Hab erfolgreich die meisten Probleme behoben. Alter Code ist noch da ABER auskommentiert!
-        Einziges mir AKTUELL bekanntes PROBLEM:
-        Wenn in 3.datetime input feld ('#mail') schon etwas im falschen Format eingegeben wurde und dann
-        im Nachhinein noch Nein! ausgewählt wird, so bleibt das geschriebene im falschen Format in dem
-        Feld und das Feld ist nicht mehr zugänig. (Gelöst!!)
-        Neuer Fehler: Button wird nicht mehr aktiviert da @param: count nur 2 annimmt und nicht mehr 3.
-        ---> YESSSS!!
-        ---> Jetzt auch gelöst!
-    */
-/*
-    $(document).ready(function () {
-        $('#belegt').change(function () {
-            if ($(this).find('option:selected').text() == 'Der Parkplatz ist frei') {
-                //$('#farbe').attr("green_square");
-                //jQuery("div").prev("farbe").attr("id", "green_square");
-                $(".card-footer").attr('id', 'green_square');
-            }
-            if ($(this).find('option:selected').text() ==
-                'Der Parkplatz ist aktuell belegt, aber könnte auch demnächst wieder frei werden') {
-                $(".card-footer").attr('id', 'orange_square');
-            }
-            if ($(this).find('option:selected').text() == 'Ich belege den Parkplatz') {
-                $(".card-footer").attr('id', 'red_square');
-            }
-        });
-    });
-*/
+        Abhängig davon ob Parkplatz ist frei oder belegt ausgewählt wurde, wird der Button enabled.
+     */
+
     $(document).ready(function () {
         $('#belegt').change(function () {
             if ($(this).find('option:selected').text() == 'Der Parkplatz ist frei'){

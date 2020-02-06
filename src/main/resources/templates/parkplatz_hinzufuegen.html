@@ -193,6 +193,8 @@
             <div class="col">
                 <a data-tooltip title="Maximal 10.000 Minuten möglich">
                     <input required type="number" th:name="zeitbegrenzung" class="form-control"
+                           pattern="0 + \.[0-9]*[1-9][0-9]*$"
+                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                            placeholder="Parkhöchstdauer in Minuten" min="0" max="10000" id="parkhoechstdauer">
                 </a>
             </div>
@@ -244,6 +246,11 @@
      </form>-->
 </div>
 <script type="text/javascript">
+
+        /*
+            Parameter c1 - c6 dienen als Hilfsparameter zur Überprüfung, ob alles in der richtigen Form eingegeben
+            wurde.
+         */
     var c1 = 0;
     var c2 = 0;
     var c3 = 0;
@@ -255,6 +262,15 @@
         $('.check-test').click(function () {
             //$('#submit').prop('disabled', false);
         });
+
+        /*
+            @param: file
+            @param: fileType
+            @param: validType
+            Folgende Funktion untersucht ob ein ausgewählte Bild kleiner als 1MB ist und vom Typ .jpg ist.
+            Wenn beides der Fall ist wird die Hilfsvariable c1 auf 1 gesetzt, wenn nicht wird eine Nachricht
+            angezeigt
+        */
 
         $('#inputGroupFile01').bind('change', function () {
             //alert(this.files[0].size);
@@ -293,7 +309,10 @@
                 $('#img_warning').html("");
             }
         });
-        //AB hier: 1
+        /*
+            Folgende Funktionen sorgen dafür das mit einem Klick auf einen Fahrzeugtypen alle kleineren
+            Typen automatisch auch ausgewählt werden.
+        */
 
         $('#check_van').click(function () {
             $('#check_klein').prop('checked', true);
@@ -309,6 +328,11 @@
         $('#check_kombi').click(function () {
             $('#check_klein').prop('checked', true);
         });
+
+        /*
+            Folgende 2 funktionen aktivieren oder deaktivieren einige Elemente, abhängig davon ob es sich um
+            einen öffentlichen oder privaten Parkplatz handelt.
+        */
 
         $('.select_parkplatz').change(function () {
             if ($(this).find('option:selected').text() == 'Öffentlicher Parkplatz') {
@@ -328,7 +352,12 @@
             }
         });
 
-        //AB hier: 2
+    /*
+        @param c2
+        Es muss mindestens ein Fahrzeugtyp ausgewählt werden. Ist dies der Fall wird die Hilfsvariable c2 auf 1
+        gesetzt, wenn nicht wird sie auf 0 gesetzt.
+    */
+
     $('.check-test').bind('change', function () {
         checked = $("input[type=checkbox]:checked").length;
         if(!checked){
@@ -342,21 +371,13 @@
             c2 = 1;
         }
     });
-       /*
-        $('#beschreibung').focusout(function () {
-            checked = $("input[type=checkbox]:checked").length;
-            if(!checked){
-                alert("Sie müssen mindestens einen Fahrzeugtyp auswählen");
-                //$('#submit').prop('disabled', true);
-                return false;
-                c2 = 0;
-            }
-            else{
-                //$('#submit').prop('disabled', false);
-                c2 = 1;
-            }
-        });
-*/
+
+        /*
+            @param: len
+            @param: maxchar = 255;
+            Funktion zeigt an, wie viele Zeichen in der Beschreibung noch verfügbar sind (Maximal 255).
+        */
+
 
         var len = 0;
         var maxchar = 255;
@@ -376,6 +397,15 @@
             }
         });
 
+        /*
+            @param: expression = /\b[0-9]{5}\b/
+            @param: regex = new RegExp(expression)
+            @param: plz -> Liest den Wert aus dem PLZ Input aus und übernimmt ihn
+            @param: c3
+            Funktion überprüft, ob die Postleitzahl in der richtigen Form eingegeben wurde und falls
+            nicht wird der Nutzer darauf hingewiesen.
+        */
+
         $('#plz').focusout(function(){
             var expression = /\b[0-9]{5}\b/;
             var regex = new RegExp(expression);
@@ -391,6 +421,13 @@
                 c3 = 0;
             }
         });
+
+        /*
+            @param: len //Gibt länge der Beschreibung wieder
+            @param: c4
+            Folgende Funktionen überprüfen, ob bei der Beschreibung mehr als 255 Zeichen verwendet wurden. Wenn
+            dies der Fall ist wird der Nutzer darauf hingewiesen und c4 wird auf 0 bzw. 1 gesetzt.
+        */
 
         $('#beschreibung').keyup(function () {
             len = this.value.length
@@ -424,6 +461,11 @@
 
     });
 
+    /*
+        Funktion überprüft alle 300 Millisekunden ob die Summen aus c1+c2+c3+c4 gleich 4 ist.
+        Erst wenn dies der Fall ist wird der Submit Button aktiviert.
+    */
+
     window.setInterval(function(){
         if((c1+c2+c3+c4) == 4){
             $("#submit").prop('disabled', false);
@@ -432,49 +474,6 @@
             $("#submit").prop('disabled', true);
         }
     }, 300);
-
-
-    /*
-    Folgende Funktion sorgt dafür das, wenn ein Öffentlicher Parkplatz hinzugefügt wird,
-    die Eingabefelder für {Parkgebühr; Strafgebühr; Parkhöchstdauer} deaktiviert/ausgegraut werden.
-    Der zweite Teil der Funktion sorgt dafür, dass die Felder wieder aktiviert werden, wenn doch
-    wieder aud privater Parkplatz gewechselt wird.
-*/
-
-
-    /*
-        @param len soll mitzählen, wie viele Zeichen bereits eingegeben wurden
-        @param maxchar ist der Limit, wie viele Zeichen eingegeben werden dürfen
-
-        Die Funktion zählt mit wie viele Zeichen bereits eingegeben wurden und zeigt an wie viele
-        noch eingegeben werden dürfen.
-        Die Zahl, wie viele noch eingegeben werden dürfen wird angezeigt und bei jedem Tasten-Anschlag
-        aktualisiert.
-        Wenn maxchar Überschritten wird wird eine Warnanzeige angezeigt, die den Nutzer darauf aufmerksam
-        machen soll. Diese Anzeige verschwindet wieder, sobald gebügend Zeichen entfernt wurden.
-
-        Um zu verhindern, dass der Nutzer sich registriert, obwohl er zu viele Zeichen eingetragen
-        hat, wird sobald zu viele Zeichen eingegeben wurden der Submit-Button deaktiviert.
-        Dieser wird wieder aktiviert sobald genügend Zeichen entfernt wurden.
-    */
-    /*
-    function plzregex() {
-        $('#plz').focusout(function () {
-            var expression = /\b[0-9]{5}\b;
-            var regex = new RegExp(expression);
-            var plz = $("#plz").val();
-            if(plz.match(regex)){
-                $('#submit').prop('disabled', false);
-                $('#red_text').html("");
-            }
-            else{
-                $('#submit').prop('disabled', true);
-                $('#red_text').html("Bitte geben Sie eine gültige PLZ ein.");
-            }
-        });
-    }
-
-     */
 
 
 </script>

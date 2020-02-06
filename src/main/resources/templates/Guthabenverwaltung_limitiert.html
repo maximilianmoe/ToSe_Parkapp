@@ -130,55 +130,15 @@
     </div>
 </div>
 <script>
+
     /*
-    $(document).ready(function(){
-        $('#auszahlen').on('click', function (e){
-            if(parseInt($("#geld_input").val()) > parseInt($("#betrag").val())){
-                //document.getElementById('log').innerHTML = "Zu wenig Geld auf ihrem Konto";
-                $("#log").css("color", "green");
-            }
-        })
-    });
+            @param akk_betrag - Übernimmt Wert des aktuellen Guthabens
+            @param aufladen - Übernimmt Wert des Aufladen-Inputs
+            @param len
+            Überprüft ob eingegebener Wert größer ist als aktueller Guthaben-Wert. Ist dies der Fall kann man sich
+            den Betrag nicht mehr auszahlen lassen.
+         */
 
-    $(document).ready(function () {
-        if(parseFloat($("#betrag").val()) < 90) {
-            $("#ueberschrift").css("color", "green");
-        }
-    });
-
-    $(document).on('input', '#geld_betrag', function(){
-        var coins = $("#geld_betrag").val();
-        $("#reward").text(coins);
-    })
-
-    $(document).ready(function () {
-        var betrag = $("#geld_input").val();
-        if (betrag > 1) {
-            alert("Endlich?");
-        } else {
-            alert("Irgendwas");
-        }
-    });
-    */
-    /*
-    $(document).on("click", "#auszahlen", function(){
-        var wert1 = $("#geld_input").val();
-        var wert2 = $("betrag").val();
-        alert(wert1 + wert2);
-    })
-
-    $("#test2").hover(function(){
-        var h5text = document.querySelector("#test").textContent;
-        alert(h5text);
-    });
-
-    $("#test2").hover(function(){
-        var h5text = document.querySelector("#test").textContent;
-        if(h5text > 10){
-            alert(h5text);
-        }
-    });
-    */
     $(document).ready(function(){
         var akk_betrag = parseInt(document.querySelector("#test").textContent);
         var aufladen = $("#geld_input").val();

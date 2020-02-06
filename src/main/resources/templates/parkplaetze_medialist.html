@@ -384,50 +384,10 @@
 
 </div>
 <script>
-    // The following example creates a marker in Stockholm, Sweden using a DROP
-    // animation. Clicking on the marker will toggle the animation between a BOUNCE
-    // animation and no animation.
-
-    var marker;
-
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 13,
-            center: {
-                lat: 48.572052,
-                lng: 13.455946
-            }
-        });
-
-        marker = new google.maps.Marker({
-            map: map,
-            draggable: true,
-            animation: google.maps.Animation.DROP,
-            position: {
-                lat: 48.572052,
-                lng: 13.455946
-            }
-        });
-        marker.addListener('click', toggleBounce);
-    }
-
-    function toggleBounce() {
-        if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-        } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
-    }
     /*
-    $(document).ready(function () {
-        if(window.matchMedia('(max-width: 700px)').matches){
-            $('#btn_link').attr('class', 'btn btn-outline-secondary btn-sm');
-        }
-        else{
-            $('#btn_link').attr('class', 'btn btn-outline-secondary btn-lg');
-        }
-    });
-    */
+        Verändert Button Größe, wenn der Bildschirm zu klein wird
+     */
+
     $(document).ready(function () {
         if(window.matchMedia('(max-width: 700px)').matches){
             $(':button').attr('class', 'btn btn-outline-secondary btn-sm');
@@ -438,16 +398,6 @@
         }
         */
     });
-    /*
-    function checkPosition() {
-        if(window.matchMedia('(max-width: 700px)').matches){
-            $('#btn_link').attr('class', 'btn btn-outline-secondary btn-sm');
-        }
-        else{
-            $('#btn_link').attr('class', 'btn btn-outline-secondary btn-lg');
-        }
-    }
-    */
     /*
         Initialisieren Autocomplete:
         minLength: 2 bestimmt, dass ab 2 eingegebenen Zahlen Vorschläge geliefert werden.

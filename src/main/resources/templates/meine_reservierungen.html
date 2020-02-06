@@ -213,7 +213,10 @@
 <div class="container">
     <form th:action="@{/meine_reservierungen}" method="post">
     <div id="ueberschrift">
+        <!--
         <h3 id="h_3">Meine aktuellen Reservierungen von privaten Parkplätzen</h3>
+        -->
+        <h3 id="h_3">Meine aktuelle Reservierung eines privaten Parkplatzes</h3>
     </div>
     <!--
     <div id="table_div">
@@ -428,6 +431,9 @@
         $('[data-tooltip]').tooltip();
     });
 
+    /*
+        Der speichern Button wird aktiviert, wenn eine Bewertung abgegeben wurde.
+    */
     $('.star-input').click(function () {
        $('#speichern').prop('disabled', false);
     });
@@ -440,6 +446,10 @@
         $('#speichern3').prop('disabled', false);
     });
 
+    /*
+        Wenn in der Tabelle schon Beparkt mit Ja markiert ist, wird der freigeben Button aktiviert und die anderen
+        deaktiviert
+    */
     $('#table1 td span').filter(function(){
         if($(this).text() == 'Ja') {
             $('#freigeben_btn2').prop('disabled', false);
@@ -450,7 +460,9 @@
 
     /*
         Folgende Funktion checkt alle 2000 millisekunden, ob der Zeitraum für die aktuelle Reservierung begonnen
-        hat. Wenn dies der Fall ist wird der Beparken Button aktiviert.
+        hat. Wenn dies der Fall ist wird der Beparken Button aktiviert. Und wenn der Zeitpunkt noch nicht erreicht
+        ist. Werden unterschiedliche Nachrichten angezeigt. Abhängig davor ob der Zeitpunkt noch nicht erreicht ist
+        oder das Zeitintervall schon überschritten wurde.
      */
 
     window.setInterval(function(){

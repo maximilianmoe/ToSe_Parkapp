@@ -64,6 +64,13 @@
     </form>
 </div>
 <script>
+
+    /*
+        @param: pw1 - Wert von 1. Passwort Input
+        @param: pw2 - Wert von 2. Passwort Input
+        Überprüfen, on 2 mal das selbe Passwort eingegeben wurde
+     */
+
     $('#pw2').focusout(function () {
         var pw1 = $('#pw1').val();
         var pw2 = $('#pw2').val();

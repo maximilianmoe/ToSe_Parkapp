@@ -120,29 +120,14 @@
 </div>
 
 <script>
+
+    /*
+        Tooltip und DataTable werden initialisiert
+     */
+
     $(document).ready(function () {
         $('[data-tooltip]').tooltip();
         $('#log-table').DataTable();
-        /*
-        $('#log-table_wrapper').find('label').each(function () {
-            $(this).parent().append($(this).children());
-        });
-        $('#log-table_wrapper .dataTables_filter').find('label').each(function () {
-            var $this= $(this);
-            $this.attr("placeholder", "Suche");
-            $(this).removeClass('form-control-sm');
-        });
-        $('#log-table_wrapper .dataTables_length').addClass('d-flex flex-row');
-        $('#log-table_wrapper .dataTables_filter').addClass('md-form');
-        $('#log-table_wrapper select').removeClass(
-            'custom-select custom-select-sm form-control form-control-sm'
-        );
-        $('#log-table_wrapper select').addClass('mdb-select');
-        $('#log-table_wrapper .mdb-select').materialSelect();
-        $('#log-table_wrapper .dataTables_filter').find('label').remove();
-
-        //$('.dataTables_length').addClass('bs-select');
-        */
     });
 
 </script>
