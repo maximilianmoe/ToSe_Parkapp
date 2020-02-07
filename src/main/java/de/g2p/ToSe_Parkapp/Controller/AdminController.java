@@ -103,11 +103,12 @@ public class AdminController {
         if (nutzer == null) {
             return "error_kein_nutzer";
         } else {
+            /*
             if (anbieterRepository.findByNid(nutzer).getNid() != null) {
                 if (anbieterRepository.findByNid(nutzer).getParkplatz())
                     return "error_anbieter_noch_parkplatz_vorhanden";
             }
-
+            */
             mailService.sendSimpleMessage(nutzer.getEmailAdresse(), "Account gelöscht.", "Ihr Account wurde von einem Adminsitrator gelöscht.");
             if (nutzer.getRolle().equalsIgnoreCase("beides")) {
                 System.out.println("Rolle beides");
@@ -115,6 +116,10 @@ public class AdminController {
                 Konsument konsument = konsumentRepository.findByNid(nutzer);
                 Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
                 List<Historie> historieList = historieRepository.findByNid(anbieter.getNid());
+                if (anbieterRepository.findByNid(nutzer).getNid() != null) {
+                    if (anbieterRepository.findByNid(nutzer).getParkplatz())
+                        return "error_anbieter_noch_parkplatz_vorhanden";
+                }
                 for (Historie historieFor : historieList) {
                     historieRepository.updateNid(null, historieFor.getHistorienId());
                     if (anbieter.getParkplatz())
@@ -129,6 +134,10 @@ public class AdminController {
 
             } else if (nutzer.getRolle().equalsIgnoreCase("anbieter")) {
                 System.out.println("rolle anbieter");
+                if (anbieterRepository.findByNid(nutzer).getNid() != null) {
+                    if (anbieterRepository.findByNid(nutzer).getParkplatz())
+                        return "error_anbieter_noch_parkplatz_vorhanden";
+                }
                 Anbieter anbieter = anbieterRepository.findByNid(nutzer);
                 Parkplatz parkplatz = parkplatzRepository.findByAnbieterId(anbieter);
                 List<Historie> historieList = historieRepository.findByNid(anbieter.getNid());
