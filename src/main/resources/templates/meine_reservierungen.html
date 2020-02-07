@@ -472,28 +472,50 @@
 
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = today.getFullYear();
 
         today = yyyy + '-' + mm + '-' + dd;
 
-        time = $('#testing').find("tr:eq(1)").find("td:eq(4)").html();
-        time2 = $('#testing').find("tr:eq(1)").find("td:eq(6)").html();
-        day = $('#testing').find("tr:eq(1)").find("td:eq(3)").html();
+        var x1 = $('#testing').find("tr:eq(1)").find("td:eq(4)").html();
+        var x2 = $('#testing').find("tr:eq(1)").find("td:eq(6)").html();
+        var arr = x1.split(':');
+        var arr2 = x2.split(':');
+        var hour1 = $.trim(arr[0]);
+        var minutes1 = $.trim(arr[1]);
+        var seconds1 = $.trim(arr[2]);
+        var hour2 = $.trim(arr2[0]);
+        var minutes2 = $.trim(arr2[1]);
+        var seconds2 = $.trim(arr2[2]);
+
+        time.setHours(hour1);
+        time.setMinutes(minutes1);
+        time.setSeconds(seconds1);
+
+        time2.setHours(hour2);
+        time2.setMinutes(minutes2);
+        time2.setSeconds(seconds2);
+
+        var cur_time = new Date();
+
+        cur_time.getHours();
+        cur_time.getMinutes();
+        cur_time.getSeconds();
+        //alert(cur_time);
+
         /*
+        day = $('#testing').find("tr:eq(1)").find("td:eq(3)").html();
+
         var time = $('#testing').find("tr:eq(1)").find("td:eq(4)").html();
         var time2 = $('#testing').find("tr:eq(1)").find("td:eq(6)").html();
-        */
+
         var dt = new Date();
-        var cur_time = dt.getHours() + ":"  + dt.getMinutes() + ":" + dt.getSeconds();
-
+        //var cur_time = dt.getHours() + ":"  + dt.getMinutes() + ":" + dt.getSeconds();
+        */
         var empty = $('#testing').find("tr:eq(1)").find("td:eq(0)").html();
-
-        //alert("Anfangszeit: " + time + " Endzeit: " + time2 + " Aktuelle Zeit: " + cur_time);
-        if((time <= cur_time && cur_time <= time2) && day == today){
-            //$('#beparken_btn').prop('disabled', false);
+        if(time <= cur_time && cur_time <= time2){
+            //alert("Yes");
             $('#red_text1').html("");
-            //AB hier verändert:
             $('#table1 td span').filter(function(){
                 if($(this).text() == 'Ja') {
                     $('#beparken_btn').prop('disabled', true);
@@ -503,24 +525,16 @@
                 }
             });
         }
-        else if((time2 < cur_time && day == today) && $('#stornieren_btn').is(":disabled")){
+        else if((time2 < cur_time) && $('#stornieren_btn').is(":disabled")){
+            //else if((time2 < cur_time && day == today) && $('#stornieren_btn').is(":disabled")){
             $('#red_text1').html("Sie haben ihre Reservierungsdauer überschritten. Bitte geben Sie den" +
                 " Parkplatz frei.");
             //AB hier verändert:
-            /*
-            $('#table1 td span').filter(function(){
-                if($(this).text() == 'Ja') {
-                    $('#beparken_btn').prop('disabled', true);
-                }
-                if($(this).text() == 'Nein') {
-                    $('#beparken_btn').prop('disabled', false);
-                }
-            });
-             */
         }
-        else if(time2 < cur_time && day == today){
+        else if(time2 < cur_time){
             $('#red_text1').html("Sie haben ihre Reservierungsdauer nicht wahrgenommen." +
                 " Stornieren Sie diese um fortfahren zu können.");
+            //alert(date);
             $('#beparken_btn').prop('disabled', true);
             //alert(time2 + " cur: " + cur_time);
         }
@@ -528,9 +542,7 @@
             $('#red_text1').html("");
         }
         else{
-            //$('#beparken_btn').prop('disabled', true);
-            //alert("NEIN: Anfangszeit: " + time + " Endzeit: " + time2 + " Aktuelle Zeit: " + cur_time);
-            //alert("Angangsdate: " + day + " today: " + today);
+            //alert("No");
             $('#beparken_btn').prop('disabled', true);
             $('#red_text1').html("Der Beparken-Button wird erst aktiviert, wenn der Zeitpunkt ihrer Reservierung " +
                 "gekommen ist.");
